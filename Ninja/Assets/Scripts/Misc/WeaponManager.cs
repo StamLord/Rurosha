@@ -1,0 +1,223 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WeaponManager : MonoBehaviour
+{
+    [SerializeField] private CharacterStats _characterStats;
+    public CharacterStats Stats {get {return _characterStats;}}
+    
+    [SerializeField] private Transform weaponsHolder;
+    [SerializeField] private Item[] items = new Item[10];
+    [SerializeField] private int selected = 0;
+    
+    [Header("Default Weapon")]
+    [SerializeField] private Weapon defaultWeapon;
+
+    [Header("Templates")]
+    [SerializeField] private GameObject _melee;
+    [SerializeField] private GameObject _knife;
+    [SerializeField] private GameObject _sword;
+    [SerializeField] private GameObject _staff;
+    [SerializeField] private GameObject _kanabo;
+    [SerializeField] private GameObject _throw;
+    [SerializeField] private GameObject _bow;
+    [SerializeField] private GameObject _item;
+    [SerializeField] private GameObject _equipment;
+
+    [SerializeField] private WeaponType _lastType;
+    [SerializeField] private GameObject _lastActive;
+
+    public delegate void ChangeSelectionDeleget(int index);
+    public event ChangeSelectionDeleget ChangeSelectionEvent;
+
+    public delegate void ChangeItemDeleget(int index, Item item, int stack = 0);
+    public event ChangeItemDeleget ChangeItemEvent;
+
+    void Start()
+    {
+        SelectItem();
+    }
+
+    void Update()
+    {
+        int oldSelected = selected;
+
+        #region Mouse Wheel
+
+        if(Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            if(selected >= items.Length -1 /*&& weapons[0]*/) 
+                selected = 0;
+            else /*if(weapons[selected + 1])*/
+                selected++;
+        }
+
+        if(Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            if(selected <= 0 /*&& weapons[weapons.Length - 1]*/) 
+                selected = items.Length -1;
+            else if(selected > 0 /*&& weapons[selected - 1]*/)
+                selected--;
+        }
+
+        #endregion
+        
+        #region Num Keys
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+            selected = 0;
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+            selected = 1;
+        if(Input.GetKeyDown(KeyCode.Alpha3))
+            selected = 2;
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+            selected = 3;
+        if(Input.GetKeyDown(KeyCode.Alpha5))
+            selected = 4;
+        if(Input.GetKeyDown(KeyCode.Alpha6))
+            selected = 5;
+        if(Input.GetKeyDown(KeyCode.Alpha7))
+            selected = 6;
+        if(Input.GetKeyDown(KeyCode.Alpha8))
+            selected = 7;
+        if(Input.GetKeyDown(KeyCode.Alpha9))
+            selected = 8;
+        if(Input.GetKeyDown(KeyCode.Alpha0))
+            selected = 9;
+        
+        #endregion
+
+        if(selected != oldSelected)
+        {
+            SelectItem();
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }   
+    }
+
+    void SelectItem()
+    {
+        if(_lastActive)
+            _lastActive.SetActive(false);
+        
+        if(items[selected] == null)
+            items[selected] = Instantiate(defaultWeapon);
+        
+        // Weapon
+        if(items[selected] is Weapon)
+        {
+            switch(((Weapon)items[selected]).WeaponType)
+            {
+                case WeaponType.KNIFE:
+                    _knife?.SetActive(true);
+                    _lastActive = _knife;
+                    break;
+                case WeaponType.SWORD:
+                    _sword?.SetActive(true);
+                    _lastActive = _sword;
+                    break;
+                case WeaponType.STAFF:
+                    _staff?.SetActive(true);
+                    _lastActive = _staff;
+                    break;
+                case WeaponType.KANABO:
+                    _kanabo?.SetActive(true);
+                    _lastActive = _kanabo;
+                    break;
+                case WeaponType.THROW:
+                    _throw?.SetActive(true);
+                    _lastActive = _throw;
+                    break;
+                case WeaponType.BOW:
+                    break;
+            }
+        }
+        // Equipment
+        else if (items[selected] is Equipment)
+        {
+            _equipment?.SetActive(true);
+            _equipment?.GetComponent<EquipmentItem>().SetEquipment((Equipment)items[selected]);
+            _lastActive = _equipment;
+        }
+        else // Item
+        {
+            _item?.SetActive(true);
+            _lastActive = _item;
+        }
+    }
+
+    public bool AddItem(Item item)
+    {
+        int firstEmpty = -1;
+
+        // Same Loop is used to check for stackable 
+        // items and the first empty slot
+        for(int i = 0; i < items.Length; i++)
+        {
+            if(items[i] == null && i != 0 || items[i].itemName == defaultWeapon.itemName && i != 0)
+            {
+                if(firstEmpty == -1)
+                    firstEmpty = i; // We keep record of the first empty slot so we don't loop again later
+            }
+            // If not empty, check if same and stackable
+            else if(item.itemName == items[i].itemName &&  
+                item.stackable && 
+                items[i].stackable)
+            {
+                items[i].ammo += item.ammo;
+                if(ChangeItemEvent != null) ChangeItemEvent(i, item, items[i].ammo);
+                return true;
+            }
+        }
+        
+        if(firstEmpty != -1)
+        {
+            // if(item is Weapon)
+            //     items[firstEmpty] = Instantiate((Weapon)item);
+            // else if(item is Equipment)
+            //     items[firstEmpty] = Instantiate((Equipment)item);
+            // else
+                items[firstEmpty] = Instantiate(item);
+
+            if(ChangeItemEvent != null) ChangeItemEvent(firstEmpty, item);
+            return true;
+        }
+
+        return false;
+    }
+
+    public void AddItemAtSelection(Item item)
+    {
+        items[selected] = item;
+        if(ChangeItemEvent != null) ChangeItemEvent(selected, item);
+
+        SelectItem();
+    }
+
+    public void RemoveItem()
+    {
+        items[selected] = null;
+        if(ChangeItemEvent != null) ChangeItemEvent(selected, null);
+
+        SelectItem();
+    }
+
+    public void RemoveItem(int index)
+    {
+        items[index] = null;
+        if(ChangeItemEvent != null) ChangeItemEvent(index, null);
+
+        SelectItem();
+    }
+
+    public void DepleteItem(int amount)
+    {
+        Item item = items[selected];
+        item.ammo -= amount;
+        if(item.ammo < 1)
+            RemoveItem(selected);
+        else
+            if(ChangeItemEvent != null) ChangeItemEvent(selected, item, item.ammo);
+
+    }
+}
