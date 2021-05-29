@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c06a67b7c08df743ab815a1848c8e81, type: 3}
+  m_Name: Ramen Bowl
+  m_EditorClassIdentifier: 
+  model: {fileID: 7568307919506465898, guid: ad6fb43597c394640b300bf65d54ccfa, type: 3}
+  material: {fileID: 2100000, guid: b3b6c6811cfe81a41b842d5e2b680c37, type: 2}
+  itemName: Rice Bowl
+  stackable: 0
+  _ammo: 0
+  durability: 100
+  healthRestore: 50
+  potentialHealthRestore: 0
+  staminaRestore: 0
+  potentialStaminaRestore: 0
+  consumeDuration: 10
+  incremental: 1

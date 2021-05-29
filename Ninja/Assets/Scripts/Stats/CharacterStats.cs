@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,31 +14,55 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private const int minAttributeLevel = 1;
     [SerializeField] private const int maxAttributeLevel = 10;
 
+    #region Health
+
     [Header("Health")]
     [SerializeField] private bool isAlive = true;
-    [SerializeField] private float _maxHealth = 100;
+
     [SerializeField] private string _maxHealthStatModifier = "Endurance";
     [SerializeField] private int[] _maxHealthPerStat = {70, 80, 90, 100 ,115 ,130, 150, 170, 200, 230};
+    public float MaxHealth {get { return _maxHealthPerStat[GetAttributeLevel(_maxHealthStatModifier)]; }}
+
     [SerializeField] private float _health = 100;
-    public float maxHealth {get { return _maxHealthPerStat[GetAttributeLevel(_maxHealthStatModifier)]; }}
-    public float health 
+    [SerializeField] private float _potentialHealth = 100;
+
+    public float Health 
     {
         get { return _health; } 
         private set 
         { 
             float oldValue = _health;
-            _health = Mathf.Clamp(value, 0, maxHealth); 
+            _health = Mathf.Clamp(value, 0, PotentialHealth); 
             
-            if (HealthUpdateEvent != null)
-                HealthUpdateEvent(_health - oldValue); 
+            if (HealthUpdateEvent != null && oldValue != _health)
+                HealthUpdateEvent(_health / MaxHealth); 
 
             if(_health <= 0)
                 Die();
         }
     }
 
-    public delegate void healthUpdateDelegate(float delta);
+    public float PotentialHealth
+    {
+        get { return _potentialHealth; }
+        private set 
+        {
+            float oldValue = _potentialHealth;
+            _potentialHealth = Mathf.Clamp(value, 0, MaxHealth); 
+            
+            if (PotentialHealthUpdateEvent != null && oldValue != _potentialHealth)
+                PotentialHealthUpdateEvent(_potentialHealth / MaxHealth); 
+
+            if(_potentialHealth < _health)
+                Health = _potentialHealth;
+        }
+    }
+
+    public delegate void healthUpdateDelegate(float health);
     public event healthUpdateDelegate HealthUpdateEvent;
+
+    public delegate void potentialHealthUpdateDelegate(float potentialHealth);
+    public event potentialHealthUpdateDelegate PotentialHealthUpdateEvent;
 
     public delegate void deathDelegate();
     public event deathDelegate DeathEvent;
@@ -48,30 +72,67 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private float _healthRecoveryStart = 20f;
     [SerializeField] private float _healthLastDeplete;
 
+    [SerializeField] private float _potentialHealthRecovery = .5f;
+    [SerializeField] private float _potentialHealthRecoveryStart = 60f;
+    [SerializeField] private float _potentialHealthLastDeplete;
+
+    #endregion
+
+    #region Stamina
+
     [Header("Stamina")]
-    [SerializeField] private float _maxStamina = 100;
     [SerializeField] private float _stamina = 100;
-    public float maxStamina {get { return _maxStamina; }}
-    public float stamina 
+    [SerializeField] private float _potentialStamina = 100;
+
+    [SerializeField] private string _maxStaminaStatModifier = "Endurance";
+    [SerializeField] private int[] _maxStaminaPerStat = {70, 80, 90, 100 ,115 ,130, 150, 170, 200, 230};
+    public float MaxStamina {get { return _maxStaminaPerStat[GetAttributeLevel(_maxStaminaStatModifier)]; }}
+    
+    public float Stamina 
     {
         get { return _stamina; }  
         private set 
         { 
             float oldValue = _stamina;
-            _stamina = Mathf.Clamp(value, 0, maxStamina); 
+            _stamina = Mathf.Clamp(value, 0, potentialStamina); 
             
-            if (StaminaUpdateEvent != null)
-                StaminaUpdateEvent(_stamina - oldValue); 
+            if (StaminaUpdateEvent != null && oldValue != _stamina)
+                StaminaUpdateEvent(_stamina / MaxStamina); 
+        }
+    }
+
+    public float potentialStamina 
+    {
+        get { return _potentialStamina; }  
+        private set 
+        { 
+            float oldValue = _potentialStamina;
+            _potentialStamina = Mathf.Clamp(value, 0, MaxStamina); 
+            
+            if (PotentialStaminaUpdateEvent != null && oldValue != _potentialStamina)
+                PotentialStaminaUpdateEvent(_potentialStamina / MaxStamina); 
+
+            if(_potentialStamina < _stamina)
+                Stamina = _potentialStamina;
         }
     }
         
-    public delegate void staminaUpdateDelegate(float delta);
+    public delegate void staminaUpdateDelegate(float stamina);
     public event staminaUpdateDelegate StaminaUpdateEvent;
+
+    public delegate void potentialStaminaUpdateDelegate(float potentialStamina);
+    public event potentialStaminaUpdateDelegate PotentialStaminaUpdateEvent;
 
     [Tooltip("Stamina recovery per second")]
     [SerializeField] private float _staminaRecovery = .5f;
     [SerializeField] private float _staminaRecoveryStart = 1f;
     [SerializeField] private float _staminaLastDeplete;
+
+    [SerializeField] private float _potentialStaminaRecovery = 1f;
+    [SerializeField] private float _potentialStaminaRecoveryStart = 10f;
+    [SerializeField] private float _potentialStaminaLastDeplete;
+
+    #endregion
 
     void Start()
     {
@@ -150,8 +211,15 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         if(Time.time - _healthLastDeplete > _healthRecoveryStart) 
             AddHealth(_healthRecovery * Time.deltaTime);
+
+        if(Time.time - _potentialHealthLastDeplete > _potentialHealthRecoveryStart) 
+            AddPotentialHealth(_potentialHealthRecovery * Time.deltaTime);
+
         if(Time.time - _staminaLastDeplete > _staminaRecoveryStart) 
             AddStamina(_staminaRecovery * Time.deltaTime);
+
+        if(Time.time - _potentialStaminaLastDeplete > _potentialStaminaRecoveryStart) 
+            AddPotentialStamina(_potentialStaminaRecovery * Time.deltaTime);
     }
 
     #region Health Change
@@ -160,23 +228,46 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         if(amount < 0)
         {
-            Debug.LogWarning("You are trying to add a negative amount of health!");
+            Debug.LogWarning("You are trying to add a negative amount of Health!");
             return;
         }
             
-        health += amount;
+        Health += amount;
     }
 
     public void SubHealth(float amount)
     {
         if(amount < 0)
         {
-            Debug.LogWarning("You are trying to subtract a negative amount of health!");
+            Debug.LogWarning("You are trying to subtract a negative amount of Health!");
             return;
         }
             
-        health -= amount;
+        Health -= amount;
         _healthLastDeplete = Time.time;
+    }
+
+    public void AddPotentialHealth(float amount)
+    {
+        if(amount < 0)
+        {
+            Debug.LogWarning("You are trying to add a negative amount of potential Health!");
+            return;
+        }
+            
+        PotentialHealth += amount;
+    }
+
+    public void SubPotentialHealth(float amount)
+    {
+        if(amount < 0)
+        {
+            Debug.LogWarning("You are trying to subtract a negative amount of potential Health!");
+            return;
+        }
+            
+        PotentialHealth -= amount;
+        _potentialHealthLastDeplete = Time.time;
     }
 
     #endregion
@@ -186,22 +277,22 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         if(amount < 0)
         {
-            Debug.LogWarning("You are trying to add a negative amount of stamina!");
+            Debug.LogWarning("You are trying to add a negative amount of Stamina!");
             return;
         }
             
-        stamina += amount;
+        Stamina += amount;
     }
 
     public void SubStamina(float amount)
     {
         if(amount < 0)
         {
-            Debug.LogWarning("You are trying to subtract a negative amount of stamina!");
+            Debug.LogWarning("You are trying to subtract a negative amount of Stamina!");
             return;
         }
             
-        stamina -= amount;
+        Stamina -= amount;
         _staminaLastDeplete = Time.time;
     }
 
@@ -209,14 +300,52 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         if(amount < 0)
         {
-            Debug.LogWarning("You are trying to subtract a negative amount of stamina!");
+            Debug.LogWarning("You are trying to deplete a negative amount of Stamina!");
             return false;
         }
 
-        if(stamina < amount)
+        if(Stamina < amount)
             return false;
 
         SubStamina(amount);
+        return true;
+    }
+
+    public void AddPotentialStamina(float amount)
+    {
+        if(amount < 0)
+        {
+            Debug.LogWarning("You are trying to add a negative amount of potential Stamina!");
+            return;
+        }
+            
+        potentialStamina += amount;
+    }
+
+    public void SubPotentialStamina(float amount)
+    {
+        if(amount < 0)
+        {
+            Debug.LogWarning("You are trying to subtract a negative amount of potential Stamina!");
+            return;
+        }
+            
+        potentialStamina -= amount;
+        _potentialStaminaLastDeplete = Time.time;
+    }
+
+    public bool DepletePotentailStamina(float amount)
+    {
+        if(amount < 0)
+        {
+            Debug.LogWarning("You are trying to deplete a negative amount of potential Stamina!");
+            return false;
+        }
+
+        if(potentialStamina < amount)
+            return false;
+
+        SubPotentialStamina(amount);
         return true;
     }
 

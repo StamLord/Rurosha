@@ -20,6 +20,7 @@ public class GroundedState : State
     [Header("Stats")]
     [SerializeField] private CharacterStats characterStats;
     [SerializeField] private float staminaDepleteRate = 20f;
+    [SerializeField] private float potentialStaminaDepleteRate = 2f;
     [SerializeField] private float enduranceExpGain = .01f;
     [Space(20f)]
 	
@@ -92,7 +93,11 @@ public class GroundedState : State
                 if(characterStats.DepleteStamina(staminaDepleteRate * Time.deltaTime))
                 {
                     characterStats.IncreaseAttributeExp("endurance", enduranceExpGain * Time.deltaTime);
+                    characterStats.DepletePotentailStamina(potentialStaminaDepleteRate * Time.deltaTime);
+
+                    // Set relevant speed
                     targetVelocity *= runSpeedPerAgilityLevel[characterStats.GetAttributeLevel("agility") - 1];
+
                 }
                 else
                     targetVelocity *= walkSpeed;

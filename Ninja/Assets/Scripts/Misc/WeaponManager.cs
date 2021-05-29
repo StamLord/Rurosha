@@ -23,6 +23,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private GameObject _throw;
     [SerializeField] private GameObject _bow;
     [SerializeField] private GameObject _item;
+    [SerializeField] private GameObject _itemBowl;
     [SerializeField] private GameObject _equipment;
 
     [SerializeField] private WeaponType _lastType;
@@ -109,24 +110,19 @@ public class WeaponManager : MonoBehaviour
             switch(((Weapon)items[selected]).WeaponType)
             {
                 case WeaponType.KNIFE:
-                    _knife?.SetActive(true);
-                    _lastActive = _knife;
+                    ActivateObject(_knife);
                     break;
                 case WeaponType.SWORD:
-                    _sword?.SetActive(true);
-                    _lastActive = _sword;
+                    ActivateObject(_sword);
                     break;
                 case WeaponType.STAFF:
-                    _staff?.SetActive(true);
-                    _lastActive = _staff;
+                    ActivateObject(_staff);
                     break;
                 case WeaponType.KANABO:
-                    _kanabo?.SetActive(true);
-                    _lastActive = _kanabo;
+                    ActivateObject(_kanabo);
                     break;
                 case WeaponType.THROW:
-                    _throw?.SetActive(true);
-                    _lastActive = _throw;
+                    ActivateObject(_throw);
                     break;
                 case WeaponType.BOW:
                     break;
@@ -135,15 +131,29 @@ public class WeaponManager : MonoBehaviour
         // Equipment
         else if (items[selected] is Equipment)
         {
-            _equipment?.SetActive(true);
+            ActivateObject(_equipment);
             _equipment?.GetComponent<EquipmentItem>().SetEquipment((Equipment)items[selected]);
-            _lastActive = _equipment;
         }
         else // Item
         {
-            _item?.SetActive(true);
-            _lastActive = _item;
+            if(items[selected].itemName.Contains("Bowl"))
+            {
+                ActivateObject(_itemBowl);
+                _itemBowl?.GetComponent<HeldItem>().SetItem(items[selected]);
+            }
+            else
+            {
+                ActivateObject(_item);
+                _item?.GetComponent<HeldItem>().SetItem(items[selected]);
+            }
+            
         }
+    }
+
+    void ActivateObject(GameObject gameObject)
+    {
+        gameObject?.SetActive(true);
+        _lastActive = gameObject;
     }
 
     public bool AddItem(Item item)

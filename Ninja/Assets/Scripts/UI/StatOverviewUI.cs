@@ -47,9 +47,9 @@ public class StatOverviewUI : MonoBehaviour
 
     void RefreshWindow()
     {
-        health.text = Mathf.RoundToInt(characterStats.health) + "/" + Mathf.FloorToInt(characterStats.maxHealth);
+        health.text = Mathf.RoundToInt(characterStats.Health) + "/" + Mathf.FloorToInt(characterStats.MaxHealth);
 
-        stamina.text =  Mathf.RoundToInt(characterStats.stamina) + "/" + Mathf.FloorToInt(characterStats.maxStamina);
+        stamina.text =  Mathf.RoundToInt(characterStats.Stamina) + "/" + Mathf.FloorToInt(characterStats.MaxStamina);
 
         strength.text =  "" + characterStats.GetAttributeLevel("strength");
         endurance.text =  "" + characterStats.GetAttributeLevel("endurance");

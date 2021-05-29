@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    public Material healthBarMat;
-    public Material healthBarAftermathMat;
-    public Material staminaBarMat;
-    public Material staminaBarAftermathMat;
+    public Image healthBar;
+    public Image potentialHealthBar;
+
+    public Image staminaBar;
+    public Image potentialStaminaBar;
 
     public CharacterStats playerStats;
 
@@ -24,98 +26,110 @@ public class HUD : MonoBehaviour
     void Start()
     {
         playerStats.HealthUpdateEvent += UpdateHealthBar;
+        playerStats.PotentialHealthUpdateEvent += UpdatePotentialHealthBar;
+
         playerStats.StaminaUpdateEvent += UpdateStaminaBar;
+        playerStats.PotentialStaminaUpdateEvent += UpdatePotentialStaminaBar;
 
-        healthBarMat.SetFloat("_Fill", playerStats.health / playerStats.maxHealth);
-        healthBarAftermathMat.SetFloat("_Fill", playerStats.health / playerStats.maxHealth);
+        healthBar.fillAmount = playerStats.Health / playerStats.MaxHealth;
+        potentialHealthBar.fillAmount = playerStats.Health / playerStats.MaxHealth;
 
-        staminaBarMat.SetFloat("_Fill", playerStats.stamina / playerStats.maxStamina);
-        staminaBarAftermathMat.SetFloat("_Fill", playerStats.stamina / playerStats.maxStamina);
+        staminaBar.fillAmount = playerStats.Stamina / playerStats.MaxStamina;
+        potentialStaminaBar.fillAmount = playerStats.Stamina / playerStats.MaxStamina;
     }
 
-    void LateUpdate()
+    void UpdateHealthBar(float health)
     {
-        UpdateHealthAftermath();
-        UpdateStaminaAftermath();
-    }
-
-    void UpdateHealthBar(float delta)
-    {
-        healthBarMat.SetFloat("_Fill", playerStats.health / playerStats.maxHealth);
+        healthBar.fillAmount = health;
         //if(delta != 0) 
-        StartHealthAftermath();
+        //StartHealthAftermath();
     }
 
-    void UpdateStaminaBar(float delta)
+    void UpdatePotentialHealthBar(float potentialHealth)
     {
-        staminaBarMat.SetFloat("_Fill", playerStats.stamina / playerStats.maxStamina);
-        StartStaminaAftermath();
+        potentialHealthBar.fillAmount = potentialHealth;
     }
 
-    void StartHealthAftermath()
+    void UpdateStaminaBar(float stamina)
     {
-        if(hAftermathDone == false) return;
-
-        hAftermathStartTime = Time.time;
-        hAftermathDone = false;
+        staminaBar.fillAmount = stamina;
+        //StartStaminaAftermath();
     }
 
-    void UpdateHealthAftermath()
+    void UpdatePotentialStaminaBar(float potentialStamina)
     {
-        if(hAftermathDone) return;
+        potentialStaminaBar.fillAmount = potentialStamina;
+    }
 
-        float hBar = healthBarMat.GetFloat("_Fill");
-        float haBar = healthBarAftermathMat.GetFloat("_Fill");
+    void UpdatePotentialHealth(float delta)
+    {
+
+    }
+
+    // void StartHealthAftermath()
+    // {
+    //     if(hAftermathDone == false) return;
+
+    //     hAftermathStartTime = Time.time;
+    //     hAftermathDone = false;
+    // }
+
+    // void UpdateHealthAftermath()
+    // {
+    //     if(hAftermathDone) return;
+
+    //     float hBar = healthBar.fillAmount;
+    //     float haBar = potentialHealthBar.fillAmount;
         
-        if(hBar == haBar) 
-        {
-            hAftermathDone = true;
-            return;
-        }
+    //     if(hBar == haBar) 
+    //     {
+    //         hAftermathDone = true;
+    //         return;
+    //     }
 
-        if((Time.time - hAftermathStartTime) > hAftermathDelay)
-        {
-            float speed =  1 / hAftermathSpeed * Time.deltaTime;
-            float direction = ((hBar - haBar) > 0)? 1 : -1;
+    //     if((Time.time - hAftermathStartTime) > hAftermathDelay)
+    //     {
+    //         float speed =  1 / hAftermathSpeed * Time.deltaTime;
+    //         float direction = ((hBar - haBar) > 0)? 1 : -1;
 
-            float newValue = haBar + speed * direction;
-            newValue = (direction == 1)? Mathf.Min(newValue, hBar) : Mathf.Max(newValue, hBar);
+    //         float newValue = haBar + speed * direction;
+    //         newValue = (direction == 1)? Mathf.Min(newValue, hBar) : Mathf.Max(newValue, hBar);
 
-            healthBarAftermathMat.SetFloat("_Fill", newValue);
-        }
-    }
+    //         potentialHealthBar.fillAmount = newValue;
+    //     }
+    // }
 
-    void StartStaminaAftermath()
-    {
-        if(sAftermathDone == false) return;
+    // void StartStaminaAftermath()
+    // {
+    //     if(sAftermathDone == false) return;
 
-        sAftermathStartTime = Time.time;
-        sAftermathDone = false;
-    }
+    //     sAftermathStartTime = Time.time;
+    //     sAftermathDone = false;
+    // }
 
-    void UpdateStaminaAftermath()
-    {
-        if(sAftermathDone) return;
+    // void UpdateStaminaAftermath()
+    // {
+    //     if(sAftermathDone) return;
 
-        float sBar = staminaBarMat.GetFloat("_Fill");
-        float saBar = staminaBarAftermathMat.GetFloat("_Fill");
+    //     float sBar = staminaBar.fillAmount;
+    //     float saBar = potentialStaminaBar.fillAmount;
         
-        if(sBar == saBar) 
-        {
-            sAftermathDone = true;
-            return;
-        }
+    //     if(sBar == saBar) 
+    //     {
+    //         sAftermathDone = true;
+    //         return;
+    //     }
 
-        if((Time.time - sAftermathStartTime) > sAftermathDelay)
-        {
-            float speed =  1 / hAftermathSpeed * Time.deltaTime;
-            float direction = ((sBar - saBar) > 0)? 1 : -1;
+    //     if((Time.time - sAftermathStartTime) > sAftermathDelay)
+    //     {
+    //         float speed =  1 / hAftermathSpeed * Time.deltaTime;
+    //         float direction = ((sBar - saBar) > 0)? 1 : -1;
 
-            float newValue = saBar + speed * direction;
-            newValue = (direction == 1)? Mathf.Min(newValue, sBar) : Mathf.Max(newValue, sBar);
+    //         float newValue = saBar + speed * direction;
+    //         newValue = (direction == 1)? Mathf.Min(newValue, sBar) : Mathf.Max(newValue, sBar);
 
-           staminaBarAftermathMat.SetFloat("_Fill", newValue);
-        }
+    //        potentialStaminaBar.fillAmount = newValue;
+    //     }
 
-    }
+    // }
 }

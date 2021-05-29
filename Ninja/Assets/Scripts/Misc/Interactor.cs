@@ -264,7 +264,7 @@ public class Interactor : MonoBehaviour
         if(isCarrying == false || carryType != CarryType.PHYSICS)
             return;
 
-        if(Vector3.Distance(carriedObject.position, carryPoint.transform.position) > .05f)
+        if(Vector3.Distance(carriedObject.position, carryPoint.position) > .05f)
         {
             Vector3 moveDir = carryPoint.position - carriedObject.position;
             carriedObject.AddForce(moveDir * moveForce);

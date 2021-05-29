@@ -6,10 +6,14 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public Mesh model;
+    public Material material;
+
     public string itemName;
 
     public bool stackable;
 
     [SerializeField] private int _ammo;
     public int ammo { get { return _ammo; } set { _ammo = Mathf.Max(0, value); } }
+
+    public float durability = 100f;
 }
