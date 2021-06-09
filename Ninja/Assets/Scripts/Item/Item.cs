@@ -12,7 +12,7 @@ public class Item : ScriptableObject
 
     public bool stackable;
 
-    [SerializeField] private int _ammo;
+    [SerializeField] private int _ammo = 1;
     public int ammo { get { return _ammo; } set { _ammo = Mathf.Max(0, value); } }
 
     public float durability = 100f;

@@ -136,7 +136,7 @@ public class WeaponManager : MonoBehaviour
         }
         else // Item
         {
-            if(items[selected].itemName.Contains("Bowl"))
+            if(items[selected].itemName == ("Rice Bowl") || items[selected].itemName == ("Ramen Bowl"))
             {
                 ActivateObject(_itemBowl);
                 _itemBowl?.GetComponent<HeldItem>().SetItem(items[selected]);
@@ -197,7 +197,7 @@ public class WeaponManager : MonoBehaviour
     }
 
     public void AddItemAtSelection(Item item)
-    {
+    {   Debug.Log("Adding item " + item);
         items[selected] = item;
         if(ChangeItemEvent != null) ChangeItemEvent(selected, item);
 
@@ -220,10 +220,17 @@ public class WeaponManager : MonoBehaviour
         SelectItem();
     }
 
+    public void DepleteItem()
+    {
+        DepleteItem(1);
+    }
+
     public void DepleteItem(int amount)
     {
         Item item = items[selected];
         item.ammo -= amount;
+        item.durability = 100f;
+
         if(item.ammo < 1)
             RemoveItem(selected);
         else

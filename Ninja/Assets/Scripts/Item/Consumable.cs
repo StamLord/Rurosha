@@ -13,4 +13,6 @@ public class Consumable : Item
 
     public float consumeDuration = 5;
     public bool incremental = true;
+
+    public Item leftoverItem;
 }

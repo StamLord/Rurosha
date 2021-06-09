@@ -32,10 +32,10 @@ public class HUD : MonoBehaviour
         playerStats.PotentialStaminaUpdateEvent += UpdatePotentialStaminaBar;
 
         healthBar.fillAmount = playerStats.Health / playerStats.MaxHealth;
-        potentialHealthBar.fillAmount = playerStats.Health / playerStats.MaxHealth;
+        potentialHealthBar.fillAmount = playerStats.PotentialHealth / playerStats.MaxHealth;
 
         staminaBar.fillAmount = playerStats.Stamina / playerStats.MaxStamina;
-        potentialStaminaBar.fillAmount = playerStats.Stamina / playerStats.MaxStamina;
+        potentialStaminaBar.fillAmount = playerStats.potentialStamina / playerStats.MaxStamina;
     }
 
     void UpdateHealthBar(float health)

@@ -129,14 +129,18 @@ public class Katana : WeaponObject, IHitboxResponder
 
     public void CollisionWith(Collider collider)
     {   
+        //Gain Exp
         charStats.IncreaseAttributeExp("strength", strengthExpGain);
         
+        //Collision Effects
         PhysicalMaterial pMat = collider.GetComponent<PhysicalMaterial>();
         pMat?.CollideEffect(collider.ClosestPointOnBounds(transform.position));
         
+        //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         hurtbox?.GetHit(10);
 
+        //Slice
         Sliceable sliceable = collider.GetComponent<Sliceable>();
         if(sliceable)
         {

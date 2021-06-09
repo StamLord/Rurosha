@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee187a8a719d9645a50cd39626a7e66, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c06a67b7c08df743ab815a1848c8e81, type: 3}
   m_Name: Onigiri
   m_EditorClassIdentifier: 
   model: {fileID: -5495902117074765545, guid: 55fb71665df85424bbe72c1881062170, type: 3}
@@ -18,3 +18,10 @@ MonoBehaviour:
   stackable: 1
   _ammo: 1
   durability: 100
+  healthRestore: 15
+  potentialHealthRestore: 0
+  staminaRestore: 0
+  potentialStaminaRestore: 0
+  consumeDuration: 3
+  incremental: 0
+  leftoverItem: {fileID: 0}

@@ -29,12 +29,7 @@ public class HeldItem : MonoBehaviour
                         ActivateConsumableEffects(fractionPerSecond * Time.deltaTime);
                 }
                 else
-                {
-                    if(consumable.incremental == false)
-                        ActivateConsumableEffects(1f);
-
-                    weaponManager.RemoveItem();
-                }
+                    ConsumeItem();
             }
         }
         else
@@ -43,7 +38,17 @@ public class HeldItem : MonoBehaviour
         }
     }
 
-    
+    void ConsumeItem()
+    {
+        if(consumable.incremental == false)
+            ActivateConsumableEffects(1f);
+
+        if(consumable.leftoverItem) 
+            weaponManager.AddItemAtSelection(consumable.leftoverItem);
+        else
+            weaponManager.DepleteItem();
+    }
+
     void ActivateConsumableEffects(float fraction)
     {
         characterStats.AddHealth(consumable.healthRestore * fraction);
@@ -61,8 +66,9 @@ public class HeldItem : MonoBehaviour
           durabilityLossPerSecond = consumable.durability / consumable.consumeDuration;
           fractionPerSecond = 1 / consumable.consumeDuration;
         }
+        else
+            consumable = null;
 
-        Debug.Log(item);
         UpdateVisual();
     }
 

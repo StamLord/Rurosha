@@ -7,6 +7,12 @@ public enum MaterialType {Stone, Wood, Flesh}
 public class PhysicalMaterial : MonoBehaviour
 {
     [SerializeField] private MaterialType mType;
+    [SerializeField] private GameObject rockBluntPrefab;
+    [SerializeField] private GameObject rockSharpPrefab;
+
+    [SerializeField] private GameObject woodBluntPrefab;
+    [SerializeField] private GameObject woodSharpPrefab;
+
     [SerializeField] private GameObject smallBloodPrefab;
     [SerializeField] private GameObject BigBloodPrefab;
     

@@ -18,6 +18,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     [Header("Health")]
     [SerializeField] private bool isAlive = true;
+    [SerializeField] private GameObject aliveVisual;
+    [SerializeField] private GameObject deadVisual;
 
     [SerializeField] private string _maxHealthStatModifier = "Endurance";
     [SerializeField] private int[] _maxHealthPerStat = {70, 80, 90, 100 ,115 ,130, 150, 170, 200, 230};
@@ -351,15 +353,19 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
-    public void GetHit(int damage)
+    public void GetHit(int damage, DamageType damageType)
     {
-        Debug.Log("I was hit for " + damage + " damage");
+        Debug.Log(gameObject.name + " was hit for " + damage + damageType + " damage");
         SubHealth(damage);
     }
 
     public void Die()
     {
         isAlive = false;
+
+        aliveVisual?.SetActive(false);
+        deadVisual?.SetActive(true);
+
         if(DeathEvent != null)
             DeathEvent();
     }

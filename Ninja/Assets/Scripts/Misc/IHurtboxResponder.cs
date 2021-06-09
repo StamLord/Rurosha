@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IHurtboxResponder
 {
-    void GetHit(int damage);
+    void GetHit(int damage, DamageType damageType);
 }

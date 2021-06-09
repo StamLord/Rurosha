@@ -16,7 +16,7 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: b3b6c6811cfe81a41b842d5e2b680c37, type: 2}
   itemName: Rice Bowl
   stackable: 0
-  _ammo: 0
+  _ammo: 1
   durability: 100
   healthRestore: 50
   potentialHealthRestore: 0
@@ -24,3 +24,4 @@ MonoBehaviour:
   potentialStaminaRestore: 0
   consumeDuration: 10
   incremental: 1
+  leftoverItem: {fileID: 11400000, guid: 2d5e2e2d992ca1d4ba1c12d3f6a47a09, type: 2}

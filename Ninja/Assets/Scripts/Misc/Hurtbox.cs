@@ -11,14 +11,19 @@ public class Hurtbox : MonoBehaviour
     
     public void Start()
     {
-        material = GetComponent<MeshRenderer>().material;
+        material = GetComponentInChildren<MeshRenderer>().material;
         baseColor = material.color;
     }
 
     public void GetHit(int damage)
     {
+        GetHit(damage, DamageType.Blunt);
+    }
+
+    public void GetHit(int damage, DamageType damageType)
+    {
         foreach(IHurtboxResponder r in _responders)
-            r.GetHit(damage);
+            r.GetHit(damage, damageType);
 
         StartCoroutine(ColorChange(.5f));
     }
