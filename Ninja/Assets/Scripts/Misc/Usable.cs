@@ -15,7 +15,8 @@ public class Usable : MonoBehaviour
 
     public void InitializeOutline()
     {
-        outline = GetComponent<Outline>();
+        if(outline == null) 
+            outline = GetComponent<Outline>();
         Highlight(false);
     }
 
