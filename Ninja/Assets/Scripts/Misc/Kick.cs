@@ -5,6 +5,7 @@ using UnityEngine;
 public class Kick : MonoBehaviour
 {
     [SerializeField] private float kickForce = 5f;
+    [SerializeField] private float kickUpwardsModifier = 1f;
     [SerializeField] private float kickRadius = 1f;
     [SerializeField] private Transform kickTransform;
     
@@ -17,9 +18,7 @@ public class Kick : MonoBehaviour
             Rigidbody rb = (col.transform != transform)? col.GetComponent<Rigidbody>() : null;
 
             if(rb)
-            {
-                rb.AddForce((kickTransform.forward + Vector3.up) * kickForce, ForceMode.VelocityChange);
-            }
+                rb.AddExplosionForce(kickForce, kickTransform.position, kickForce, kickUpwardsModifier, ForceMode.VelocityChange);
         }
     }
 }
