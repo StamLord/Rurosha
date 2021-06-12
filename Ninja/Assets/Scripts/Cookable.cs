@@ -16,13 +16,21 @@ public class Cookable : HeatConductor
     public float Burned {get{return _burned;}}
 
     public MeshRenderer meshRenderer;
+    public SkinnedMeshRenderer skinnedMeshRenderer;
+    [SerializeField] private Material _material;
+    
     public Color baseColor;
     public Color cookedColor;
     public Color burnedColor;
 
     void Start() 
     {
-        baseColor = meshRenderer.material.color;
+        if(skinnedMeshRenderer)
+            _material = skinnedMeshRenderer.material;
+        else if (meshRenderer)
+            _material = meshRenderer.material;
+
+        if(_material) baseColor = _material.color;
     }
 
     void Update()
@@ -37,8 +45,11 @@ public class Cookable : HeatConductor
                 Burn();
         }
 
-        meshRenderer.material.color = Color.Lerp(baseColor, cookedColor, _cooked);
-        meshRenderer.material.color = Color.Lerp(meshRenderer.material.color, burnedColor, _burned);
+        if(_material)
+        {
+            _material.color = Color.Lerp(baseColor, cookedColor, _cooked);
+            _material.color = Color.Lerp(_material.color, burnedColor, _burned);
+        }
     }
 
     void Cook()

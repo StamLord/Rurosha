@@ -6,6 +6,7 @@ public class HeatSource : MonoBehaviour
 {
     [SerializeField] private float _temperature;
     [SerializeField] private float _radius;
+    [SerializeField] private AnimationCurve _falloff;
 
     [SerializeField] private bool debug;
 
@@ -21,7 +22,12 @@ public class HeatSource : MonoBehaviour
         foreach(Collider col in colliders)
         {
             HeatConductor hc = col.GetComponent<HeatConductor>();
-            hc?.Conduct(Mathf.Lerp(_temperature, 0, Vector3.Distance(transform.position, hc.transform.position) / _radius));
+            
+            if(hc)
+            {
+                float falloffSample = _falloff.Evaluate(Vector3.Distance(transform.position, hc.transform.position) / _radius);
+                hc.Conduct(_temperature * falloffSample);
+            }
         }
     }
 

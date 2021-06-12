@@ -12,9 +12,14 @@ public class HeatConductor : MonoBehaviour
     public float Temperature {get{return temperature;} private set {temperature = value;}}
     public float Conductivity {get{return conductivity;}}
 
+    [SerializeField] private HeatConductor delegateHeatConductor;
+    
     public void Conduct(float sourceTemperature)
     {
-        Temperature += conductivity * Mathf.Max(0, sourceTemperature - temperature) * Time.deltaTime;
+        if(delegateHeatConductor)
+            delegateHeatConductor.Conduct(sourceTemperature);
+        else
+            Temperature += conductivity * Mathf.Max(0, sourceTemperature - temperature) * Time.deltaTime;
     }
 
     void Update()
