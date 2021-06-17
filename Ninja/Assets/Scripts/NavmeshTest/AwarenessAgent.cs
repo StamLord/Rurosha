@@ -12,6 +12,7 @@ public class AwarenessAgent : MonoBehaviour
     [SerializeField] private float visionAngle = 45f;
     [SerializeField] private LayerMask visionMask;
     [SerializeField] private List<StealthAgent> visibleAgents = new List<StealthAgent>();
+    [SerializeField] public List<StealthAgent> VisibleAgents {get {return visibleAgents;}}
 
     [Header("Hearing")]
     [SerializeField] private float hearingRadius = 20f;
