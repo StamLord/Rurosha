@@ -26,11 +26,6 @@ public class StatOverviewUI : MonoBehaviour
 
     [SerializeField] private GameObject statWindow;
 
-    void OnValidate()
-    {
-        RefreshWindow();
-    }
-
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.J))
@@ -47,9 +42,9 @@ public class StatOverviewUI : MonoBehaviour
 
     void RefreshWindow()
     {
-        health.text = Mathf.RoundToInt(characterStats.Health) + "/" + Mathf.FloorToInt(characterStats.MaxHealth);
+        health.text = Mathf.RoundToInt(characterStats.Health) + "/" + (characterStats.MaxHealth);
 
-        stamina.text =  Mathf.RoundToInt(characterStats.Stamina) + "/" + Mathf.FloorToInt(characterStats.MaxStamina);
+        stamina.text =  Mathf.RoundToInt(characterStats.Stamina) + "/" + (characterStats.MaxStamina);
 
         strength.text =  "" + characterStats.GetAttributeLevel("strength");
         endurance.text =  "" + characterStats.GetAttributeLevel("endurance");

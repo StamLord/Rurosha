@@ -3077,6 +3077,18 @@ MonoBehaviour:
   _potentialStaminaRecovery: 1
   _potentialStaminaRecoveryStart: 10
   _potentialStaminaLastDeplete: 0
+  HealthRegeneration:
+    attributeName: 
+    values: []
+  PotentialHealthRegeneration:
+    attributeName: 
+    values: []
+  StaminaRegeneration:
+    attributeName: 
+    values: []
+  PotentialStaminaRegeneration:
+    attributeName: 
+    values: []
 --- !u!114 &439103427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3156,19 +3168,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 0}
   isActive: 0
-  walkSpeed: 5
-  runSpeed: 15
-  runSpeedPerAgilityLevel:
-  - 10
-  - 10.5
-  - 11
-  - 11.5
-  - 12
-  - 12.5
-  - 13
-  - 13.5
-  - 14
-  - 15
+  walkSpeed: 3
+  RunSpeed:
+    attributeName: agility
+    values:
+    - 10
+    - 10.5
+    - 11
+    - 11.5
+    - 12
+    - 12.5
+    - 13
+    - 13.5
+    - 14
+    - 15
   airControl: 5
   gravityOn: 1
   standingColliderSize: {x: 0, y: 2, z: 0}
@@ -3210,7 +3223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 0}
   isActive: 0
-  walkSpeed: 10
+  walkSpeed: 2
   airControl: 5
   gravityOn: 1
   croucingColliderSize: {x: 0, y: 1, z: 0}
@@ -3246,18 +3259,19 @@ MonoBehaviour:
   _timeStamp: 0
   _jumpDirection: {x: 0, y: 0, z: 0}
   _fromGround: 0
-  jumpHeight: 2
-  jumpHeightPerAgilityLevel:
-  - 0.75
-  - 1
-  - 1.25
-  - 1.5
-  - 2
-  - 3
-  - 4
-  - 5
-  - 6
-  - 8
+  JumpHeight:
+    attributeName: Agility
+    values:
+    - 0.75
+    - 1
+    - 1.25
+    - 1.5
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 8
   airControl: 0
   gravity: 20
   gravityOn: 1

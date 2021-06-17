@@ -9,8 +9,9 @@ public class GroundedState : State
 {
     [Header("Control Settings")]
     [SerializeField] private float walkSpeed = 10.0f;
-    [SerializeField] private float runSpeed = 15.0f;
-    [SerializeField] private float[] runSpeedPerAgilityLevel = {10, 10.5f, 11, 11.5f, 12, 12.5f, 13, 13.5f, 14, 15.0f};
+    // [SerializeField] private float runSpeed = 15.0f;
+    // [SerializeField] private float[] runSpeedPerAgilityLevel = {10, 10.5f, 11, 11.5f, 12, 12.5f, 13, 13.5f, 14, 15.0f};
+    [SerializeField] private AttributeDependant<float> RunSpeed;
     [SerializeField] private float airControl = 5f;
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private Vector3 standingColliderSize;
@@ -96,7 +97,8 @@ public class GroundedState : State
                     characterStats.DepletePotentailStamina(potentialStaminaDepleteRate * Time.deltaTime);
 
                     // Set relevant speed
-                    targetVelocity *= runSpeedPerAgilityLevel[characterStats.GetAttributeLevel("agility") - 1];
+                    //targetVelocity *= runSpeedPerAgilityLevel[characterStats.GetAttributeLevel("agility") - 1];
+                    targetVelocity *= RunSpeed.GetValue(characterStats);
 
                 }
                 else

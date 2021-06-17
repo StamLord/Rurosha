@@ -21,9 +21,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private GameObject aliveVisual;
     [SerializeField] private GameObject deadVisual;
 
-    [SerializeField] private string _maxHealthStatModifier = "Endurance";
-    [SerializeField] private int[] _maxHealthPerStat = {70, 80, 90, 100 ,115 ,130, 150, 170, 200, 230};
-    public float MaxHealth {get { return _maxHealthPerStat[GetAttributeLevel(_maxHealthStatModifier)]; }}
+    //[SerializeField] private string _maxHealthStatModifier = "Endurance";
+    //[SerializeField] private int[] _maxHealthPerStat = {70, 80, 90, 100 ,115 ,130, 150, 170, 200, 230};
+    [SerializeField] private AttributeDependant<int> _maxHealth;
+    public int MaxHealth {get { return _maxHealth.GetValue(this); }}
 
     [SerializeField] private float _health = 100;
     [SerializeField] private float _potentialHealth = 100;
@@ -86,9 +87,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private float _stamina = 100;
     [SerializeField] private float _potentialStamina = 100;
 
-    [SerializeField] private string _maxStaminaStatModifier = "Endurance";
-    [SerializeField] private int[] _maxStaminaPerStat = {70, 80, 90, 100 ,115 ,130, 150, 170, 200, 230};
-    public float MaxStamina {get { return _maxStaminaPerStat[GetAttributeLevel(_maxStaminaStatModifier)]; }}
+    // [SerializeField] private string _maxStaminaStatModifier = "Endurance";
+    // [SerializeField] private int[] _maxStaminaPerStat = {70, 80, 90, 100 ,115 ,130, 150, 170, 200, 230};
+    [SerializeField] private AttributeDependant<int> _maxStamina;
+    public int MaxStamina {get { return _maxStamina.GetValue(this); }}
     
     public float Stamina 
     {
@@ -136,10 +138,22 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    #region Dependant
+
+    [SerializeField] private AttributeDependant<float> HealthRegeneration;
+    [SerializeField] private AttributeDependant<float> PotentialHealthRegeneration;
+
+    [SerializeField] private AttributeDependant<float> StaminaRegeneration;
+    [SerializeField] private AttributeDependant<float> PotentialStaminaRegeneration;
+
+    #endregion
+
     void Start()
     {
         foreach(Hurtbox h in hurtboxes)
             h.AddResponder(this);
+
+        //InitializeAttributes();
     }
 
     public void OnValidate()
@@ -158,8 +172,14 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         oldAttributeLength = attributeNames.Length;
     }
 
-    Attribute FindAttribute(string attributeName)
+    public Attribute FindAttribute(string attributeName)
     {
+        if(attributeName.Length == 0)
+        {
+            Debug.LogWarning("Attribute name to search cannot be empty!", gameObject);
+            return null;
+        }
+
         attributeName = char.ToUpper(attributeName[0]) + attributeName.Substring(1).ToLower();
         for (int i = 0; i < attributes.Length; i++)
             if(attributes[i]._name == attributeName)

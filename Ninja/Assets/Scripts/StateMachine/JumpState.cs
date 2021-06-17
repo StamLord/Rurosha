@@ -12,8 +12,9 @@ public class JumpState : State
     [Space(20f)]
 
     [Header("Control Settings")]
-    [SerializeField] private float jumpHeight = 2.0f;
-    [SerializeField] private float[] jumpHeightPerAgilityLevel = {.75f, 1f, 1.25f, 1.5f, 2f, 3f, 4f, 5f, 6f, 8f};
+    //[SerializeField] private float jumpHeight = 2.0f;
+    //[SerializeField] private float[] jumpHeightPerAgilityLevel = {.75f, 1f, 1.25f, 1.5f, 2f, 3f, 4f, 5f, 6f, 8f};
+    [SerializeField] private AttributeDependant<float> JumpHeight;
     [SerializeField] private float airControl = 5f;
     [SerializeField] private float gravity = 20.0f;
     [SerializeField] private bool gravityOn = true;
@@ -157,7 +158,8 @@ public class JumpState : State
     {
 	    // From the jump height and gravity we deduce the upwards speed 
 	    // for the character to reach at the apex.
-	    return Mathf.Sqrt(2 * jumpHeightPerAgilityLevel[characterStats.GetAttributeLevel("agility") - 1] * gravity);
+	    //return Mathf.Sqrt(2 * jumpHeightPerAgilityLevel[characterStats.GetAttributeLevel("agility") - 1] * gravity);
+        return Mathf.Sqrt(2 * JumpHeight.GetValue(characterStats) * gravity);
 	}
 
     private void GetInput()

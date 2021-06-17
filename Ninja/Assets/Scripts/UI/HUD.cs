@@ -25,11 +25,15 @@ public class HUD : MonoBehaviour
 
     void Start()
     {
+        #region Events Register
+
         playerStats.HealthUpdateEvent += UpdateHealthBar;
         playerStats.PotentialHealthUpdateEvent += UpdatePotentialHealthBar;
 
         playerStats.StaminaUpdateEvent += UpdateStaminaBar;
         playerStats.PotentialStaminaUpdateEvent += UpdatePotentialStaminaBar;
+
+        #endregion
 
         healthBar.fillAmount = playerStats.Health / playerStats.MaxHealth;
         potentialHealthBar.fillAmount = playerStats.PotentialHealth / playerStats.MaxHealth;
@@ -41,8 +45,6 @@ public class HUD : MonoBehaviour
     void UpdateHealthBar(float health)
     {
         healthBar.fillAmount = health;
-        //if(delta != 0) 
-        //StartHealthAftermath();
     }
 
     void UpdatePotentialHealthBar(float potentialHealth)
@@ -53,83 +55,10 @@ public class HUD : MonoBehaviour
     void UpdateStaminaBar(float stamina)
     {
         staminaBar.fillAmount = stamina;
-        //StartStaminaAftermath();
     }
 
     void UpdatePotentialStaminaBar(float potentialStamina)
     {
         potentialStaminaBar.fillAmount = potentialStamina;
     }
-
-    void UpdatePotentialHealth(float delta)
-    {
-
-    }
-
-    // void StartHealthAftermath()
-    // {
-    //     if(hAftermathDone == false) return;
-
-    //     hAftermathStartTime = Time.time;
-    //     hAftermathDone = false;
-    // }
-
-    // void UpdateHealthAftermath()
-    // {
-    //     if(hAftermathDone) return;
-
-    //     float hBar = healthBar.fillAmount;
-    //     float haBar = potentialHealthBar.fillAmount;
-        
-    //     if(hBar == haBar) 
-    //     {
-    //         hAftermathDone = true;
-    //         return;
-    //     }
-
-    //     if((Time.time - hAftermathStartTime) > hAftermathDelay)
-    //     {
-    //         float speed =  1 / hAftermathSpeed * Time.deltaTime;
-    //         float direction = ((hBar - haBar) > 0)? 1 : -1;
-
-    //         float newValue = haBar + speed * direction;
-    //         newValue = (direction == 1)? Mathf.Min(newValue, hBar) : Mathf.Max(newValue, hBar);
-
-    //         potentialHealthBar.fillAmount = newValue;
-    //     }
-    // }
-
-    // void StartStaminaAftermath()
-    // {
-    //     if(sAftermathDone == false) return;
-
-    //     sAftermathStartTime = Time.time;
-    //     sAftermathDone = false;
-    // }
-
-    // void UpdateStaminaAftermath()
-    // {
-    //     if(sAftermathDone) return;
-
-    //     float sBar = staminaBar.fillAmount;
-    //     float saBar = potentialStaminaBar.fillAmount;
-        
-    //     if(sBar == saBar) 
-    //     {
-    //         sAftermathDone = true;
-    //         return;
-    //     }
-
-    //     if((Time.time - sAftermathStartTime) > sAftermathDelay)
-    //     {
-    //         float speed =  1 / hAftermathSpeed * Time.deltaTime;
-    //         float direction = ((sBar - saBar) > 0)? 1 : -1;
-
-    //         float newValue = saBar + speed * direction;
-    //         newValue = (direction == 1)? Mathf.Min(newValue, sBar) : Mathf.Max(newValue, sBar);
-
-    //        potentialStaminaBar.fillAmount = newValue;
-    //     }
-
-    // }
 }
