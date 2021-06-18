@@ -7,6 +7,8 @@ public class StateMachine : MonoBehaviour
     [SerializeField] private State _currentState;
     [SerializeField] private State[] _states;
 
+    public string CurrentState { get{return _currentState.GetType().Name;}}
+
     void Start()
     {
         SwitchState(0);

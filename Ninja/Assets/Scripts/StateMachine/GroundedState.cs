@@ -11,7 +11,7 @@ public class GroundedState : State
     [SerializeField] private float walkSpeed = 10.0f;
     // [SerializeField] private float runSpeed = 15.0f;
     // [SerializeField] private float[] runSpeedPerAgilityLevel = {10, 10.5f, 11, 11.5f, 12, 12.5f, 13, 13.5f, 14, 15.0f};
-    [SerializeField] private AttributeDependant<float> RunSpeed;
+    [SerializeField] private AttributeDependant<float> _runSpeed;
     [SerializeField] private float airControl = 5f;
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private Vector3 standingColliderSize;
@@ -98,7 +98,7 @@ public class GroundedState : State
 
                     // Set relevant speed
                     //targetVelocity *= runSpeedPerAgilityLevel[characterStats.GetAttributeLevel("agility") - 1];
-                    targetVelocity *= RunSpeed.GetValue(characterStats);
+                    targetVelocity *= _runSpeed.GetValue(characterStats);
 
                 }
                 else
@@ -114,6 +114,9 @@ public class GroundedState : State
             velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
             velocityChange.y = 0;
             rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
+
+            if(Input.GetKeyDown(KeyCode.X) && characterStats.DepleteStamina(20))
+                _stateMachine.SwitchState(4);
         }
         // Air
         //else 

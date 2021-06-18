@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class HeadBobCam : MonoBehaviour
 {
+    [SerializeField] private PlayerControls playerStateMachine;
+    [SerializeField] private List<string> activeInStates = new List<string>();
+
     [SerializeField] private AnimationCurve xMove;
     [SerializeField] private AnimationCurve yMove;
-
-    private Vector3 originPos;
-    private float timer;
-
 
     [SerializeField] private new Rigidbody rigidbody;
 
     [SerializeField] private float speedTimerMultiplier = 1f;
     [SerializeField] private float xValueMultiplier = 1f;
     [SerializeField] private float yValueMultiplier = 1f;
+    
+    private Vector3 originPos;
+    private float timer;
 
     void Start()
     {
@@ -24,6 +26,11 @@ public class HeadBobCam : MonoBehaviour
 
     void Update()
     {
+        string state = playerStateMachine.CurrentState;
+        
+        if(activeInStates.Contains(state) == false)
+            return;
+
         float velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z).magnitude;
 
         timer += Time.deltaTime * velocity * speedTimerMultiplier;

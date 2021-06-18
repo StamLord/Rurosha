@@ -21,8 +21,6 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private GameObject aliveVisual;
     [SerializeField] private GameObject deadVisual;
 
-    //[SerializeField] private string _maxHealthStatModifier = "Endurance";
-    //[SerializeField] private int[] _maxHealthPerStat = {70, 80, 90, 100 ,115 ,130, 150, 170, 200, 230};
     [SerializeField] private AttributeDependant<int> _maxHealth;
     public int MaxHealth {get { return _maxHealth.GetValue(this); }}
 
@@ -71,11 +69,14 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     public event deathDelegate DeathEvent;
 
     [Tooltip("Health recovery per second")]
-    [SerializeField] private float _healthRecovery = .5f;
+
+    [SerializeField] private AttributeDependant<float> HealthRecovery;
+    private float _healthRecovery {get {return HealthRecovery.GetValue(this);}}
     [SerializeField] private float _healthRecoveryStart = 20f;
     [SerializeField] private float _healthLastDeplete;
 
-    [SerializeField] private float _potentialHealthRecovery = .5f;
+    [SerializeField] private AttributeDependant<float> PotentialHealthRecovery;
+    private float _potentialHealthRecovery {get {return PotentialHealthRecovery.GetValue(this);}}
     [SerializeField] private float _potentialHealthRecoveryStart = 60f;
     [SerializeField] private float _potentialHealthLastDeplete;
 
@@ -87,8 +88,6 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private float _stamina = 100;
     [SerializeField] private float _potentialStamina = 100;
 
-    // [SerializeField] private string _maxStaminaStatModifier = "Endurance";
-    // [SerializeField] private int[] _maxStaminaPerStat = {70, 80, 90, 100 ,115 ,130, 150, 170, 200, 230};
     [SerializeField] private AttributeDependant<int> _maxStamina;
     public int MaxStamina {get { return _maxStamina.GetValue(this); }}
     
@@ -128,23 +127,16 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     public event potentialStaminaUpdateDelegate PotentialStaminaUpdateEvent;
 
     [Tooltip("Stamina recovery per second")]
-    [SerializeField] private float _staminaRecovery = .5f;
+
+    [SerializeField] private AttributeDependant<float> StaminaRecovery;
+    private float _staminaRecovery {get {return StaminaRecovery.GetValue(this);}}
     [SerializeField] private float _staminaRecoveryStart = 1f;
     [SerializeField] private float _staminaLastDeplete;
 
-    [SerializeField] private float _potentialStaminaRecovery = 1f;
+    [SerializeField] private AttributeDependant<float> PotentialStaminaRecovery;
+    private float _potentialStaminaRecovery {get {return PotentialStaminaRecovery.GetValue(this);}}
     [SerializeField] private float _potentialStaminaRecoveryStart = 10f;
     [SerializeField] private float _potentialStaminaLastDeplete;
-
-    #endregion
-
-    #region Dependant
-
-    [SerializeField] private AttributeDependant<float> HealthRegeneration;
-    [SerializeField] private AttributeDependant<float> PotentialHealthRegeneration;
-
-    [SerializeField] private AttributeDependant<float> StaminaRegeneration;
-    [SerializeField] private AttributeDependant<float> PotentialStaminaRegeneration;
 
     #endregion
 
