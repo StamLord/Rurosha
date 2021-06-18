@@ -12,12 +12,8 @@ public class BTBrain : MonoBehaviour
     [SerializeField] private float sightMemory = 3f;
     [SerializeField] private float lastSeen;
 
-    [SerializeField] private bool avoidObstacles;
-    [SerializeField] private int avoidanceNumberOfRays;
-    [SerializeField] private float avoidanceAngle;
-    [SerializeField] private float avoidanceRange;
-    [SerializeField] private float avoidanceScalar;
-    [SerializeField] private LayerMask avoidanceMask;
+    [SerializeField] private MoveBehavior idleBehavior;
+    [SerializeField] private MoveBehavior fleeBehavior;
 
     [SerializeField] private bool debug;
     [SerializeField] private Color debugRayColor = Color.red;
@@ -48,9 +44,24 @@ public class BTBrain : MonoBehaviour
         entry.Evaluate();
     }
 
+    private List<Transform> GetNearbyFlockMembers()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
+        List<Transform> neighbors = new List<Transform>();
+
+        foreach(Collider c in colliders)
+        {
+            BTBrain btb = c.GetComponent<BTBrain>();
+            if(btb)
+                neighbors.Add(btb.transform);
+        }
+        
+        return neighbors;
+    }
+
     NodeStates Idle ()
     {
-        inputState.AxisInput = Vector3.zero;
+        inputState.AxisInput = idleBehavior.CalculateMove(transform, flock: GetNearbyFlockMembers());
         return NodeStates.SUCCESS;
     }
 
@@ -83,7 +94,7 @@ public class BTBrain : MonoBehaviour
         
         if(closest != null)
         {
-            Vector3 axisInput = -1 * CalculateAxisInput(closest.transform.position);
+            Vector3 axisInput = fleeBehavior.CalculateMove(transform, closest.transform);
             inputState.AxisInput = axisInput;
 
             Quaternion changeInRotation = Quaternion.FromToRotation(Vector3.forward, axisInput);
@@ -93,42 +104,5 @@ public class BTBrain : MonoBehaviour
         }
 
         return NodeStates.SUCCESS;
-    }
-
-    private Vector3 CalculateAxisInput(Vector3 worldSpaceGoal)
-    {
-        Vector3 direction = worldSpaceGoal - transform.position;
-        direction.y = 0;
-
-        if(avoidObstacles) 
-            direction += AvoidingAgent.CalculateAvoidanceVector(
-                transform, 
-                avoidanceAngle, 
-                avoidanceNumberOfRays, 
-                avoidanceRange,
-                avoidanceMask,
-                avoidanceScalar);
-
-        direction.Normalize();
-
-        return direction;
-    }
-
-    private void OnDrawGizmos() 
-    {
-        if(!debug) return;
-
-        Gizmos.color = debugRayColor;
-
-        float anglePerLoop = avoidanceAngle / (avoidanceNumberOfRays - 1);
-        float halfAngle = avoidanceAngle / 2;
-        for (var i = 0; i < avoidanceNumberOfRays; i++)
-        {
-            Gizmos.DrawRay(transform.position, Quaternion.Euler(0, (anglePerLoop * i ) - halfAngle, 0) * transform.forward * avoidanceRange);
-        }
-
-        Gizmos.color = debugFinalColor;
-        Gizmos.DrawRay(transform.position, AvoidingAgent.CalculateAvoidanceVector(transform, avoidanceAngle, avoidanceNumberOfRays, avoidanceRange, avoidanceMask, avoidanceScalar));
-
     }
 }

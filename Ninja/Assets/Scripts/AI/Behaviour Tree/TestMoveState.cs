@@ -41,7 +41,7 @@ public class TestMoveState : MonoBehaviour
             Vector3 euler = changeInRotation.eulerAngles;
             // transform.RotateAround(transform.position, Vector3.up, inputState.rotation * Time.deltaTime);
 
-            rigidbody.MoveRotation(Quaternion.Euler(Vector3.Lerp(rigidbody.rotation.eulerAngles, euler, .05f)));
+            //rigidbody.MoveRotation(Quaternion.Euler(Vector3.Lerp(rigidbody.rotation.eulerAngles, euler, .05f)));
         }
 
         animator.SetFloat("Speed", rigidbody.velocity.magnitude);

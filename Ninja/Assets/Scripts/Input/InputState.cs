@@ -5,7 +5,7 @@ using UnityEngine;
 public class InputState : MonoBehaviour
 {
     [SerializeField] private Vector3 _axisInput;
-    public Vector3 AxisInput { get { return _axisInput;} set {_axisInput = value;}}
+    public Vector3 AxisInput { get { return _axisInput;} set {_axisInput = Vector3.ClampMagnitude(value, 1f);}}
     public float rotation;
 
     public VButton jump = new VButton();
