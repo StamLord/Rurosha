@@ -15,6 +15,8 @@ public class TestMoveState : MonoBehaviour
     public Rigidbody rigidbody;
     public Animator animator;
 
+    public bool flat = true;
+
     void Update()
     {
         // Input
@@ -32,7 +34,7 @@ public class TestMoveState : MonoBehaviour
         Vector3 velocityChange = (targetVelocity - velocity);
         velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
         velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-        velocityChange.y = 0;
+        velocityChange.y = flat ? 0 : Mathf.Clamp(velocityChange.y, -maxVelocityChange, maxVelocityChange);
         rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
         if(targetDirection.magnitude != 0)
@@ -42,8 +44,9 @@ public class TestMoveState : MonoBehaviour
             // transform.RotateAround(transform.position, Vector3.up, inputState.rotation * Time.deltaTime);
 
             //rigidbody.MoveRotation(Quaternion.Euler(Vector3.Lerp(rigidbody.rotation.eulerAngles, euler, .05f)));
+            transform.forward = Vector3.Lerp(transform.forward, inputState.AxisInput, .1f);
         }
 
-        animator.SetFloat("Speed", rigidbody.velocity.magnitude);
+        if(animator) animator.SetFloat("Speed", rigidbody.velocity.magnitude);
     }
 }

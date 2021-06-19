@@ -216,6 +216,18 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         return false;
     }
 
+    public bool SetAttributeLevel(string statName, int level)
+    {
+        Attribute s = FindAttribute(statName);
+        if (s != null) 
+        {   
+            s._level = Mathf.Clamp(level, minAttributeLevel, maxAttributeLevel);
+            return true;
+        }
+            
+        return false;
+    }
+
     void Update()
     {
         RegenUpdate();

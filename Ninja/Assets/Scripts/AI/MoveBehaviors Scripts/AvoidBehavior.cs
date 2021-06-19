@@ -34,8 +34,6 @@ public class AvoidBehavior : MoveBehavior
             //    move += (1f / numberOfRays) * direction;
         }
 
-        move.y = 0;
-
         return move;
     }
 }

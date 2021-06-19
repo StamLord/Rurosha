@@ -36,14 +36,18 @@ public class DashState : State
     {
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Dash State]");
+
         characterStats = ((PlayerControls)_stateMachine).characterStats;
 
         dashStart = rigidbody.position;
         Vector3 inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        inputVector.Normalize();
-        dashDirection = transform.TransformDirection(inputVector);
+        
+        if(inputVector.sqrMagnitude == 0)
+            dashDirection = transform.forward;
+        else
+            dashDirection = transform.TransformDirection(inputVector);
 
-        collider.height = colliderHeight;
+        //collider.height = colliderHeight;
 
         rigidbody.velocity = dashDirection * dashSpeed;
     }

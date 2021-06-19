@@ -16,8 +16,6 @@ public class FollowBehavior : MoveBehavior
         if(distance.sqrMagnitude > bufferZone * bufferZone)
             move = target.position - local.position;
 
-        move.y = 0;
-
         return move;
     }
 }

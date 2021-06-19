@@ -7,7 +7,7 @@ public class CohesionBehavior : MoveBehavior
 {
     public override Vector3 CalculateMove(Transform local, Transform target = null, List<Transform> flock = null)
     {
-        if(flock.Count == 0)
+        if(flock == null || flock.Count == 0)
             return Vector3.zero;
 
         Vector3 cohesionMove = Vector3.zero;
@@ -20,7 +20,6 @@ public class CohesionBehavior : MoveBehavior
 
         // Offset local position
         cohesionMove -= local.position;
-        Debug.Log("Cohesion Move: " + cohesionMove);
         return cohesionMove;
     }
 }
