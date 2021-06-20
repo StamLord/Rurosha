@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HeadBobCam : MonoBehaviour
 {
-    [SerializeField] private PlayerControls playerStateMachine;
+    [SerializeField] private CharacterStateMachine playerStateMachine;
     [SerializeField] private List<string> activeInStates = new List<string>();
 
     [SerializeField] private AnimationCurve xMove;

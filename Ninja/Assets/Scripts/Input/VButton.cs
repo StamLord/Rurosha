@@ -12,32 +12,24 @@ public class VButton
     private float firstPress;
     private float lastPress;
 
+    public float PressTime { get{return ((State == VButtonState.UNPRESSED) ? 0f : lastPress - firstPress);}}
+
     public void Set(VButtonState newState)
     {
         _state = newState;
+        
+        switch(newState)
+        {
+            case VButtonState.PRESS_START:
+                firstPress = Time.time;
+                lastPress = Time.time;
+                break;
+            case VButtonState.PRESSED:
+                lastPress = Time.time;
+                break;
+            case VButtonState.PRESS_END:
+                lastPress = Time.time;
+                break;
+        }
     }
-
-    // public void Press() 
-    // {
-    //     if (IsPressed() == VButtonState.UNPRESSED)
-    //         firstPress = Time.time;
-
-    //     lastPress = Time.time;
-
-    // }
-
-    // private VButtonState IsPressed()
-    // {
-    //     if(Time.time > lastPress)
-
-    //         return VButtonState.UNPRESSED;
-
-    //     if(Time.time == firstPress)
-    //         return VButtonState.PRESS_START;
-
-    //     if(Time.time == lastPress)
-    //         return VButtonState.PRESS_END;
-
-    //     return VButtonState.PRESSED;
-    // }
 }

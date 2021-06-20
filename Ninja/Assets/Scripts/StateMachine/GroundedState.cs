@@ -20,6 +20,7 @@ public class GroundedState : State
     [Space(20f)]
     [Header("Stats")]
     [SerializeField] private CharacterStats characterStats;
+    [SerializeField] private InputState inputState;
     [SerializeField] private float staminaDepleteRate = 20f;
     [SerializeField] private float potentialStaminaDepleteRate = 2f;
     [SerializeField] private float enduranceExpGain = .01f;
@@ -70,7 +71,8 @@ public class GroundedState : State
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Ground State]");
         collider.height = standingColliderSize.y;
-        characterStats = ((PlayerControls)_stateMachine).characterStats;
+        characterStats = ((CharacterStateMachine)_stateMachine).characterStats;
+        inputState = ((CharacterStateMachine)_stateMachine).inputState;
     }
 
     public override void OnStateUpdate()
@@ -115,8 +117,9 @@ public class GroundedState : State
             velocityChange.y = 0;
             rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
-            if(Input.GetKeyDown(KeyCode.X) && characterStats.DepleteStamina(20))
-                _stateMachine.SwitchState(4);
+            if(inputState.doubleForward || inputState.doubleBack || inputState.doubleLeft || inputState.doubleRight)
+                if(characterStats.DepleteStamina(20))
+                    _stateMachine.SwitchState(4);
         }
         // Air
         //else 

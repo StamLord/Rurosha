@@ -12,10 +12,40 @@ public class PControls : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _runVBText;
     [SerializeField] private TextMeshProUGUI _crouchVBText;
     [SerializeField] private TextMeshProUGUI _useVBText;
+
+    [SerializeField] private TextMeshProUGUI _jumpVBTime;
+    [SerializeField] private TextMeshProUGUI _runVBTime;
+    [SerializeField] private TextMeshProUGUI _crouchVBTime;
+    [SerializeField] private TextMeshProUGUI _useVBTime;
+
+    [SerializeField] private TextMeshProUGUI _dbForwardText;
+    [SerializeField] private TextMeshProUGUI _dbBackText;
+    [SerializeField] private TextMeshProUGUI _dbLeftText;
+    [SerializeField] private TextMeshProUGUI _dbRightText;
     
+    [SerializeField] private float doubleTapWindow = .5f;
+
+    private float lastForwardTime = -1f;
+    private bool doubleForwardReady;
+    private bool movingForward;
+
+    private float lastBackTime = -1f;
+    private bool doubleBackReady;
+    private bool movingBack;
+
+    private float lastLeftTime = -1f;
+    private bool doubleLeftReady;
+    private bool movingLeft;
+
+    private float lastRightTime = -1f;
+    private bool doubleRightReady;
+    private bool movingRight;
+
     void Update()
     {
         _inputState.AxisInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 rawInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        DoubleInputCheck(rawInput);
 
         //Jump
         if(Input.GetButtonDown("Jump"))
@@ -64,7 +94,115 @@ public class PControls : MonoBehaviour
         _runVBText.text = "[" + _inputState.run.State + "]";
         _crouchVBText.text = "[" + _inputState.crouch.State + "]";
         _useVBText.text = "[" + _inputState.use.State + "]";
+
+        _jumpVBTime.text = "" + _inputState.jump.PressTime;
+        _runVBTime.text = "" + _inputState.run.PressTime;
+        _crouchVBTime.text = "" + _inputState.crouch.PressTime;
+        _useVBTime.text = "" + _inputState.use.PressTime;
+
+        _dbForwardText.text = "[ " + _inputState.doubleForward + "]";
+        _dbBackText.text = "[ " + _inputState.doubleBack + "]";
+        _dbLeftText.text = "[ " + _inputState.doubleLeft + "]";
+        _dbRightText.text = "[ " + _inputState.doubleRight + "]";;
         
+    }
+
+    void DoubleInputCheck(Vector3 input)
+    {
+        if(input.z == 0)
+            movingForward = movingBack = false;
+
+        if(input.x == 0) 
+            movingLeft = movingRight = false;
+        
+        ResetDoubleInputReady();
+
+        // Forward
+        if(input.z == 1)
+        {
+            if(movingForward == false)
+            {
+                movingForward = true;
+                lastForwardTime = Time.time;
+
+                if(doubleForwardReady)
+                {
+                    doubleForwardReady = false;
+                    _inputState.doubleForward = true;
+                }
+                else
+                    doubleForwardReady = true;
+            }
+        }
+
+        // Back
+        if(input.z == -1)
+        {
+            if(movingBack == false)
+            {
+                movingBack = true;
+                lastBackTime = Time.time;
+
+                if(doubleBackReady)
+                {
+                    doubleBackReady = false;
+                    _inputState.doubleBack = true;
+                }
+                else
+                    doubleBackReady = true;
+            }
+        }
+
+        // Left
+        if(input.x == -1)
+        {
+            if(movingLeft == false)
+            {
+                movingLeft = true;
+                lastLeftTime = Time.time;
+
+                if(doubleLeftReady)
+                {
+                    doubleLeftReady = false;
+                    _inputState.doubleLeft = true;
+                }
+                else
+                    doubleLeftReady = true;
+            }
+        }
+
+        // Right
+        if(input.x == 1)
+        {
+            if(movingRight == false)
+            {
+                movingRight = true;
+                lastRightTime = Time.time;
+
+                if(doubleRightReady)
+                {
+                    doubleRightReady = false;
+                    _inputState.doubleRight = true;
+                }
+                else
+                    doubleRightReady = true;
+            }
+        }
+    }
+
+    void ResetDoubleInputReady()
+    {
+        if(Time.time > lastForwardTime + doubleTapWindow)
+            doubleForwardReady = false;
+
+        if(Time.time > lastBackTime + doubleTapWindow)
+            doubleBackReady = false;
+
+        if(Time.time > lastLeftTime + doubleTapWindow)
+            doubleLeftReady = false;
+
+        if(Time.time > lastRightTime + doubleTapWindow)
+            doubleRightReady = false;
     }
 }
 

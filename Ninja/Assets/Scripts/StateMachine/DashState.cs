@@ -5,10 +5,13 @@ using UnityEngine;
 public class DashState : State
 {
     [Header("Control Settings")]
-    [SerializeField] private float dashDistance = 3f;
+    //[SerializeField] private float dashDistance = 3f;
+    [SerializeField] private AttributeDependant<float> dashDistance;
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float colliderHeight;
     [SerializeField] private new CapsuleCollider collider;
+    [SerializeField] private bool gravityOn = true;
+    [SerializeField] private float gravity = 20.0f;
 
     [Space(20f)]
 
@@ -37,17 +40,17 @@ public class DashState : State
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Dash State]");
 
-        characterStats = ((PlayerControls)_stateMachine).characterStats;
+        characterStats = ((CharacterStateMachine)_stateMachine).characterStats;
 
         dashStart = rigidbody.position;
-        Vector3 inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 inputVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        inputVector.Normalize();
         
+        //Safeguard, default is dash forward
         if(inputVector.sqrMagnitude == 0)
             dashDirection = transform.forward;
         else
             dashDirection = transform.TransformDirection(inputVector);
-
-        //collider.height = colliderHeight;
 
         rigidbody.velocity = dashDirection * dashSpeed;
     }
@@ -56,7 +59,13 @@ public class DashState : State
     {
         base.OnStateUpdate();
 
-        if((rigidbody.position - dashStart).sqrMagnitude > dashDistance * dashDistance)
+        if(gravityOn)
+            rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
+
+        // Stop Dash if traveled enough distance OR velocity dropped below threshold (For example if hit a wall)
+        float distance = dashDistance.GetValue(characterStats);
+        if((rigidbody.position - dashStart).sqrMagnitude > distance * distance || 
+            rigidbody.velocity.magnitude < dashSpeed * .75f)
             _stateMachine.SwitchState(1);
     }
 }

@@ -86,7 +86,7 @@ public class JumpState : State
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Jump State]");
 
-        characterStats = ((PlayerControls)_stateMachine).characterStats;
+        characterStats = ((CharacterStateMachine)_stateMachine).characterStats;
 
         _timeStamp = Time.time;
 
