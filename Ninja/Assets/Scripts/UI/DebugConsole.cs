@@ -8,20 +8,24 @@ using UnityEngine.Events;
 
 public class DebugConsole : MonoBehaviour
 {
+    [Header("Self References")]
     [SerializeField] private bool showConsole;
     [SerializeField] private GameObject consoleObject;
     [SerializeField] private TMP_InputField inputField;
 
+    [Header("Other References")]
     [SerializeField] private CharacterStats playerStats;
+    [SerializeField] private InputDebugWindow inputDebugWindow;
 
-    List<DebugCommand> commandList = new List<DebugCommand>();
+    //List<DebugCommand> commandList = new List<DebugCommand>();
 
+    [Header("Command History")]
     [SerializeField] private List<string> commandHistory = new List<string>();
     [SerializeField] private int historyIndex;
 
     private void Awake() 
     {
-        commandList.Add(new DebugCommand(
+        DebugCommandDatabase.AddCommand(new DebugCommand(
             "rosebud", 
             "Gives the player 1000 gold.", 
             "rosebud", 
@@ -29,7 +33,7 @@ public class DebugConsole : MonoBehaviour
                 Debug.Log("Invoking rosebud! You rascal!");
             }));
 
-        commandList.Add(new DebugCommand(
+        DebugCommandDatabase.AddCommand(new DebugCommand(
             "increase_attribute", 
             "Increases attribue", 
             "increase_attribute <attribute name>", 
@@ -37,18 +41,41 @@ public class DebugConsole : MonoBehaviour
                 playerStats.IncreaseAttribute(paramaters[0]);
             }));
 
-        commandList.Add(new DebugCommand(
+        DebugCommandDatabase.AddCommand(new DebugCommand(
             "set_attribute", 
             "Sets attribue", 
             "set_attribute <attribute name> <level>", 
+            (string[] parameters) => {
+                playerStats.SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
+            }));
+
+        DebugCommandDatabase.AddCommand(new DebugCommand(
+            "inputdebug", 
+            "Turns Input Debug window On / Off", 
+            "inputdebug <on/off>", 
             (string[] paramaters) => {
-                playerStats.SetAttributeLevel(paramaters[0], Int32.Parse(paramaters[1]));
+                string p = paramaters[0].ToLower();
+                if(p == "on")
+                    inputDebugWindow.Show(true);
+                else if(p == "off")
+                    inputDebugWindow.Show(false);
+            }));
+
+        DebugCommandDatabase.AddCommand(new DebugCommand(
+            "spawn", 
+            "Spawns an object", 
+            "spawn <objectname> [optional]<amount>", 
+            (string[] paramaters) => {
+                // To Add
             }));
     }
     private void Update() 
     {
         if(Input.GetKeyDown(KeyCode.BackQuote))    
             ShowConsole(!showConsole);
+
+        if(showConsole && inputField.isFocused == false)
+            SelectInputField();
 
         if(showConsole)
         {
@@ -59,12 +86,14 @@ public class DebugConsole : MonoBehaviour
             {
                 historyIndex = Mathf.Max(0, historyIndex - 1);
                 inputField.text = commandHistory[historyIndex];
+                inputField.caretPosition = inputField.text.Length;
             }
 
             if(Input.GetKeyDown(KeyCode.DownArrow))    
             {
                 historyIndex = Mathf.Min(historyIndex + 1, commandHistory.Count);
                 inputField.text = (historyIndex < commandHistory.Count)? commandHistory[historyIndex] : "";
+                inputField.caretPosition = inputField.text.Length;
             }
         }
     }
@@ -73,7 +102,14 @@ public class DebugConsole : MonoBehaviour
     {
         showConsole = on;
         consoleObject.SetActive(on);
-        if(inputField.isFocused == false) inputField.Select();
+        if(inputField.isFocused == false)
+            SelectInputField();
+    }
+
+    void SelectInputField()
+    {
+        inputField.Select();
+        inputField.ActivateInputField();
     }
 
     public void SubmitInput()
@@ -83,49 +119,21 @@ public class DebugConsole : MonoBehaviour
         if(input.Length < 1)
             return;
 
-        string[] split = input.Split(' ');
+        string[] command = input.Split(' ');
         string[] parameters = new string[0];
 
-        if(split.Length > 1)
+        if(command.Length > 1)
         {
-            parameters = new string[split.Length - 1];
+            parameters = new string[command.Length - 1];
             for (int i = 0; i < parameters.Length; i++)
-                parameters[i] = split[i + 1];
+                parameters[i] = command[i + 1];
         }
 
-        foreach(DebugCommand dc in commandList)
-        {
-            if(dc._id == split[0])
-                dc.Invoke(parameters);
-        }
+        DebugCommandDatabase.ExecuteCommand(command[0], parameters);
 
         commandHistory.Add(inputField.text);
         historyIndex = commandHistory.Count;
 
         inputField.text = "";
-    }
-
-}
-
-public class DebugCommand
-{
-    public string _id { get; private set;}
-    public string _description { get; private set;}
-    public string _format { get; private set;}
-
-    private UnityAction<string[]> _command;
-
-    public DebugCommand(string id, string description, string format, UnityAction<string[]> command)
-    {
-        _id = id;
-        _description = description;
-        _format = format;
-
-        _command = command;
-    }
-
-    public void Invoke(string[] parameters)
-    {
-        _command.Invoke(parameters);
     }
 }
