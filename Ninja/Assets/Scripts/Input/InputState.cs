@@ -21,8 +21,11 @@ public class InputState : MonoBehaviour
 
     private void Update() 
     {
-        // Reset double axis flags after 1 frame
+        ResetDoubleAxisFlags();        
+    }
 
+    private void ResetDoubleAxisFlags()
+    {
         if(oldDoubleForward)
             doubleForward = false;
 
