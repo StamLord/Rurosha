@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -146,6 +146,22 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             h.AddResponder(this);
 
         //InitializeAttributes();
+
+        DebugCommandDatabase.AddCommand(new DebugCommand(
+            "setattribute", 
+            "Sets attribute to desired value", 
+            "setattribute <attribute> <level>", 
+            (string[] parameters) => {
+                SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
+            }));
+
+        DebugCommandDatabase.AddCommand(new DebugCommand(
+            "killme", 
+            "Kills the player", 
+            "killme", 
+            (string[] parameters) => {
+                SubHealth(9999f);
+            }));
     }
 
     public void OnValidate()
@@ -235,6 +251,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     void RegenUpdate()
     {
+        if(isAlive == false) return;
+        
         if(Time.time - _healthLastDeplete > _healthRecoveryStart) 
             AddHealth(_healthRecovery * Time.deltaTime);
 

@@ -12,7 +12,7 @@ public class HeadBobCam : MonoBehaviour
 
     [SerializeField] private new Rigidbody rigidbody;
 
-    [SerializeField] private float speedTimerMultiplier = 1f;
+    [SerializeField] private float speedTimerMultiplier = .2f;
     [SerializeField] private float xValueMultiplier = 1f;
     [SerializeField] private float yValueMultiplier = 1f;
     
@@ -35,9 +35,14 @@ public class HeadBobCam : MonoBehaviour
 
         timer += Time.deltaTime * velocity * speedTimerMultiplier;
         if(timer > 1f || velocity == 0)
-            timer = 0;
+            timer -= 1f;
 
-        Vector3 newPosition = Vector3.Lerp(originPos, originPos + new Vector3(xMove.Evaluate(timer) * velocity * xValueMultiplier, yMove.Evaluate(timer) * velocity * yValueMultiplier, 0), velocity);
+        Vector3 nextPosition = originPos + new Vector3(
+            xMove.Evaluate(timer) * xValueMultiplier, 
+            yMove.Evaluate(timer) * yValueMultiplier, 
+            0);
+
+        Vector3 newPosition = Vector3.Lerp(originPos, nextPosition, velocity);
         transform.localPosition = Vector3.Lerp(transform.localPosition, newPosition, .1f);
     }
 }

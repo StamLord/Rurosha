@@ -11,10 +11,12 @@ public class Shuriken : WeaponObject
     public float burstRange = 3f;
     public float burstSpread = 45f;
     public float lastShot;
-    public float shootRate = .4f;
+    //public float shootRate = .4f;
 
-    [SerializeField] private float[] maxAnglePerDexterity = {35, 30, 25, 20, 16, 12, 8, 5, 3, 1};
-    [SerializeField] private float[] shootRatePerAgility = {2f, 1.75f, 1.5f, 1.25f, 1f, .8f, .6f, .5f, .4f, .35f};
+    [SerializeField] AttributeDependant<float> maxAngle = new AttributeDependant<float>("Dexterity", new float[]{35, 30, 25, 20, 16, 12, 8, 5, 3, 1});
+    //[SerializeField] private float[] maxAnglePerDexterity = {35, 30, 25, 20, 16, 12, 8, 5, 3, 1};
+    [SerializeField] AttributeDependant<float> shootRate = new AttributeDependant<float>("Agility", new float[]{2f, 1.75f, 1.5f, 1.25f, 1f, .8f, .6f, .5f, .4f, .35f});
+    //[SerializeField] private float[] shootRatePerAgility = {2f, 1.75f, 1.5f, 1.25f, 1f, .8f, .6f, .5f, .4f, .35f};
 
     [SerializeField] private float agilityExpGain = 1f;
     [SerializeField] private float dexterityExpGain = 2f;
@@ -30,7 +32,7 @@ public class Shuriken : WeaponObject
     {
         if(Input.GetMouseButtonDown(0))
         {
-            if(Time.time >= lastShot + shootRatePerAgility[_weaponManager.Stats.GetAttributeLevel("Agility") - 1])
+            if(Time.time >= lastShot + shootRate.GetValue(_weaponManager.Stats))
             {
                 GameObject obj = Instantiate(prefab, transform.position, Quaternion.identity);
 
@@ -50,7 +52,7 @@ public class Shuriken : WeaponObject
                     distance = dexterityExpMaxDistance;
                 }
 
-                float angle = maxAnglePerDexterity[_weaponManager.Stats.GetAttributeLevel("Dexterity") - 1];
+                float angle = maxAngle.GetValue(_weaponManager.Stats);
                 Quaternion randomRotation = Quaternion.Euler(0, Random.Range(-angle, angle), Random.Range(-angle, angle));
 
                 Debug.Log(randomRotation);

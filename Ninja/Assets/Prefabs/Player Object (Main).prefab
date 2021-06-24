@@ -2550,15 +2550,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.099999994
-      outSlope: 0.099999994
+      inSlope: 0.19999999
+      outSlope: 0.19999999
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.2
-      value: 0.02
+      value: 0.04
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2567,7 +2567,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.8
-      value: -0.02
+      value: -0.04
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2577,8 +2577,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0.1
-      outSlope: 0.1
+      inSlope: 0.2
+      outSlope: 0.2
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -2591,9 +2591,9 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.02
-      inSlope: -0.099999994
-      outSlope: -0.099999994
+      value: 0.04
+      inSlope: -0.19999999
+      outSlope: -0.19999999
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -2601,15 +2601,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.2
       value: 0
-      inSlope: -0.016666666
-      outSlope: -0.016666666
+      inSlope: -0.03333333
+      outSlope: -0.03333333
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.5
-      value: 0.02
+      value: 0.04
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -2619,17 +2619,17 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.8
       value: 0
-      inSlope: 0.01666667
-      outSlope: 0.01666667
+      inSlope: 0.03333334
+      outSlope: 0.03333334
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.02
-      inSlope: 0.1
-      outSlope: 0.1
+      value: 0.04
+      inSlope: 0.2
+      outSlope: 0.2
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -2638,9 +2638,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   rigidbody: {fileID: 6944390856915565340}
-  speedTimerMultiplier: 0.12
-  xValueMultiplier: 0.2
-  yValueMultiplier: 1
+  speedTimerMultiplier: 0.2
+  xValueMultiplier: 1
+  yValueMultiplier: 0.5
 --- !u!114 &2037844329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3217,6 +3217,7 @@ MonoBehaviour:
   - {fileID: 1526170146151346383}
   - {fileID: 923813910}
   characterStats: {fileID: 6944390856915565334}
+  inputState: {fileID: 0}
 --- !u!114 &8253494154602247536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3250,6 +3251,7 @@ MonoBehaviour:
   standingColliderSize: {x: 0, y: 2, z: 0}
   collider: {fileID: 0}
   characterStats: {fileID: 0}
+  inputState: {fileID: 0}
   staminaDepleteRate: 20
   potentialStaminaDepleteRate: 2
   enduranceExpGain: 0.01
@@ -3422,10 +3424,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 0}
   isActive: 0
-  dashDistance: 3
+  dashDistance:
+    attributeName: 
+    values: []
   dashSpeed: 20
   colliderHeight: 1
   collider: {fileID: 0}
+  gravityOn: 1
+  gravity: 20
   characterStats: {fileID: 0}
   debugView: 0
   rigidbody: {fileID: 0}

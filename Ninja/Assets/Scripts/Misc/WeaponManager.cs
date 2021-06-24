@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -35,9 +37,33 @@ public class WeaponManager : MonoBehaviour
     public delegate void ChangeItemDeleget(int index, Item item, int stack = 0);
     public event ChangeItemDeleget ChangeItemEvent;
 
+    public static Dictionary<string, Item> itemDatabase = new Dictionary<string, Item>();
+
     void Start()
     {
         SelectItem();
+
+        // Move later to its own class
+        
+        Item[] items = new Item[] 
+        {
+            (Item)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Items/Weapons/Shuriken.asset", typeof(Item))
+        };
+
+        foreach (Item i in items)
+        {
+            itemDatabase[i.itemName.ToLower()] = i;
+            Debug.Log(i.itemName);
+        }
+
+        DebugCommandDatabase.AddCommand(new DebugCommand(
+            "addweapon",
+            "Adds a weapon to player",
+            "addweapon <weapon> <amount>", 
+            (string[] parameters) => {
+                for (int i = 0; i < Int32.Parse(parameters[1]); i++)
+                    AddItem(itemDatabase[parameters[0].ToLower()]);
+        }));
     }
 
     void Update()

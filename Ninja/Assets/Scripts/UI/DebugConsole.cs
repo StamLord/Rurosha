@@ -14,7 +14,6 @@ public class DebugConsole : MonoBehaviour
     [SerializeField] private TMP_InputField inputField;
 
     [Header("Other References")]
-    [SerializeField] private CharacterStats playerStats;
     [SerializeField] private InputDebugWindow inputDebugWindow;
 
     //List<DebugCommand> commandList = new List<DebugCommand>();
@@ -31,22 +30,6 @@ public class DebugConsole : MonoBehaviour
             "rosebud", 
             (string[] paramaters) => {
                 Debug.Log("Invoking rosebud! You rascal!");
-            }));
-
-        DebugCommandDatabase.AddCommand(new DebugCommand(
-            "increase_attribute", 
-            "Increases attribue", 
-            "increase_attribute <attribute name>", 
-            (string[] paramaters) => {
-                playerStats.IncreaseAttribute(paramaters[0]);
-            }));
-
-        DebugCommandDatabase.AddCommand(new DebugCommand(
-            "set_attribute", 
-            "Sets attribue", 
-            "set_attribute <attribute name> <level>", 
-            (string[] parameters) => {
-                playerStats.SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
             }));
 
         DebugCommandDatabase.AddCommand(new DebugCommand(
