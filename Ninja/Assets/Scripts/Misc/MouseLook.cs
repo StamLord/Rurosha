@@ -12,13 +12,19 @@ public class MouseLook : MonoBehaviour
 
     float xRotation = 0f;
 
+    [SerializeField] private bool disabled;
+
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
+        UIManager.OnDisableMouse += Disable;
+        UIManager.OnEnableMouse += Enable;
     }
     
     void LateUpdate()
     {
+        if(disabled) return;
+
         float mouseX = Input.GetAxis("Mouse X") * sensitivity.x;
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity.y;
 
@@ -41,5 +47,15 @@ public class MouseLook : MonoBehaviour
     void SetLookState(LookState lookState)
     {
         _lookState = lookState;
+    }
+
+    private void Enable()
+    {
+        disabled = false;
+    }
+
+    private void Disable()
+    {
+        disabled = true;
     }
 }

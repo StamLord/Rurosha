@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 
-public class DebugConsole : MonoBehaviour
+public class DebugConsole : UIWindow
 {
     [Header("Self References")]
     [SerializeField] private bool showConsole;
@@ -85,6 +85,13 @@ public class DebugConsole : MonoBehaviour
     {
         showConsole = on;
         consoleObject.SetActive(on);
+
+        if(on)
+            UIManager.Instance.AddWindow(this, true, false);
+        else
+            UIManager.Instance.RemoveWindow(this, true, false);
+        
+        // Make sure we can type in field
         if(inputField.isFocused == false)
             SelectInputField();
     }

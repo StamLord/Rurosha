@@ -7,6 +7,8 @@ public abstract class UIWindow : MonoBehaviour{}
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private List<UIWindow> activeWindows = new List<UIWindow>();
+    private bool _disabledMouse;
+    private bool _disabledMovement;
 
     #region Singleton
 
@@ -40,27 +42,40 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    public delegate void DisableControlsDelegate();
-    public static event DisableControlsDelegate OnDisableControls;
+    #region Events
 
-    public delegate void EnableControlsDelegate();
-    public static event EnableControlsDelegate OnEnableControls;
+    public delegate void DisableMovementDelegate();
+    public static event DisableMovementDelegate OnDisableMovement;
 
+    public delegate void EnableMovementDelegate();
+    public static event EnableMovementDelegate OnEnableMovement;
+
+    public delegate void DisableMouseDelegate();
+    public static event DisableMouseDelegate OnDisableMouse;
+
+    public delegate void EnableMouseDelegate();
+    public static event EnableMouseDelegate OnEnableMouse;
+
+    #endregion
 
     private void Awake() 
     {
         SetupInstance();    
     }
     
-    public void AddWindow(UIWindow window)
+    public void AddWindow(UIWindow window, bool disableMovement = false, bool disableMouse = false)
     {
         activeWindows.Add(window);
+        if(disableMovement) EnableMovement(false);
+        if(disableMouse) EnableMouse(false);
         CheckWindows();
     }
 
-    public void RemoveWindow(UIWindow window)
+    public void RemoveWindow(UIWindow window, bool enableMovement = false, bool enableMouse = false)
     {
         activeWindows.Remove(window);
+        if(enableMovement) EnableMovement(true);
+        if(enableMouse) EnableMouse(true);
         CheckWindows();
     }
 
@@ -73,14 +88,36 @@ public class UIManager : MonoBehaviour
     private void CheckWindows()
     {
         if(activeWindows.Count > 0)
-        {
             Cursor.lockState = CursorLockMode.None;
-            if(OnDisableControls != null) OnDisableControls();
-        }
         else
-        {
             Cursor.lockState = CursorLockMode.Locked;
-            if(OnEnableControls != null) OnEnableControls();
+    }
+
+    private void EnableMouse(bool state)
+    {
+        if(state) // Enable
+        {
+            _disabledMouse = false;
+            if(OnEnableMouse != null) OnEnableMouse();
+        }
+        else // Disable
+        {
+            _disabledMouse = true;
+            if(OnDisableMouse != null) OnDisableMouse();
+        }
+    }
+
+    private void EnableMovement(bool state)
+    {
+        if(state) // Enable
+        {
+            _disabledMovement = false;
+            if(OnEnableMovement != null) OnEnableMovement();
+        }
+        else // Disable
+        {
+            _disabledMovement = true;
+            if(OnDisableMovement != null) OnDisableMovement();
         }
     }
 }

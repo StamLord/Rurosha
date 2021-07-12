@@ -29,8 +29,8 @@ public class PlayerControls : MonoBehaviour
 
     void Start() 
     {
-        UIManager.OnDisableControls += DisableControls;
-        UIManager.OnEnableControls += EnableControls;
+        UIManager.OnDisableMovement += DisableControls;
+        UIManager.OnEnableMovement += EnableControls;
     }
 
     void Update()
