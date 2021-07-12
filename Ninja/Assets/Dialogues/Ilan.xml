@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<DialogueNpcXml xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <NpcName>Ilan</NpcName>
+
+  <CharmMod>1</CharmMod>
+  <JokeMod>2</JokeMod>
+  <ThreatMod>2</ThreatMod>
+  <BribeMod>1</BribeMod>
+
+  <CharmResponse>Charming</CharmResponse>
+  <JokeResponse>LOL</JokeResponse>
+  <ThreatResponse>Oy Vey</ThreatResponse>
+  <BribeResponse>I love money</BribeResponse>
+
+  <NegativeResponse>I don't want to discuss this with someone like you.</NegativeResponse>
+
+  <Topics>
+    <string>Castle Grayskull</string>
+  </Topics>
+
+  <Responses>
+    <string>Don't go near Castle Grayskull</string>
+  </Responses>
+
+  <DialogueNode>
+    <TextMessage>Hello $PlayerName, tell me, why no JSON?</TextMessage>
+    <Choices>
+      <string>wHy nO Js0n??</string>
+      <string>Ilan ani mazhir otha..</string>
+      <string>Yalla yalla</string>
+      <string>Lama lo Labron?</string>
+    </Choices>
+    <Nodes>
+      <DialogueNodeXML>
+        <TextMessage>Suka. You look like a $Appearance. Your reputation is $Reputation</TextMessage>
+        <Choices />
+        <Nodes />
+        <Topics>
+          <string>Castle Grayskull</string>
+        </Topics>
+      </DialogueNodeXML>
+      <DialogueNodeXML>
+        <TextMessage>Yep</TextMessage>
+        <Choices />
+        <Nodes />
+        <Topics />
+      </DialogueNodeXML>
+      <DialogueNodeXML>
+        <TextMessage>Ma Tov Ahi?</TextMessage>
+        <Choices />
+        <Nodes />
+        <Topics />
+      </DialogueNodeXML>
+      <DialogueNodeXML>
+        <TextMessage>Goodbye</TextMessage>
+        <Choices />
+        <Nodes />
+        <Topics />
+      </DialogueNodeXML>
+    </Nodes>
+    <Topics />
+  </DialogueNode>
+</DialogueNpcXml>

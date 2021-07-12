@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<DialogueNodeXML xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="DialogueNodeXML">
+  <TextMessage>Hello world, my name is Bart!!</TextMessage>
+  <Choices>
+    <string>Hello you.</string>
+    <string>Bye now!</string>
+    <string>Is this working?</string>
+  </Choices>
+  <Nodes>
+    <DialogueNodeXML>
+      <TextMessage>Have you been to Castle Grayskull?</TextMessage>
+      <Choices />
+      <Nodes />
+    </DialogueNodeXML>
+    <DialogueNodeXML>
+      <TextMessage>Goodbye</TextMessage>
+      <Choices />
+      <Nodes />
+    </DialogueNodeXML>
+    <DialogueNodeXML>
+      <TextMessage>OMG ITS WORKING!</TextMessage>
+      <Choices>
+        <string>Nice.</string>
+        <string>I don't believe you</string>
+      </Choices>
+      <Nodes>
+        <DialogueNodeXML>
+          <TextMessage>Real NICE.</TextMessage>
+          <Choices />
+          <Nodes />
+        </DialogueNodeXML>
+        <DialogueNodeXML>
+          <TextMessage>You don't have to take my word for it.</TextMessage>
+          <Choices />
+          <Nodes />
+        </DialogueNodeXML>
+      </Nodes>
+      <Topics>
+        <string>Castle Grayskull</string>
+      </Topics>
+    </DialogueNodeXML>
+  </Nodes>
+</DialogueNodeXML>

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class StatOverviewUI : MonoBehaviour
+public class StatOverviewUI : UIWindow
 {
     [SerializeField] private CharacterStats characterStats;
 
@@ -29,15 +29,25 @@ public class StatOverviewUI : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.J))
-            statWindow.SetActive(!statWindow.activeSelf);
+            SetWindow(!statWindow.activeSelf);
 
-        if(statWindow.activeSelf)
-        {
-            RefreshWindow();
-            Cursor.lockState = CursorLockMode.None;
-        }
+        // if(statWindow.activeSelf)
+        // {
+        //     RefreshWindow();
+        //     Cursor.lockState = CursorLockMode.None;
+        // }
+        // else
+        //     Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void SetWindow(bool open)
+    {
+        statWindow.SetActive(open);
+        
+        if(open)
+            UIManager.Instance.AddWindow(this);
         else
-            Cursor.lockState = CursorLockMode.Locked;
+            UIManager.Instance.RemoveWindow(this);
     }
 
     void RefreshWindow()

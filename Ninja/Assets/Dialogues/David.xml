@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<DialogueNodeXML xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TextMessage>I'm David</TextMessage>
+  <Choices>
+    <string>Hello David.</string>
+    <string>Bye now!</string>
+  </Choices>
+  <Nodes>
+    <DialogueNodeXML>
+      <TextMessage>Have you been to Castle Grayskull?</TextMessage>
+      <Choices />
+      <Nodes />
+      <Topics>
+        <string>Castle Grayskull</string>
+      </Topics>
+    </DialogueNodeXML>
+    <DialogueNodeXML>
+      <TextMessage>Goodbye</TextMessage>
+      <Choices />
+      <Nodes />
+      <Topics />
+    </DialogueNodeXML>
+  </Nodes>
+  <Topics />
+</DialogueNodeXML>
