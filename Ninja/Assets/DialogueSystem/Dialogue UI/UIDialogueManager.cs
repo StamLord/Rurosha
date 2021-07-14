@@ -82,9 +82,9 @@ public class UIDialogueManager : UIWindow
         _dialogueWindow.SetActive(open);
 
         if(open) 
-            UIManager.Instance.AddWindow(this, false, true);
+            UIManager.Instance.AddWindow(this, false, true, true);
         else
-            UIManager.Instance.RemoveWindow(this, false, true);
+            UIManager.Instance.RemoveWindow(this, false, true, true);
     }
 
     public void ChoicesSliderChange(float value)

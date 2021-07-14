@@ -13,8 +13,8 @@ public class Pickup : PhysicalObject
 
         if(_item)
         {
-            if(interactor.weaponManager.AddItem(_item))
-               Destroy(transform.gameObject);
+            if(interactor.WeaponManager.AddItem(_item))
+                Destroy(transform.gameObject);
         }
     }
 }

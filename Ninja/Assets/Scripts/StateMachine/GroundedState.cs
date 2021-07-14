@@ -60,8 +60,8 @@ public class GroundedState : State
     void Awake () 
     {
         rigidbody = GetComponent<Rigidbody>();
-	    rigidbody.freezeRotation = true;
-	    rigidbody.useGravity = false;
+        rigidbody.freezeRotation = true;
+        rigidbody.useGravity = false;
 
         collider = GetComponent<CapsuleCollider>();
 	}
@@ -83,15 +83,15 @@ public class GroundedState : State
         ClimbCheck();
 
         // Input
-        inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        inputVector = inputState.AxisInput;
         inputVector.Normalize();
         targetDirection = transform.TransformDirection(inputVector);
         Vector3 targetVelocity = targetDirection;
 
         // Ground Control
-	    if (isGrounded) 
+        if (isGrounded) 
         {
-            if(Input.GetButton("Run"))
+            if(inputState.run.State == VButtonState.PRESSED)
             {
                 if(characterStats.DepleteStamina(staminaDepleteRate * Time.deltaTime))
                 {
@@ -130,14 +130,14 @@ public class GroundedState : State
             GetComponent<Kick>().ActivateKick();
 
         // Jump
-        if (Input.GetButton("Jump")) 
+        if (inputState.jump.State == VButtonState.PRESSED) 
         {
             if(isGrounded)
                 _stateMachine.SwitchState(2);
         }
 
         // Crouch
-        if (Input.GetKey(KeyCode.C)) 
+        if (inputState.crouch.State == VButtonState.PRESSED) 
             _stateMachine.SwitchState(1);
         
         if(isClimbing)

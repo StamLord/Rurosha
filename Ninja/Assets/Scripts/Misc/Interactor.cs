@@ -7,19 +7,20 @@ public class Interactor : MonoBehaviour
     public enum CarryType {FIXED, PHYSICS, JOINT};
 
     [Header("References")]
-    [SerializeField] private new Transform camera;
-    [SerializeField] private Transform carryPoint;
+    [SerializeField] private Transform _camera;
+    [SerializeField] private Transform _carryPoint;
     [SerializeField] private WeaponManager _weaponManager;
-    [SerializeField] private CharacterStats characterStats;
-    public WeaponManager weaponManager { get {return _weaponManager;} }
+    [SerializeField] private InputState _inputState;
+    [SerializeField] private CharacterStats _characterStats;
+    public WeaponManager WeaponManager { get {return _weaponManager;} }
 
     [Space(10)]
 
     [Header("Interaction")]
-    [SerializeField] private float interactionRange;
-    [SerializeField] private LayerMask interactionMask;
+    [SerializeField] private float _interactionRange = 2f;
+    [SerializeField] private LayerMask _interactionMask;
 
-    [SerializeField] private Usable currentSelection;
+    [SerializeField] private Usable _currentSelection;
 
     public delegate void SelectionChangeDelegate(string selectionText);
     public event SelectionChangeDelegate SelectionChangeEvent;
@@ -28,8 +29,8 @@ public class Interactor : MonoBehaviour
 
     [Header("Carry")]
 
-    [SerializeField] private float startPressTime;
-    [SerializeField] private float minTimeToCarry = 2f;
+    [SerializeField] private float _startPressTime;
+    [SerializeField] private float _minTimeToCarry = 1f;
 
     [Space(10)]
 
@@ -94,7 +95,7 @@ public class Interactor : MonoBehaviour
                         joint.spring = s;
                     }
                     
-                    joint.transform.SetParent(carryPoint);
+                    joint.transform.SetParent(_carryPoint);
                     joint.transform.localPosition = Vector3.zero;
                 }
                 break;
@@ -105,24 +106,24 @@ public class Interactor : MonoBehaviour
     {
         CheckObject();
 
-        float carryTimer = Time.time - startPressTime;
+        float carryTimer = Time.time - _startPressTime;
 
         if(UpdateCarryTimerEvent != null)
-            UpdateCarryTimerEvent((attemptingCarry)? carryTimer / minTimeToCarry : 0f);
+            UpdateCarryTimerEvent((attemptingCarry)? carryTimer / _minTimeToCarry : 0f);
 
-        if(Input.GetKeyDown(KeyCode.E))
+        if(_inputState.use.State == VButtonState.PRESS_START)
         {
-            startPressTime = Time.time;
+            _startPressTime = Time.time;
             attemptingCarry = true;
         }
-        else if(Input.GetKeyUp(KeyCode.E))
+        else if(_inputState.use.State == VButtonState.PRESS_END)
         {
             attemptingCarry = false;
             UpdateCarryTimerEvent(0);
 
-            if(carryTimer <  minTimeToCarry && 
+            if(carryTimer <  _minTimeToCarry && 
                 isCarrying == false)
-                currentSelection?.Use(this);
+                _currentSelection?.Use(this);
             else if(isCarrying)
                 StopCarry();
             else
@@ -135,7 +136,7 @@ public class Interactor : MonoBehaviour
             {
                 Rigidbody co = carriedObject;
                 StopCarry();
-                co.AddForce(camera.forward * throwForce, ForceMode.Impulse);
+                co.AddForce(_camera.forward * throwForce, ForceMode.Impulse);
             }
         }
     }
@@ -149,7 +150,7 @@ public class Interactor : MonoBehaviour
     {
         //Debug.DrawRay(camera.position, camera.forward * interactionRange);
         RaycastHit hit;
-        if(Physics.Raycast(camera.position, camera.forward, out hit, interactionRange, interactionMask))
+        if(Physics.Raycast(_camera.position, _camera.forward, out hit, _interactionRange, _interactionMask))
         {
             Usable usable = hit.transform.GetComponent<Usable>();
             if(usable) 
@@ -164,8 +165,8 @@ public class Interactor : MonoBehaviour
 
     void ClearSelection()
     {
-        currentSelection?.Highlight(false);
-        currentSelection = null;
+        _currentSelection?.Highlight(false);
+        _currentSelection = null;
 
         if(SelectionChangeEvent != null)
             SelectionChangeEvent("");
@@ -173,22 +174,24 @@ public class Interactor : MonoBehaviour
 
     void ChangeSelection(Usable usable)
     {
-        if(currentSelection) ClearSelection();
+        if(_currentSelection) ClearSelection();
         usable.Highlight(true);
-        currentSelection = usable;
+        _currentSelection = usable;
 
         if(SelectionChangeEvent != null)
-            SelectionChangeEvent(currentSelection.GetText());
+            SelectionChangeEvent(_currentSelection.GetText());
     }
 
     void StartCarry()
     {
-        PhysicalObject po = currentSelection.GetComponent<PhysicalObject>();
-        if(po == null || characterStats.CanPickup(po.GetWeight()) == false)
+        if(_currentSelection == null) return;
+        
+        PhysicalObject po = _currentSelection.GetComponent<PhysicalObject>();
+        if(po == null || _characterStats.CanPickup(po.GetWeight()) == false)
             return;
 
         isCarrying = true;
-        carriedObject = currentSelection.transform.GetComponent<Rigidbody>();
+        carriedObject = _currentSelection.transform.GetComponent<Rigidbody>();
         
         switch(carryType)
         {
@@ -196,7 +199,7 @@ public class Interactor : MonoBehaviour
 
                 carriedObject.isKinematic = true;
                 carriedObject.freezeRotation = true;
-                carriedObject.transform.SetParent(carryPoint);
+                carriedObject.transform.SetParent(_carryPoint);
 
                 break;
             case CarryType.PHYSICS:
@@ -209,7 +212,7 @@ public class Interactor : MonoBehaviour
                 carriedObject.drag = drag;
                 carriedObject.angularDrag = angularDrag;
 
-                carriedObject.transform.parent = carryPoint;
+                carriedObject.transform.parent = _carryPoint;
                 
                 break;
             case CarryType.JOINT:
@@ -264,9 +267,9 @@ public class Interactor : MonoBehaviour
         if(isCarrying == false || carryType != CarryType.PHYSICS)
             return;
 
-        if(Vector3.Distance(carriedObject.position, carryPoint.position) > .05f)
+        if(Vector3.Distance(carriedObject.position, _carryPoint.position) > .05f)
         {
-            Vector3 moveDir = carryPoint.position - carriedObject.position;
+            Vector3 moveDir = _carryPoint.position - carriedObject.position;
             carriedObject.AddForce(moveDir * moveForce);
         }
     }
@@ -276,7 +279,7 @@ public class Interactor : MonoBehaviour
         if(!debugView) return;
         
         Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(camera.position, camera.forward * interactionRange);
+        Gizmos.DrawRay(_camera.position, _camera.forward * _interactionRange);
 
         if(!joint) return;
         Gizmos.color = Color.green;

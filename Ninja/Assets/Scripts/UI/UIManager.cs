@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<UIWindow> activeWindows = new List<UIWindow>();
     private bool _disabledMouse;
     private bool _disabledMovement;
+    private bool _disabledInteraction;
 
     #region Singleton
 
@@ -50,6 +51,12 @@ public class UIManager : MonoBehaviour
     public delegate void EnableMovementDelegate();
     public static event EnableMovementDelegate OnEnableMovement;
 
+    public delegate void DisableInteractionDelegate();
+    public static event DisableInteractionDelegate OnDisableInteraction;
+
+    public delegate void EnableInteractionDelegate();
+    public static event EnableInteractionDelegate OnEnableInteraction;
+
     public delegate void DisableMouseDelegate();
     public static event DisableMouseDelegate OnDisableMouse;
 
@@ -63,25 +70,21 @@ public class UIManager : MonoBehaviour
         SetupInstance();    
     }
     
-    public void AddWindow(UIWindow window, bool disableMovement = false, bool disableMouse = false)
+    public void AddWindow(UIWindow window, bool disableMovement = false, bool disableMouse = false, bool disableInteraction = false)
     {
         activeWindows.Add(window);
         if(disableMovement) EnableMovement(false);
         if(disableMouse) EnableMouse(false);
+        if(disableInteraction) EnableInteraction(false);
         CheckWindows();
     }
 
-    public void RemoveWindow(UIWindow window, bool enableMovement = false, bool enableMouse = false)
+    public void RemoveWindow(UIWindow window, bool enableMovement = false, bool enableMouse = false, bool enableInteraction = false)
     {
         activeWindows.Remove(window);
         if(enableMovement) EnableMovement(true);
         if(enableMouse) EnableMouse(true);
-        CheckWindows();
-    }
-
-    public void RemoveLastWindow()
-    {
-        activeWindows.RemoveAt(activeWindows.Count-1);
+        if(enableInteraction) EnableInteraction(true);
         CheckWindows();
     }
 
@@ -118,6 +121,20 @@ public class UIManager : MonoBehaviour
         {
             _disabledMovement = true;
             if(OnDisableMovement != null) OnDisableMovement();
+        }
+    }
+
+    private void EnableInteraction(bool state)
+    {
+        if(state) // Enable
+        {
+            _disabledInteraction = false;
+            if(OnEnableInteraction != null) OnEnableInteraction();
+        }
+        else // Disable
+        {
+            _disabledInteraction = true;
+            if(OnDisableInteraction != null) OnDisableInteraction();
         }
     }
 }

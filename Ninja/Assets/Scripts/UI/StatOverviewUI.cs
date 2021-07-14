@@ -31,13 +31,8 @@ public class StatOverviewUI : UIWindow
         if(Input.GetKeyDown(KeyCode.J))
             SetWindow(!statWindow.activeSelf);
 
-        // if(statWindow.activeSelf)
-        // {
-        //     RefreshWindow();
-        //     Cursor.lockState = CursorLockMode.None;
-        // }
-        // else
-        //     Cursor.lockState = CursorLockMode.Locked;
+        if(statWindow.activeSelf)
+            RefreshWindow();
     }
 
     void SetWindow(bool open)
