@@ -91,7 +91,7 @@ public class GroundedState : State
         // Ground Control
         if (isGrounded) 
         {
-            if(inputState.run.State == VButtonState.PRESSED)
+            if(inputState.Run.State == VButtonState.PRESSED)
             {
                 if(characterStats.DepleteStamina(staminaDepleteRate * Time.deltaTime))
                 {
@@ -117,7 +117,7 @@ public class GroundedState : State
             velocityChange.y = 0;
             rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
-            if(inputState.doubleForward || inputState.doubleBack || inputState.doubleLeft || inputState.doubleRight)
+            if(inputState.DoubleForward || inputState.DoubleBack || inputState.DoubleLeft || inputState.DoubleRight)
                 if(characterStats.DepleteStamina(20))
                     _stateMachine.SwitchState(4);
         }
@@ -130,14 +130,14 @@ public class GroundedState : State
             GetComponent<Kick>().ActivateKick();
 
         // Jump
-        if (inputState.jump.State == VButtonState.PRESSED) 
+        if (inputState.Jump.State == VButtonState.PRESSED) 
         {
             if(isGrounded)
                 _stateMachine.SwitchState(2);
         }
 
         // Crouch
-        if (inputState.crouch.State == VButtonState.PRESSED) 
+        if (inputState.Crouch.State == VButtonState.PRESSED) 
             _stateMachine.SwitchState(1);
         
         if(isClimbing)

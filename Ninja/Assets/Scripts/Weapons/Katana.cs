@@ -202,7 +202,7 @@ public class Katana : WeaponObject, IHitboxResponder
     void MovementCheck()
     {
         // Horizontal Axis
-        float currentX = Input.GetAxis("Horizontal");
+        float currentX = inputState.AxisInput.x;
 
         if(positiveAxisPressX == false && currentX > lastX && currentX > 0)
         {
@@ -224,7 +224,7 @@ public class Katana : WeaponObject, IHitboxResponder
         
 
         // Vertical Axis
-        float currentZ = Input.GetAxis("Vertical");
+        float currentZ = inputState.AxisInput.z;
 
         if(positiveAxisPressZ == false && currentZ > lastZ && currentZ > 0)
         {
@@ -250,12 +250,12 @@ public class Katana : WeaponObject, IHitboxResponder
 
     public void Method1()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(inputState.MouseButton1.State == VButtonState.PRESS_START)
         {
             AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
             float currentTime = state.normalizedTime % 1;
 
-            if(Input.GetButton("Crouch"))
+            if(inputState.Crouch.State == VButtonState.PRESSED)
             {
                 if(charStats.DepleteStamina(crouchAttackStaminaCost))
                 {
@@ -272,9 +272,9 @@ public class Katana : WeaponObject, IHitboxResponder
             }
         }
 
-        if(Input.GetMouseButtonDown(1))
+        if(inputState.MouseButton2.State == VButtonState.PRESS_START)
             animator.SetBool("Defending", true);
-        else if(Input.GetMouseButtonUp(1))
+        else if(inputState.MouseButton2.State == VButtonState.PRESS_END)
             animator.SetBool("Defending", false);
     }
 
@@ -291,7 +291,7 @@ public class Katana : WeaponObject, IHitboxResponder
             animator.SetBool("Defending", false);
         
         // LMB
-        if(Input.GetMouseButtonDown(0))
+        if(inputState.MouseButton1.State == VButtonState.PRESS_START)
         {
             AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
 
@@ -311,7 +311,7 @@ public class Katana : WeaponObject, IHitboxResponder
             }
         }
         // RMB
-        else if(Input.GetMouseButtonDown(1))
+        else if(inputState.MouseButton2.State == VButtonState.PRESS_START)
         {
             AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
             
@@ -325,7 +325,7 @@ public class Katana : WeaponObject, IHitboxResponder
             {   
                 if(charStats.DepleteStamina(rightAttackStaminaCost))
                 {
-                    if(Input.GetButton("Crouch"))
+                    if(inputState.Crouch.State == VButtonState.PRESSED)
                         animator.SetTrigger("CrouchAttack");
                     else
                     {

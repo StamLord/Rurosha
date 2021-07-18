@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WeaponObject : MonoBehaviour
 {
-    public Animator animator;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected InputState inputState;
 
     void Awake()
     {

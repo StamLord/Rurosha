@@ -24,7 +24,7 @@ public class TestMoveState : MonoBehaviour
         targetDirection = inputVector;
         Vector3 targetVelocity = targetDirection;
 
-        if(inputState.run.State == VButtonState.PRESSED)
+        if(inputState.Run.State == VButtonState.PRESSED)
             targetVelocity *= runSpeed;
         else
             targetVelocity *= moveSpeed;

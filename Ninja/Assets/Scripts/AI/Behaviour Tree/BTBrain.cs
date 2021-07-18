@@ -336,7 +336,7 @@ public class BTBrain : MonoBehaviour
         float closestDistance = Mathf.Infinity;
         StealthAgent closest = null;
 
-        inputState.run.Set(VButtonState.PRESSED);
+        inputState.Run.Set(VButtonState.PRESSED);
         foreach(StealthAgent a in awarenessAgent.VisibleAgents)
         {
             float distance = Vector3.Distance(transform.position, a.transform.position);

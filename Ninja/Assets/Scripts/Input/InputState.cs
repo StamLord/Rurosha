@@ -7,17 +7,19 @@ public class InputState : MonoBehaviour
     [SerializeField] private Vector3 _axisInput;
     public Vector3 AxisInput { get { return _axisInput;} set {_axisInput = Vector3.ClampMagnitude(value, 1f);}}
 
-    public bool doubleForward, doubleBack, doubleLeft, doubleRight;
-    public bool oldDoubleForward, oldDoubleBack, oldDoubleLeft, oldDoubleRight;
+    public bool DoubleForward, DoubleBack, DoubleLeft, DoubleRight;
+    private bool prevDoubleForward, prevDoubleBack, prevDoubleLeft, prevDoubleRight;
 
-    public float rotation;
+    public float Rotation;
 
-    public VButton jump = new VButton();
-    public VButton run = new VButton();
-    public VButton crouch = new VButton();
-    public VButton use = new VButton();
+    public VButton Jump = new VButton();
+    public VButton Run = new VButton();
+    public VButton Crouch = new VButton();
+    public VButton Use = new VButton();
+    public VButton MouseButton1 = new VButton();
+    public VButton MouseButton2 = new VButton();
 
-    public bool debug;
+    [SerializeField] private bool debug;
 
     private void Update() 
     {
@@ -26,22 +28,22 @@ public class InputState : MonoBehaviour
 
     private void ResetDoubleAxisFlags()
     {
-        if(oldDoubleForward)
-            doubleForward = false;
+        if(prevDoubleForward)
+            DoubleForward = false;
 
-        if(oldDoubleBack)
-            doubleBack = false;
+        if(prevDoubleBack)
+            DoubleBack = false;
 
-        if(oldDoubleLeft)
-            doubleLeft = false;
+        if(prevDoubleLeft)
+            DoubleLeft = false;
 
-        if(oldDoubleRight)
-            doubleRight = false;
+        if(prevDoubleRight)
+            DoubleRight = false;
 
-        oldDoubleForward = doubleForward;
-        oldDoubleBack = doubleBack;
-        oldDoubleLeft = doubleLeft;
-        oldDoubleRight = doubleRight;
+        prevDoubleForward = DoubleForward;
+        prevDoubleBack = DoubleBack;
+        prevDoubleLeft = DoubleLeft;
+        prevDoubleRight = DoubleRight;
     }
 
     private void OnDrawGizmos() 

@@ -351,6 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   charStats: {fileID: 6944390856915565334}
+  inputState: {fileID: 0}
   hitbox: {fileID: 1314776839}
   nextAttack: 0
   lastAttack: 0
@@ -2731,6 +2732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   charStats: {fileID: 6944390856915565334}
+  inputState: {fileID: 1496715723}
   hitbox: {fileID: 6944390855641208536}
   nextAttack: 0
   lastAttack: 0
@@ -3420,15 +3422,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _axisInput: {x: 0, y: 0, z: 0}
-  doubleForward: 0
-  doubleBack: 0
-  doubleLeft: 0
-  doubleRight: 0
-  oldDoubleForward: 0
-  oldDoubleBack: 0
-  oldDoubleLeft: 0
-  oldDoubleRight: 0
-  rotation: 0
+  DoubleForward: 0
+  DoubleBack: 0
+  DoubleLeft: 0
+  DoubleRight: 0
+  Rotation: 0
   debug: 0
 --- !u!114 &1496715738
 MonoBehaviour:

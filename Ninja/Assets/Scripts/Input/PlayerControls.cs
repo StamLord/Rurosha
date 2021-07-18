@@ -9,6 +9,8 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private InputState _inputState;
     [SerializeField] private float doubleTapWindow = .35f;
 
+    #region Double Tap
+
     private float lastForwardTime = -1f;
     private bool doubleForwardReady;
     private bool movingForward;
@@ -24,6 +26,8 @@ public class PlayerControls : MonoBehaviour
     private float lastRightTime = -1f;
     private bool doubleRightReady;
     private bool movingRight;
+
+    #endregion
 
     [SerializeField] private bool movementDisabled;
     [SerializeField] private bool interactionDisabled;
@@ -46,46 +50,69 @@ public class PlayerControls : MonoBehaviour
 
             //Jump
             if(Input.GetButtonDown("Jump"))
-                _inputState.jump.Set(VButtonState.PRESS_START);
+                _inputState.Jump.Set(VButtonState.PRESS_START);
             else if (Input.GetButtonUp("Jump"))
-                _inputState.jump.Set(VButtonState.PRESS_END);
+                _inputState.Jump.Set(VButtonState.PRESS_END);
             else if (Input.GetButton("Jump"))
-                _inputState.jump.Set(VButtonState.PRESSED);
+                _inputState.Jump.Set(VButtonState.PRESSED);
             else
-                _inputState.jump.Set(VButtonState.UNPRESSED);
+                _inputState.Jump.Set(VButtonState.UNPRESSED);
 
             //Run
             if(Input.GetButtonDown("Run"))
-                _inputState.run.Set(VButtonState.PRESS_START);
+                _inputState.Run.Set(VButtonState.PRESS_START);
             else if (Input.GetButtonUp("Run"))
-                _inputState.run.Set(VButtonState.PRESS_END);
+                _inputState.Run.Set(VButtonState.PRESS_END);
             else if (Input.GetButton("Run"))
-                _inputState.run.Set(VButtonState.PRESSED);
+                _inputState.Run.Set(VButtonState.PRESSED);
             else
-                _inputState.run.Set(VButtonState.UNPRESSED);
+                _inputState.Run.Set(VButtonState.UNPRESSED);
 
             //Crouch
             if(Input.GetButtonDown("Crouch"))
-                _inputState.crouch.Set(VButtonState.PRESS_START);
+                _inputState.Crouch.Set(VButtonState.PRESS_START);
             else if (Input.GetButtonUp("Crouch"))
-                _inputState.crouch.Set(VButtonState.PRESS_END);
+                _inputState.Crouch.Set(VButtonState.PRESS_END);
             else if (Input.GetButton("Crouch"))
-                _inputState.crouch.Set(VButtonState.PRESSED);
+                _inputState.Crouch.Set(VButtonState.PRESSED);
             else
-                _inputState.crouch.Set(VButtonState.UNPRESSED);
+                _inputState.Crouch.Set(VButtonState.UNPRESSED);
         }
 
         if(interactionDisabled == false)
         {
             //Use
             if(Input.GetButtonDown("Use"))
-                _inputState.use.Set(VButtonState.PRESS_START);
+                _inputState.Use.Set(VButtonState.PRESS_START);
             else if (Input.GetButtonUp("Use"))
-                _inputState.use.Set(VButtonState.PRESS_END);
+                _inputState.Use.Set(VButtonState.PRESS_END);
             else if (Input.GetButton("Use"))
-                _inputState.use.Set(VButtonState.PRESSED);
+                _inputState.Use.Set(VButtonState.PRESSED);
             else
-                _inputState.use.Set(VButtonState.UNPRESSED);
+                _inputState.Use.Set(VButtonState.UNPRESSED);
+        }
+
+        if(interactionDisabled == false)
+        {
+            //Mouse Button 1
+            if(Input.GetButtonDown("Fire1"))
+                _inputState.MouseButton1.Set(VButtonState.PRESS_START);
+            else if (Input.GetButtonUp("Fire1"))
+                _inputState.MouseButton1.Set(VButtonState.PRESS_END);
+            else if (Input.GetButton("Fire1"))
+                _inputState.MouseButton1.Set(VButtonState.PRESSED);
+            else
+                _inputState.MouseButton1.Set(VButtonState.UNPRESSED);
+
+            //Mouse Button 2
+            if(Input.GetButtonDown("Fire2"))
+                _inputState.MouseButton2.Set(VButtonState.PRESS_START);
+            else if (Input.GetButtonUp("Fire2"))
+                _inputState.MouseButton2.Set(VButtonState.PRESS_END);
+            else if (Input.GetButton("Fire2"))
+                _inputState.MouseButton2.Set(VButtonState.PRESSED);
+            else
+                _inputState.MouseButton2.Set(VButtonState.UNPRESSED);
         }
     }
 
@@ -110,7 +137,7 @@ public class PlayerControls : MonoBehaviour
                 if(doubleForwardReady)
                 {
                     doubleForwardReady = false;
-                    _inputState.doubleForward = true;
+                    _inputState.DoubleForward = true;
                 }
                 else
                     doubleForwardReady = true;
@@ -128,7 +155,7 @@ public class PlayerControls : MonoBehaviour
                 if(doubleBackReady)
                 {
                     doubleBackReady = false;
-                    _inputState.doubleBack = true;
+                    _inputState.DoubleBack = true;
                 }
                 else
                     doubleBackReady = true;
@@ -146,7 +173,7 @@ public class PlayerControls : MonoBehaviour
                 if(doubleLeftReady)
                 {
                     doubleLeftReady = false;
-                    _inputState.doubleLeft = true;
+                    _inputState.DoubleLeft = true;
                 }
                 else
                     doubleLeftReady = true;
@@ -164,7 +191,7 @@ public class PlayerControls : MonoBehaviour
                 if(doubleRightReady)
                 {
                     doubleRightReady = false;
-                    _inputState.doubleRight = true;
+                    _inputState.DoubleRight = true;
                 }
                 else
                     doubleRightReady = true;
@@ -200,7 +227,7 @@ public class PlayerControls : MonoBehaviour
     private void DisableInteraction()
     {
         interactionDisabled = true;
-        _inputState.use.Set(VButtonState.UNPRESSED);
+        _inputState.Use.Set(VButtonState.UNPRESSED);
     }
 
     private void EnableInteraction()
