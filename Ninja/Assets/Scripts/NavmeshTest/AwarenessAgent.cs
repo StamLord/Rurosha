@@ -11,6 +11,7 @@ public class AwarenessAgent : MonoBehaviour
     [SerializeField] private float lookRadius = 10f;
     [SerializeField] private float visionAngle = 45f;
     [SerializeField] private LayerMask visionMask;
+    [SerializeField] private LayerMask blockVisionMask;
     [SerializeField] private List<StealthAgent> visibleAgents = new List<StealthAgent>();
     [SerializeField] public List<StealthAgent> VisibleAgents {get {return visibleAgents;}}
 
@@ -50,24 +51,32 @@ public class AwarenessAgent : MonoBehaviour
                 Vector3 direction = sAgent.transform.position - transform.position;
                 float angle = Vector3.Angle(transform.forward, direction);
                 if(angle <= visionAngle)
-                    AddVisibleTarget(sAgent);
+                {    
+                    // Check line of sight
+                    if(Physics.Raycast(eyeLevel.position, direction, direction.magnitude, blockVisionMask) == false)
+                        AddVisibleTarget(sAgent);
+                }
             }
         }
         
-        // Remove any agents not visible anymore
+        // Find which agents are not visible anymore
+        List<StealthAgent> toRemove = new List<StealthAgent>();
         foreach(StealthAgent s in visibleAgents)
         {
             if(stealthAgents.Contains(s) == false) 
-                visibleAgents.Remove(s);
+                toRemove.Add(s);
             else
             {
                 Vector3 direction = s.transform.position - transform.position;
                 float angle = Vector3.Angle(transform.forward, direction);
                 if(angle > visionAngle)
-                    visibleAgents.Remove(s);
+                    toRemove.Add(s);
             }
         }
-        
+
+        // Remove the agents not visible anymore
+        foreach(StealthAgent s in toRemove)
+            visibleAgents.Remove(s);
     }
 
     void AddVisibleTarget(StealthAgent sAgent)
