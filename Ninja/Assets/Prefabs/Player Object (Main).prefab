@@ -2851,7 +2851,6 @@ GameObject:
   - component: {fileID: 6944390856915565329}
   - component: {fileID: 6944390856915565330}
   - component: {fileID: 6944390856915565331}
-  - component: {fileID: 6944390856915565341}
   - component: {fileID: 6944390856915565328}
   - component: {fileID: 6944390856915565335}
   - component: {fileID: 6944390856915565334}
@@ -2918,7 +2917,7 @@ MonoBehaviour:
   _interactionRange: 2
   _interactionMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 7168
   _currentSelection: {fileID: 0}
   _startPressTime: 0
   _minTimeToCarry: 1
@@ -2951,66 +2950,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &6944390856915565341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6944390856915565342}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00ee29333984646498e3cf23ba430061, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 4
-  runSpeed: 10
-  airControl: 10
-  gravityOn: 1
-  isCrouching: 0
-  standingColliderSize: {x: 0, y: 2, z: 0}
-  crouchingColliderSize: {x: 0, y: 1, z: 0}
-  collider: {fileID: 0}
-  gravity: 20
-  maxVelocityChange: 10
-  jumpHeight: 2
-  inputVector: {x: 0, y: 0, z: 0}
-  targetDirection: {x: 0, y: 0, z: 0}
-  groundCheck: {fileID: 6944390855444759398}
-  groundSlope: 0
-  groundSphereRadius: 0.4
-  groundDistance: 0.8
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 1
-  isGrounded: 0
-  ceilCheck: {fileID: 920716880367338671}
-  ceilDistance: 0.5
-  wallJumpWindow: 0.2
-  wallJumpForce: 10
-  wallJumpOn: 1
-  wallJumpCheck: {fileID: 6944390856471971234}
-  wallJumpDistance: 0.7
-  wallJumpMinimumSlope: -0.1
-  wallJumpMask:
-    serializedVersion: 2
-    m_Bits: 1
-  wallCollided: {fileID: 0}
-  wallHitNormal: {x: 0, y: 0, z: 0}
-  wallRunOn: 0
-  isWallRunning: 0
-  wallRunDistance: 0.7
-  wallRunMinimumSlope: -0.1
-  wallRunMask:
-    serializedVersion: 2
-    m_Bits: 1
-  wallRunCheck: {fileID: 6944390855170999859}
-  wallRunCheckVector: {x: 1, y: 0, z: 0}
-  wallRunNormal: {x: 0, y: 0, z: 0}
-  runningOnWall: {fileID: 0}
-  vectorAlongWall: {x: 0, y: 0, z: 0}
-  debugView: 0
-  rigidbody: {fileID: 0}
 --- !u!208 &6944390856915565328
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -3174,7 +3113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  fpsWalker: {fileID: 6944390856915565341}
+  fpsWalker: {fileID: 0}
 --- !u!114 &640803222212128632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3504,7 +3443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputState: {fileID: 1496715723}
-  doubleTapWindow: 0.35
+  doubleTapWindow: 0.25
   movementDisabled: 0
   interactionDisabled: 0
 --- !u!1 &7041260090810834121
@@ -4680,6 +4619,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 82b234ae1164c7b42843d67a321ff364, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54e815dba3635b40a5362bfc50cf844, type: 3}
+--- !u!1 &1551188740537958083 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100086, guid: a54e815dba3635b40a5362bfc50cf844,
+    type: 3}
+  m_PrefabInstance: {fileID: 1551188740537858101}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1551188740538245859 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400086, guid: a54e815dba3635b40a5362bfc50cf844,
@@ -4689,12 +4634,6 @@ Transform:
 --- !u!95 &1551188740545236309 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: a54e815dba3635b40a5362bfc50cf844,
-    type: 3}
-  m_PrefabInstance: {fileID: 1551188740537858101}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1551188740537958083 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100086, guid: a54e815dba3635b40a5362bfc50cf844,
     type: 3}
   m_PrefabInstance: {fileID: 1551188740537858101}
   m_PrefabAsset: {fileID: 0}
@@ -5332,15 +5271,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad6fb43597c394640b300bf65d54ccfa, type: 3}
---- !u!23 &4967399365177868214 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2643843705189524329, guid: ad6fb43597c394640b300bf65d54ccfa,
-    type: 3}
-  m_PrefabInstance: {fileID: 6944390856440028383}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7482123634050956084 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ad6fb43597c394640b300bf65d54ccfa,
+    type: 3}
+  m_PrefabInstance: {fileID: 6944390856440028383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4967399365177868214 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2643843705189524329, guid: ad6fb43597c394640b300bf65d54ccfa,
     type: 3}
   m_PrefabInstance: {fileID: 6944390856440028383}
   m_PrefabAsset: {fileID: 0}

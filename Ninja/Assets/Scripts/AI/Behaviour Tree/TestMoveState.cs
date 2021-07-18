@@ -12,7 +12,7 @@ public class TestMoveState : MonoBehaviour
     public float runSpeed = 5;
     public float maxVelocityChange = 10;
 
-    public Rigidbody rigidbody;
+    public new Rigidbody rigidbody;
     public Animator animator;
 
     public bool flat = true;
@@ -35,12 +35,14 @@ public class TestMoveState : MonoBehaviour
         velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
         velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
         velocityChange.y = flat ? 0 : Mathf.Clamp(velocityChange.y, -maxVelocityChange, maxVelocityChange);
+
+        // Move body
         rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
         if(targetDirection.magnitude != 0)
         {
-            Quaternion changeInRotation = Quaternion.FromToRotation(Vector3.forward, targetDirection);
-            Vector3 euler = changeInRotation.eulerAngles;
+            // changeInRotation = Quaternion.FromToRotation(Vector3.forward, targetDirection);
+            //Vector3 euler = changeInRotation.eulerAngles;
             // transform.RotateAround(transform.position, Vector3.up, inputState.rotation * Time.deltaTime);
 
             //rigidbody.MoveRotation(Quaternion.Euler(Vector3.Lerp(rigidbody.rotation.eulerAngles, euler, .05f)));

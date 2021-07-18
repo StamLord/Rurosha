@@ -1,21 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BTBrain : MonoBehaviour
 {
     [SerializeField] private InputState inputState;
     [SerializeField] private BTSelector entry;
 
+    [Header ("Senses")]
     [SerializeField] private AwarenessAgent awarenessAgent;
 
-    [SerializeField] private float sightMemory = 3f;
-    [SerializeField] private float lastSeen;
-
+    [Header ("Behaviors")]
     [SerializeField] private MoveBehavior idleBehavior;
+    [SerializeField] private MoveBehavior chaseBehavior;
     [SerializeField] private MoveBehavior fleeBehavior;
     [SerializeField] private MoveBehavior roamBehavior;
 
+    [Header("Chasing Parameters")]
+    [SerializeField] private bool isChasing;
+    [SerializeField] private Transform chaseTarget;
+    [SerializeField] private bool inSight;
+    [SerializeField] private float sightMemory = 3f;
+    [SerializeField] private float sightCheatRadius = 2f;
+    [SerializeField] private float lastSeenTime;
+    [SerializeField] private Vector3 lastSeenPos;
+
+    [Header("Pathfinding")]
+    [SerializeField] private NavMeshPath path;
+    [SerializeField] private Vector3[] points = new Vector3[0];
+    [SerializeField] private int nextPoint;
+
+    [Header("Debug")]
     [SerializeField] private bool debug;
     [SerializeField] private Color debugRayColor = Color.red;
     [SerializeField] private Color debugFinalColor = Color.blue;
@@ -23,6 +39,7 @@ public class BTBrain : MonoBehaviour
     [SerializeField] private Transform goal;
     [SerializeField] private bool flat = true;
     [SerializeField] private float timeToWait = 3;
+    [SerializeField] private float brave = 1;
 
     [SerializeField] private string currentBTNode;
 
@@ -33,15 +50,30 @@ public class BTBrain : MonoBehaviour
 
     void Start() 
     {
+        path = new NavMeshPath();
+
         List<BTNode> nodes1 = new List<BTNode>()
         {
+            // Fight or Flight branch
             new BTSequence(this, new List<BTNode>() 
             {
-                new BTActionNode(this, SeeAnyone),
-                new BTActionNode(this, Flee),
-
+                new BTSelector(this, new List<BTNode>()
+                {
+                    new BTActionNode(this, ChasingAnyone),
+                    new BTActionNode(this, SeeAnyone)
+                }),
+                new BTSelector(this, new List<BTNode>()
+                {
+                    new BTSequence(this, new List<BTNode>()
+                    {
+                        new BTActionNode(this, IsBraveEnough),
+                        new BTActionNode(this, Chase)
+                    }),
+                    new BTActionNode(this, Flee)
+                })
             }),
-
+            /*
+            // Idle and Roam branch
             new BTSequence(this, new List<BTNode>() 
             {
                 new BTActionNode(this, Roam),
@@ -56,7 +88,7 @@ public class BTBrain : MonoBehaviour
                     new BTActionNode(this, Idle)
                 }),
                 new BTActionNode(this, NextRoam)
-            })
+            })*/
 
         };
         entry = new BTSelector(this, nodes1);
@@ -81,8 +113,11 @@ public class BTBrain : MonoBehaviour
 
     void Update()
     {
+        inputState.AxisInput = Vector3.zero;
         entry.Evaluate();
         cachedNeighbors = GetNearbyFlockMembers();
+
+        
     }
 
     private List<Transform> GetNearbyFlockMembers()
@@ -123,6 +158,12 @@ public class BTBrain : MonoBehaviour
         }
 
         return NodeStates.FAILURE;
+    }
+
+    NodeStates IsBraveEnough ()
+    {
+        currentBTNode = "IsBraveEnough";
+        return (brave > .7f) ? NodeStates.SUCCESS : NodeStates.FAILURE;
     }
 
     NodeStates IsStuck()
@@ -176,7 +217,6 @@ public class BTBrain : MonoBehaviour
     NodeStates Roam()
     {
         currentBTNode = "Roam";
-
         if(roamBehavior)
         {   
             inputState.AxisInput = roamBehavior.CalculateMove(transform, goal, cachedNeighbors);
@@ -189,18 +229,110 @@ public class BTBrain : MonoBehaviour
     {
         currentBTNode = "SeeAnyone";
         if(awarenessAgent.VisibleAgents.Count > 0)
-            lastSeen = Time.time;
+            lastSeenTime = Time.time;
 
-        if(Time.time - lastSeen < sightMemory)
+        if(Time.time - lastSeenTime < sightMemory)
             return NodeStates.SUCCESS;
         else
             return NodeStates.FAILURE;
     }
 
+    NodeStates ChasingAnyone ()
+    {
+        currentBTNode = "ChasingAnyone";
+
+        if(isChasing)
+            return NodeStates.SUCCESS;
+        else
+            return NodeStates.FAILURE;
+    }
+
+    NodeStates Chase()
+    {
+        currentBTNode = "Chase";
+        
+        // Pick chase target
+        if(isChasing == false)
+        {
+            StealthAgent sa = FindClosestStealthAgent();
+            if(sa)
+            {
+                chaseTarget = sa.transform;
+                isChasing = true;
+            }
+        }
+
+        if(chaseTarget)
+        {
+            // Check if still seeing target
+            if(Vector3.Distance(transform.position, chaseTarget.position) < sightCheatRadius)
+            {
+                inSight = true;
+            }
+            else
+            {
+                inSight = false;
+                foreach(StealthAgent sa in awarenessAgent.VisibleAgents)
+                {
+                    if(sa.transform == chaseTarget)
+                    {
+                        inSight = true;
+                        break;
+                    }
+                }
+            }
+
+            // Update last seen position
+            if(inSight)
+                lastSeenPos = chaseTarget.position;
+
+            // Generate path if no path or target moved from path's final destination
+            if(points.Length == 0 || Vector3.Distance(lastSeenPos, points[points.Length - 1]) > .1f)
+            {
+                NavMesh.CalculatePath(transform.position, lastSeenPos, NavMesh.AllAreas, path);
+                points = path.corners;
+                nextPoint = 0;
+            }
+        }
+        
+        for (int i = 0; i < points.Length - 1; i++)
+        {   
+            // Draw path for debugging
+            Debug.DrawLine(points[i], points[i + 1], Color.red);
+            
+            // Look for that farthest point in the path we are close enough to set next point
+            if(Vector3.Distance(transform.position, points[i]) < .2f)
+                nextPoint = i + 1;
+        }
+
+        // Move goal transform at next point
+        goal.position = (points.Length > 0) ? points[nextPoint] : transform.position;
+        inputState.AxisInput = chaseBehavior.CalculateMoveFlat(transform, goal, cachedNeighbors);
+
+        return NodeStates.SUCCESS;
+    }
+
     NodeStates Flee ()
     {
         currentBTNode = "Flee";
+        StealthAgent closest = FindClosestStealthAgent();
+        
+        if(closest != null)
+        {
+            Vector3 axisInput = fleeBehavior.CalculateMove(transform, closest.transform, cachedNeighbors);
+            inputState.AxisInput = axisInput;
 
+            // Quaternion changeInRotation = Quaternion.FromToRotation(Vector3.forward, axisInput);
+            // Vector3 euler = changeInRotation.eulerAngles;
+
+            // inputState.rotation = euler.y;
+        }
+
+        return NodeStates.SUCCESS;
+    }
+
+    private StealthAgent FindClosestStealthAgent()
+    {
         float closestDistance = Mathf.Infinity;
         StealthAgent closest = null;
 
@@ -214,18 +346,24 @@ public class BTBrain : MonoBehaviour
                 closest = a;
             }
         }
-        
-        if(closest != null)
+
+        return closest;
+    }
+
+    private void OnDrawGizmosSelected() 
+    {
+        if(debug == false) return;
+
+        Color color1 = Color.yellow;
+        Color color2 = Color.red;
+
+        for (int i = 0; i < points.Length; i++)
         {
-            Vector3 axisInput = fleeBehavior.CalculateMove(transform, closest.transform, cachedNeighbors);
-            inputState.AxisInput = axisInput;
-
-            Quaternion changeInRotation = Quaternion.FromToRotation(Vector3.forward, axisInput);
-            Vector3 euler = changeInRotation.eulerAngles;
-
-            inputState.rotation = euler.y;
+            Gizmos.color = Color.Lerp(color1, color2, (float)i/points.Length);
+            Gizmos.DrawSphere(points[i], .2f);
         }
 
-        return NodeStates.SUCCESS;
+        Gizmos.color = color1;
+        Gizmos.DrawWireSphere(transform.position, sightCheatRadius);
     }
 }

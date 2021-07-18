@@ -53,7 +53,6 @@ public class WeaponManager : MonoBehaviour
         foreach (Item i in items)
         {
             itemDatabase[i.itemName.ToLower()] = i;
-            Debug.Log(i.itemName);
         }
 
         DebugCommandDatabase.AddCommand(new DebugCommand(
