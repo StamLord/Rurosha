@@ -15,7 +15,7 @@ public class Hurtbox : MonoBehaviour
     public void Start()
     {
         _material = GetComponentInChildren<MeshRenderer>()?.material;
-        _baseColor = _material.color;
+        if(_material) _baseColor = _material.color;
     }
 
     // Called by weapon scripts after
