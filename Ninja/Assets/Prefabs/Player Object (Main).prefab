@@ -350,8 +350,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  charStats: {fileID: 6944390856915565334}
   inputState: {fileID: 0}
+  charStats: {fileID: 6944390856915565334}
   hitbox: {fileID: 1314776839}
   nextAttack: 0
   lastAttack: 0
@@ -368,6 +368,9 @@ MonoBehaviour:
   sliceForce: 3
   maxSlicesPerCut: 20
   newSlices: []
+  softDamage: 20
+  hardDamage: 10
+  chanceToBleed: 0.25
   leftAttackStaminaCost: 15
   rightAttackStaminaCost: 15
   stabAttackStaminaCost: 7
@@ -407,6 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  inputState: {fileID: 0}
   charStats: {fileID: 6944390856915565334}
   hitbox: {fileID: 1314776839}
   nextAttack: 0
@@ -1141,6 +1145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  inputState: {fileID: 0}
+  charStats: {fileID: 0}
   player: {fileID: 0}
   rigidPlayer: {fileID: 0}
   staticKunai: {fileID: 6944390856455874062}
@@ -1245,6 +1251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6944390855011133441}
+  inputState: {fileID: 0}
+  charStats: {fileID: 0}
   prefab: {fileID: 2728008844794060368, guid: c5ddf0f291f970243a62ef9af7d91317, type: 3}
   _weaponManager: {fileID: 0}
   burstAmount: 3
@@ -2519,7 +2527,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensitivity: {x: 2, y: 1.6}
   playerBody: {fileID: 6944390856915565329}
-  _lookState: 0
+  inputState: {fileID: 1496715723}
+  maxRotZ: 1
+  rotSpeedZ: 2
   disabled: 0
 --- !u!114 &818045431
 MonoBehaviour:
@@ -2731,8 +2741,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  charStats: {fileID: 6944390856915565334}
   inputState: {fileID: 1496715723}
+  charStats: {fileID: 6944390856915565334}
   hitbox: {fileID: 6944390855641208536}
   nextAttack: 0
   lastAttack: 0
@@ -2749,6 +2759,9 @@ MonoBehaviour:
   sliceForce: 3
   maxSlicesPerCut: 20
   newSlices: []
+  softDamage: 20
+  hardDamage: 10
+  chanceToBleed: 0.25
   leftAttackStaminaCost: 15
   rightAttackStaminaCost: 15
   stabAttackStaminaCost: 7
@@ -2807,6 +2820,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6944390854785963743}
+  inputState: {fileID: 0}
+  charStats: {fileID: 0}
   prefab: {fileID: 2728008844794060368, guid: c5ddf0f291f970243a62ef9af7d91317, type: 3}
   _weaponManager: {fileID: 6944390854823740390}
   burstAmount: 3
@@ -3011,22 +3026,27 @@ MonoBehaviour:
   attributes:
   - _name: Strength
     _level: 1
+    _minLevel: 1
     _maxLevel: 10
     _experience: 0
   - _name: Endurance
     _level: 1
+    _minLevel: 1
     _maxLevel: 10
     _experience: 0
   - _name: Agility
     _level: 1
+    _minLevel: 1
     _maxLevel: 10
     _experience: 0
   - _name: Dexterity
     _level: 1
+    _minLevel: 1
     _maxLevel: 10
     _experience: 0
   - _name: Mind
     _level: 1
+    _minLevel: 1
     _maxLevel: 10
     _experience: 0
   isAlive: 1
@@ -3202,12 +3222,12 @@ MonoBehaviour:
   standingColliderSize: {x: 0, y: 2, z: 0}
   collider: {fileID: 0}
   characterStats: {fileID: 0}
-  inputState: {fileID: 0}
   staminaDepleteRate: 20
   potentialStaminaDepleteRate: 2
   enduranceExpGain: 0.01
   gravity: 20
   maxVelocityChange: 10
+  inputState: {fileID: 0}
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}
   groundCheck: {fileID: 6944390855444759398}
@@ -3246,6 +3266,7 @@ MonoBehaviour:
   collider: {fileID: 0}
   gravity: 20
   maxVelocityChange: 10
+  inputState: {fileID: 0}
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}
   groundCheck: {fileID: 6944390855444759398}
@@ -3294,6 +3315,7 @@ MonoBehaviour:
   maxVelocityChange: 10
   originalSpeed: {x: 0, y: 0, z: 0}
   characterStats: {fileID: 0}
+  inputState: {fileID: 0}
   staminaDepleteRate: 20
   enduranceExpGain: 0.01
   inputVector: {x: 0, y: 0, z: 0}
@@ -3341,6 +3363,7 @@ MonoBehaviour:
   climbingColliderSize: {x: 0, y: 1, z: 0}
   collider: {fileID: 0}
   maxVelocityChange: 10
+  inputState: {fileID: 0}
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}
   targetVelocity: {x: 0, y: 0, z: 0}
@@ -3393,6 +3416,7 @@ MonoBehaviour:
   collider: {fileID: 0}
   gravityOn: 1
   gravity: 20
+  inputState: {fileID: 0}
   characterStats: {fileID: 0}
   debugView: 0
   rigidbody: {fileID: 0}
