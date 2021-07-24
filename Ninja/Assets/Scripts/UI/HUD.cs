@@ -13,33 +13,31 @@ public class HUD : MonoBehaviour
 
     public CharacterStats playerStats;
 
-    [SerializeField] private float hAftermathDelay = 3f;
-    [SerializeField] private float hAftermathSpeed = 1f;
-    [SerializeField] private float hAftermathStartTime;
-    [SerializeField] private bool hAftermathDone;
-
-    [SerializeField] private float sAftermathDelay = 3f;
-    [SerializeField] private float sAftermathSpeed = 1f;
-    [SerializeField] private float sAftermathStartTime;
-    [SerializeField] private bool sAftermathDone;
-
     void Start()
     {
-        #region Events Register
+        if(healthBar)
+        {
+            playerStats.HealthUpdateEvent += UpdateHealthBar;
+            healthBar.fillAmount = playerStats.Health / playerStats.MaxHealth;
+        }
 
-        playerStats.HealthUpdateEvent += UpdateHealthBar;
-        playerStats.PotentialHealthUpdateEvent += UpdatePotentialHealthBar;
+        if(potentialHealthBar)
+        {
+            playerStats.PotentialHealthUpdateEvent += UpdatePotentialHealthBar;
+            potentialHealthBar.fillAmount = playerStats.PotentialHealth / playerStats.MaxHealth;
+        }
 
-        playerStats.StaminaUpdateEvent += UpdateStaminaBar;
-        playerStats.PotentialStaminaUpdateEvent += UpdatePotentialStaminaBar;
+        if(staminaBar)
+        {
+            playerStats.StaminaUpdateEvent += UpdateStaminaBar;
+            staminaBar.fillAmount = playerStats.Stamina / playerStats.MaxStamina;
+        }
 
-        #endregion
-
-        healthBar.fillAmount = playerStats.Health / playerStats.MaxHealth;
-        potentialHealthBar.fillAmount = playerStats.PotentialHealth / playerStats.MaxHealth;
-
-        staminaBar.fillAmount = playerStats.Stamina / playerStats.MaxStamina;
-        potentialStaminaBar.fillAmount = playerStats.potentialStamina / playerStats.MaxStamina;
+        if(potentialStaminaBar)
+        {
+            playerStats.PotentialStaminaUpdateEvent += UpdatePotentialStaminaBar;
+            potentialStaminaBar.fillAmount = playerStats.potentialStamina / playerStats.MaxStamina;
+        }
     }
 
     void UpdateHealthBar(float health)

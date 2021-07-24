@@ -36,7 +36,7 @@ public class SkillTreeUI : MonoBehaviour
 
     void UpdateTree()
     {
-        treeExp.fillAmount = tree._experience;
-        treeLevel.text = "" + tree._level;
+        treeExp.fillAmount = tree.Experience;
+        treeLevel.text = "" + tree.Level;
     }
 }
