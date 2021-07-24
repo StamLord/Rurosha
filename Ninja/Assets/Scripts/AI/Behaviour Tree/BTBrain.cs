@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class BTBrain : MonoBehaviour
 {
+    [SerializeField] private CharacterStats charStats;
     [SerializeField] private InputState inputState;
     [SerializeField] private BTSelector entry;
 
@@ -53,6 +54,7 @@ public class BTBrain : MonoBehaviour
 
     void Start() 
     {
+        lastSeenTime = int.MinValue;
         path = new NavMeshPath();
 
         List<BTNode> nodes1 = new List<BTNode>()
@@ -124,7 +126,15 @@ public class BTBrain : MonoBehaviour
 
     void Update()
     {
+        // Reset Inputs
         inputState.AxisInput = Vector3.zero;
+        inputState.Run.Set(VButtonState.UNPRESSED);
+        inputState.Jump.Set(VButtonState.UNPRESSED);
+        inputState.Crouch.Set(VButtonState.UNPRESSED);
+        inputState.MouseButton1.Set(VButtonState.UNPRESSED);
+        inputState.MouseButton2.Set(VButtonState.UNPRESSED);
+
+        // AI
         entry.Evaluate();
         cachedNeighbors = GetNearbyFlockMembers();
 
@@ -174,12 +184,14 @@ public class BTBrain : MonoBehaviour
     NodeStates IsBraveEnough()
     {
         currentBTNode = "IsBraveEnough";
+        // Debug.Log(currentBTNode);
         return (brave > .7f) ? NodeStates.SUCCESS : NodeStates.FAILURE;
     }
 
     NodeStates IsCloseEnoughToAttack()
     {
         currentBTNode = "IsCloseEnoughToAttack";
+        // Debug.Log(currentBTNode);
         if(chaseTarget)
         {
             if(Vector3.Distance(chaseTarget.position, transform.position) < attackRange)
@@ -192,6 +204,7 @@ public class BTBrain : MonoBehaviour
     NodeStates Attack()
     {
         currentBTNode = "Attack";
+        // Debug.Log(currentBTNode);
         inputState.MouseButton1.Set(VButtonState.PRESS_START);
         return NodeStates.SUCCESS;
     }
@@ -258,6 +271,7 @@ public class BTBrain : MonoBehaviour
     NodeStates SeeAnyone ()
     {
         currentBTNode = "SeeAnyone";
+        // Debug.Log(currentBTNode);
         if(awarenessAgent.VisibleAgents.Count > 0)
             lastSeenTime = Time.time;
 
@@ -270,7 +284,7 @@ public class BTBrain : MonoBehaviour
     NodeStates ChasingAnyone ()
     {
         currentBTNode = "ChasingAnyone";
-
+        // Debug.Log(currentBTNode);
         if(isChasing)
             return NodeStates.SUCCESS;
         else
@@ -280,7 +294,7 @@ public class BTBrain : MonoBehaviour
     NodeStates Chase()
     {
         currentBTNode = "Chase";
-        
+        // Debug.Log(currentBTNode);
         // Pick chase target
         if(isChasing == false)
         {
@@ -337,6 +351,7 @@ public class BTBrain : MonoBehaviour
 
         // Move goal transform at next point
         goal.position = (points.Length > 0) ? points[nextPoint] : transform.position;
+        inputState.Run.Set((charStats.Stamina > 20) ? VButtonState.PRESSED : VButtonState.UNPRESSED);
         inputState.AxisInput = chaseBehavior.CalculateMoveFlat(transform, goal, cachedNeighbors);
 
         return NodeStates.SUCCESS;
