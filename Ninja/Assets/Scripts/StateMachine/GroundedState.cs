@@ -57,7 +57,7 @@ public class GroundedState : State
     [SerializeField] private bool debugView;
     [SerializeField] private new Rigidbody rigidbody;
 
-    void Awake () 
+    void Awake ()
     {
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.freezeRotation = true;
@@ -163,7 +163,7 @@ public class GroundedState : State
 
     private void OnDrawGizmos()
     {
-        if(!debugView) return;
+        if(debugView == false) return;
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(groundCheck.position, groundSphereRadius);
