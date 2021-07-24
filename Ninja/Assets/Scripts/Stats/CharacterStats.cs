@@ -147,21 +147,24 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
         //InitializeAttributes();
 
-        DebugCommandDatabase.AddCommand(new DebugCommand(
-            "setattribute", 
-            "Sets attribute to desired value", 
-            "setattribute <attribute> <level>", 
-            (string[] parameters) => {
-                SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
-            }));
+        if(gameObject.name == "Player Object (Main)")
+        {
+            DebugCommandDatabase.AddCommand(new DebugCommand(
+                "setattribute", 
+                "Sets attribute to desired value", 
+                "setattribute <attribute> <level>", 
+                (string[] parameters) => {
+                    SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
+                }));
 
-        DebugCommandDatabase.AddCommand(new DebugCommand(
-            "killme", 
-            "Kills the player", 
-            "killme", 
-            (string[] parameters) => {
-                SubHealth(9999f);
-            }));
+            DebugCommandDatabase.AddCommand(new DebugCommand(
+                "killme", 
+                "Kills the player", 
+                "killme", 
+                (string[] parameters) => {
+                    SubHealth(9999f);
+                }));
+        }
     }
 
     public void OnValidate()
@@ -190,7 +193,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
         attributeName = char.ToUpper(attributeName[0]) + attributeName.Substring(1).ToLower();
         for (int i = 0; i < attributes.Length; i++)
-            if(attributes[i]._name == attributeName)
+            if(attributes[i].Name == attributeName)
                 return attributes[i];
 
         return null;
@@ -200,7 +203,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         Attribute attr = FindAttribute(attributeName);
         if (attr != null) 
-            return attr._level;
+            return attr.Level;
 
         return -1;
     }
@@ -209,7 +212,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         Attribute attr = FindAttribute(attributeName);
         if (attr != null) 
-            return attr._experience;
+            return attr.Experience;
 
         return -1f;
     }
@@ -237,7 +240,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         Attribute s = FindAttribute(statName);
         if (s != null) 
         {   
-            s._level = Mathf.Clamp(level, minAttributeLevel, maxAttributeLevel);
+            // s.Level = Mathf.Clamp(level, minAttributeLevel, maxAttributeLevel);
+            s.SetLevel(level);
             return true;
         }
             
@@ -395,10 +399,11 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
-    public void GetHit(int damage, DamageType damageType)
+    public void GetHit(int softDamage, int hardDamage, DamageType damageType)
     {
-        Debug.Log(gameObject.name + " was hit for " + damage + damageType + " damage");
-        SubHealth(damage);
+        Debug.Log(gameObject.name + " was hit for " + softDamage + " / " + hardDamage + " " + damageType + " damage");
+        SubHealth(softDamage);
+        SubPotentialHealth(hardDamage);
     }
 
     public void Die()

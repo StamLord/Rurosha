@@ -26,6 +26,9 @@ public class BTBrain : MonoBehaviour
     [SerializeField] private float lastSeenTime;
     [SerializeField] private Vector3 lastSeenPos;
 
+    [Header("Attack Parameters")]
+    [SerializeField] private float attackRange = 2f;
+
     [Header("Pathfinding")]
     [SerializeField] private NavMeshPath path;
     [SerializeField] private Vector3[] points = new Vector3[0];
@@ -67,7 +70,15 @@ public class BTBrain : MonoBehaviour
                     new BTSequence(this, new List<BTNode>()
                     {
                         new BTActionNode(this, IsBraveEnough),
-                        new BTActionNode(this, Chase)
+                        new BTSelector(this, new List<BTNode>()
+                        {
+                            new BTSequence(this, new List<BTNode>()
+                            {
+                                new BTActionNode(this, IsCloseEnoughToAttack),
+                                new BTActionNode(this, Attack)
+                            }),
+                            new BTActionNode(this, Chase)
+                        })
                     }),
                     new BTActionNode(this, Flee)
                 })
@@ -135,7 +146,7 @@ public class BTBrain : MonoBehaviour
         return neighbors;
     }
     
-    NodeStates IsCloseEnough ()
+    NodeStates IsCloseEnoughToGoal()
     {
         currentBTNode = "IsCloseEnough";
         Vector3 flatGoal = goal.position;
@@ -160,10 +171,29 @@ public class BTBrain : MonoBehaviour
         return NodeStates.FAILURE;
     }
 
-    NodeStates IsBraveEnough ()
+    NodeStates IsBraveEnough()
     {
         currentBTNode = "IsBraveEnough";
         return (brave > .7f) ? NodeStates.SUCCESS : NodeStates.FAILURE;
+    }
+
+    NodeStates IsCloseEnoughToAttack()
+    {
+        currentBTNode = "IsCloseEnoughToAttack";
+        if(chaseTarget)
+        {
+            if(Vector3.Distance(chaseTarget.position, transform.position) < attackRange)
+                return NodeStates.SUCCESS;
+        }
+
+        return NodeStates.FAILURE;
+    }
+
+    NodeStates Attack()
+    {
+        currentBTNode = "Attack";
+        inputState.MouseButton1.Set(VButtonState.PRESS_START);
+        return NodeStates.SUCCESS;
     }
 
     NodeStates IsStuck()
