@@ -13,6 +13,7 @@ public class ClimbState : State
 	[SerializeField] private float maxVelocityChange = 10.0f;
 
     [Header("Input Data")]
+    [SerializeField] private InputState inputState;
     [SerializeField] private Vector3 inputVector;
     [SerializeField] private Vector3 targetDirection;
     [SerializeField] private Vector3 targetVelocity;
@@ -60,6 +61,8 @@ public class ClimbState : State
         collider.height = climbingColliderSize.y;
 
         collider.material = friction;
+
+        inputState = ((CharacterStateMachine)_stateMachine).inputState;
     }
 
     public override void OnStateUpdate()
@@ -84,11 +87,11 @@ public class ClimbState : State
             _stateMachine.SwitchState(0);
 
         
-        if(Input.GetButtonDown("Jump"))
+        if(inputState.Jump.State == VButtonState.PRESS_START)
             _stateMachine.SwitchState(2);
 
         // Jump off
-        if(Input.GetButtonDown("Jump"))
+        if(inputState.Jump.State == VButtonState.PRESS_START)
             _stateMachine.SwitchState(2);
 
         // Fall if no longer climbing
@@ -106,7 +109,7 @@ public class ClimbState : State
 
     private void GetInput()
     {
-        inputVector = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        inputVector = new Vector3(inputState.AxisInput.x, inputState.AxisInput.z, 0);
         inputVector.Normalize();
         targetDirection = transform.TransformDirection(inputVector);
         targetVelocity = targetDirection;

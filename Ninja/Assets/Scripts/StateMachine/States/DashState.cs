@@ -14,6 +14,10 @@ public class DashState : State
     [SerializeField] private float gravity = 20.0f;
 
     [Space(20f)]
+    [Header("Input Data")]
+    [SerializeField] private InputState inputState;
+
+    [Space(20f)]
 
     [Header("Stats")]
     [SerializeField] private CharacterStats characterStats;
@@ -41,9 +45,10 @@ public class DashState : State
         if(debugView) Debug.Log("State: Entered [Dash State]");
 
         characterStats = ((CharacterStateMachine)_stateMachine).characterStats;
+        inputState = ((CharacterStateMachine)_stateMachine).inputState;
 
         dashStart = rigidbody.position;
-        Vector3 inputVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        Vector3 inputVector = inputState.AxisInput;
         inputVector.Normalize();
         
         //Safeguard, default is dash forward

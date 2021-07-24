@@ -18,18 +18,20 @@ public class GroundedState : State
     [SerializeField] private new CapsuleCollider collider;
     
     [Space(20f)]
+    
     [Header("Stats")]
     [SerializeField] private CharacterStats characterStats;
-    [SerializeField] private InputState inputState;
     [SerializeField] private float staminaDepleteRate = 20f;
     [SerializeField] private float potentialStaminaDepleteRate = 2f;
     [SerializeField] private float enduranceExpGain = .01f;
+
     [Space(20f)]
 	
     [SerializeField] private float gravity = 20.0f;
 	[SerializeField] private float maxVelocityChange = 10.0f;
 
     [Header("Input Data")]
+    [SerializeField] private InputState inputState;
     [SerializeField] private Vector3 inputVector;
     [SerializeField] private Vector3 targetDirection;
     

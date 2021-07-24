@@ -16,6 +16,7 @@ public class CrouchState : State
 	[SerializeField] private float maxVelocityChange = 10.0f;
 
     [Header("Input Data")]
+    [SerializeField] private InputState inputState;
     [SerializeField] private Vector3 inputVector;
     [SerializeField] private Vector3 targetDirection;
     
@@ -49,6 +50,8 @@ public class CrouchState : State
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Crouch State]");
         collider.height = croucingColliderSize.y;
+
+        inputState = ((CharacterStateMachine)_stateMachine).inputState;
     }
 
     public override void OnStateUpdate()
@@ -58,7 +61,7 @@ public class CrouchState : State
         GroundCheck();
 
         // Input
-        inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        inputVector = inputState.AxisInput;
         inputVector.Normalize();
         targetDirection = transform.TransformDirection(inputVector);
         Vector3 targetVelocity = targetDirection;
@@ -81,7 +84,7 @@ public class CrouchState : State
             rigidbody.AddForce(targetVelocity * airControl, ForceMode.Acceleration);
 
         // Crouch
-        if (Input.GetKey(KeyCode.C) == false) 
+        if (inputState.Crouch.State == VButtonState.UNPRESSED) 
             _stateMachine.SwitchState(0);
 
 	    // We apply gravity manually for more tuning control

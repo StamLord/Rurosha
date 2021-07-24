@@ -25,6 +25,7 @@ public class JumpState : State
 
     [Header("Stats")]
     [SerializeField] private CharacterStats characterStats;
+    [SerializeField] private InputState inputState;
     [SerializeField] private float staminaDepleteRate = 20f;
     [SerializeField] private float enduranceExpGain = .01f;
     
@@ -87,6 +88,7 @@ public class JumpState : State
         if(debugView) Debug.Log("State: Entered [Jump State]");
 
         characterStats = ((CharacterStateMachine)_stateMachine).characterStats;
+        inputState = ((CharacterStateMachine)_stateMachine).inputState;
 
         _timeStamp = Time.time;
 
@@ -139,7 +141,7 @@ public class JumpState : State
         // }
         rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);*/
         
-        if(Input.GetButtonDown("Jump"))
+        if(inputState.Jump.State == VButtonState.PRESS_START)
             _stateMachine.SwitchState(2);
 
         if(gravityOn)
@@ -164,17 +166,17 @@ public class JumpState : State
 
     private void GetInput()
     {
-        inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        inputVector = inputState.AxisInput;
         inputVector.Normalize();
         targetDirection = transform.TransformDirection(inputVector);
         targetVelocity = targetDirection;
 
-        if(Input.GetButton("Crouch") && glideOn && isGliding == false)
+        if(inputState.Crouch.State == VButtonState.PRESSED && glideOn && isGliding == false)
         {
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0f, rigidbody.velocity.z);
             isGliding = true;
         }
-        else if(Input.GetButton("Crouch") == false && isGliding)
+        else if(inputState.Crouch.State == VButtonState.UNPRESSED && isGliding)
             isGliding = false;
     }
 
