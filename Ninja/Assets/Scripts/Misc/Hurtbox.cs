@@ -5,27 +5,32 @@ using UnityEngine;
 public class Hurtbox : MonoBehaviour
 {
     [SerializeField] private List<IHurtboxResponder> _responders = new List<IHurtboxResponder>();
-    [SerializeField] private Material material;
-    [SerializeField] private Color baseColor;
-    [SerializeField] private Color hitColor;
+
+    [Header("Debug")]
+    [SerializeField] private bool _debug;
+    [SerializeField] private Material _material;
+    [SerializeField] private Color _baseColor;
+    [SerializeField] private Color _hitColor;
     
     public void Start()
     {
-        material = GetComponentInChildren<MeshRenderer>().material;
-        baseColor = material.color;
+        _material = GetComponentInChildren<MeshRenderer>()?.material;
+        _baseColor = _material.color;
     }
 
-    public void GetHit(int damage)
+    // Called by weapon scripts after
+    public void Hit(int softDamage, int hardtDamage)
     {
-        GetHit(damage, DamageType.Blunt);
+        Hit(softDamage, hardtDamage, DamageType.Blunt);
     }
 
-    public void GetHit(int damage, DamageType damageType)
+    public void Hit(int softDamage, int hardDamage, DamageType damageType)
     {
         foreach(IHurtboxResponder r in _responders)
-            r.GetHit(damage, damageType);
+            r.GetHit(softDamage, hardDamage, damageType);
 
-        StartCoroutine(ColorChange(.5f));
+        if(_debug && _material)
+            StartCoroutine(ColorChange(.5f));
     }
 
     public void AddResponder(IHurtboxResponder responder)
@@ -41,15 +46,14 @@ public class Hurtbox : MonoBehaviour
         while(timePassed < time)
         {
             if(timePassed < time / 2 )
-                material.color = Color.Lerp(baseColor, hitColor, timePassed / time / 2);
+                _material.color = Color.Lerp(_baseColor, _hitColor, timePassed / time / 2);
             else
-                material.color = Color.Lerp(hitColor, baseColor, timePassed - time / 2 / time / 2);
+                _material.color = Color.Lerp(_hitColor, _baseColor, timePassed - time / 2 / time / 2);
                 
             timePassed += Time.deltaTime;
             yield return null;
         }
 
-        material.color = baseColor;
-        
+        _material.color = _baseColor;
     }
 }

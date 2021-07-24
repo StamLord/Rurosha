@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Kanabo : WeaponObject, IHitboxResponder
 {
-    [SerializeField] private CharacterStats charStats;
     [SerializeField] private Hitbox hitbox;
 
     [SerializeField] private bool nextAttack;
@@ -99,7 +98,7 @@ public class Kanabo : WeaponObject, IHitboxResponder
         pMat?.CollideEffect(collider.ClosestPointOnBounds(transform.position));
         
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
-        hurtbox?.GetHit(10);
+        hurtbox?.Hit(30, 10);
     }
 
     public void UpdateColliderState(bool newState)

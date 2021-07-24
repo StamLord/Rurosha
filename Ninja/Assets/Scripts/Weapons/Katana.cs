@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Katana : WeaponObject, IHitboxResponder
 {
-    [SerializeField] private CharacterStats charStats;
     [SerializeField] private Hitbox hitbox;
 
     [SerializeField] private bool nextAttack;
@@ -30,6 +29,11 @@ public class Katana : WeaponObject, IHitboxResponder
     [SerializeField] private float sliceForce = 2f;
     [SerializeField] private float maxSlicesPerCut = 10;
     [SerializeField] private List<GameObject> newSlices = new List<GameObject>();
+
+    [Header("Damage")]
+    [SerializeField] private int softDamage = 20;
+    [SerializeField] private int hardDamage = 10;
+    [SerializeField] private float chanceToBleed = .25f;
 
     [Header("Stats")]
     [SerializeField] private float leftAttackStaminaCost= 2f;
@@ -127,6 +131,7 @@ public class Katana : WeaponObject, IHitboxResponder
         }
     }
 
+    // Called by Hitbox on collision
     public void CollisionWith(Collider collider)
     {   
         //Gain Exp
@@ -138,7 +143,7 @@ public class Katana : WeaponObject, IHitboxResponder
         
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
-        hurtbox?.GetHit(10);
+        hurtbox?.Hit(softDamage, hardDamage, DamageType.Slash);
 
         //Slice
         Sliceable sliceable = collider.GetComponent<Sliceable>();

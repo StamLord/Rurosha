@@ -5,7 +5,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour, IHitboxResponder
 {   
     [Header("Damage")]
-    [SerializeField] private int damage = 5;
+    [SerializeField] private int softDamage = 5;
+    [SerializeField] private int hardDamage = 5;
 
     [Header("Visual")]
     [SerializeField] private Vector3 visualRotationPerSecond;
@@ -108,7 +109,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             // Avoid triggering multiple hurtboxes with the same parent GameObject
             if(objectsCollided.Contains(hurtbox.transform.parent.gameObject) == false)
             {
-                hurtbox.GetHit(damage);
+                hurtbox.Hit(softDamage, hardDamage, DamageType.Pierce);
                 objectsCollided.Add(hurtbox.transform.parent.gameObject);
             }        
         }

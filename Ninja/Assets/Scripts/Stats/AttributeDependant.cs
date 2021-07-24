@@ -26,7 +26,7 @@ public class AttributeDependant<T>
 
     private T GetValue()
     {
-        return values[attribute._level - 1];
+        return values[attribute.Level - 1];
     }
 
     public T GetValue(CharacterStats stats)
@@ -41,6 +41,6 @@ public class AttributeDependant<T>
 
     public T GetValue(Attribute attribute)
     {   
-        return values[attribute._level - 1];
+        return values[attribute.Level - 1];
     }
 }

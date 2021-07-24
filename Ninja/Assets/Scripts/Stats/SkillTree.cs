@@ -17,7 +17,7 @@ public class SkillTree : Attribute
         int total = 0;
 
         foreach(Skill s in skills)
-            total += s._maxLevel;
+            total += s.MaxLevel;
 
         return total;
     }
@@ -27,8 +27,8 @@ public class SkillTree : Attribute
         int level = 0;
 
         foreach(Skill s in _skills)
-            if(s._maxLevel > level)
-                level = s._maxLevel;
+            if(s.MaxLevel > level)
+                level = s.MaxLevel;
 
         return level;
     }
