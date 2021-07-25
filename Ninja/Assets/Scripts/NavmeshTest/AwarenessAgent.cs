@@ -122,7 +122,7 @@ public class AwarenessAgent : MonoBehaviour
             Gizmos.DrawCube(s.transform.position, new Vector3(1f, 1f, 1f));
 
         // Last Sound Representation
-        Gizmos.color = Color.black;   
+        Gizmos.color = Color.white;   
         Gizmos.DrawCube(lastSoundDetected, new Vector3(1f, 1f, 1f));
 
     }
