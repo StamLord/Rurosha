@@ -5,15 +5,15 @@ using UnityEngine;
 public class AnimationManager : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    [SerializeField] private RigidbodyFPSWalker fpsWalker;
+    [SerializeField] private InputState inputState;
 
     void LateUpdate()
     {
         if(animator)
         {
-            animator.SetFloat("Speed X", fpsWalker.Speed.x);
-            animator.SetFloat("Speed Z", fpsWalker.Speed.z);
-            animator.SetBool("Crouching", fpsWalker.Crouching);
+            animator.SetFloat("Speed X", inputState.AxisInput.x);
+            animator.SetFloat("Speed Z", inputState.AxisInput.z);
+            animator.SetBool("Crouching", inputState.Crouch.State == VButtonState.PRESSED);
         }
     }
 }
