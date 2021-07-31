@@ -9,9 +9,22 @@ public class OneWayCollider : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Rigidbody rigid = other.GetComponent<Rigidbody>();
+        if(rigid == null) return;
+        
         if(rigid.velocity.y > 0)
+        {
+            Debug.Log("Ignoring " + other);
             Physics.IgnoreCollision(other, affectedCollider, true);
-        else
-            Physics.IgnoreCollision(other, affectedCollider, false);
+        }
+        
+    }
+
+    void OnTriggerExit(Collider other) 
+    {
+        Rigidbody rigid = other.GetComponent<Rigidbody>();
+        if(rigid == null) return;
+        
+        Debug.Log("UnIgnoring " + other);
+        Physics.IgnoreCollision(other, affectedCollider, false);
     }
 }

@@ -12,7 +12,8 @@ public class VButton
     private float firstPress;
     private float lastPress;
 
-    public float PressTime { get{return ((State == VButtonState.UNPRESSED) ? 0f : lastPress - firstPress);}}
+    public bool Pressed { get { return (State == VButtonState.PRESS_START || State == VButtonState.PRESSED); }}
+    public float PressTime { get { return ((State == VButtonState.UNPRESSED) ? 0f : lastPress - firstPress); }}
 
     public void Set(VButtonState newState)
     {

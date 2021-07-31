@@ -255,6 +255,16 @@ public class Katana : WeaponObject, IHitboxResponder
 
     public void Method1()
     {
+        // MB1  + MB2 = Defend
+        if(inputState.MouseButton1.Pressed && 
+            inputState.MouseButton2.Pressed)
+        {
+            animator.SetBool("Defending", true);
+            return;
+        }
+        else
+            animator.SetBool("Defending", false);
+
         if(inputState.MouseButton1.State == VButtonState.PRESS_START)
         {
             AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
@@ -276,11 +286,6 @@ public class Katana : WeaponObject, IHitboxResponder
                 }
             }
         }
-
-        if(inputState.MouseButton2.State == VButtonState.PRESS_START)
-            animator.SetBool("Defending", true);
-        else if(inputState.MouseButton2.State == VButtonState.PRESS_END)
-            animator.SetBool("Defending", false);
     }
 
     public void Method2()
