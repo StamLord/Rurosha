@@ -126,9 +126,6 @@ public class GroundedState : State
                 if(characterStats.DepleteStamina(20))
                     _stateMachine.SwitchState(4);
         }
-        // Air
-        //else 
-            //rigidbody.AddForce(targetVelocity * airControl, ForceMode.Acceleration);
 
         // Kick
         if (Input.GetKeyDown(KeyCode.F)) 
@@ -162,8 +159,7 @@ public class GroundedState : State
 
     private void ClimbCheck()
     {
-        Collider[] colliders = Physics.OverlapSphere(climbCheck.position, 1f, climbMask);
-        isClimbing = (colliders.Length > 0 && inputVector.z > 0);
+        isClimbing = (Physics.Raycast(climbCheck.position, targetDirection, 1f, climbMask));
     }
 
     private void OnDrawGizmos()
