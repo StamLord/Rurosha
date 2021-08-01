@@ -54,6 +54,7 @@ public class GroundedState : State
     [SerializeField] private Transform climbCheck;
     [SerializeField] private LayerMask climbMask;
     [SerializeField] private bool isClimbing;
+    [SerializeField] private float climbingStartDistannce = .75f;
 
     [Space(20f)]
     
@@ -159,7 +160,7 @@ public class GroundedState : State
 
     private void ClimbCheck()
     {
-        isClimbing = (Physics.Raycast(climbCheck.position, targetDirection, 1f, climbMask));
+        isClimbing = (Physics.Raycast(climbCheck.position, targetDirection, climbingStartDistannce, climbMask));
     }
 
     private void OnDrawGizmos()

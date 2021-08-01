@@ -4128,6 +4128,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8192
   isClimbing: 0
+  climbingStartDistannce: 0.75
   debugView: 0
   rigidbody: {fileID: 0}
 --- !u!114 &4243153703830139676
@@ -4261,7 +4262,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   isClimbing: 0
-  lastWallNormal: {x: 0, y: 0, z: 0}
+  wallPoint: {x: 0, y: 0, z: 0}
+  wallNormal: {x: 0, y: 0, z: 0}
+  wallVertical: {x: 0, y: 0, z: 0}
+  wallHorizontal: {x: 0, y: 0, z: 0}
+  ledgeOffset: 0.1
+  ledgeDetected: 0
+  ledgePoint: {x: 0, y: 0, z: 0}
+  ledgeClimbTime: 1
+  ledgeTransTimer: 0
+  inTransition: 0
   groundCheck: {fileID: 6944390855444759398}
   groundSlope: 0
   groundSphereRadius: 0.4
@@ -4271,6 +4281,8 @@ MonoBehaviour:
     m_Bits: 1
   isGrounded: 0
   debugView: 0
+  ledgeColor: {r: 1, g: 0, b: 0, a: 1}
+  climbCheckColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   rigidbody: {fileID: 0}
   noFriction: {fileID: 13400000, guid: 2e34a1d4bdf627f468f40849b0331d69, type: 2}
   friction: {fileID: 13400000, guid: 9fd4fa3b2f129f74b90ace2cfcb928d4, type: 2}

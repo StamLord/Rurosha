@@ -33,7 +33,14 @@ public class ClimbState : State
 
     [Space(20f)]
 
-    [Header("Climb Transitions")]
+    [Header("Ledge Detection")]
+    [SerializeField] private float ledgeOffset = .1f;
+    [SerializeField] private bool ledgeDetected;
+    [SerializeField] private Vector3 ledgePoint;
+
+    [Space(20f)]
+
+    [Header("Ledge Transitions")]
     [SerializeField] private float ledgeClimbTime = 1f;
     [SerializeField] private float ledgeTransTimer;
     [SerializeField] private bool inTransition;
@@ -52,6 +59,8 @@ public class ClimbState : State
     
     [Header("Debug View")]
     [SerializeField] private bool debugView;
+    [SerializeField] private Color ledgeColor = Color.red;
+    [SerializeField] private Color climbCheckColor = Color.yellow;
     [SerializeField]private new Rigidbody rigidbody;
 
     [SerializeField]private PhysicMaterial noFriction;
@@ -102,33 +111,33 @@ public class ClimbState : State
 
         ClimbCheck();
         GetWallAxis();
+        DetectLedge();
         
         Vector3 moveVector = wallVertical * inputVector.y + wallHorizontal * inputVector.x;
         moveVector.Normalize();
 
         // Check if we have wall to move to
         RaycastHit wallToClimb;
-        if(Physics.Raycast(transform.position + (moveVector * Time.deltaTime), -wallNormal, out wallToClimb, climbMask))
+        Vector3 projection = moveVector;
+        projection.y *= 15f;
+
+        Debug.DrawRay(climbCheck.position + (projection * Time.deltaTime), -wallNormal * 1f);
+        if(Physics.Raycast(climbCheck.position + (projection * Time.deltaTime), -wallNormal, out wallToClimb, 1f ,climbMask))
         {
             moveVector *= climbSpeed;
-
+            Debug.Log(wallToClimb.transform.gameObject);
             RaycastHit obstacle;
             if(Physics.Raycast(transform.position, moveVector, out obstacle, 1f, blockMask) == false)
                 rigidbody.MovePosition(transform.position + (moveVector * Time.deltaTime));
         }
         else
         {
-            // Moving up along the wall
-            if(moveVector.y > 0)
+            // Moving up and there is a ledge
+            if(moveVector.y > 0 && ledgeDetected)
             {   
-                RaycastHit ledge;
-                Debug.DrawRay(wallPoint - wallNormal + Vector3.up, Vector3.down, Color.cyan);
-                if(Physics.Raycast(wallPoint - wallNormal + Vector3.up, Vector3.down, out ledge, 1f))
-                {
-                    // Start Ledge transition
-                    IEnumerator co = LedgeTransition(ledge.point);
-                    StartCoroutine(co);
-                }
+                // Start Ledge transition
+                IEnumerator co = LedgeTransition(ledgePoint);
+                StartCoroutine(co);
             }
         }
         
@@ -152,7 +161,6 @@ public class ClimbState : State
             if(Physics.Raycast(transform.position, -wallVertical, out floor, 1f))
                 _stateMachine.SwitchState(1);
         }
-
 
         // Jump off
         if(inputState.Jump.State == VButtonState.PRESS_START)
@@ -192,7 +200,7 @@ public class ClimbState : State
     {
         // Get wall and normal infront
         RaycastHit wall;
-        if(Physics.Raycast(transform.position, transform.forward, out wall, 1f, climbMask))
+        if(Physics.Raycast(climbCheck.position, transform.forward, out wall, 1f, climbMask))
         {    
             wallPoint = wall.point;
             wallNormal = wall.normal;
@@ -200,9 +208,7 @@ public class ClimbState : State
             climbingOn = wall.transform;
         }
         else
-        {
             climbingOn = null;
-        }
     }
 
     private void CalculateWallAxis()
@@ -230,6 +236,17 @@ public class ClimbState : State
         _stateMachine.SwitchState(1);        
     }
 
+    private void DetectLedge()
+    {
+        RaycastHit ledge;
+        Ray ledgeRay = new Ray(wallPoint - wallNormal * ledgeOffset + Vector3.up - Vector3.up * .1f, Vector3.down);
+        
+        ledgeDetected = Physics.Raycast(ledgeRay, out ledge, 1f);
+        ledgePoint = ledge.point;
+
+        Debug.DrawRay(wallPoint - wallNormal * ledgeOffset + Vector3.up - Vector3.up * .1f, Vector3.down, Color.cyan);
+    }
+
     private bool ClimbDownCheck()
     {
         if(inputVector.y > 0) return false;
@@ -239,5 +256,16 @@ public class ClimbState : State
         groundSlope = Vector3.Angle(groundHit.normal, Vector3.up);
 
         return isGrounded;
+    }
+
+    private void OnDrawGizmos() 
+    {
+        if(debugView == false) return;
+
+        Gizmos.color = ledgeColor;
+        Gizmos.DrawCube(ledgePoint, new Vector3(.1f, .1f, .1f));
+
+        Gizmos.color = climbCheckColor;
+        Gizmos.DrawWireSphere(climbCheck.position, 2f);
     }
 }
