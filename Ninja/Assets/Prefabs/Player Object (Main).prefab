@@ -369,8 +369,8 @@ MonoBehaviour:
         transform: {fileID: 0}
         weight: 0
     m_Offset: {x: 0, y: 0, z: 0}
-    m_MinLimit: -30
-    m_MaxLimit: 30
+    m_MinLimit: -10
+    m_MaxLimit: 10
     m_AimAxis: 4
     m_UpAxis: 2
     m_WorldUpType: 0
@@ -628,7 +628,7 @@ GameObject:
   - component: {fileID: 1314776839}
   - component: {fileID: 1314776838}
   - component: {fileID: 1314776837}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 1348594577}
   - component: {fileID: 1348594576}
   - component: {fileID: 1348594579}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Kanabo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -858,7 +858,7 @@ GameObject:
   - component: {fileID: 1385408372}
   - component: {fileID: 1385408374}
   - component: {fileID: 1385408373}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Head Hurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1006,7 +1006,7 @@ GameObject:
   - component: {fileID: 1862995510}
   - component: {fileID: 1862995512}
   - component: {fileID: 1862995511}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Body Hurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1106,7 +1106,7 @@ MonoBehaviour:
       m_Length: 1
       m_Item0:
         transform: {fileID: 2118518809}
-        weight: 0.2
+        weight: 0.5
       m_Item1:
         transform: {fileID: 0}
         weight: 0
@@ -1129,8 +1129,8 @@ MonoBehaviour:
         transform: {fileID: 0}
         weight: 0
     m_Offset: {x: 0, y: 0, z: 0}
-    m_MinLimit: -30
-    m_MaxLimit: 30
+    m_MinLimit: -20
+    m_MaxLimit: 20
     m_AimAxis: 4
     m_UpAxis: 2
     m_WorldUpType: 0
@@ -2311,7 +2311,7 @@ GameObject:
   - component: {fileID: 6944390855641208536}
   - component: {fileID: 169263845}
   - component: {fileID: 169263844}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3575,7 +3575,7 @@ GameObject:
   - component: {fileID: 6944390856736947500}
   - component: {fileID: 6944390856736947501}
   - component: {fileID: 6944390856736947502}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Katana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4121,7 +4121,7 @@ MonoBehaviour:
   groundDistance: 0.8
   groundMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8193
   isGrounded: 0
   climbCheck: {fileID: 1085942235367669121}
   climbMask:
@@ -4161,7 +4161,7 @@ MonoBehaviour:
   groundDistance: 0.8
   groundMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8193
   isGrounded: 0
   debugView: 0
   rigidbody: {fileID: 0}
@@ -4213,7 +4213,7 @@ MonoBehaviour:
   groundDistance: 0.8
   groundMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8193
   wallJumpWindow: 0.2
   wallJumpForce: 10
   wallJumpOn: 1
@@ -4246,7 +4246,7 @@ MonoBehaviour:
   _stateMachine: {fileID: 0}
   isActive: 0
   climbSpeed: 2
-  climbingColliderSize: {x: 0, y: 1, z: 0}
+  climbingColliderSize: {x: 0, y: 2, z: 0}
   collider: {fileID: 0}
   maxVelocityChange: 10
   inputState: {fileID: 0}
@@ -4260,7 +4260,7 @@ MonoBehaviour:
     m_Bits: 8192
   blockMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   isClimbing: 0
   wallPoint: {x: 0, y: 0, z: 0}
   wallNormal: {x: 0, y: 0, z: 0}
@@ -4269,7 +4269,7 @@ MonoBehaviour:
   ledgeOffset: 0.1
   ledgeDetected: 0
   ledgePoint: {x: 0, y: 0, z: 0}
-  ledgeClimbTime: 1
+  ledgeClimbTime: 0.5
   ledgeTransTimer: 0
   inTransition: 0
   groundCheck: {fileID: 6944390855444759398}
