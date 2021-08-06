@@ -158,6 +158,14 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
                 }));
 
             DebugCommandDatabase.AddCommand(new DebugCommand(
+                "setattr", 
+                "Sets attribute to desired value", 
+                "setattr <attribute> <level>", 
+                (string[] parameters) => {
+                    SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
+                }));
+
+            DebugCommandDatabase.AddCommand(new DebugCommand(
                 "killme", 
                 "Kills the player", 
                 "killme", 
