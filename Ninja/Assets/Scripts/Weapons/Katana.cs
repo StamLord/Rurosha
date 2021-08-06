@@ -264,7 +264,8 @@ public class Katana : WeaponObject, IHitboxResponder
         }
         else
             animator.SetBool("Defending", false);
-
+        
+        // LMB
         if(inputState.MouseButton1.State == VButtonState.PRESS_START)
         {
             AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
@@ -275,16 +276,23 @@ public class Katana : WeaponObject, IHitboxResponder
                 if(charStats.DepleteStamina(crouchAttackStaminaCost))
                 {
                     animator.SetTrigger("CrouchAttack");
-                }
-            }
-            else if(state.IsName("Idle") || state.IsName("HighIdle") ||state.IsName("Attack1") && nextAttack)
-            {
-                if(charStats.DepleteStamina(leftAttackStaminaCost))
-                {
-                    animator.SetTrigger("Attack");
                     charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
                 }
             }
+            else if(state.IsName("Idle") || state.IsName("HighIdle") || state.IsName("Attack1_chain") || state.IsName("Attack2_chain"))
+            {
+                if(charStats.DepleteStamina(leftAttackStaminaCost))
+                {
+                    animator.SetTrigger("LMB");
+                    charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+                }
+            }
+        }
+        // RMB
+        else if(inputState.MouseButton2.State == VButtonState.PRESS_START)
+        {
+            animator.SetTrigger("RMB");
+            charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
         }
     }
 
