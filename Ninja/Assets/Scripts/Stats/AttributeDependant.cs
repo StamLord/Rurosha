@@ -32,9 +32,7 @@ public class AttributeDependant<T>
     public T GetValue(CharacterStats stats)
     {   
         if(attribute == null)
-        {
             attribute = stats.FindAttribute(attributeName);
-        }
         
         return GetValue();
     }
@@ -42,5 +40,10 @@ public class AttributeDependant<T>
     public T GetValue(Attribute attribute)
     {   
         return values[attribute.Level - 1];
+    }
+
+    public T GetValueAt(int index)
+    {
+        return values[index];
     }
 }

@@ -9,10 +9,7 @@ public class GroundedState : State
 {
     [Header("Control Settings")]
     [SerializeField] private float walkSpeed = 10.0f;
-    // [SerializeField] private float runSpeed = 15.0f;
-    // [SerializeField] private float[] runSpeedPerAgilityLevel = {10, 10.5f, 11, 11.5f, 12, 12.5f, 13, 13.5f, 14, 15.0f};
     [SerializeField] private AttributeDependant<float> _runSpeed;
-    [SerializeField] private float airControl = 5f;
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private Vector3 standingColliderSize;
     [SerializeField] private new CapsuleCollider collider;
@@ -24,16 +21,13 @@ public class GroundedState : State
     [SerializeField] private float staminaDepleteRate = 20f;
     [SerializeField] private float potentialStaminaDepleteRate = 2f;
     [SerializeField] private float enduranceExpGain = .01f;
-
-    [Space(20f)]
-	
     [SerializeField] private float gravity = 20.0f;
-	[SerializeField] private float maxVelocityChange = 10.0f;
 
     [Header("Input Data")]
     [SerializeField] private InputState inputState;
     [SerializeField] private Vector3 inputVector;
     [SerializeField] private Vector3 targetDirection;
+	[SerializeField] private float maxVelocityChange = 10.0f;
     [Header("[IMPORTANT! Player needs this enabled]")]
     [SerializeField] private bool transformDirection;
     
@@ -133,7 +127,7 @@ public class GroundedState : State
             GetComponent<Kick>().ActivateKick();
 
         // Jump
-        if (inputState.Jump.State == VButtonState.PRESSED) 
+        if (inputState.Jump.Pressed) 
         {
             if(isGrounded)
                 _stateMachine.SwitchState(2);
@@ -142,6 +136,13 @@ public class GroundedState : State
         // Crouch
         if (inputState.Crouch.State == VButtonState.PRESSED) 
             _stateMachine.SwitchState(1);
+        
+        if(isClimbing)
+            _stateMachine.SwitchState(3);
+
+        // Fall
+        if (isGrounded == false) 
+            _stateMachine.SwitchState(5);
         
         if(isClimbing)
             _stateMachine.SwitchState(3);
