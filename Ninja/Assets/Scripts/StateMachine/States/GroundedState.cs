@@ -140,10 +140,11 @@ public class GroundedState : State
         if(isClimbing)
             _stateMachine.SwitchState(3);
 
-        // Fall
+        // Switch to AirSTate
         if (isGrounded == false) 
             _stateMachine.SwitchState(5);
         
+        // Switch to ClimbState
         if(isClimbing)
             _stateMachine.SwitchState(3);
 
@@ -151,6 +152,8 @@ public class GroundedState : State
         if(gravityOn)
 	        rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
     }
+
+    #region Checks
 
     private void GroundCheck()
     {
@@ -163,6 +166,8 @@ public class GroundedState : State
     {
         isClimbing = (Physics.Raycast(climbCheck.position, targetDirection, climbingStartDistannce, climbMask));
     }
+
+    #endregion
 
     private void OnDrawGizmos()
     {

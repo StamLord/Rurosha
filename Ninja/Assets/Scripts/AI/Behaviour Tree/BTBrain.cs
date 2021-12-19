@@ -59,49 +59,54 @@ public class BTBrain : MonoBehaviour
 
         List<BTNode> nodes1 = new List<BTNode>()
         {
-            // Fight or Flight branch
-            new BTSequence(this, new List<BTNode>() 
+            new BTSelector(this, new List<BTNode>()
             {
-                new BTSelector(this, new List<BTNode>()
+                new BTActionNode(this, IsDead),
+                // Fight or Flight branch
+                new BTSequence(this, new List<BTNode>() 
                 {
-                    new BTActionNode(this, ChasingAnyone),
-                    new BTActionNode(this, SeeAnyone)
-                }),
-                new BTSelector(this, new List<BTNode>()
-                {
-                    new BTSequence(this, new List<BTNode>()
+                    new BTSelector(this, new List<BTNode>()
                     {
-                        new BTActionNode(this, IsBraveEnough),
-                        new BTSelector(this, new List<BTNode>()
-                        {
-                            new BTSequence(this, new List<BTNode>()
-                            {
-                                new BTActionNode(this, IsCloseEnoughToAttack),
-                                new BTActionNode(this, Attack)
-                            }),
-                            new BTActionNode(this, Chase)
-                        })
+                        new BTActionNode(this, ChasingAnyone),
+                        new BTActionNode(this, SeeAnyone)
                     }),
-                    new BTActionNode(this, Flee)
-                })
-            }),
-            /*
-            // Idle and Roam branch
-            new BTSequence(this, new List<BTNode>() 
-            {
-                new BTActionNode(this, Roam),
-                new BTSelector(this, new List<BTNode>()
-                {
-                    new BTActionNode(this, IsCloseEnough),
-                    new BTActionNode(this, IsStuck)
+                    new BTSelector(this, new List<BTNode>()
+                    {
+                        new BTSequence(this, new List<BTNode>()
+                        {
+                            new BTActionNode(this, IsBraveEnough),
+                            new BTSelector(this, new List<BTNode>()
+                            {
+                                new BTSequence(this, new List<BTNode>()
+                                {
+                                    new BTActionNode(this, IsCloseEnoughToAttack),
+                                    new BTActionNode(this, Attack)
+                                }),
+                                new BTActionNode(this, Chase)
+                            })
+                        }),
+                        new BTActionNode(this, Flee)
+                    })
                 }),
-                new BTSelector(this, new List<BTNode>()
+                /*
+                // Idle and Roam branch
+                new BTSequence(this, new List<BTNode>() 
                 {
-                    new BTActionNode(this, Wait),
-                    new BTActionNode(this, Idle)
-                }),
-                new BTActionNode(this, NextRoam)
-            })*/
+                    new BTActionNode(this, Roam),
+                    new BTSelector(this, new List<BTNode>()
+                    {
+                        new BTActionNode(this, IsCloseEnough),
+                        new BTActionNode(this, IsStuck)
+                    }),
+                    new BTSelector(this, new List<BTNode>()
+                    {
+                        new BTActionNode(this, Wait),
+                        new BTActionNode(this, Idle)
+                    }),
+                    new BTActionNode(this, NextRoam)
+                })*/
+            })
+            
 
         };
         entry = new BTSelector(this, nodes1);
@@ -154,6 +159,14 @@ public class BTBrain : MonoBehaviour
         }
         
         return neighbors;
+    }
+
+    NodeStates IsDead()
+    {
+        if(charStats.IsAlive) 
+            return NodeStates.FAILURE;
+
+        return NodeStates.SUCCESS;
     }
     
     NodeStates IsCloseEnoughToGoal()

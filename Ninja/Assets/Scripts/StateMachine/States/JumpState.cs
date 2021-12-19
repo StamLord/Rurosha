@@ -71,6 +71,9 @@ public class JumpState : State
     [SerializeField] private new Rigidbody rigidbody;
     [SerializeField] private new CapsuleCollider collider;
 
+    public delegate void OnJumpChargeDelegate(float percentage);
+    public event OnJumpChargeDelegate OnJumpCharge;
+
 	void Awake () 
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -153,10 +156,16 @@ public class JumpState : State
                     _stateMachine.SwitchState(4);
         }
 
+        // Update jump charge listeners
+        if(OnJumpCharge != null)
+            OnJumpCharge(pressTime / maxPressTime);
+
         if (inputState.Jump.State == VButtonState.UNPRESSED && isGrounded) 
         {    
             rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
             pressTime = 0f;
+            if(OnJumpCharge != null)
+                OnJumpCharge(-1f);
             _stateMachine.SwitchState(5);
         }
         

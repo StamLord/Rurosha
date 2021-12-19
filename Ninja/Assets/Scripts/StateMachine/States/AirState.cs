@@ -28,6 +28,16 @@ public class AirState : State
     [SerializeField] private float groundSphereRadius = .4f;
     [SerializeField] private float groundDistance = .8f;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private bool isGrounded;
+    public bool IsGrounded {get{return isGrounded;}}
+
+    [Space(20f)]
+
+    [Header("Climb Detection")]
+    [SerializeField] private Transform climbCheck;
+    [SerializeField] private LayerMask climbMask;
+    [SerializeField] private bool isClimbing;
+    [SerializeField] private float climbingStartDistannce = .75f;
 
     [Space(20f)]
 
@@ -73,6 +83,9 @@ public class AirState : State
     {
         base.OnStateUpdate();
 
+        GroundCheck();
+        ClimbCheck();
+
         // Input
         GetInput();
 
@@ -104,9 +117,14 @@ public class AirState : State
                 rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
         }
 
-        // Touch ground
-        if (isGrounded() && rigidbody.velocity.y <= 0) 
+        // Switch to GroundedState
+        if (isGrounded && rigidbody.velocity.y <= 0) 
             _stateMachine.SwitchState(0);
+
+        // Switch to ClimbState
+        if(isClimbing)
+            _stateMachine.SwitchState(3);
+
     }
 
     private void GetInput()
@@ -125,12 +143,19 @@ public class AirState : State
             isGliding = false;
     }
 
-    private bool isGrounded()
+    #region Checks
+
+    private void GroundCheck()
     {
         RaycastHit groundHit;
-        bool _isGrounded = Physics.SphereCast(groundCheck.position, groundSphereRadius, Vector3.down, out groundHit, groundDistance, groundMask);
+        isGrounded = Physics.SphereCast(groundCheck.position, groundSphereRadius, Vector3.down, out groundHit, groundDistance, groundMask);
         groundSlope = Vector3.Angle(groundHit.normal, Vector3.up);
-        return _isGrounded;
     }
 
+    private void ClimbCheck()
+    {
+        isClimbing = (Physics.Raycast(climbCheck.position, targetDirection, climbingStartDistannce, climbMask));
+    }
+
+    #endregion
 }

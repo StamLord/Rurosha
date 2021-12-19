@@ -17,7 +17,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     #region Health
 
     [Header("Health")]
-    [SerializeField] private bool isAlive = true;
+    [SerializeField] private bool _isAlive = true;
+    public bool IsAlive {get {return _isAlive;}}
+
     [SerializeField] private GameObject aliveVisual;
     [SerializeField] private GameObject deadVisual;
 
@@ -263,7 +265,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     void RegenUpdate()
     {
-        if(isAlive == false) return;
+        if(_isAlive == false) return;
         
         if(Time.time - _healthLastDeplete > _healthRecoveryStart) 
             AddHealth(_healthRecovery * Time.deltaTime);
@@ -416,7 +418,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     public void Die()
     {
-        isAlive = false;
+        _isAlive = false;
 
         aliveVisual?.SetActive(false);
         deadVisual?.SetActive(true);

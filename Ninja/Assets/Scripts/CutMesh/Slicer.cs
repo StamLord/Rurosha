@@ -31,10 +31,10 @@ namespace Assets.Scripts
             
             Debug.Log(dimensions);
 
-            if(dimensions.x < sliceable.minMeshDimensions.x || 
-                dimensions.y < sliceable.minMeshDimensions.y ||
-                dimensions.z < sliceable.minMeshDimensions.z )
-                throw new NotSupportedException("Cannot slice non sliceable object, less then minimum dimensions");
+            // if(dimensions.x < sliceable.minMeshDimensions.x || 
+            //     dimensions.y < sliceable.minMeshDimensions.y ||
+            //     dimensions.z < sliceable.minMeshDimensions.z )
+            //     throw new NotSupportedException("Cannot slice non sliceable object, less then minimum dimensions");
                             
             //Create left and right slice of hollow object
             //SlicesMetadata slicesMeta = new SlicesMetadata(plane, mesh, sliceable.IsSolid, sliceable.ReverseWireTriangles, sliceable.ShareVertices, sliceable.SmoothVertices);            

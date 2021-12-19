@@ -4103,7 +4103,6 @@ MonoBehaviour:
     - 16
     - 18
     - 20
-  airControl: 5
   gravityOn: 1
   standingColliderSize: {x: 0, y: 2, z: 0}
   collider: {fileID: 0}
@@ -4213,7 +4212,7 @@ MonoBehaviour:
     - 5
     - 6
     - 8
-  minJumpHeight: 0.75
+  chargeJump: 1
   characterStats: {fileID: 0}
   inputState: {fileID: 0}
   potentialStaminaDepleteRate: 20
@@ -4371,6 +4370,12 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8193
+  climbCheck: {fileID: 1085942235367669121}
+  climbMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  isClimbing: 0
+  climbingStartDistannce: 0.75
   characterStats: {fileID: 0}
   glideOn: 0
   glideGravityMultiplier: 0.2

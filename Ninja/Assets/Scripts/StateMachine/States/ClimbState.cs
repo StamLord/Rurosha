@@ -6,6 +6,7 @@ public class ClimbState : State
 {
     [Header("Control Settings")]
     [SerializeField] private float climbSpeed = 4.0f;
+    [SerializeField] private float climbSpeedHorizontal = 4.0f;
     [SerializeField] private Vector3 climbingColliderSize;
     [SerializeField] private new CapsuleCollider collider;
     [Space(20f)]
