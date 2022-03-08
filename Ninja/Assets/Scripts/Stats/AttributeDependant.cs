@@ -26,6 +26,8 @@ public class AttributeDependant<T>
 
     private T GetValue()
     {
+        if(attribute == null)
+            return default(T);
         return values[attribute.Level - 1];
     }
 
