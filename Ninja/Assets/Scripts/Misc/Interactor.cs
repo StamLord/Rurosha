@@ -119,7 +119,8 @@ public class Interactor : MonoBehaviour
         else if(_inputState.Use.State == VButtonState.PRESS_END)
         {
             attemptingCarry = false;
-            UpdateCarryTimerEvent(0);
+            if(UpdateCarryTimerEvent != null)
+                UpdateCarryTimerEvent(0);
 
             if(carryTimer <  _minTimeToCarry && 
                 isCarrying == false)
