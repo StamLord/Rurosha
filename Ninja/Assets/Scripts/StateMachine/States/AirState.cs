@@ -96,7 +96,7 @@ public class AirState : State
         //rigidbody.AddForce(targetVelocity * airControl, ForceMode.VelocityChange);
         
         // Instant Method
-        /*
+        
         targetVelocity *= airControl;
 
         // Apply a force that attempts to reach our target velocity
@@ -106,11 +106,7 @@ public class AirState : State
         velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
         velocityChange.y = 0;
 
-        // if(dotProduct == 1)
-        // {
-        //     velocityChange += projectedInput;
-        // }
-        rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);*/
+        rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
         if(gravityOn)
         {

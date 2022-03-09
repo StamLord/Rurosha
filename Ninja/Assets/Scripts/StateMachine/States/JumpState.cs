@@ -173,6 +173,9 @@ public class JumpState : State
                 pressTime = 0f;
                 if(OnJumpCharge != null)
                     OnJumpCharge(-1f);
+                
+                // Transition to Air State
+                 _stateMachine.SwitchState(5);
             }
 
             if(gravityOn)
