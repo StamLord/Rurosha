@@ -52,6 +52,9 @@ public class AirState : State
     [SerializeField] private bool isGliding = false;
 
     [Space(20f)]
+    [Header("Air Jumps")]
+    [SerializeField] private int airJumps;
+    [SerializeField] private int maxAirJumps = 2;
 
     [Header("Debug View")]
     [SerializeField] private bool debugView;
@@ -117,9 +120,19 @@ public class AirState : State
                 rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
         }
 
+        // Jump
+        if (inputState.Jump.State == VButtonState.PRESS_START && airJumps < maxAirJumps) 
+        {
+            airJumps++;
+            _stateMachine.SwitchState(2);
+        }
+
         // Switch to GroundedState
         if (isGrounded && rigidbody.velocity.y <= 0) 
+        {
+            airJumps = 0;
             _stateMachine.SwitchState(0);
+        }
 
         // Switch to ClimbState
         if(isClimbing)

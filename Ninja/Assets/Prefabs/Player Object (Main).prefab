@@ -3934,7 +3934,7 @@ MonoBehaviour:
     _minLevel: 1
     _maxLevel: 10
     _experience: 0
-  isAlive: 1
+  _isAlive: 1
   aliveVisual: {fileID: 0}
   deadVisual: {fileID: 0}
   _maxHealth:
@@ -4262,6 +4262,7 @@ MonoBehaviour:
   _stateMachine: {fileID: 0}
   isActive: 0
   climbSpeed: 2
+  climbSpeedHorizontal: 4
   climbingColliderSize: {x: 0, y: 2, z: 0}
   collider: {fileID: 0}
   maxVelocityChange: 10
@@ -4370,6 +4371,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8193
+  isGrounded: 0
   climbCheck: {fileID: 1085942235367669121}
   climbMask:
     serializedVersion: 2

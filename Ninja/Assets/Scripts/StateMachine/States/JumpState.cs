@@ -90,12 +90,19 @@ public class JumpState : State
 
         characterStats = ((CharacterStateMachine)_stateMachine).characterStats;
         inputState = ((CharacterStateMachine)_stateMachine).inputState;
-
+        
         _timeStamp = Time.time;
 
         _jumpDirection = targetDirection;
+        
+        GroundCheck();
         _fromGround = isGrounded;
 
+        if(_fromGround == false)
+        {
+            rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
+        }
+        
         if (_fromGround == false && wallJumpOn)
         {
             WallJumpCheck();
@@ -154,26 +161,28 @@ public class JumpState : State
             if(inputState.DoubleForward || inputState.DoubleBack || inputState.DoubleLeft || inputState.DoubleRight)
                 if(characterStats.DepleteStamina(20))
                     _stateMachine.SwitchState(4);
-        }
 
-        // Update jump charge listeners
-        if(OnJumpCharge != null)
-            OnJumpCharge(pressTime / maxPressTime);
-
-        if (inputState.Jump.State == VButtonState.UNPRESSED && isGrounded) 
-        {    
-            rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
-            pressTime = 0f;
+            // Update jump charge listeners
             if(OnJumpCharge != null)
-                OnJumpCharge(-1f);
+                OnJumpCharge(pressTime / maxPressTime);
+
+            // Release of jump button
+            if (inputState.Jump.State == VButtonState.UNPRESSED && isGrounded) 
+            {    
+                rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
+                pressTime = 0f;
+                if(OnJumpCharge != null)
+                    OnJumpCharge(-1f);
+            }
+
+            if(gravityOn)
+                rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
+        }
+        // In Air
+        else
+        {
             _stateMachine.SwitchState(5);
         }
-        
-        // if(inputState.Jump.State == VButtonState.PRESS_START)
-        //     _stateMachine.SwitchState(2);
-
-        if(gravityOn)
-            rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
 
         pressTime = Mathf.Min(inputState.Jump.PressTime, maxPressTime);
     }
