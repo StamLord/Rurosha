@@ -23,7 +23,7 @@ public class StateMachine : MonoBehaviour
     {
         if(stateIndex >= _states.Length)
         {
-            Debug.LogWarning("Out of bounds state index!");
+            Debug.LogWarning("Out of bounds state index!" + stateIndex + "/" + _states.Length + "GameObject: " + transform.gameObject.name);
             return;
         }
 
