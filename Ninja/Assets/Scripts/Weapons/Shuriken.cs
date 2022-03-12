@@ -81,7 +81,9 @@ public class Shuriken : WeaponObject
             float angleStep = burstSpread / burstAmount;
             float firstAngleStep = 0 - angleStep * burstAmount / 2;
 
-            for(int i = 0; i < burstAmount; i++)
+            int availableAmmo = Mathf.Min(burstAmount, _weaponManager.GetAmmo());
+
+            for(int i = 0; i < availableAmmo; i++)
             {
                 GameObject obj = Instantiate(prefab, xFirstStep + transform.right * rangeStep * i, Quaternion.identity);
                 obj.transform.forward = Quaternion.AngleAxis(firstAngleStep + angleStep * i, Vector3.up) * Camera.main.transform.forward;

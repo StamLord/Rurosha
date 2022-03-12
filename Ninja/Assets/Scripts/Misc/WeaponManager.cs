@@ -266,4 +266,9 @@ public class WeaponManager : MonoBehaviour
             if(ChangeItemEvent != null) ChangeItemEvent(selected, item, item.ammo);
 
     }
+
+    public int GetAmmo()
+    {
+        return items[selected].ammo;
+    }
 }
