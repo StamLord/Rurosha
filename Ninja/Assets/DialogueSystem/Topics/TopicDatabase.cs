@@ -63,31 +63,29 @@ public class TopicDatabase : MonoBehaviour
 
     private void Start() 
     {
-        _peopleTopics.Add("David", new Topic("David", "Where is David", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
-        _peopleTopics.Add("Akira", new Topic("Akira", "Where is Akira", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
-        _peopleTopics.Add("Nakamura", new Topic("Nakamura", "Where is Nakamura", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
-        _peopleTopics.Add("Jin", new Topic("Jin", "Where is Jin", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
-        _peopleTopics.Add("Tanaka", new Topic("Tanaka", "Where is Tanaka", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
-        _peopleTopics.Add("Kanji", new Topic("Kanji", "Where is Kanji", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
-        _peopleTopics.Add("Toriko", new Topic("Toriko", "Where is Toriko", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
+        _peopleTopics.Add("Strength", new Topic("Strength", "Tell me about Strength.", new string[] {}, new string[] {"I have no idea", "Never heard of him"}));
+        _peopleTopics.Add("Agility", new Topic("Agility", "Tell me about Agility.", new string[] {}, new string[] {"I have no idea", "Never heard of him"}));
+        _peopleTopics.Add("Dextirity", new Topic("Dextirity", "Tell me about Dextirity.", new string[] {}, new string[] {"I have no idea", "Never heard of him"}));
+        _peopleTopics.Add("Mind", new Topic("Mind", "Tell me about Mind.", new string[] {}, new string[] {"I have no idea", "Never heard of him"}));
+        
         //_topics.Add("Daniel", new Topic("Daniel", "Where is Daniel", new string[] {"On the couch"}));
-        LearnTopic("David");
+        /*LearnTopic("David");
         LearnTopic("Akira");
         LearnTopic("Nakamura");
         LearnTopic("Jin");
         LearnTopic("Tanaka");
         LearnTopic("Kanji");
-        LearnTopic("Toriko");
-
-        _locationTopics.Add("Castle Grayskull", new Topic("Castle Grayskull", "Where is Castle Grayskull", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
+        LearnTopic("Toriko");*/
+        
+        /*_locationTopics.Add("Castle Grayskull", new Topic("Castle Grayskull", "Where is Castle Grayskull", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
         _locationTopics.Add("Eternia", new Topic("Eternia", "Where is Eternia", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
         _locationTopics.Add("Mountain Fuji", new Topic("Mountain Fuji", "Where is Mountain Fuji", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
         _locationTopics.Add("Zion", new Topic("Zion", "Where is Zion", new string[] {"Located near X", "I seen them over at X"}, new string[] {"I have no idea", "Never heard of him"}));
-
-        //LearnTopic("Castle Grayskull");
+        
+        LearnTopic("Castle Grayskull");
         LearnTopic("Eternia");
         LearnTopic("Mountain Fuji");
-        LearnTopic("Zion");
+        LearnTopic("Zion");*/
     }
 
     public static bool PlayerKnowsTopic(string topic, out Dictionary<string, Topic> topicsCollection)
