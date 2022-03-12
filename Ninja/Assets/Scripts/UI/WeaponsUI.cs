@@ -59,6 +59,8 @@ public class WeaponsUI : MonoBehaviour
     {
         displayStartTime = Time.time;
         dissappearPercentage = 0;
+        for (int i=0; i < _slots.Length; i++)
+            ChangeSlotOpacity(i, 1 - dissappearPercentage);
 
         _slots[index].UpdateItem(item, stack);
     }
