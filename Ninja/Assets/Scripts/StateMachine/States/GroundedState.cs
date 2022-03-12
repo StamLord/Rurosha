@@ -79,7 +79,7 @@ public class GroundedState : PlayerState
         // Ground Control
         if (IsGrounded) 
         {
-            if(inputState.Run.State == VButtonState.PRESSED)
+            if(inputVector != Vector3.zero && inputState.Run.State == VButtonState.PRESSED)
             {
                 if(characterStats.DepleteStamina(staminaDepleteRate * Time.deltaTime))
                 {
