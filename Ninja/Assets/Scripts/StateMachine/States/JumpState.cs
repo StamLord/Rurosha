@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpState : State
+public class JumpState : PlayerState
 {
     [Header("Jump Start Data")]
     [SerializeField] private float _timeStamp;
@@ -39,17 +39,6 @@ public class JumpState : State
     [SerializeField] private bool transformDirection;
     [SerializeField] private float pressTime;
     [SerializeField] private float maxPressTime = 1f;
-    
-    [Space(20f)]
-    
-    [Header("Ground Detection")]
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundSlope;
-    [SerializeField] private float groundSphereRadius = .4f;
-    [SerializeField] private float groundDistance = .8f;
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private bool isGrounded;
-    public bool IsGrounded {get{return isGrounded;}}
     
     [Space(20f)]
 
@@ -95,8 +84,7 @@ public class JumpState : State
 
         _jumpDirection = targetDirection;
         
-        GroundCheck();
-        _fromGround = isGrounded;
+        _fromGround = IsGrounded;
 
         if(_fromGround == false)
         {
@@ -120,8 +108,6 @@ public class JumpState : State
     {
         base.OnStateUpdate();
 
-        GroundCheck();
-
         // Input
         inputVector = inputState.AxisInput;
         inputVector.Normalize();
@@ -130,7 +116,7 @@ public class JumpState : State
         Vector3 targetVelocity = targetDirection;
 
         // Ground Control
-        if (isGrounded) 
+        if (IsGrounded) 
         {
             if(inputState.Run.State == VButtonState.PRESSED)
             {
@@ -167,7 +153,7 @@ public class JumpState : State
                 OnJumpCharge(pressTime / maxPressTime);
 
             // Release of jump button
-            if (inputState.Jump.State == VButtonState.UNPRESSED && isGrounded) 
+            if (inputState.Jump.State == VButtonState.UNPRESSED && IsGrounded) 
             {    
                 rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
                 pressTime = 0f;
@@ -203,14 +189,6 @@ public class JumpState : State
 	    // for the character to reach at the apex.
         return Mathf.Sqrt(2 * jumpHeight * gravity);
 	}
-
-    
-    private void GroundCheck()
-    {
-        RaycastHit groundHit;
-        isGrounded = Physics.SphereCast(groundCheck.position, groundSphereRadius, Vector3.down, out groundHit, groundDistance, groundMask);
-        groundSlope = Vector3.Angle(groundHit.normal, Vector3.up);
-    }
 
     private void WallJumpCheck()
     {

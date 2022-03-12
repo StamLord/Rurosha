@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashState : State
+public class DashState : PlayerState
 {
     [Header("Control Settings")]
     //[SerializeField] private float dashDistance = 3f;

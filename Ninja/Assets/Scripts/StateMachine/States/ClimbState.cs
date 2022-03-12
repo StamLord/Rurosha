@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClimbState : State
+public class ClimbState : PlayerState
 {
     [Header("Control Settings")]
     [SerializeField] private float climbSpeed = 4.0f;
@@ -45,16 +45,6 @@ public class ClimbState : State
     [SerializeField] private float ledgeClimbTime = 1f;
     [SerializeField] private float ledgeTransTimer;
     [SerializeField] private bool inTransition;
-
-    [Space(20f)]
-
-    [Header("Ground Detection")]
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundSlope;
-    [SerializeField] private float groundSphereRadius = .4f;
-    [SerializeField] private float groundDistance = .8f;
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private bool isGrounded;
 
     [Space(20f)]
     
@@ -251,12 +241,7 @@ public class ClimbState : State
     private bool ClimbDownCheck()
     {
         if(inputVector.y > 0) return false;
-
-        RaycastHit groundHit;
-        isGrounded = Physics.SphereCast(groundCheck.position, groundSphereRadius, targetDirection, out groundHit, groundDistance, groundMask);
-        groundSlope = Vector3.Angle(groundHit.normal, Vector3.up);
-
-        return isGrounded;
+        return IsGrounded;
     }
 
     private void OnDrawGizmos() 

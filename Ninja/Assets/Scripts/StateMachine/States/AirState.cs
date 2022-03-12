@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AirState : State
+public class AirState : PlayerState
 {
     [Header("Control Settings")]
     [SerializeField] private float colliderHeight;
@@ -22,22 +22,25 @@ public class AirState : State
 
     [Space(20f)]
 
-    [Header("Ground Detection")]
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundSlope;
-    [SerializeField] private float groundSphereRadius = .4f;
-    [SerializeField] private float groundDistance = .8f;
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private bool isGrounded;
-    public bool IsGrounded {get{return isGrounded;}}
-
-    [Space(20f)]
-
     [Header("Climb Detection")]
     [SerializeField] private Transform climbCheck;
     [SerializeField] private LayerMask climbMask;
     [SerializeField] private bool isClimbing;
     [SerializeField] private float climbingStartDistannce = .75f;
+
+    [Space(20f)]
+
+    [Header("Ledge Detection")]
+    [SerializeField] private LedgeSensor ledgeSensor;
+
+    [Space(20f)]
+    [Header("Vault Settings")]
+    private bool isVaulting;
+    private Vector3 vaultTarget;
+    private Vector3 vaultStart;
+    private float vaultTimeStart;
+    [SerializeField] private float vaultDuration = .5f;
+    [SerializeField] private Vector3 finalPositionOffset = new Vector3(0, .5f, 0);
 
     [Space(20f)]
 
@@ -86,11 +89,35 @@ public class AirState : State
     {
         base.OnStateUpdate();
 
-        GroundCheck();
         ClimbCheck();
 
         // Input
         GetInput();
+
+        // Vault
+        if(isVaulting)
+        {
+            float percent = (Time.time - vaultTimeStart) / vaultDuration;
+            transform.position = Vector3.Lerp(vaultStart, vaultTarget, percent);
+
+            if(percent >= 1f)
+            {
+                isVaulting = false;
+                rigidbody.isKinematic = false;
+            }
+
+            return;
+        }
+        else if(ledgeSensor.LedgeDetected)
+        {
+            isVaulting = true;
+            rigidbody.velocity = Vector3.zero; // Stop jumping, falling and any other forces
+            rigidbody.isKinematic = true;
+            vaultTimeStart = Time.time;
+            vaultStart = transform.position;
+            vaultTarget = ledgeSensor.LedgePoint + finalPositionOffset;
+            return;
+        }
 
         // Accelration Method
         //rigidbody.AddForce(targetVelocity * airControl, ForceMode.VelocityChange);
@@ -124,7 +151,7 @@ public class AirState : State
         }
 
         // Switch to GroundedState
-        if (isGrounded && rigidbody.velocity.y <= 0) 
+        if (IsGrounded && rigidbody.velocity.y <= 0) 
         {
             airJumps = 0;
             _stateMachine.SwitchState(0);
@@ -153,13 +180,6 @@ public class AirState : State
     }
 
     #region Checks
-
-    private void GroundCheck()
-    {
-        RaycastHit groundHit;
-        isGrounded = Physics.SphereCast(groundCheck.position, groundSphereRadius, Vector3.down, out groundHit, groundDistance, groundMask);
-        groundSlope = Vector3.Angle(groundHit.normal, Vector3.up);
-    }
 
     private void ClimbCheck()
     {

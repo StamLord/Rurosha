@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent (typeof (Rigidbody))]
 [RequireComponent (typeof (CapsuleCollider))]
 
-public class GroundedState : State
+public class GroundedState : PlayerState
 {
     [Header("Control Settings")]
     [SerializeField] private float walkSpeed = 10.0f;
@@ -31,17 +31,6 @@ public class GroundedState : State
     [Header("[IMPORTANT! Player needs this enabled]")]
     [SerializeField] private bool transformDirection;
     
-    [Space(20f)]
-    
-    [Header("Ground Detection")]
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundSlope;
-    [SerializeField] private float groundSphereRadius = .4f;
-    [SerializeField] private float groundDistance = .8f;
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private bool isGrounded;
-    public bool IsGrounded {get{return isGrounded;}}
-
     [Space(20f)]
 
     [Header("Climb Detection")]
@@ -78,7 +67,6 @@ public class GroundedState : State
     {
         base.OnStateUpdate();
 
-        GroundCheck();
         ClimbCheck();
 
         // Input
@@ -89,7 +77,7 @@ public class GroundedState : State
         Vector3 targetVelocity = targetDirection;
 
         // Ground Control
-        if (isGrounded) 
+        if (IsGrounded) 
         {
             if(inputState.Run.State == VButtonState.PRESSED)
             {
@@ -129,7 +117,7 @@ public class GroundedState : State
         // Jump
         if (inputState.Jump.Pressed) 
         {
-            if(isGrounded)
+            if(IsGrounded)
                 _stateMachine.SwitchState(2);
         }
 
@@ -141,7 +129,7 @@ public class GroundedState : State
             _stateMachine.SwitchState(3);
 
         // Switch to AirSTate
-        if (isGrounded == false) 
+        if (IsGrounded == false) 
             _stateMachine.SwitchState(5);
         
         // Switch to ClimbState
@@ -155,13 +143,6 @@ public class GroundedState : State
 
     #region Checks
 
-    private void GroundCheck()
-    {
-        RaycastHit groundHit;
-        isGrounded = Physics.SphereCast(groundCheck.position, groundSphereRadius, Vector3.down, out groundHit, groundDistance, groundMask);
-        groundSlope = Vector3.Angle(groundHit.normal, Vector3.up);
-    }
-
     private void ClimbCheck()
     {
         isClimbing = (Physics.Raycast(climbCheck.position, targetDirection, climbingStartDistannce, climbMask));
@@ -172,10 +153,6 @@ public class GroundedState : State
     private void OnDrawGizmos()
     {
         if(debugView == false) return;
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(groundCheck.position, groundSphereRadius);
-        Gizmos.DrawWireSphere(groundCheck.position + Vector3.down * groundDistance, groundSphereRadius);
 
         Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position, targetDirection);
