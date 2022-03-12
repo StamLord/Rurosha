@@ -32,20 +32,37 @@ public class MouseLook : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity.y;
 
         // Invert
-        this.xRotation -= mouseY;
+        xRotation -= mouseY;
 
         // Clamp
-        this.xRotation = Mathf.Clamp(this.xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(this.xRotation, -90f, 90f);
 
         // Movement Feedback
         Vector3 inputVector = inputState.AxisInput;
-        float xRotation = Mathf.Lerp(
+
+        // Lerp
+        /*
+        float zRotation = Mathf.Lerp(
             transform.localRotation.z, 
             (inputVector.x > 0)? -maxRotZ : (inputVector.x < 0) ? maxRotZ : 0f, 
             Mathf.Abs(inputVector.x) * rotSpeedZ);
+        */
+
+        float targetZRot = (inputVector.x > 0)? -maxRotZ : (inputVector.x < 0)? maxRotZ : 0f;
+        float currentZ = transform.localRotation.eulerAngles.z;
+        currentZ = (currentZ > 180)? currentZ - 360 : currentZ;
+        float deltaZ = (targetZRot - currentZ) * rotSpeedZ * Time.deltaTime;
+        float zRotation =  currentZ + deltaZ;
+
+        if(currentZ > targetZRot)
+            zRotation = Mathf.Max(zRotation, targetZRot);
+        else if(currentZ < targetZRot)
+            zRotation = Mathf.Min(zRotation, targetZRot);
+        
+        
 
         // Rotate Camera
-        transform.localRotation = Quaternion.Euler(this.xRotation, 0f, xRotation);
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, zRotation);
         
         // Rotate transform
         playerBody.Rotate(Vector3.up * mouseX);
