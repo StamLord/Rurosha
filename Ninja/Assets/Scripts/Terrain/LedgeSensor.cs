@@ -41,7 +41,7 @@ public class LedgeSensor : MonoBehaviour
 
     private void OnDrawGizmos() 
     {
-        if(debugView == false) return;
+        if(debugView == false || ledgeDetected == false) return;
 
         Gizmos.color = ledgeColor;
         Gizmos.DrawCube(ledgePoint, new Vector3(.1f, .1f, .1f));
