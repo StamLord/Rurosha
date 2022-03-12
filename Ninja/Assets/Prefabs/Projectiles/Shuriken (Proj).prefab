@@ -150,14 +150,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de228584dad30f459624439cc059add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  softDamage: 5
+  hardDamage: 5
   visualRotationPerSecond: {x: 10, y: 0, z: 1.5}
   parentRotationPerSecond: {x: 0, y: 0, z: 0}
   visual: {fileID: 2728008844794060370}
   minRotation: {x: 0, y: 0, z: 0}
   maxRotation: {x: 0, y: 0, z: 0}
   penetration: -0.1
-  speed: 35
+  speed: 50
   stopped: 0
   lastPositionCheck: 0
   lastPosition: {x: 0, y: 0, z: 0}
@@ -205,6 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outline: {fileID: 0}
   interactionText: Pickup
+  weightClass: 0
   _item: {fileID: 11400000, guid: 691ebfc88b4130c4da1cf663f21b7032, type: 2}
 --- !u!65 &6861394814472067686
 BoxCollider:

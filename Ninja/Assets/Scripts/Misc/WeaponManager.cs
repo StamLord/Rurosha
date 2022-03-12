@@ -23,6 +23,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private GameObject _staff;
     [SerializeField] private GameObject _kanabo;
     [SerializeField] private GameObject _throw;
+    [SerializeField] private GameObject _big_throw;
     [SerializeField] private GameObject _bow;
     [SerializeField] private GameObject _item;
     [SerializeField] private GameObject _itemBowl;
@@ -148,6 +149,9 @@ public class WeaponManager : MonoBehaviour
                     break;
                 case WeaponType.THROW:
                     ActivateObject(_throw);
+                    break;
+                case WeaponType.BIG_THROW:
+                    ActivateObject(_big_throw);
                     break;
                 case WeaponType.BOW:
                     break;
