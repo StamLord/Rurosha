@@ -179,8 +179,34 @@ public class UIDialogueManager : UIWindow
         int i = 0;
         while(i < text.Length)
         {
-            _outputBox.text += text[i];
-            i++;
+            bool foundHTML = false;
+            // Check for html codes for TMPro to handle
+            if(text[i] == '<')
+            {
+                int j = i;
+                string subString = "";
+                // Search for closing tag
+                while(j < text.Length)
+                {
+                    subString += text[j];
+                    // If found closing tag, add substring and set new index
+                    if(text[j] == '>')
+                    {
+                        foundHTML = true;
+                        _outputBox.text += subString;
+                        i = j + 1;
+                        break;
+                    }
+                    j++;
+                }
+            }
+
+            if(foundHTML == false)
+            {  
+                _outputBox.text += text[i];
+                i++;
+            }
+
             yield return new WaitForSeconds(letterDrawTime);
         }
     }

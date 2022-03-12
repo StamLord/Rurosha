@@ -99,7 +99,7 @@ public class DialogueManager : MonoBehaviour
 
         DialogueNode locationNode = new DialogueNode("What location do you want to know about?", knownLocationTopics, locationDialogueNodes);
 
-        return new DialogueNode("How can I help you?", new List<string>() {"People", "Locations"}, new List<DialogueNode>() {peopleNode, locationNode});
+        return new DialogueNode("How can I help you?", new List<string>() {"Topics", "Places"}, new List<DialogueNode>() {peopleNode, locationNode});
     }
 
     private void SetNode(DialogueNode node)
@@ -193,7 +193,7 @@ public class DialogueManager : MonoBehaviour
     private string PrepareTextMessage(string textMessage)
     {
         // Replace special tags
-        textMessage = Regex.Replace(textMessage, playerNamePattern, "Philip");
+        textMessage = Regex.Replace(textMessage, playerNamePattern, "Player");
         textMessage = Regex.Replace(textMessage, appearancePattern, "Samurai");
         textMessage = Regex.Replace(textMessage, reputationPattern, "Renowned");
         

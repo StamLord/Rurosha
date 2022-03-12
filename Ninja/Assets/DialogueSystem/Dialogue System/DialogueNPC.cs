@@ -43,7 +43,7 @@ public class DialogueNPC : IXMLSerializable
         ThreatMod = Random.Range(.25f, 2f);
         BribeMod = Random.Range(.25f, 2f);
 
-        LikesPlayer = 0;
+        LikesPlayer = 1;
         FearsPlayer = 0;
     }
 

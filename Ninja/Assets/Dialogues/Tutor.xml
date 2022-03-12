@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<DialogueNpcXml xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <NpcName>Tutor</NpcName>
+
+  <CharmMod>1</CharmMod>
+  <JokeMod>1</JokeMod>
+  <ThreatMod>1</ThreatMod>
+  <BribeMod>1</BribeMod>
+
+  <CharmResponse>Charming</CharmResponse>
+  <JokeResponse>LOL</JokeResponse>
+  <ThreatResponse>Oy Vey</ThreatResponse>
+  <BribeResponse>I love money</BribeResponse>
+
+  <NegativeResponse>I don't feel like talking now.</NegativeResponse>
+
+  <Topics>
+    <string>Strength</string>
+    <string>Agility</string>
+    <string>Dextirity</string>
+    <string>Mind</string>
+  </Topics>
+
+  <Responses>
+    <string>Strength affects what you can pickup, your damage, health and health recovery.</string>
+    <string>Agility affects your running speed, jump height, stamina, stamina recovery and rate of fire with ranged weapons.</string>
+    <string>Dextirity affects accuracy with ranged weapons and damage with weapons where technique matters.</string>
+    <string>Mind affects what you can pickup and your damage.</string>
+  </Responses>
+
+  <DialogueNode>
+    <TextMessage>Hello $PlayerName. This dialogue system uses a Topics system. As you talk to NPCs and learn new Topics, you can ask about them by selecting the "Ask" choice below.</TextMessage>
+    <Choices>
+      <string>Tell me about stats</string>
+      <string>Goodbye</string>
+    </Choices>
+    <Nodes>
+      <DialogueNodeXML>
+        <TextMessage>Stats range between 1 to 10. Your stats include: &lt;color=red&gt;Strength&lt;/color&gt;, &lt;color=red&gt;Agility&lt;/color&gt;, &lt;color=red&gt;Dextirity&lt;/color&gt; and &lt;color=red&gt;Mind&lt;/color&gt;. You can open the stats view by pressing [J] and edit them.</TextMessage>
+        <Choices />
+        <Nodes />
+        <Topics>
+          <string>Strength</string>
+          <string>Agility</string>
+          <string>Dextirity</string>
+          <string>Mind</string>
+        </Topics>
+      </DialogueNodeXML>
+      <DialogueNodeXML>
+        <TextMessage>You can walk away to end this conversation. Come back when you want to ask anything!</TextMessage>
+        <Choices />
+        <Nodes />
+        <Topics />
+      </DialogueNodeXML>
+    </Nodes>
+    <Topics />
+  </DialogueNode>
+</DialogueNpcXml>
