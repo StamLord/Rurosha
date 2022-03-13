@@ -26,7 +26,7 @@ public class JumpState : PlayerState
     [SerializeField] private InputState inputState;
     [SerializeField] private float potentialStaminaDepleteRate = 2f;
     [SerializeField] private float staminaDepleteRate = 20f;
-    [SerializeField] private float enduranceExpGain = .01f;
+    [SerializeField] private float agilityExpGain = .01f;
     
     [Space(20f)]
     
@@ -43,15 +43,10 @@ public class JumpState : PlayerState
     [Space(20f)]
 
     [Header("Wall Jumping")]
-    [SerializeField] private float wallJumpWindow= .2f;
-    [SerializeField] private float wallJumpForce = 10f;
+    [SerializeField] private WallSensor wallSensor;
     [SerializeField] private bool wallJumpOn = true;
-    [SerializeField] private Transform wallJumpCheck;
-    [SerializeField] private float wallJumpDistance = .7f;
+    [SerializeField] private float wallJumpForce = 10f;
     [SerializeField] private float wallJumpMinimumSlope = -.1f;
-    [SerializeField] private LayerMask wallJumpMask;
-    [SerializeField] private GameObject wallCollided;
-    [SerializeField] private Vector3 wallHitNormal;
 
     [Space(20f)]
     
@@ -81,25 +76,22 @@ public class JumpState : PlayerState
         inputState = ((CharacterStateMachine)_stateMachine).inputState;
         
         _timeStamp = Time.time;
-
         _jumpDirection = targetDirection;
-        
         _fromGround = IsGrounded;
 
         if(_fromGround == false)
         {
-            rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
-        }
-        
-        if (_fromGround == false && wallJumpOn)
-        {
-            WallJumpCheck();
-            if(wallCollided != null && wallHitNormal.y >= wallJumpMinimumSlope)
+            if (wallJumpOn && wallSensor.WallDetected && wallSensor.WallNormal.y >= wallJumpMinimumSlope)
             {
-                rigidbody.velocity = wallHitNormal * wallJumpForce;
+                rigidbody.velocity = wallSensor.WallNormal * wallJumpForce;
                 rigidbody.velocity = new Vector3(rigidbody.velocity.x, CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
-                wallCollided = null;
+                _stateMachine.SwitchState(5);
                 return;
+            }
+            else
+            {
+                rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
+                _stateMachine.SwitchState(5);
             }
         }
     }
@@ -122,13 +114,11 @@ public class JumpState : PlayerState
             {
                 if(characterStats.DepleteStamina(staminaDepleteRate * Time.deltaTime))
                 {
-                    characterStats.IncreaseAttributeExp("endurance", enduranceExpGain * Time.deltaTime);
+                    characterStats.IncreaseAttributeExp("agility", agilityExpGain * Time.deltaTime);
                     characterStats.DepletePotentailStamina(potentialStaminaDepleteRate * Time.deltaTime);
 
                     // Set relevant speed
-                    //targetVelocity *= runSpeedPerAgilityLevel[characterStats.GetAttributeLevel("agility") - 1];
                     targetVelocity *= _runSpeed.GetValue(characterStats);
-
                 }
                 else
                     targetVelocity *= walkSpeed;
@@ -189,20 +179,4 @@ public class JumpState : PlayerState
 	    // for the character to reach at the apex.
         return Mathf.Sqrt(2 * jumpHeight * gravity);
 	}
-
-    private void WallJumpCheck()
-    {
-        wallCollided = null;
-
-        if(Time.time - _timeStamp > wallJumpWindow || _fromGround) return;
-        
-        RaycastHit wall;
-
-        if(Physics.Raycast(wallJumpCheck.position, _jumpDirection, out wall, wallJumpDistance, wallJumpMask) /*||
-            Physics.Raycast(wallJumpCheck.position, rigidbody.velocity, out wall, wallJumpDistance, wallJumpMask)*/)
-        {
-            wallCollided = wall.transform.gameObject;
-            wallHitNormal = wall.normal;
-        }
-    }
 }
