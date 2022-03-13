@@ -48,7 +48,7 @@ public class WeaponManager : MonoBehaviour
         
         Item[] items = new Item[] 
         {
-            (Item)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Items/Weapons/Shuriken.asset", typeof(Item))
+            //(Item)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Items/Weapons/Shuriken.asset", typeof(Item))
         };
 
         foreach (Item i in items)
