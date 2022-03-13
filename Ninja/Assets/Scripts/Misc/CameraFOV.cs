@@ -28,15 +28,15 @@ public class CameraFOV : MonoBehaviour
 
     void Update()
     {
-        if(camera)
-        {
-            Vector3 velocity = rigidbody.velocity;
-            
-            if(ignoreY)
-                velocity.y = 0;
+        if(camera == null)
+            return;
+        
+        Vector3 velocity = rigidbody.velocity;
+        
+        if(ignoreY)
+            velocity.y = 0;
 
-            float targetFov = Mathf.Lerp(minFov, maxFov, velocity.sqrMagnitude / sqrMaxSpeed);
-            camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, targetFov, transitionSpeed);
-        }
+        float targetFov = Mathf.Lerp(minFov, maxFov, velocity.sqrMagnitude / sqrMaxSpeed);
+        camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, targetFov, transitionSpeed);
     }
 }
