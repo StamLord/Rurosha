@@ -171,8 +171,13 @@ public class JumpState : PlayerState
         float jumpHeight = JumpHeight.GetValue(characterStats);
         if(chargeJump) 
         {
-            jumpHeight *= (pressTime / maxPressTime);
-            jumpHeight = Mathf.Max(JumpHeight.GetValueAt(0), jumpHeight); // Jump height must be atleast the height at level 1
+            float level1 = JumpHeight.GetValueAt(0);
+            float p = pressTime / maxPressTime;
+
+            if(level1 == jumpHeight)
+                jumpHeight = Mathf.Lerp(level1, level1 * 1.5f, p);
+            else
+                jumpHeight = Mathf.Lerp(level1, jumpHeight, p);
         }
         
         // From the jump height and gravity we deduce the upwards speed 
