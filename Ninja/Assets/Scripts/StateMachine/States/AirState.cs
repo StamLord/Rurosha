@@ -160,6 +160,11 @@ public class AirState : PlayerState
             _stateMachine.SwitchState(2);
         }
 
+        // Dash
+        if(inputState.DoubleForward || inputState.DoubleBack || inputState.DoubleLeft || inputState.DoubleRight)
+            if(characterStats.DepleteStamina(20))
+                _stateMachine.SwitchState(4);
+
         // Switch to GroundedState
         if (IsGrounded && rigidbody.velocity.y <= 0) 
         {
@@ -170,7 +175,6 @@ public class AirState : PlayerState
         // Switch to ClimbState
         if(isClimbing)
             _stateMachine.SwitchState(3);
-
     }
 
     private void GetInput()

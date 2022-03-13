@@ -4303,7 +4303,7 @@ MonoBehaviour:
   inputState: {fileID: 0}
   potentialStaminaDepleteRate: 20
   staminaDepleteRate: 20
-  enduranceExpGain: 0.01
+  agilityExpGain: 0.01
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}
   targetVelocity: {x: 0, y: 0, z: 0}
@@ -4385,15 +4385,15 @@ MonoBehaviour:
   dashDistance:
     attributeName: Agility
     values:
-    - 2
-    - 2.5
-    - 3
-    - 3.5
-    - 4
     - 5
+    - 5.5
     - 6
+    - 6.5
     - 7
+    - 7.5
     - 8
+    - 8.5
+    - 9
     - 10
   dashSpeed: 20
   colliderHeight: 1
