@@ -40,8 +40,6 @@ public class LedgeSensor : MonoBehaviour
         
         ledgeDetected = Physics.Raycast(ledgeRay, out ledge, 1f);
         ledgePoint = ledge.point;
-
-        Debug.DrawRay(transform.position + transform.forward * ledgeOffset + Vector3.up - Vector3.up * .1f, Vector3.down, Color.cyan);
     }
 
     private void OnDrawGizmos() 
