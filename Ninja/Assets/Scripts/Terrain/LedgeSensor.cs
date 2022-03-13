@@ -31,6 +31,11 @@ public class LedgeSensor : MonoBehaviour
     private void DetectLedge()
     {
         RaycastHit ledge;
+
+        // Make sure we don't face a wall
+        if(Physics.Raycast(transform.position + Vector3.up - Vector3.up * .1f, transform.forward, ledgeOffset))
+            return;
+
         Ray ledgeRay = new Ray(transform.position + transform.forward * ledgeOffset + Vector3.up - Vector3.up * .1f, Vector3.down);
         
         ledgeDetected = Physics.Raycast(ledgeRay, out ledge, 1f);
