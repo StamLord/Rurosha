@@ -79,6 +79,7 @@ public class GroundedState : PlayerState
         // Ground Control
         if (IsGrounded) 
         {
+            // Running
             if(inputVector != Vector3.zero && inputState.Run.State == VButtonState.PRESSED)
             {
                 if(characterStats.DepleteStamina(staminaDepleteRate * Time.deltaTime))
@@ -94,7 +95,7 @@ public class GroundedState : PlayerState
                 else
                     targetVelocity *= walkSpeed;
             }
-            else
+            else // Walking
                 targetVelocity *= walkSpeed;
 
             // Apply a force that attempts to reach our target velocity
@@ -105,6 +106,7 @@ public class GroundedState : PlayerState
             velocityChange.y = 0;
             rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
+            // Dash
             if(inputState.DoubleForward || inputState.DoubleBack || inputState.DoubleLeft || inputState.DoubleRight)
                 if(characterStats.DepleteStamina(20))
                     _stateMachine.SwitchState(4);
@@ -124,9 +126,6 @@ public class GroundedState : PlayerState
         // Crouch
         if (inputState.Crouch.State == VButtonState.PRESSED) 
             _stateMachine.SwitchState(1);
-        
-        if(isClimbing)
-            _stateMachine.SwitchState(3);
 
         // Switch to AirSTate
         if (IsGrounded == false) 
