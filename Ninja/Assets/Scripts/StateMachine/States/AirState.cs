@@ -53,7 +53,7 @@ public class AirState : PlayerState
     [Space(20f)]
 
     [Header("Glide")]
-    [SerializeField] private bool glideOn = false;
+    [SerializeField] public bool glideOn = false;
     [SerializeField] private float glideGravityMultiplier = .2f;
     [SerializeField] private bool isGliding = false;
 
@@ -153,7 +153,9 @@ public class AirState : PlayerState
         }
 
         // Jump
-        if (inputState.Jump.State == VButtonState.PRESS_START && airJumps < maxAirJumps) 
+        if (inputState.Jump.State == VButtonState.PRESS_START 
+        && airJumps < maxAirJumps 
+        && isGliding == false) 
         {
             airJumps++;
             if(OnDoubleJumpStart != null) OnDoubleJumpStart();

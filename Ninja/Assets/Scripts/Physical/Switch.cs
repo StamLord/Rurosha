@@ -6,6 +6,9 @@ public class Switch : Usable
 {
     [SerializeField] private bool _state;
     public bool state { get { return _state; } }
+
+    [SerializeField] private string onText;
+    [SerializeField] private string offText;
     
     public delegate void StateChangeDelegate(bool state);
     public event StateChangeDelegate StateChangeEvent;
@@ -14,6 +17,8 @@ public class Switch : Usable
     {
         base.Use(interactor);
         _state = !_state;
+
+        interactionText = (_state)? onText : offText;
 
         if(StateChangeEvent != null)
             StateChangeEvent(_state);
