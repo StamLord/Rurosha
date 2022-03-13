@@ -62,6 +62,9 @@ public class AirState : PlayerState
     [SerializeField] private int airJumps;
     [SerializeField] private int maxAirJumps = 2;
 
+    public delegate void DoubleJumpStartDelegate();
+    public event DoubleJumpStartDelegate OnDoubleJumpStart;
+
     [Header("Debug View")]
     [SerializeField] private bool debugView;
     [SerializeField] private new Rigidbody rigidbody;
@@ -153,6 +156,7 @@ public class AirState : PlayerState
         if (inputState.Jump.State == VButtonState.PRESS_START && airJumps < maxAirJumps) 
         {
             airJumps++;
+            if(OnDoubleJumpStart != null) OnDoubleJumpStart();
             _stateMachine.SwitchState(2);
         }
 
