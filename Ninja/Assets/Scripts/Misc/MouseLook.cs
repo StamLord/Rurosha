@@ -66,8 +66,6 @@ public class MouseLook : MonoBehaviour
             zRotation = Mathf.Max(zRotation, targetZRot);
         else if(currentZ < targetZRot)
             zRotation = Mathf.Min(zRotation, targetZRot);
-        
-        
 
         // Rotate Camera
         transform.localRotation = Quaternion.Euler(xRotation, 0f, zRotation);
@@ -101,7 +99,7 @@ public class MouseLook : MonoBehaviour
 
         while (Time.time - startTime < ledgeTiltDuration)
         {
-            float p = (Time.time - startTime ) / ledgeTiltDuration; Debug.Log(p);
+            float p = (Time.time - startTime ) / ledgeTiltDuration;
             float z = 0;
 
             if (p < .5f)
