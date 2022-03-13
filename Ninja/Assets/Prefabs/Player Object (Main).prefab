@@ -622,7 +622,7 @@ MonoBehaviour:
     - 0.5
     - 0.2
   shootRate:
-    attributeName: Agility
+    attributeName: Dexterity
     values:
     - 2
     - 1.75
@@ -3828,7 +3828,7 @@ MonoBehaviour:
     - 0.5
     - 0.2
   shootRate:
-    attributeName: Agility
+    attributeName: Dexterity
     values:
     - 2
     - 1.75
@@ -4440,7 +4440,7 @@ MonoBehaviour:
   vaultDuration: 0.4
   finalPositionOffset: {x: 0, y: 0, z: 0}
   characterStats: {fileID: 0}
-  glideOn: 0
+  glideOn: 1
   glideGravityMultiplier: 0.2
   isGliding: 0
   airJumps: 0
