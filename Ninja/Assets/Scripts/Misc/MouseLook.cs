@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
+    [Header("Camera Setting")]
     [SerializeField] private Vector2 sensitivity = new Vector2(100f,80f);
     [SerializeField] private Transform playerBody;
+    [SerializeField] private AirState airState;
 
     //[SerializeField] private LookState _lookState = LookState.TURN_BODY;
 
@@ -15,12 +17,18 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float maxRotZ = 1f;
     [SerializeField] private float rotSpeedZ = 2f;
 
+    [Header("Climb Ledge FX")]
+    [SerializeField] private float maxTilt = 20f;
+    [SerializeField] private float ledgeTiltDuration = .5f;
+    [SerializeField] private bool isClimbingLedge;
+
     [SerializeField] private bool disabled;
 
     void Start()
     {
         UIManager.OnDisableMouse += Disable;
         UIManager.OnEnableMouse += Enable;
+        airState.OnVaultStart += StartClimbLedgeTilt;
     }
     
     void LateUpdate()
@@ -76,5 +84,35 @@ public class MouseLook : MonoBehaviour
     private void Disable()
     {
         disabled = true;
+    }
+
+    private void StartClimbLedgeTilt()
+    {
+        if(isClimbingLedge)
+            return;
+
+        StartCoroutine("ClimbLedgeTilt");
+    }
+
+    private IEnumerator ClimbLedgeTilt()
+    {
+        isClimbingLedge = true;
+        float startTime = Time.time;
+
+        while (Time.time - startTime < ledgeTiltDuration)
+        {
+            float p = (Time.time - startTime ) / ledgeTiltDuration; Debug.Log(p);
+            float z = 0;
+
+            if (p < .5f)
+                z = Mathf.Lerp(0, maxTilt, p);
+            else
+                z = Mathf.Lerp(maxTilt, 0, p);
+
+            transform.localRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
+            yield return null;
+        }
+
+        isClimbingLedge = false;
     }
 }

@@ -42,6 +42,9 @@ public class AirState : PlayerState
     [SerializeField] private float vaultDuration = .5f;
     [SerializeField] private Vector3 finalPositionOffset = new Vector3(0, .5f, 0);
 
+    public delegate void VaultStartDelegate();
+    public event VaultStartDelegate OnVaultStart;
+
     [Space(20f)]
 
     [Header("Stats")]
@@ -116,6 +119,9 @@ public class AirState : PlayerState
             vaultTimeStart = Time.time;
             vaultStart = transform.position;
             vaultTarget = ledgeSensor.LedgePoint + finalPositionOffset;
+
+            if (OnVaultStart != null) OnVaultStart();
+            
             return;
         }
 
