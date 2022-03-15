@@ -7,11 +7,9 @@ public class ClimbState : PlayerState
     [Header("Control Settings")]
     [SerializeField] private float climbSpeed = 4.0f;
     [SerializeField] private float climbSpeedHorizontal = 4.0f;
-    [SerializeField] private Vector3 climbingColliderSize;
-    [SerializeField] private new CapsuleCollider collider;
-    [Space(20f)]
-	
 	[SerializeField] private float maxVelocityChange = 10.0f;
+
+    [Space(20f)]
 
     [Header("Input Data")]
     [SerializeField] private InputState inputState;
@@ -54,26 +52,19 @@ public class ClimbState : PlayerState
     [SerializeField] private Color climbCheckColor = Color.yellow;
     [SerializeField]private new Rigidbody rigidbody;
 
-    [SerializeField]private PhysicMaterial noFriction;
-    [SerializeField]private PhysicMaterial friction;
-
     void Awake () 
     {
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.freezeRotation = true;
         rigidbody.useGravity = false;
         rigidbody.velocity = Vector3.zero;
-
-        collider = GetComponent<CapsuleCollider>();
 	}
 
     protected override void OnEnterState()
     {
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Climb State]");
-        collider.height = climbingColliderSize.y;
 
-        collider.material = friction;
         rigidbody.isKinematic = true;
 
         inputState = ((CharacterStateMachine)_stateMachine).inputState;
@@ -169,7 +160,6 @@ public class ClimbState : PlayerState
         base.OnExitState();
 
         rigidbody.isKinematic = false;
-        collider.material = noFriction;
     }
 
     private void GetInput()
