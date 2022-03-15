@@ -29,11 +29,6 @@ public class AirState : PlayerState
     [SerializeField] private float climbingStartDistannce = .75f;
 
     [Space(20f)]
-
-    [Header("Ledge Detection")]
-    [SerializeField] private LedgeSensor ledgeSensor;
-
-    [Space(20f)]
     [Header("Vault Settings")]
     private bool isVaulting;
     private Vector3 vaultTarget;
@@ -114,14 +109,14 @@ public class AirState : PlayerState
 
             return;
         }
-        else if(ledgeSensor.LedgeDetected)
+        else if(ledgeDetected)
         {
             isVaulting = true;
             rigidbody.velocity = Vector3.zero; // Stop jumping, falling and any other forces
             rigidbody.isKinematic = true;
             vaultTimeStart = Time.time;
             vaultStart = transform.position;
-            vaultTarget = ledgeSensor.LedgePoint + finalPositionOffset;
+            vaultTarget = ledgePoint + finalPositionOffset;
 
             if (OnVaultStart != null) OnVaultStart();
             
@@ -168,7 +163,7 @@ public class AirState : PlayerState
                 _stateMachine.SwitchState(4);
 
         // Switch to GroundedState
-        if (IsGrounded && rigidbody.velocity.y <= 0) 
+        if (isGrounded && rigidbody.velocity.y <= 0) 
         {
             airJumps = 0;
             _stateMachine.SwitchState(0);

@@ -8,7 +8,8 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private Vector2 sensitivity = new Vector2(100f,80f);
     [SerializeField] private Transform playerBody;
     [SerializeField] private AirState airState;
-
+    [SerializeField] private CrouchState crouchState;
+    
     //[SerializeField] private LookState _lookState = LookState.TURN_BODY;
 
     float xRotation = 0f;
@@ -16,6 +17,14 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private InputState inputState;
     [SerializeField] private float maxRotZ = 1f;
     [SerializeField] private float rotSpeedZ = 2f;
+
+    [Header("Crouch FX")]
+    [SerializeField] private float standHeight;
+    [SerializeField] private float crouchHeight;
+    [SerializeField] float heightTransitionDuration = .1f;
+
+    private Coroutine crouchCoroutine;
+    private bool isAnimatingCrouch;
 
     [Header("Climb Ledge FX")]
     [SerializeField] private float maxTilt = 20f;
@@ -28,7 +37,10 @@ public class MouseLook : MonoBehaviour
     {
         UIManager.OnDisableMouse += Disable;
         UIManager.OnEnableMouse += Enable;
+
         airState.OnVaultStart += StartClimbLedgeTilt;
+        crouchState.OnCrouchStart += StartCrouch;
+        crouchState.OnCrouchEnd += EndCrouch;
     }
     
     void LateUpdate()
@@ -84,6 +96,40 @@ public class MouseLook : MonoBehaviour
         disabled = true;
     }
 
+    #region Crouch
+
+    private void StartCrouch()
+    {
+        //transform.localPosition = new Vector3(transform.localPosition.x, crouchHeight, transform.localPosition.z);
+        if(isAnimatingCrouch) StopCoroutine(crouchCoroutine);
+        crouchCoroutine = StartCoroutine("HeightTransition", crouchHeight);
+    }
+
+    private void EndCrouch()
+    {
+        //transform.localPosition = new Vector3(transform.localPosition.x, standHeight, transform.localPosition.z);
+        if(isAnimatingCrouch) StopCoroutine(crouchCoroutine);
+        crouchCoroutine = StartCoroutine("HeightTransition", standHeight);
+    }
+
+    private IEnumerator HeightTransition(float newHeight)
+    {
+        isAnimatingCrouch = true;
+        float startTime = Time.time;
+        float startHeight = transform.localPosition.y;
+        while(transform.localPosition.y != newHeight)
+        {
+            float p = (Time.time - startTime) / heightTransitionDuration;
+            transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Lerp(startHeight, newHeight, p), transform.localPosition.z);
+            yield return null;
+        }
+        isAnimatingCrouch = false;
+    }
+
+    #endregion
+
+    #region Climb Ledge
+
     private void StartClimbLedgeTilt()
     {
         if(isClimbingLedge)
@@ -113,4 +159,6 @@ public class MouseLook : MonoBehaviour
 
         isClimbingLedge = false;
     }
+
+    #endregion
 }

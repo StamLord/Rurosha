@@ -8,12 +8,15 @@ public class CrouchState : PlayerState
     [SerializeField] private float walkSpeed = 10.0f;
     [SerializeField] private float airControl = 5f;
     [SerializeField] private bool gravityOn = true;
+    [SerializeField] private Vector3 standingColliderSize;
     [SerializeField] private Vector3 croucingColliderSize;
-    [SerializeField] private new CapsuleCollider collider;
-    [Space(20f)]
-	
+    [SerializeField] private new CapsuleCollider standCollider;
+    [SerializeField] private new CapsuleCollider crouchCollider;
+    
     [SerializeField] private float gravity = 20.0f;
 	[SerializeField] private float maxVelocityChange = 10.0f;
+    
+    [Space(20f)]
 
     [Header("Input Data")]
     [SerializeField] private InputState inputState;
@@ -26,22 +29,39 @@ public class CrouchState : PlayerState
     [SerializeField] private bool debugView;
     [SerializeField]private new Rigidbody rigidbody;
 
+    public delegate void CrouchStartDelegate();
+    public event CrouchStartDelegate OnCrouchStart;
+
+    public delegate void CrouchEndDelegate();
+    public event CrouchEndDelegate OnCrouchEnd;
+
     void Awake () 
     {
         rigidbody = GetComponent<Rigidbody>();
 	    rigidbody.freezeRotation = true;
 	    rigidbody.useGravity = false;
-
-        collider = GetComponent<CapsuleCollider>();
 	}
 
     protected override void OnEnterState()
     {
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Crouch State]");
-        collider.height = croucingColliderSize.y;
+        
+        crouchCollider.enabled = true;
+        standCollider.enabled = false;
 
         inputState = ((CharacterStateMachine)_stateMachine).inputState;
+
+        if(OnCrouchStart != null) OnCrouchStart();
+    }
+
+    protected override void OnExitState()
+    {
+        base.OnExitState();
+        crouchCollider.enabled = false;
+        standCollider.enabled = true;
+
+        if(OnCrouchEnd != null) OnCrouchEnd();
     }
 
     public override void OnStateUpdate()
@@ -55,7 +75,7 @@ public class CrouchState : PlayerState
         Vector3 targetVelocity = targetDirection;
 
         // Ground Control
-	    if (IsGrounded) 
+	    if (isGrounded) 
         {
             targetVelocity *= walkSpeed;
 
@@ -72,7 +92,7 @@ public class CrouchState : PlayerState
             rigidbody.AddForce(targetVelocity * airControl, ForceMode.Acceleration);
 
         // Crouch
-        if (inputState.Crouch.State == VButtonState.UNPRESSED) 
+        if (inputState.Crouch.State == VButtonState.UNPRESSED && isUnder == false)
             _stateMachine.SwitchState(0);
 
 	    // We apply gravity manually for more tuning control

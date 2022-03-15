@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof (Rigidbody))]
-[RequireComponent (typeof (CapsuleCollider))]
 
 public class GroundedState : PlayerState
 {
@@ -12,7 +11,6 @@ public class GroundedState : PlayerState
     [SerializeField] private AttributeDependant<float> _runSpeed;
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private Vector3 standingColliderSize;
-    [SerializeField] private new CapsuleCollider collider;
     
     [Space(20f)]
     
@@ -50,15 +48,12 @@ public class GroundedState : PlayerState
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.freezeRotation = true;
         rigidbody.useGravity = false;
-
-        collider = GetComponent<CapsuleCollider>();
 	}
 
     protected override void OnEnterState()
     {
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Ground State]");
-        collider.height = standingColliderSize.y;
         characterStats = ((CharacterStateMachine)_stateMachine).characterStats;
         inputState = ((CharacterStateMachine)_stateMachine).inputState;
     }
@@ -77,7 +72,7 @@ public class GroundedState : PlayerState
         Vector3 targetVelocity = targetDirection;
 
         // Ground Control
-        if (IsGrounded) 
+        if (isGrounded) 
         {
             // Running
             if(inputVector != Vector3.zero && inputState.Run.State == VButtonState.PRESSED)
@@ -119,7 +114,7 @@ public class GroundedState : PlayerState
         // Jump
         if (inputState.Jump.Pressed) 
         {
-            if(IsGrounded)
+            if(isGrounded)
                 _stateMachine.SwitchState(2);
         }
 
@@ -128,7 +123,7 @@ public class GroundedState : PlayerState
             _stateMachine.SwitchState(1);
 
         // Switch to AirSTate
-        if (IsGrounded == false) 
+        if (isGrounded == false) 
             _stateMachine.SwitchState(5);
         
         // Switch to ClimbState

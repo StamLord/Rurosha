@@ -241,7 +241,7 @@ public class ClimbState : PlayerState
     private bool ClimbDownCheck()
     {
         if(inputVector.y > 0) return false;
-        return IsGrounded;
+        return isGrounded;
     }
 
     private void OnDrawGizmos() 

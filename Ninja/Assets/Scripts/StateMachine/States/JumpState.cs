@@ -43,7 +43,6 @@ public class JumpState : PlayerState
     [Space(20f)]
 
     [Header("Wall Jumping")]
-    [SerializeField] private WallSensor wallSensor;
     [SerializeField] private bool wallJumpOn = true;
     [SerializeField] private float wallJumpForce = 10f;
     [SerializeField] private float wallJumpMinimumSlope = -.1f;
@@ -77,13 +76,13 @@ public class JumpState : PlayerState
         
         _timeStamp = Time.time;
         _jumpDirection = targetDirection;
-        _fromGround = IsGrounded;
+        _fromGround = isGrounded;
 
         if(_fromGround == false)
         {
-            if (wallJumpOn && wallSensor.WallDetected && wallSensor.WallNormal.y >= wallJumpMinimumSlope)
+            if (wallJumpOn && wallDetected && wallNormal.y >= wallJumpMinimumSlope)
             {
-                rigidbody.velocity = wallSensor.WallNormal * wallJumpForce;
+                rigidbody.velocity = wallNormal * wallJumpForce;
                 rigidbody.velocity = new Vector3(rigidbody.velocity.x, CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
                 _stateMachine.SwitchState(5);
                 return;
@@ -108,7 +107,7 @@ public class JumpState : PlayerState
         Vector3 targetVelocity = targetDirection;
 
         // Ground Control
-        if (IsGrounded) 
+        if (isGrounded) 
         {
             if(inputState.Run.State == VButtonState.PRESSED)
             {
@@ -143,7 +142,7 @@ public class JumpState : PlayerState
                 OnJumpCharge(pressTime / maxPressTime);
 
             // Release of jump button
-            if (inputState.Jump.State == VButtonState.UNPRESSED && IsGrounded) 
+            if (inputState.Jump.State == VButtonState.UNPRESSED && isGrounded) 
             {    
                 rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
                 pressTime = 0f;

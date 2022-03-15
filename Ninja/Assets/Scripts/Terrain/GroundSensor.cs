@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GroundSensor : MonoBehaviour
 {
+    public enum Direction {down, up}
     public enum GroundDetectionType {SphereCast, FourRays}
 
     [Header("Ground Info")]
@@ -14,6 +15,7 @@ public class GroundSensor : MonoBehaviour
     [Space(20f)]
 
     [Header("Detection Settings")]
+    [SerializeField] private Direction direction;
     [SerializeField] private GroundDetectionType detectionType;
     [SerializeField] private float groundSphereRadius = .3f;
     [SerializeField] private float groundDistance = .8f;
@@ -23,47 +25,56 @@ public class GroundSensor : MonoBehaviour
     
     [Header("Debug View")]
     [SerializeField] private bool debugView;
+    [SerializeField] private Color debugColor = Color.blue;
 
     void Update()
     {
         GroundCheck();
-        DebugView();
     }
 
     private bool GroundCheck()
     {
+        Vector3 dir = Vector3.down;
+
+        switch(direction)
+        {
+            case Direction.up:
+                dir = Vector3.up;
+                break;
+        }
+
         RaycastHit groundHit;
 
         switch(detectionType)
         {
             case GroundDetectionType.SphereCast:
-                isGrounded = Physics.SphereCast(transform.position, groundSphereRadius, Vector3.down, out groundHit, groundDistance, groundMask);
+                isGrounded = Physics.SphereCast(transform.position, groundSphereRadius, dir, out groundHit, groundDistance, groundMask);
                 groundSlope = Vector3.Angle(groundHit.normal, Vector3.up);
                 break;
             case GroundDetectionType.FourRays:
 
                 Vector3 averageNormal = Vector3.zero;
 
-                bool ray1 = Physics.Raycast(transform.position + new Vector3(-1,0,1) * groundSphereRadius, Vector3.down, out groundHit, groundDistance, groundMask);
+                bool ray1 = Physics.Raycast(transform.position + new Vector3(-1,0,1) * groundSphereRadius, dir, out groundHit, groundDistance, groundMask);
                 
                 if(ray1)
                 {
                     averageNormal += groundHit.normal;
                 }
                 
-                bool ray2 = Physics.Raycast(transform.position + new Vector3(1,0,1) * groundSphereRadius, Vector3.down, out groundHit, groundDistance, groundMask);
+                bool ray2 = Physics.Raycast(transform.position + new Vector3(1,0,1) * groundSphereRadius, dir, out groundHit, groundDistance, groundMask);
                 if(ray2)
                 {
                     averageNormal += groundHit.normal;
                 }
 
-                bool ray3 = Physics.Raycast(transform.position + new Vector3(-1,0,-1) * groundSphereRadius, Vector3.down, out groundHit, groundDistance, groundMask);
+                bool ray3 = Physics.Raycast(transform.position + new Vector3(-1,0,-1) * groundSphereRadius, dir, out groundHit, groundDistance, groundMask);
                 if(ray3)
                 {
                     averageNormal += groundHit.normal;
                 }
 
-                bool ray4 = Physics.Raycast(transform.position + new Vector3(1,0,-1) * groundSphereRadius, Vector3.down, out groundHit, groundDistance, groundMask);
+                bool ray4 = Physics.Raycast(transform.position + new Vector3(1,0,-1) * groundSphereRadius, dir, out groundHit, groundDistance, groundMask);
                 if(ray4)
                 {
                     averageNormal += groundHit.normal;
@@ -80,13 +91,31 @@ public class GroundSensor : MonoBehaviour
         return isGrounded;
     }
 
-    private void DebugView()
+    private void OnDrawGizmos()
     {
         if(debugView == false) return;
 
-        Debug.DrawRay(transform.position + new Vector3(-1,0,1) * groundSphereRadius, Vector3.down * groundDistance, Color.blue);
-        Debug.DrawRay(transform.position + new Vector3(1,0,1) * groundSphereRadius, Vector3.down * groundDistance, Color.blue);
-        Debug.DrawRay(transform.position + new Vector3(-1,0,-1) * groundSphereRadius, Vector3.down * groundDistance, Color.blue);
-        Debug.DrawRay(transform.position + new Vector3(1,0,-1) * groundSphereRadius, Vector3.down * groundDistance, Color.blue);
+        Vector3 dir = Vector3.down;
+
+        switch(direction)
+        {
+            case Direction.up:
+                dir = Vector3.up;
+                break;
+        }
+        
+        Gizmos.color = debugColor;
+        switch(detectionType)
+        {
+            case GroundDetectionType.SphereCast:
+                Gizmos.DrawWireSphere(transform.position + dir * groundDistance, groundSphereRadius);
+                break;
+            case GroundDetectionType.FourRays:
+                Gizmos.DrawRay(transform.position + new Vector3(-1,0,1) * groundSphereRadius, dir * groundDistance);
+                Gizmos.DrawRay(transform.position + new Vector3(1,0,1) * groundSphereRadius, dir * groundDistance);
+                Gizmos.DrawRay(transform.position + new Vector3(-1,0,-1) * groundSphereRadius, dir * groundDistance);
+                Gizmos.DrawRay(transform.position + new Vector3(1,0,-1) * groundSphereRadius, dir * groundDistance);
+                break;
+        }
     }
 }
