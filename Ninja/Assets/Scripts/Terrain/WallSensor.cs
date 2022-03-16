@@ -8,10 +8,12 @@ public class WallSensor : MonoBehaviour
     [SerializeField] bool wallDetected;
     [SerializeField] Vector3 wallPoint;
     [SerializeField] Vector3 wallNormal;
+    [SerializeField] float wallAngle;
 
-    public bool WallDetected {get{return wallDetected;}}
-    public Vector3 WallPoint {get{return wallPoint;}}
-    public Vector3 WallNormal {get{return wallNormal;}}
+    public bool WallDetected {get {return wallDetected;}}
+    public Vector3 WallPoint {get {return wallPoint;}}
+    public Vector3 WallNormal {get {return wallNormal;}}
+    public float WallAngle {get {return wallAngle;}}
 
     [Space(20f)]
 
@@ -50,6 +52,8 @@ public class WallSensor : MonoBehaviour
         {
             wallPoint = wall.point;
             wallNormal = wall.normal;
+            wallAngle = Vector3.Angle(wallNormal, transform.forward);
+            if(wallAngle > 180f) wallAngle -= 360f;
         }
     }
 

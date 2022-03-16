@@ -20,6 +20,7 @@ public class CharacterStateMachine : StateMachine
     public bool WallDetected { get {return wallSensor.WallDetected;}}
     public Vector3 WallNormal{ get {return wallSensor.WallNormal;}}
     public Vector3 WallPoint{ get {return wallSensor.WallPoint;}}
+    public float WallAngle{ get {return wallSensor.WallAngle;}}
 
     [Header("Ledge Detection")]
     [SerializeField] protected LedgeSensor ledgeSensor;

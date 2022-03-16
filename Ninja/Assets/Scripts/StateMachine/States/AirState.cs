@@ -152,6 +152,8 @@ public class AirState : PlayerState
         && airJumps < maxAirJumps 
         && isGliding == false) 
         {
+            if(wallAngle > 90 && wallAngle < 140)
+                Debug.Log("Wall Run");
             airJumps++;
             if(OnDoubleJumpStart != null) OnDoubleJumpStart();
             _stateMachine.SwitchState(2);

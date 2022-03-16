@@ -10,6 +10,7 @@ public class PlayerState : State
 
     public bool wallDetected {get {return WallDetected();}}
     public Vector3 wallNormal {get {return WallNormal();}}
+    public float wallAngle {get {return WallAngle();}}
 
     public bool ledgeDetected {get {return LedgeDetected();}}
     public Vector3 ledgePoint {get {return LedgePoint();}}
@@ -32,6 +33,11 @@ public class PlayerState : State
     public Vector3 WallNormal()
     {
         return ((CharacterStateMachine)_stateMachine).WallNormal;
+    }
+
+    public float WallAngle()
+    {
+        return ((CharacterStateMachine)_stateMachine).WallAngle;
     }
 
     public bool LedgeDetected()
