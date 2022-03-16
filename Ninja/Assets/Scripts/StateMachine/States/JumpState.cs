@@ -95,6 +95,12 @@ public class JumpState : PlayerState
         }
     }
 
+    protected override void OnExitState()
+    {
+        base.OnExitState();
+        ResetCharging();
+    }
+
     public override void OnStateUpdate()
     {
         base.OnStateUpdate();
@@ -145,9 +151,7 @@ public class JumpState : PlayerState
             if (inputState.Jump.State == VButtonState.UNPRESSED && isGrounded) 
             {    
                 rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
-                pressTime = 0f;
-                if(OnJumpCharge != null)
-                    OnJumpCharge(-1f);
+                ResetCharging();
                 
                 // Transition to Air State
                  _stateMachine.SwitchState(5);
@@ -163,6 +167,13 @@ public class JumpState : PlayerState
         }
 
         pressTime = Mathf.Min(inputState.Jump.PressTime, maxPressTime);
+    }
+
+    private void ResetCharging()
+    {
+        pressTime = 0f;
+        if(OnJumpCharge != null)
+            OnJumpCharge(-1f);
     }
 
     float CalculateJumpVerticalSpeed () 
