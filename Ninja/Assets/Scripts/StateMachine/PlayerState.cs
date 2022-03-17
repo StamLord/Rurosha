@@ -4,49 +4,24 @@ using UnityEngine;
 
 public class PlayerState : State
 {
-    public bool isGrounded {get {return IsGrounded();}}
 
-    public bool isUnder {get {return IsUnder();}}
+    [SerializeField] private CharacterStateMachine characterStateMachine;
+    public CharacterStateMachine CharacterStateMachine { 
+        get { 
+            return (characterStateMachine == null)? characterStateMachine = (CharacterStateMachine)_stateMachine : characterStateMachine; 
+            }}
 
-    public bool wallDetected {get {return WallDetected();}}
-    public Vector3 wallNormal {get {return WallNormal();}}
-    public float wallAngle {get {return WallAngle();}}
+    public InputState inputState { get { return CharacterStateMachine.inputState; }}
+    public CharacterStats characterStats { get { return CharacterStateMachine.characterStats; }}
 
-    public bool ledgeDetected {get {return LedgeDetected();}}
-    public Vector3 ledgePoint {get {return LedgePoint();}}
+    public bool isGrounded {get {return CharacterStateMachine.IsGrounded;}}
 
-    public bool IsGrounded()
-    {
-        return ((CharacterStateMachine)_stateMachine).IsGrounded;
-    }
+    public bool isUnder {get {return CharacterStateMachine.IsUnder;}}
 
-    public bool IsUnder()
-    {
-        return ((CharacterStateMachine)_stateMachine).IsUnder;
-    }
+    public bool wallDetected {get {return CharacterStateMachine.WallDetected;}}
+    public Vector3 wallNormal {get {return CharacterStateMachine.WallNormal;}}
+    public float wallAngle {get {return CharacterStateMachine.WallAngle;}}
 
-    public bool WallDetected()
-    {
-        return ((CharacterStateMachine)_stateMachine).WallDetected;
-    }
-
-    public Vector3 WallNormal()
-    {
-        return ((CharacterStateMachine)_stateMachine).WallNormal;
-    }
-
-    public float WallAngle()
-    {
-        return ((CharacterStateMachine)_stateMachine).WallAngle;
-    }
-
-    public bool LedgeDetected()
-    {
-        return ((CharacterStateMachine)_stateMachine).LedgeDetected;
-    }
-
-    public Vector3 LedgePoint()
-    {
-        return ((CharacterStateMachine)_stateMachine).LedgePoint;
-    }
+    public bool ledgeDetected {get {return CharacterStateMachine.LedgeDetected;}}
+    public Vector3 ledgePoint {get {return CharacterStateMachine.LedgePoint;}}
 }
