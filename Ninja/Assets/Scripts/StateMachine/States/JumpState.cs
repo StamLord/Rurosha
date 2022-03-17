@@ -10,6 +10,7 @@ public class JumpState : PlayerState
     [SerializeField] private bool _fromGround;
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private float gravity = 20.0f;
+    private float lastJumpHeight;
 
     [Space(20f)]
 
@@ -89,7 +90,7 @@ public class JumpState : PlayerState
             }
             else
             {
-                rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
+                rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateDoubleJumpVerticalSpeed(), rigidbody.velocity.z);
                 _stateMachine.SwitchState(5);
             }
         }
@@ -192,6 +193,13 @@ public class JumpState : PlayerState
         
         // From the jump height and gravity we deduce the upwards speed 
 	    // for the character to reach at the apex.
+        lastJumpHeight = jumpHeight;
         return Mathf.Sqrt(2 * jumpHeight * gravity);
 	}
+
+    float CalculateDoubleJumpVerticalSpeed()
+    {
+        float jumpHeight = Mathf.Max(lastJumpHeight * .5f, JumpHeight.GetValueAt(0));
+        return Mathf.Sqrt(2 * jumpHeight * gravity);;
+    }
 }
