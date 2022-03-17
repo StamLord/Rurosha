@@ -67,7 +67,9 @@ public class UIManager : MonoBehaviour
 
     private void Awake() 
     {
-        SetupInstance();    
+        Debug.Log(gameObject.name);
+        SetupInstance();
+        CheckWindows();
     }
     
     public void AddWindow(UIWindow window, bool disableMovement = false, bool disableMouse = false, bool disableInteraction = false)
