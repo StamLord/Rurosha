@@ -15,7 +15,6 @@ public class AirState : PlayerState
 
     [Space(20f)]
     [Header("Input Data")]
-    [SerializeField] private InputState inputState;
     [SerializeField] private Vector3 inputVector;
     [SerializeField] private Vector3 targetDirection;
     [SerializeField] private Vector3 targetVelocity;
@@ -39,11 +38,6 @@ public class AirState : PlayerState
 
     public delegate void VaultStartDelegate();
     public event VaultStartDelegate OnVaultStart;
-
-    [Space(20f)]
-
-    [Header("Stats")]
-    [SerializeField] private CharacterStats characterStats;
 
     [Space(20f)]
 
@@ -76,9 +70,6 @@ public class AirState : PlayerState
     {
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Air State]");
-
-        characterStats = ((CharacterStateMachine)_stateMachine).characterStats;
-        inputState = ((CharacterStateMachine)_stateMachine).inputState;
 
         originalSpeed =  new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
 
@@ -127,7 +118,6 @@ public class AirState : PlayerState
         //rigidbody.AddForce(targetVelocity * airControl, ForceMode.VelocityChange);
         
         // Instant Method
-        
         targetVelocity *= airControl;
 
         // Apply a force that attempts to reach our target velocity
@@ -152,8 +142,12 @@ public class AirState : PlayerState
         && airJumps < maxAirJumps 
         && isGliding == false) 
         {
-            if(wallAngle > 90 && wallAngle < 140)
-                Debug.Log("Wall Run");
+            if(wallDetected && wallAngle > 90 && wallAngle < 140 && inputState.AxisInput.z > 0)
+            {
+                _stateMachine.SwitchState(6);
+                return;
+            }
+
             airJumps++;
             if(OnDoubleJumpStart != null) OnDoubleJumpStart();
             _stateMachine.SwitchState(2);

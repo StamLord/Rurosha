@@ -9,6 +9,7 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private Transform playerBody;
     [SerializeField] private AirState airState;
     [SerializeField] private CrouchState crouchState;
+    [SerializeField] private WallRunState wallRunState;
     
     //[SerializeField] private LookState _lookState = LookState.TURN_BODY;
 
@@ -31,6 +32,11 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float ledgeTiltDuration = .5f;
     [SerializeField] private bool isClimbingLedge;
 
+    [Header("Wall Run FX")]
+    [SerializeField] private float wallRunTilt = 20f;
+    [SerializeField] private float wallRunDuration = .5f;
+    [SerializeField] private bool isWallRunning;
+
     [SerializeField] private bool disabled;
 
     void Start()
@@ -41,6 +47,8 @@ public class MouseLook : MonoBehaviour
         airState.OnVaultStart += StartClimbLedgeTilt;
         crouchState.OnCrouchStart += StartCrouch;
         crouchState.OnCrouchEnd += EndCrouch;
+        wallRunState.OnRunStart += StartWallRun;
+        wallRunState.OnRunEnd += EndWallRun;
     }
     
     void LateUpdate()
@@ -60,24 +68,22 @@ public class MouseLook : MonoBehaviour
         // Movement Feedback
         Vector3 inputVector = inputState.AxisInput;
 
-        // Lerp
-        /*
-        float zRotation = Mathf.Lerp(
-            transform.localRotation.z, 
-            (inputVector.x > 0)? -maxRotZ : (inputVector.x < 0) ? maxRotZ : 0f, 
-            Mathf.Abs(inputVector.x) * rotSpeedZ);
-        */
+        // Handle Z rotation
+        float zRotation = transform.localEulerAngles.z;
 
-        float targetZRot = (inputVector.x > 0)? -maxRotZ : (inputVector.x < 0)? maxRotZ : 0f;
-        float currentZ = transform.localRotation.eulerAngles.z;
-        currentZ = (currentZ > 180)? currentZ - 360 : currentZ;
-        float deltaZ = (targetZRot - currentZ) * rotSpeedZ * Time.deltaTime;
-        float zRotation =  currentZ + deltaZ;
+        if(isWallRunning == false) // if WallRunning, coroutine will handle z rotation
+        {
+            float targetZRot = (inputVector.x > 0)? -maxRotZ : (inputVector.x < 0)? maxRotZ : 0f;
+            float currentZ = transform.localRotation.eulerAngles.z;
+            currentZ = (currentZ > 180)? currentZ - 360 : currentZ;
+            float deltaZ = (targetZRot - currentZ) * rotSpeedZ * Time.deltaTime;
+            zRotation =  currentZ + deltaZ;
 
-        if(currentZ > targetZRot)
-            zRotation = Mathf.Max(zRotation, targetZRot);
-        else if(currentZ < targetZRot)
-            zRotation = Mathf.Min(zRotation, targetZRot);
+            if(currentZ > targetZRot)
+                zRotation = Mathf.Max(zRotation, targetZRot);
+            else if(currentZ < targetZRot)
+                zRotation = Mathf.Min(zRotation, targetZRot);
+        }
 
         // Rotate Camera
         transform.localRotation = Quaternion.Euler(xRotation, 0f, zRotation);
@@ -124,6 +130,56 @@ public class MouseLook : MonoBehaviour
             yield return null;
         }
         isAnimatingCrouch = false;
+    }
+
+    #endregion
+
+    #region Wall Run
+
+    private void StartWallRun(bool left)
+    {
+        StartCoroutine("StartWalRunTilt", left);
+    }
+
+    private void EndWallRun()
+    {
+        StartCoroutine("EndWalRunTilt");
+    }
+
+    private IEnumerator StartWalRunTilt(bool left)
+    {
+        isWallRunning = true;
+        float startTime = Time.time;
+        float startZ = transform.localRotation.eulerAngles.z;
+        if(startZ > 180f) startZ -= 360f;
+        float angle = (left)? -wallRunTilt : wallRunTilt;
+        if(angle > 180f) angle -= 360f;
+
+        while (Time.time - startTime < wallRunDuration)
+        {
+            float p = (Time.time - startTime) / wallRunDuration;
+            
+            
+
+            transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, Mathf.Lerp(startZ, angle, p));
+            yield return null;
+        }
+    }
+
+    private IEnumerator EndWalRunTilt()
+    {
+        float startTime = Time.time;
+        float startZ = transform.localRotation.eulerAngles.z;
+        if(startZ > 180f) startZ -= 360f;
+
+        while (Time.time - startTime < wallRunDuration)
+        {
+            float p = (Time.time - startTime) / wallRunDuration;
+            transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, Mathf.Lerp(startZ, 0, p));
+            yield return null;
+        }
+
+        isWallRunning = false;
     }
 
     #endregion
