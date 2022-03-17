@@ -14,15 +14,6 @@ public class DashState : PlayerState
     [SerializeField] private float gravity = 20.0f;
 
     [Space(20f)]
-    [Header("Input Data")]
-    [SerializeField] private InputState inputState;
-
-    [Space(20f)]
-
-    [Header("Stats")]
-    [SerializeField] private CharacterStats characterStats;
-
-    [Space(20f)]
 
     [Header("Debug View")]
     [SerializeField] private bool debugView;
@@ -43,9 +34,6 @@ public class DashState : PlayerState
     {
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Dash State]");
-
-        characterStats = ((CharacterStateMachine)_stateMachine).characterStats;
-        inputState = ((CharacterStateMachine)_stateMachine).inputState;
 
         dashStart = rigidbody.position;
         Vector3 inputVector = inputState.AxisInput;
@@ -71,6 +59,13 @@ public class DashState : PlayerState
         float distance = dashDistance.GetValue(characterStats);
         if((rigidbody.position - dashStart).sqrMagnitude > distance * distance || 
             rigidbody.velocity.magnitude < dashSpeed * .75f)
-            _stateMachine.SwitchState(1);
+        {
+            rigidbody.velocity = Vector3.zero;
+            if(isGrounded)
+                _stateMachine.SwitchState(1);
+            else
+                _stateMachine.SwitchState(5);
+
+        }
     }
 }
