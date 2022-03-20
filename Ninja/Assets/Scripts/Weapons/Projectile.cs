@@ -55,7 +55,6 @@ public class Projectile : MonoBehaviour, IHitboxResponder
 
     void Update()
     {
-        //Debug.DrawRay(transform.position, transform.forward, Color.green, speed);
         if(stopped)
         {
             for(int i=0; i < hitbox.Length; i++)
@@ -78,22 +77,26 @@ public class Projectile : MonoBehaviour, IHitboxResponder
         }
 
         if (CollisionCheck())
-        {
-            transform.position = hitDetected.point + transform.forward * penetration;
-            transform.SetParent(hitDetected.transform);
-            stopped = true;
-            //transform.parent = hitDetected.transform;
-            if(pickupable && pickup)
-                pickup.enabled = true;
-            
-            if(collider)
-                collider.enabled = true;
-        }
+            StopProjectile();
 
         lastPosition = transform.position;
     }
 
-    bool CollisionCheck()
+    private void StopProjectile()
+    {
+        stopped = true;
+        transform.position = hitDetected.point + transform.forward * penetration;
+        transform.SetParent(hitDetected.transform);
+        
+        if(pickupable && pickup)
+            pickup.enabled = true;
+        
+        if(collider)
+            collider.enabled = true;
+    }
+
+    // Make sure we don't fly through colliders due to speed
+    private bool CollisionCheck()
     {   
         if(lastPositionCheck)
             return Physics.Raycast(lastPosition, transform.position, out hitDetected, speed * 2f * Time.deltaTime, hitMask);

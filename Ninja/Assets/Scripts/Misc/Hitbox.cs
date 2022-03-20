@@ -13,9 +13,12 @@ public class Hitbox : MonoBehaviour
 
     [SerializeField] private List<Collider> collided = new List<Collider>();
 
-    public void StartColliding()
+    private bool activeForOneFrame = false;
+
+    public void StartColliding(bool activeForOneFrame = false)
     {
         isActive = true;    
+        this.activeForOneFrame = activeForOneFrame;
     }
 
     public void StopColliding()
@@ -54,7 +57,9 @@ public class Hitbox : MonoBehaviour
                     collided.Add(col);
                 }
             }
-                
+
+            if(activeForOneFrame)
+                StopColliding();
         }
 
         lastActiveState = isActive;

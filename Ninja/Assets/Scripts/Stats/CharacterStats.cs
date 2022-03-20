@@ -420,8 +420,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         _isAlive = false;
 
-        aliveVisual?.SetActive(false);
-        deadVisual?.SetActive(true);
+        if(aliveVisual) aliveVisual.SetActive(false);
+        if(deadVisual) deadVisual.SetActive(true);
 
         if(DeathEvent != null)
             DeathEvent();
