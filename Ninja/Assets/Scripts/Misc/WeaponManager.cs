@@ -22,8 +22,9 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private GameObject _sword;
     [SerializeField] private GameObject _staff;
     [SerializeField] private GameObject _kanabo;
-    [SerializeField] private GameObject _throw;
-    [SerializeField] private GameObject _big_throw;
+    [SerializeField] private GameObject _shuriken;
+    [SerializeField] private GameObject _big_shuriken;
+    [SerializeField] private GameObject _bomb;
     [SerializeField] private GameObject _bow;
     [SerializeField] private GameObject _item;
     [SerializeField] private GameObject _itemBowl;
@@ -148,10 +149,10 @@ public class WeaponManager : MonoBehaviour
                     ActivateObject(_kanabo);
                     break;
                 case WeaponType.THROW:
-                    ActivateObject(_throw);
+                    ActivateObject(_shuriken);
                     break;
                 case WeaponType.BIG_THROW:
-                    ActivateObject(_big_throw);
+                    ActivateObject(_big_shuriken);
                     break;
                 case WeaponType.BOW:
                     break;

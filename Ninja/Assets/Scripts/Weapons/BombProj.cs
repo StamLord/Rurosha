@@ -10,6 +10,8 @@ public class BombProj : MonoBehaviour, IHitboxResponder
     [SerializeField] private DamageType damageType = DamageType.Pierce;
     [SerializeField] private int softDamage = 10;
     [SerializeField] private int hardDamage = 20;
+    [SerializeField] private float explosionForce = 20;
+    [SerializeField] private float explosionUpForce = 10;
     
     [Header("References")]
     [SerializeField] private GameObject visual;
@@ -43,10 +45,15 @@ public class BombProj : MonoBehaviour, IHitboxResponder
     
     private void Explode()
     {
-        Debug.Log("BoOM");
         StopTimer();
         if(visual) visual.SetActive(false);
-        if(explosion) explosion.SetActive(true);
+        if(explosion)
+        {
+            explosion.transform.SetParent(null);
+            explosion.transform.rotation = Quaternion.identity;
+            explosion.SetActive(true);
+        }
+            
         hitbox.StartColliding(true);
     }
 
@@ -57,10 +64,20 @@ public class BombProj : MonoBehaviour, IHitboxResponder
 
     public void CollisionWith(Collider col)
     {
+        // Check if we have line of sight to collider
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, col.transform.position - transform.position, out hit, radius))
+        {
+            Debug.Log(hit.transform);
+            Debug.Log(col.transform);
+            if(hit.transform != col.transform)
+                return;
+        }
+
+        // Get hurtbox and register hit
         Hurtbox hurtbox = col.GetComponent<Hurtbox>();
         if(hurtbox)
         { 
-            Debug.Log("Collide with " + col.gameObject.name);
             // Avoid triggering multiple hurtboxes with the same parent GameObject
             if(objectsCollided.Contains(hurtbox.transform.parent.gameObject) == false)
             {
@@ -68,6 +85,11 @@ public class BombProj : MonoBehaviour, IHitboxResponder
                 objectsCollided.Add(hurtbox.transform.parent.gameObject);
             } 
         }
+
+        // Get rigidbody and apply explosion force
+        Rigidbody rb = col.GetComponent<Rigidbody>();
+        if(rb)
+            rb.AddExplosionForce(explosionForce, transform.position, radius, explosionUpForce, ForceMode.Impulse);
     }
 
     public void UpdateColliderState(bool state)
