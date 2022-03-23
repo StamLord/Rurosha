@@ -99,6 +99,11 @@ public class Bomb : WeaponObject
 
     private void ThrowBomb(int index)
     {
+        // Check ammo and deplete
+        if(weaponManager.GetAmmo() < 1) return;
+        weaponManager.DepleteItem(1);
+
+        // Instantiate projectile
         Vector3 pos = transform.position + transform.right * origins[index].x + transform.up * origins[index].y + transform.forward * origins[index].z;
         GameObject obj = Instantiate(projectile, pos, camera.rotation);
         obj.GetComponent<Rigidbody>().AddForce((camera.forward + camera.up * upModifier).normalized * throwForce, ForceMode.VelocityChange);

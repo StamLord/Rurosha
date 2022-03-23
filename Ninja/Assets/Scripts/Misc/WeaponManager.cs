@@ -148,11 +148,14 @@ public class WeaponManager : MonoBehaviour
                 case WeaponType.KANABO:
                     ActivateObject(_kanabo);
                     break;
-                case WeaponType.THROW:
+                case WeaponType.SHURIKEN:
                     ActivateObject(_shuriken);
                     break;
-                case WeaponType.BIG_THROW:
+                case WeaponType.BIG_SHURIKEN:
                     ActivateObject(_big_shuriken);
+                    break;
+                case WeaponType.BOMB:
+                    ActivateObject(_bomb);
                     break;
                 case WeaponType.BOW:
                     break;
