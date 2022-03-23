@@ -54,9 +54,10 @@ public class Bomb : WeaponObject
             case VButtonState.PRESS_END:
                 if(isAimingMultiple)
                 {
-                    ThrowBomb(0);
-                    ThrowBomb(1);
-                    ThrowBomb(2);
+                    int ammo = weaponManager.GetAmmo();
+                    for (int i = 0; i < ammo && i < origins.Length; i++)
+                        ThrowBomb(i);
+                    
                     CancelAimMultiple();
                 }
                 break;
@@ -102,7 +103,7 @@ public class Bomb : WeaponObject
         // Check ammo and deplete
         if(weaponManager.GetAmmo() < 1) return;
         weaponManager.DepleteItem(1);
-
+        
         // Instantiate projectile
         Vector3 pos = transform.position + transform.right * origins[index].x + transform.up * origins[index].y + transform.forward * origins[index].z;
         GameObject obj = Instantiate(projectile, pos, camera.rotation);
