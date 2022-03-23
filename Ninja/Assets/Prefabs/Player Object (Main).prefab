@@ -915,8 +915,8 @@ MonoBehaviour:
   timeBetweenPoints: 0.1
   origins:
   - {x: 0, y: 0, z: 0}
-  - {x: -0.5, y: 0, z: 0}
-  - {x: 0.5, y: 0, z: 0}
+  - {x: -0.5, y: -0.25, z: 0}
+  - {x: 0.5, y: -0.25, z: 0}
   upModifier: 0.2
   throwForce: 20
   collisionMask:
@@ -2811,9 +2811,9 @@ MonoBehaviour:
   _sword: {fileID: 6944390856736947496}
   _staff: {fileID: 0}
   _kanabo: {fileID: 1348594574}
-  _shuriken: {fileID: 0}
-  _big_shuriken: {fileID: 0}
-  _bomb: {fileID: 0}
+  _shuriken: {fileID: 6944390856768252502}
+  _big_shuriken: {fileID: 933431932}
+  _bomb: {fileID: 1003663445}
   _bow: {fileID: 0}
   _item: {fileID: 3192729886834974161}
   _itemBowl: {fileID: 603892458077574971}
