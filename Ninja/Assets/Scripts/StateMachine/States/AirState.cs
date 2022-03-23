@@ -100,7 +100,7 @@ public class AirState : PlayerState
 
             return;
         }
-        else if(ledgeDetected)
+        else if(ledgeDetected && inputState.AxisInput.z > 0) // We must be moving forward to trigger ledge climbing
         {
             isVaulting = true;
             rigidbody.velocity = Vector3.zero; // Stop jumping, falling and any other forces
