@@ -58,7 +58,7 @@ public class WeaponSlotUI : MonoBehaviour
         float time = Time.time;
         while(Time.time < time + _stackUpdateAnimationDuration)
         {
-            float p = Time.time / (time + _stackUpdateAnimationDuration);Debug.Log(p);
+            float p = Time.time / (time + _stackUpdateAnimationDuration);
             _stackNumber.rectTransform.localScale = Vector3.Lerp(_stackUpdateAnimationSize, Vector3.one, p);
             yield return null;
         }
