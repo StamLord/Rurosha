@@ -68,8 +68,6 @@ public class BombProj : MonoBehaviour, IHitboxResponder
         RaycastHit hit;
         if(Physics.Raycast(transform.position, col.transform.position - transform.position, out hit, radius))
         {
-            Debug.Log(hit.transform);
-            Debug.Log(col.transform);
             if(hit.transform != col.transform)
                 return;
         }
