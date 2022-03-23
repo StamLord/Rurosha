@@ -55,9 +55,6 @@ public class Shuriken : WeaponObject
                 float angle = maxAngle.GetValue(_weaponManager.Stats);
                 Quaternion randomRotation = Quaternion.Euler(0, Random.Range(-angle, angle), Random.Range(-angle, angle));
 
-                Debug.Log(randomRotation);
-                Debug.Log(angle);
-
                 obj.transform.forward = randomRotation * obj.transform.forward;
 
                 lastShot = Time.time;
@@ -67,7 +64,6 @@ public class Shuriken : WeaponObject
                 UseAnimation();
 
                 distance = Mathf.Max(0.1f, distance / dexterityExpMaxDistance);
-                Debug.Log(distance);
                 _weaponManager.Stats.IncreaseAttributeExp("Dexterity", dexterityExpGain * distance);
                 _weaponManager.Stats.IncreaseAttributeExp("Agility", agilityExpGain);
             }
