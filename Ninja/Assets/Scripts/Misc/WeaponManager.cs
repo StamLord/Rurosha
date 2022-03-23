@@ -209,6 +209,7 @@ public class WeaponManager : MonoBehaviour
             {
                 items[i].ammo += item.ammo;
                 if(ChangeItemEvent != null) ChangeItemEvent(i, item, items[i].ammo);
+                SelectItem();
                 return true;
             }
         }
@@ -223,6 +224,7 @@ public class WeaponManager : MonoBehaviour
                 items[firstEmpty] = Instantiate(item);
 
             if(ChangeItemEvent != null) ChangeItemEvent(firstEmpty, item);
+            SelectItem();
             return true;
         }
 
