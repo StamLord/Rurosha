@@ -1,0 +1,1 @@
+public enum KatanaStance {Low, Medium, High}

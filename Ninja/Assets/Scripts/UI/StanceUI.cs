@@ -26,25 +26,25 @@ public class StanceUI : MonoBehaviour
         low.color = medium.color = high.color = baseColor;
     }
 
-    void UpdateImages(Vector3 delta)
+    void UpdateImages(KatanaStance stance)
     {
-        if(delta.y > 0.2f)
-        { 
-            low.color = baseColor;
-            medium.color = baseColor;
-            high.color = selectedColor;
-        }
-        else if(delta.y < -0.2f)
+        switch(stance)
         {
-            low.color = selectedColor;
-            medium.color = baseColor;
-            high.color = baseColor;
-        }
-        else
-        {
-            low.color = baseColor;
-            medium.color = selectedColor;
-            high.color = baseColor;
+            case KatanaStance.High:
+                low.color = baseColor;
+                medium.color = baseColor;
+                high.color = selectedColor;
+                break;
+            case KatanaStance.Low:
+                low.color = selectedColor;
+                medium.color = baseColor;
+                high.color = baseColor;
+                break;
+            case KatanaStance.Medium:
+                low.color = baseColor;
+                medium.color = selectedColor;
+                high.color = baseColor;
+                break;
         }
     }
 

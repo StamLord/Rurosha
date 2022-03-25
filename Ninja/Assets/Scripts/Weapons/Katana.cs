@@ -43,14 +43,13 @@ public class Katana : WeaponObject, IHitboxResponder
 
     [SerializeField] private float strengthExpGain = .01f;
     [SerializeField] private float dexterityExpGain = .01f;
+    
+    [Header("Stance Settings")]
+    [SerializeField] private float mouseDelta;
+    [SerializeField] private float mouseDeltaMargin = 1f;
+    [SerializeField] private KatanaStance stance = KatanaStance.Medium;
 
-    public enum Stance {Low, Medium, High}
-    [SerializeField] private Stance stance = Stance.Medium;
-
-    private Vector3 mouseDelta;
-    private Vector3 lastMousePos;
-
-    public delegate void stanceSwitchDeltaDelegate(Vector3 mouseDelta);
+    public delegate void stanceSwitchDeltaDelegate(KatanaStance stance);
     public event stanceSwitchDeltaDelegate StanceSwitchDeltaEvent;
 
     public delegate void stanceSwitchStart();
@@ -68,36 +67,7 @@ public class Katana : WeaponObject, IHitboxResponder
     {
         MovementCheck();
 
-        if(Input.GetButtonDown("Switch"))
-        {
-            mouseDelta = Vector3.zero;
-            lastMousePos = Input.mousePosition;
-            if(StanceSwitchStartEvent != null)
-                StanceSwitchStartEvent();
-        }
-
-        if(Input.GetButton("Switch"))
-        {
-            mouseDelta += (Input.mousePosition - lastMousePos);
-            if(StanceSwitchDeltaEvent != null)
-                StanceSwitchDeltaEvent(mouseDelta);
-            
-            lastMousePos = Input.mousePosition;
-            Debug.Log(mouseDelta);
-        }
-
-        if(Input.GetButtonUp("Switch"))
-        {
-            if(mouseDelta.y > 0.2f)
-                StanceChange(Stance.High);
-            else if(mouseDelta.y < -0.2f)
-                StanceChange(Stance.Low);
-            else
-                StanceChange(Stance.Medium);
-
-            if(StanceSwitchEndEvent != null)
-                StanceSwitchEndEvent();
-        }
+        StanceInput();
 
         switch(weaponSystem)
         {
@@ -112,7 +82,46 @@ public class Katana : WeaponObject, IHitboxResponder
         //Debug.DrawRay(hitbox.transform.position, hitbox.transform.right);
     }
 
-    private void StanceChange(Stance newStance)
+    private void StanceInput()
+    {
+        if(Input.GetButtonDown("Switch"))
+        {
+            mouseDelta = 0;
+            if(StanceSwitchStartEvent != null)
+                StanceSwitchStartEvent();
+        }
+
+        if(Input.GetButton("Switch"))
+        {
+            mouseDelta += Input.GetAxis("Mouse Y");
+            KatanaStance tempStance;
+
+            if(mouseDelta > mouseDeltaMargin)
+                tempStance = KatanaStance.High;
+            else if(mouseDelta < -mouseDeltaMargin)
+                tempStance = KatanaStance.Low;
+            else
+                tempStance = KatanaStance.Medium;
+
+            if(StanceSwitchStartEvent != null)
+                StanceSwitchDeltaEvent(tempStance);
+        }
+
+        if(Input.GetButtonUp("Switch"))
+        {
+            if(mouseDelta > mouseDeltaMargin)
+                StanceChange(KatanaStance.High);
+            else if(mouseDelta < -mouseDeltaMargin)
+                StanceChange(KatanaStance.Low);
+            else
+                StanceChange(KatanaStance.Medium);
+
+            if(StanceSwitchEndEvent != null)
+                StanceSwitchEndEvent();
+        }
+    }
+
+    private void StanceChange(KatanaStance newStance)
     {
         if(stance == newStance)
             return;
@@ -120,12 +129,12 @@ public class Katana : WeaponObject, IHitboxResponder
         stance = newStance;
         switch(stance)
         {
-            case Stance.Low:
+            case KatanaStance.Low:
                 break;
-            case Stance.Medium:
+            case KatanaStance.Medium:
                 animator.Play("Idle");
                 break;
-            case Stance.High:
+            case KatanaStance.High:
                 animator.Play("HighIdle");
                 break;
         }
@@ -256,14 +265,11 @@ public class Katana : WeaponObject, IHitboxResponder
     public void Method1()
     {
         // MB1  + MB2 = Defend
-        if(inputState.MouseButton1.Pressed && 
-            inputState.MouseButton2.Pressed)
-        {
-            animator.SetBool("Defending", true);
+        bool defend = (inputState.MouseButton1.Pressed && inputState.MouseButton2.Pressed);
+        animator.SetBool("Defending", defend);
+
+        if(defend)
             return;
-        }
-        else
-            animator.SetBool("Defending", false);
         
         // LMB
         if(inputState.MouseButton1.State == VButtonState.PRESS_START)
