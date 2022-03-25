@@ -55,8 +55,15 @@ public class WallRunState : PlayerState
 
         // Stop run if traveled enough distance OR velocity dropped below threshold (For example if hit a wall)
         float distance = runDistance.GetValue(characterStats);
-        if((rigidbody.position - runStart).sqrMagnitude > distance * distance || 
-            rigidbody.velocity.magnitude < runSpeed * .75f)
+        
+        bool reachedMaxDist = (rigidbody.position - runStart).sqrMagnitude > distance * distance;
+        bool velocityDropped =  rigidbody.velocity.magnitude < runSpeed * .75f;
+        Vector3 point, normal;
+        float angle;
+
+        bool stillOnWall = (wallOnLeft) ? WallDetect(-transform.right, out point, out normal, out angle) : WallDetect(transform.right, out point, out normal, out angle);
+
+        if(reachedMaxDist|| velocityDropped || stillOnWall == false)
         {
             if(isGrounded)
                 _stateMachine.SwitchState(1);

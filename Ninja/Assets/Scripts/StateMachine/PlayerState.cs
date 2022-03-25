@@ -21,6 +21,10 @@ public class PlayerState : State
     public bool wallDetected {get {return CharacterStateMachine.WallDetected;}}
     public Vector3 wallNormal {get {return CharacterStateMachine.WallNormal;}}
     public float wallAngle {get {return CharacterStateMachine.WallAngle;}}
+    public bool WallDetect(Vector3 direction, out Vector3 point, out Vector3 normal, out float angle)
+    {
+        return CharacterStateMachine.WallDetect(direction, out point, out normal, out angle);
+    }
 
     public bool ledgeDetected {get {return CharacterStateMachine.LedgeDetected;}}
     public Vector3 ledgePoint {get {return CharacterStateMachine.LedgePoint;}}

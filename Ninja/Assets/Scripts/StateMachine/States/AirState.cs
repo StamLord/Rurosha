@@ -137,17 +137,19 @@ public class AirState : PlayerState
                 rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
         }
 
-        // Jump
+        // Jump if below maxAirJumps and not gliding
         if (inputState.Jump.State == VButtonState.PRESS_START 
         && airJumps < maxAirJumps 
         && isGliding == false) 
         {
+            // Start wall running if wall detected (in input direction) and at correct angle. Also player needs to move forward to activate.
             if(wallDetected && wallAngle > 90 && wallAngle < 140 && inputState.AxisInput.z > 0)
             {
                 _stateMachine.SwitchState(6);
                 return;
             }
 
+            // Perform Air Jump
             airJumps++;
             if(OnDoubleJumpStart != null) OnDoubleJumpStart();
             _stateMachine.SwitchState(2);

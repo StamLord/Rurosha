@@ -28,7 +28,6 @@ public class WallSensor : MonoBehaviour
     [SerializeField] private bool debugView;
     [SerializeField] private Color wallColor = Color.red;
 
-    // Update is called once per frame
     void Update()
     {
         DetectWall();
@@ -37,10 +36,16 @@ public class WallSensor : MonoBehaviour
     private void DetectWall()
     {
         Vector3 direction = transform.TransformDirection(input.AxisInput);
+        wallDetected = DetectWall(direction, out wallPoint, out wallNormal, out wallAngle);
+    }
+
+    public bool DetectWall(Vector3 direction, out Vector3 point, out Vector3 normal, out float angle)
+    {
         if (direction == Vector3.zero)
         {
-            wallDetected = false;
-            return;
+            point = normal = Vector3.zero;
+            angle = 0f;
+            return false;
         }
 
         RaycastHit wall;
@@ -50,11 +55,17 @@ public class WallSensor : MonoBehaviour
 
         if (wallDetected)
         {
-            wallPoint = wall.point;
-            wallNormal = wall.normal;
-            wallAngle = Vector3.Angle(wallNormal, transform.forward);
-            if(wallAngle > 180f) wallAngle -= 360f;
+            point = wall.point;
+            normal = wall.normal;
+            angle = Vector3.Angle(normal, transform.forward);
+            if(angle > 180f) wallAngle -= 360f;
+
+            return true;
         }
+
+        point = normal = Vector3.zero;
+        angle = 0f;
+        return false;
     }
 
     private void OnDrawGizmos() 
