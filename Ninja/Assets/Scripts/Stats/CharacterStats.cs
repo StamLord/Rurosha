@@ -36,7 +36,6 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         { 
             float oldValue = _health;
             _health = Mathf.Clamp(value, 0, PotentialHealth); 
-            Debug.Log(_health + "/ " + MaxHealth + "=" + _health / MaxHealth);
             
             if (HealthUpdateEvent != null && oldValue != _health)
                 HealthUpdateEvent(_health / MaxHealth); 
