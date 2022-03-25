@@ -135,7 +135,10 @@ public class WeaponManager : MonoBehaviour
         if(items[selected] is Weapon)
         {
             switch(((Weapon)items[selected]).WeaponType)
-            {
+            {   
+                case WeaponType.MELEE:
+                    ActivateObject(_melee);
+                    break;
                 case WeaponType.KNIFE:
                     ActivateObject(_knife);
                     break;
