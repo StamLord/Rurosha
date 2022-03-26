@@ -11,6 +11,8 @@ public class Hurtbox : MonoBehaviour
     [SerializeField] private Material _material;
     [SerializeField] private Color _baseColor;
     [SerializeField] private Color _hitColor;
+    [SerializeField] private float _colorFadeStartDuration = .1f;
+    [SerializeField] private float _colorFadeEndDuration = .5f;
     
     public void Start()
     {
@@ -30,7 +32,7 @@ public class Hurtbox : MonoBehaviour
             r.GetHit(softDamage, hardDamage, damageType);
 
         if(_debug && _material)
-            StartCoroutine(ColorChange(.5f));
+            StartCoroutine(ColorChange(_colorFadeStartDuration, _colorFadeEndDuration));
     }
 
     public void AddResponder(IHurtboxResponder responder)
@@ -39,16 +41,17 @@ public class Hurtbox : MonoBehaviour
             _responders.Add(responder);
     }
 
-    IEnumerator ColorChange(float time)
+    IEnumerator ColorChange(float startFadeTime, float endFadeTime)
     {
         float timePassed = 0;
-
-        while(timePassed < time)
+        float totalTime = startFadeTime + endFadeTime;
+        float halfTime = totalTime / 2;
+        while(timePassed < totalTime)
         {
-            if(timePassed < time / 2 )
-                _material.color = Color.Lerp(_baseColor, _hitColor, timePassed / time / 2);
+            if(timePassed < startFadeTime)
+                _material.color = Color.Lerp(_baseColor, _hitColor, timePassed / startFadeTime);
             else
-                _material.color = Color.Lerp(_hitColor, _baseColor, timePassed - time / 2 / time / 2);
+                _material.color = Color.Lerp(_hitColor, _baseColor, (timePassed - startFadeTime) / endFadeTime);
                 
             timePassed += Time.deltaTime;
             yield return null;
