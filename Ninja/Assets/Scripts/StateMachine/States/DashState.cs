@@ -5,11 +5,8 @@ using UnityEngine;
 public class DashState : PlayerState
 {
     [Header("Control Settings")]
-    //[SerializeField] private float dashDistance = 3f;
     [SerializeField] private AttributeDependant<float> dashDistance;
     [SerializeField] private float dashSpeed = 20f;
-    [SerializeField] private float colliderHeight;
-    [SerializeField] private new CapsuleCollider collider;
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private float gravity = 20.0f;
 
@@ -21,13 +18,14 @@ public class DashState : PlayerState
 
     private Vector3 dashStart;
     private Vector3 dashDirection;
+    private float distance;
+    private float startTime;
 
     void Awake () 
     {
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.freezeRotation = true;
         rigidbody.useGravity = false;
-        collider = GetComponent<CapsuleCollider>();
 	}
 
     protected override void OnEnterState()
@@ -46,6 +44,8 @@ public class DashState : PlayerState
             dashDirection = transform.TransformDirection(inputVector);
 
         rigidbody.velocity = dashDirection * dashSpeed;
+        distance = dashDistance.GetValue(characterStats);
+        startTime = Time.time;
     }
 
     public override void OnStateUpdate()
@@ -55,10 +55,11 @@ public class DashState : PlayerState
         if(gravityOn)
             rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
 
-        // Stop Dash if traveled enough distance OR velocity dropped below threshold (For example if hit a wall)
-        float distance = dashDistance.GetValue(characterStats);
+        // Stop Dash if traveled enough distance, velocity drops below threshold (For example if hit a wall)
+        // OR if enough time has passed (Edge case if we get stuck with velocity not dropping)
         if((rigidbody.position - dashStart).sqrMagnitude > distance * distance || 
-            rigidbody.velocity.magnitude < dashSpeed * .75f)
+            rigidbody.velocity.magnitude < dashSpeed * .75f ||
+            Time.time - startTime >= distance / dashSpeed)
         {
             rigidbody.velocity = Vector3.zero;
             if(isGrounded)
