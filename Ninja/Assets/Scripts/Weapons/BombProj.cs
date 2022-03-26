@@ -64,18 +64,26 @@ public class BombProj : MonoBehaviour, IHitboxResponder
 
     public void CollisionWith(Collider col)
     {
-        // Check if we have line of sight to collider
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, col.transform.position - transform.position, out hit, radius))
-        {
-            if(hit.transform != col.transform)
-                return;
-        }
-
-        // Get hurtbox and register hit
+        // Get Hurtbox
         Hurtbox hurtbox = col.GetComponent<Hurtbox>();
+
+        // Check if we have line of sight to collider
+        // RaycastHit hit;
+        // if(Physics.Raycast(transform.position, col.transform.position - transform.position, out hit, radius))
+        // {
+        //     // If this is something we can hurt, we want only colliders not under the same root to block explosion
+        //     // Otheriwise, any other object (aka transform) will block it
+        //     if(hurtbox) 
+        //         if(hit.transform.root != col.transform.root)
+        //             return;
+        //     else
+        //         if(hit.transform != col.transform)
+        //             return;
+        // }
+
+        // Register hit
         if(hurtbox)
-        { 
+        {
             // Avoid triggering multiple hurtboxes with the same parent GameObject
             if(objectsCollided.Contains(hurtbox.transform.parent.gameObject) == false)
             {
