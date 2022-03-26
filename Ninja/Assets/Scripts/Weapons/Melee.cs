@@ -52,10 +52,18 @@ public class Melee : WeaponObject, IHitboxResponder
 
     private void Input()
     {
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+
+        // Defend (LMB + RMB)
+        bool defend = (inputState.MouseButton1.State == VButtonState.PRESSED &&
+        inputState.MouseButton2.State == VButtonState.PRESSED);
+        animator.SetBool("DEFEND", defend);
+        if(defend)
+            return;
+        
+        // Left Attack (LMB)
         if(inputState.MouseButton1.State == VButtonState.PRESS_END)
         {
-            AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-
             if(state.IsName("idle") || state.IsName("fist_left_chain") || state.IsName("fist_right_chain"))
             {
                 if(charStats.DepleteStamina(leftAttackStaminaCost))
@@ -67,15 +75,18 @@ public class Melee : WeaponObject, IHitboxResponder
                 }
             }
         }
-        // RMB
+        // Right Attack (RMB)
         else if(inputState.MouseButton2.State == VButtonState.PRESS_END)
         {
-            if(charStats.DepleteStamina(rightAttackStaminaCost))
+            if(state.IsName("idle") || state.IsName("fist_left_chain") || state.IsName("fist_right_chain"))
             {
-                AddCombo("right");
-                if(VerifyCombo() == false)
-                    animator.SetTrigger("RMB");
-                charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+                if(charStats.DepleteStamina(rightAttackStaminaCost))
+                {
+                    AddCombo("right");
+                    if(VerifyCombo() == false)
+                        animator.SetTrigger("RMB");
+                    charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+                }
             }
         }
     }
