@@ -47,7 +47,17 @@ public class Hitbox : MonoBehaviour
 
         if(isActive)
         {
-            Collider[] colliders = Physics.OverlapBox(transform.position + transform.TransformVector(offset), size / 2, transform.rotation, hitMask);
+            Vector3 centerOffset = transform.position + transform.TransformVector(offset);
+            Vector3 sizeScaled = new Vector3(transform.lossyScale.x * size.x, transform.lossyScale.y * size.y, transform.lossyScale.z * size.z);
+            
+            Collider[] colliders = Physics.OverlapBox(centerOffset, sizeScaled / 2, transform.rotation, hitMask);
+
+            // Debug.DrawLine(transform.position, transform.position + transform.TransformVector(offset), Color.red, 1f);
+
+            // Debug.DrawLine(centerOffset, centerOffset + transform.right * sizeScaled.x / 2, Color.yellow, 1f);
+            // Debug.DrawLine(centerOffset, centerOffset + transform.up * sizeScaled.y / 2, Color.yellow, 1f);
+            // Debug.DrawLine(centerOffset, centerOffset + transform.forward * sizeScaled.z / 2, Color.yellow, 1f);
+            // Debug.Break();
 
             foreach(Collider col in colliders)
             {
