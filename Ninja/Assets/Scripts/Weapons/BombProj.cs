@@ -5,6 +5,7 @@ using UnityEngine;
 public class BombProj : MonoBehaviour, IHitboxResponder
 {
     [Header("Bomb Settings")]
+    [SerializeField] private bool autoStartTimer = true;
     [SerializeField] private float countdown = 3;
     [SerializeField] private float radius = 5;
     [SerializeField] private DamageType damageType = DamageType.Pierce;
@@ -25,7 +26,8 @@ public class BombProj : MonoBehaviour, IHitboxResponder
     void Start()
     {
         hitbox.SetResponder(this);
-        StartTimer();
+        if(autoStartTimer) 
+            StartTimer();
     }
 
     public void StartTimer()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HeatConductor : MonoBehaviour
 {
@@ -14,6 +15,15 @@ public class HeatConductor : MonoBehaviour
 
     [SerializeField] private HeatConductor delegateHeatConductor;
     
+    [SerializeField] private List<HeatEvent> events = new List<HeatEvent>();
+
+    [System.Serializable]
+    public struct HeatEvent
+    {
+        public float temperature;
+        public UnityEvent action;
+    }
+
     public void Conduct(float sourceTemperature)
     {
         if(delegateHeatConductor)
@@ -25,6 +35,11 @@ public class HeatConductor : MonoBehaviour
     void Update()
     {
         Diffuse();
+        foreach(HeatEvent e in events)
+        {
+            if(e.temperature >= Temperature)
+                if(e.action != null) e.action.Invoke();
+        }
     }
 
     protected void Diffuse()
