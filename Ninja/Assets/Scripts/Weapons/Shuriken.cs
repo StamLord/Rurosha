@@ -37,7 +37,7 @@ public class Shuriken : WeaponObject
                 GameObject obj = Instantiate(prefab, transform.position, Quaternion.identity);
 
                 RaycastHit hit;
-                Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 20f);
+                Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 50f);
                 
                 float distance = 0;
 
