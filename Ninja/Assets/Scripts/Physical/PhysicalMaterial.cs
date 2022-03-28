@@ -14,9 +14,9 @@ public class PhysicalMaterial : MonoBehaviour
     [SerializeField] private GameObject woodSharpPrefab;
 
     [SerializeField] private GameObject smallBloodPrefab;
-    [SerializeField] private GameObject BigBloodPrefab;
+    [SerializeField] private GameObject bigBloodPrefab;
     
-    public void CollideEffect(Vector3 position)
+    public void CollideEffect(Vector3 position, int damage = -1)
     {
         switch(mType)
         {
@@ -28,7 +28,12 @@ public class PhysicalMaterial : MonoBehaviour
                 break;
             case MaterialType.Flesh:
                 Debug.Log("Blood");
-                if(smallBloodPrefab)
+                if(damage > 10 && bigBloodPrefab)
+                {
+                    Quaternion rotation = Quaternion.Euler(0, Random.Range(0f,1f) * 360, 0);
+                    GameObject go = Instantiate(bigBloodPrefab, position, rotation);
+                }
+                else if(smallBloodPrefab)
                 {
                     Quaternion rotation = Quaternion.Euler(0, Random.Range(0f,1f) * 360, 0);
                     GameObject go = Instantiate(smallBloodPrefab, position, rotation);
