@@ -149,8 +149,10 @@ public class AirState : PlayerState
                 return;
             }
 
+            // We don't count wall jumps / runs
+            if(wallDetected == false)
+                airJumps++;
             // Perform Air Jump
-            airJumps++;
             if(OnDoubleJumpStart != null) OnDoubleJumpStart();
             _stateMachine.SwitchState(2);
         }
