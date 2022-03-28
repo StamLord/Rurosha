@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerControls : MonoBehaviour
 {
     [SerializeField] private InputState _inputState;
+    [SerializeField] private bool useRawInput = true;
     [SerializeField] private float doubleTapWindow = .35f;
 
     #region Double Tap
@@ -42,8 +43,8 @@ public class PlayerControls : MonoBehaviour
     void Update()
     {
         if(movementDisabled == false)
-        {
-            _inputState.AxisInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        {   
+            _inputState.AxisInput = (useRawInput)? new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")) : new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) ;
             Vector3 rawInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             DoubleInputCheck(rawInput);
 
