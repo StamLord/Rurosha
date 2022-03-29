@@ -148,7 +148,7 @@ public class Katana : WeaponObject, IHitboxResponder
         
         //Collision Effects
         PhysicalMaterial pMat = collider.GetComponent<PhysicalMaterial>();
-        pMat?.CollideEffect(collider.ClosestPointOnBounds(transform.position));
+        pMat?.CollideEffect(collider.ClosestPoint(transform.position), hardDamage);
         
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();

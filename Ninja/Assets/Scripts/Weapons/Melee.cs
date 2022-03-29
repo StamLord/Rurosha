@@ -132,7 +132,7 @@ public class Melee : WeaponObject, IHitboxResponder
         
         //Collision Effects
         PhysicalMaterial pMat = collider.GetComponent<PhysicalMaterial>();
-        if(pMat) pMat.CollideEffect(collider.ClosestPointOnBounds(transform.position));
+        if(pMat) pMat.CollideEffect(collider.ClosestPoint(transform.position), hardDamage);
         
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
