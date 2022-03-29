@@ -1368,7 +1368,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2148
+  m_VersionIndex: 2154
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1556,7 +1556,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1270626750}
   - component: {fileID: 1270626752}
-  - component: {fileID: 1270626751}
   - component: {fileID: 441443418}
   m_Layer: 9
   m_Name: Weapons Camera
@@ -1623,14 +1622,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &1270626751
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1270626749}
-  m_Enabled: 1
 --- !u!114 &441443418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2544,7 +2535,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2145
+  m_VersionIndex: 2151
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5860,7 +5851,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
