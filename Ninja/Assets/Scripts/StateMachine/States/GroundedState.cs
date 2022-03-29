@@ -138,7 +138,8 @@ public class GroundedState : PlayerState
     #region Checks
 
     private void ClimbCheck()
-    {
+    {   
+        if(climbCheck == null) return;
         isClimbing = (Physics.Raycast(climbCheck.position, targetDirection, climbingStartDistannce, climbMask));
     }
 
