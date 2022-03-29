@@ -18,8 +18,12 @@ public class CrouchState : PlayerState
     
     [Space(20f)]
 
+    [Header("Stealth")]
+    [SerializeField] private float crouchVisibility = .7f;
+    
+    [Space(20f)]
+
     [Header("Input Data")]
-    [SerializeField] private InputState inputState;
     [SerializeField] private Vector3 inputVector;
     [SerializeField] private Vector3 targetDirection;
 
@@ -50,7 +54,7 @@ public class CrouchState : PlayerState
         crouchCollider.enabled = true;
         standCollider.enabled = false;
 
-        inputState = ((CharacterStateMachine)_stateMachine).inputState;
+        SetVisibility(crouchVisibility);
 
         if(OnCrouchStart != null) OnCrouchStart();
     }
@@ -60,6 +64,8 @@ public class CrouchState : PlayerState
         base.OnExitState();
         crouchCollider.enabled = false;
         standCollider.enabled = true;
+
+        SetVisibility(1f);
 
         if(OnCrouchEnd != null) OnCrouchEnd();
     }

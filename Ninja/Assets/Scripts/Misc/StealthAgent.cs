@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class StealthAgent : MonoBehaviour
 {
+    [Header("Eye Level")]
+    [SerializeField] private Transform eyeLevel;
+    [SerializeField] private Vector3 eyeLevelOffset = new Vector3(0, -.1f, 0);
+    public Vector3 EyeLevelPosition{get{return eyeLevel.position + eyeLevelOffset;}}
+
     [Header("Vision")]
     [SerializeField] private float _visibility;
 
@@ -16,12 +21,7 @@ public class StealthAgent : MonoBehaviour
     [SerializeField] private float lastSound;
     [SerializeField] private float soundEvery = 1f;
 
-    public float visibility { get{return _visibility; } }
-
-    void Start()
-    {
-        
-    }
+    public float Visibility { get{return _visibility;} }
 
     void Update()
     {
@@ -44,6 +44,11 @@ public class StealthAgent : MonoBehaviour
                 if(aAgent) aAgent.AddSound(transform.position);
             }
         }
+    }
+
+    public void SetVisibility(float visibility)
+    {
+        _visibility = visibility;
     }
 
     void OnDrawGizmosSelected()

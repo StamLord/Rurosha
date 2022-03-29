@@ -21,10 +21,14 @@ public class AwarenessAgent : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool debugView;
+    [SerializeField] private Light debugLight;
+    [SerializeField] private Color debugLightBaseColor = Color.white;
+    [SerializeField] private Color debugLightDetectedColor = Color.red;
 
     void Update()
     {
         VisionUpdate();
+        DebugLight();
     }
 
     void VisionUpdate()
@@ -38,25 +42,15 @@ public class AwarenessAgent : MonoBehaviour
         {
             if(col.transform != transform)
             {   
-                StealthAgent sAgent = col.transform.GetComponent<StealthAgent>();
+                StealthAgent sAgent = col.transform.root.GetComponent<StealthAgent>();
                 if(sAgent) stealthAgents.Add(sAgent);
             }
         }
-
         // Check visibility
         foreach(StealthAgent sAgent in stealthAgents)
-        {
-            if(sAgent.visibility == 1) 
-            {
-                Vector3 direction = sAgent.transform.position - transform.position;
-                float angle = Vector3.Angle(transform.forward, direction);
-                if(angle <= visionAngle)
-                {    
-                    // Check line of sight
-                    if(Physics.Raycast(eyeLevel.position, direction, direction.magnitude, blockVisionMask) == false)
-                        AddVisibleTarget(sAgent);
-                }
-            }
+        {   
+            if(IsLineOfSight(sAgent))
+                AddVisibleTarget(sAgent);
         }
         
         // Find which agents are not visible anymore
@@ -67,9 +61,7 @@ public class AwarenessAgent : MonoBehaviour
                 toRemove.Add(s);
             else
             {
-                Vector3 direction = s.transform.position - transform.position;
-                float angle = Vector3.Angle(transform.forward, direction);
-                if(angle > visionAngle)
+                if(IsLineOfSight(s) == false)
                     toRemove.Add(s);
             }
         }
@@ -77,6 +69,29 @@ public class AwarenessAgent : MonoBehaviour
         // Remove the agents not visible anymore
         foreach(StealthAgent s in toRemove)
             visibleAgents.Remove(s);
+    }
+
+    private bool IsLineOfSight(StealthAgent sAgent)
+    {   
+        Vector3 direction = sAgent.EyeLevelPosition - eyeLevel.position;
+
+        // Check visibility modifier
+        // Example 1: lookRadius is 10 and visibilit is 1 - Player will be visibile from 10 meters away
+        // Example 2: lookRadius is 10 and visibilit is .7 - Player will be visibile from 7 meters away
+        if(direction.magnitude > lookRadius * sAgent.Visibility) return false;
+
+        float angle = Vector3.Angle(transform.forward, direction);
+        if(angle <= visionAngle)
+        {    
+            // Check line of sight
+            RaycastHit hit;
+            Debug.DrawRay(eyeLevel.position, direction, Color.yellow);
+            bool blocked = Physics.Raycast(eyeLevel.position, direction, out hit, direction.magnitude, blockVisionMask);
+            if(blocked) Debug.Log(hit.transform.name);
+            return (blocked == false);
+        }
+
+        return false;
     }
 
     void AddVisibleTarget(StealthAgent sAgent)
@@ -93,6 +108,15 @@ public class AwarenessAgent : MonoBehaviour
     public void AddSound(Vector3 soundOrigin)
     {
         lastSoundDetected = soundOrigin;
+    }
+
+    private void DebugLight()
+    {
+        if(debugView == false || debugLight == null) return;
+
+        debugLight.range = lookRadius;
+        debugLight.innerSpotAngle = debugLight.spotAngle = visionAngle * 2;
+        debugLight.color = (VisibleAgents.Count > 0)? debugLightDetectedColor : debugLightBaseColor;
     }
 
     void OnDrawGizmosSelected()

@@ -14,6 +14,11 @@ public class PlayerState : State
     public InputState inputState { get { return CharacterStateMachine.inputState; }}
     public CharacterStats characterStats { get { return CharacterStateMachine.characterStats; }}
 
+    public void SetVisibility(float visibility)
+    {
+        CharacterStateMachine.SetVisibility(visibility);
+    }
+
     public bool isGrounded {get {return CharacterStateMachine.IsGrounded;}}
 
     public bool isUnder {get {return CharacterStateMachine.IsUnder;}}

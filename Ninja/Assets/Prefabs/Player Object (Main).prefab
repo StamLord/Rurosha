@@ -1368,7 +1368,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2154
+  m_VersionIndex: 2172
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2535,7 +2535,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2151
+  m_VersionIndex: 2169
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -6098,6 +6098,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2efa4a875d6cc479798c7939105a6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eyeLevel: {fileID: 6944390856666288591}
+  eyeLevelOffset: {x: 0, y: -0.1, z: 0}
   _visibility: 1
   walkSound: 7
   runSound: 12
@@ -6297,6 +6299,7 @@ MonoBehaviour:
   - {fileID: 1584670585454484595}
   characterStats: {fileID: 6944390856915565334}
   inputState: {fileID: 1496715723}
+  stealthAgent: {fileID: 6944390856915565335}
   groundSensor: {fileID: 1031901065}
   ceilSensor: {fileID: 478293799}
   wallSensor: {fileID: 2109989484}
@@ -6374,6 +6377,7 @@ MonoBehaviour:
   crouchCollider: {fileID: 1450019840}
   gravity: 20
   maxVelocityChange: 10
+  crouchVisibility: 0.7
   inputState: {fileID: 0}
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}
