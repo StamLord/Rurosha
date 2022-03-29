@@ -1368,7 +1368,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2142
+  m_VersionIndex: 2148
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2544,7 +2544,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2139
+  m_VersionIndex: 2145
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -4055,8 +4055,12 @@ MonoBehaviour:
   combos:
   - softDamage: 0
     hardDamage: 0
-    combo: left,left,left
+    combo: left,left
     animationState: fist_left_elbow
+  - softDamage: 0
+    hardDamage: 0
+    combo: left,right,left,right
+    animationState: fight_right_uppercut
 --- !u!95 &256875847
 Animator:
   serializedVersion: 4
@@ -5950,8 +5954,8 @@ MonoBehaviour:
   sliceForce: 3
   maxSlicesPerCut: 20
   newSlices: []
-  softDamage: 20
-  hardDamage: 10
+  softDamage: 40
+  hardDamage: 20
   chanceToBleed: 0.25
   leftAttackStaminaCost: 0
   rightAttackStaminaCost: 0
@@ -6645,6 +6649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputState: {fileID: 1496715723}
+  useRawInput: 1
   doubleTapWindow: 0.25
   movementDisabled: 0
   interactionDisabled: 0
@@ -6947,28 +6952,28 @@ MonoBehaviour:
   maxAngle:
     attributeName: Dexterity
     values:
-    - 9
-    - 8
-    - 7
-    - 6
-    - 4
-    - 3
-    - 2
-    - 1
-    - 0.5
-    - 0.2
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
   shootRate:
     attributeName: Dexterity
     values:
-    - 2
-    - 1.75
-    - 1.5
-    - 1.25
-    - 1
-    - 0.8
-    - 0.6
-    - 0.5
-    - 0.4
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
     - 0.35
   agilityExpGain: 0.025
   dexterityExpGain: 0.05
@@ -7076,11 +7081,31 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2069834475805988663, guid: 4fca8cb859966ca45a91f0f90a8819d4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 102beae0c5b49a64280e15eb710a9d98, type: 2}
     - target: {fileID: 4424396828587804706, guid: 4fca8cb859966ca45a91f0f90a8819d4,
         type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 6317578925029434746, guid: 4fca8cb859966ca45a91f0f90a8819d4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ab66ea66405b0264aadc744112a0b4be, type: 2}
+    - target: {fileID: 7553102332489177384, guid: 4fca8cb859966ca45a91f0f90a8819d4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 102beae0c5b49a64280e15eb710a9d98, type: 2}
+    - target: {fileID: 8100320773420232829, guid: 4fca8cb859966ca45a91f0f90a8819d4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 102beae0c5b49a64280e15eb710a9d98, type: 2}
     - target: {fileID: 8498266326933218333, guid: 4fca8cb859966ca45a91f0f90a8819d4,
         type: 3}
       propertyPath: m_Layer
@@ -9205,28 +9230,28 @@ MonoBehaviour:
   maxAngle:
     attributeName: Dexterity
     values:
-    - 9
-    - 8
-    - 7
-    - 6
-    - 4
-    - 3
-    - 2
-    - 1
-    - 0.5
-    - 0.2
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
   shootRate:
     attributeName: Dexterity
     values:
-    - 2
-    - 1.75
-    - 1.5
-    - 1.25
-    - 1
-    - 0.8
-    - 0.6
-    - 0.5
-    - 0.4
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
+    - 0.35
     - 0.35
   agilityExpGain: 0.025
   dexterityExpGain: 0.05
