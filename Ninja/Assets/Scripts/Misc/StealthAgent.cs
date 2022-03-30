@@ -10,7 +10,7 @@ public class StealthAgent : MonoBehaviour
     public Vector3 EyeLevelPosition{get{return eyeLevel.position + eyeLevelOffset;}}
 
     [Header("Vision")]
-    [SerializeField] private float _visibility;
+    [SerializeField] private float visibility;
 
     [Header("Sound")]
     [SerializeField] private float walkSound = 3f;
@@ -21,10 +21,18 @@ public class StealthAgent : MonoBehaviour
     [SerializeField] private float lastSound;
     [SerializeField] private float soundEvery = 1f;
 
-    public float Visibility { get{return _visibility;} }
+    public float Visibility { get{return visibility;} }
+
+    [Header("Is Seen [DEBUG]")]
+    [SerializeField]private float detectedValue;
+    public float DetectedValue { get{return detectedValue;}}
+    [SerializeField]private Dictionary<AwarenessAgent, float> awareness = new Dictionary<AwarenessAgent, float>();
+    public Dictionary<AwarenessAgent, float> Awareness {get {return awareness;}}
 
     void Update()
     {
+        UpdateHighestDetection();
+
         if(Time.time - lastSound >= soundEvery)
         {    
             CreateSound(walkSound);
@@ -48,7 +56,28 @@ public class StealthAgent : MonoBehaviour
 
     public void SetVisibility(float visibility)
     {
-        _visibility = visibility;
+        this.visibility = visibility;
+    }
+
+    public void SetAwareness(AwarenessAgent agent, float value)
+    {
+        awareness[agent] = Mathf.Clamp01(value);
+    }
+
+    public void RemoveAwareness(AwarenessAgent agent)
+    {
+        awareness.Remove(agent);
+    }
+
+    public void UpdateHighestDetection()
+    {
+        detectedValue = 0;
+
+        foreach(var a in awareness)
+        {
+            if(a.Value > detectedValue)
+                detectedValue = a.Value;
+        }
     }
 
     void OnDrawGizmosSelected()

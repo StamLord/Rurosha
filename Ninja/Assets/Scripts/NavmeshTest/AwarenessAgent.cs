@@ -69,7 +69,7 @@ public class AwarenessAgent : MonoBehaviour
                 AddAlmostVisible(sAgent);
         }
 
-        // Check if enough time passed in line of sight or if still in line of sight
+        // Loop over "almost visible" agent
         List<AlmostVisible> toRemoveAv = new List<AlmostVisible>();
         foreach(AlmostVisible av in almostVisibleAgents)
         {
@@ -77,11 +77,15 @@ public class AwarenessAgent : MonoBehaviour
             if(IsLineOfSight(av.stealthAgent) == false)
             {
                 toRemoveAv.Add(av);
+                av.stealthAgent.RemoveAwareness(this);
                 continue;
             }
 
+            float seenPercentage = (Time.time - av.timeNoticed) / timeToNotice;
+            av.stealthAgent.SetAwareness(this, seenPercentage);
+
             // If enought time passed, move from almost visible to visible list
-            if(Time.time - av.timeNoticed >= timeToNotice)
+            if(seenPercentage >= 1f)
             {
                 AddVisible(av.stealthAgent);
                 toRemoveAv.Add(av);
@@ -102,7 +106,10 @@ public class AwarenessAgent : MonoBehaviour
 
         // Remove the agents not visible anymore
         foreach(StealthAgent s in toRemove)
+        {
+            s.RemoveAwareness(this);
             RemoveVisible(s);
+        }
     }
 
     private bool IsLineOfSight(StealthAgent sAgent)
@@ -121,7 +128,6 @@ public class AwarenessAgent : MonoBehaviour
             RaycastHit hit;
             Debug.DrawRay(eyeLevel.position, direction, Color.yellow);
             bool blocked = Physics.Raycast(eyeLevel.position, direction, out hit, direction.magnitude, blockVisionMask);
-            if(blocked) Debug.Log(hit.transform.name);
             return (blocked == false);
         }
 
@@ -149,7 +155,6 @@ public class AwarenessAgent : MonoBehaviour
     private void AddVisible(StealthAgent sAgent)
     {
         if(visibleAgents.Contains(sAgent)) return;
-        
         visibleAgents.Add(sAgent);
     }
 
