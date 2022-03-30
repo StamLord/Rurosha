@@ -1,20 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CursorUI : MonoBehaviour
 {
+    [Header("Selection")]
     [SerializeField] private TextMeshProUGUI _selectionText;
     [SerializeField] private Interactor _interactor;
     [SerializeField] private bool _allCaps;
 
-    void Start()
+    private void Start()
     {
         _interactor.SelectionChangeEvent += ChangeSelectionText;
     }
 
-    void ChangeSelectionText(string selectionText)
+    private void ChangeSelectionText(string selectionText)
     {
         _selectionText.text = (_allCaps) ? selectionText.ToUpper() : selectionText;
     }
