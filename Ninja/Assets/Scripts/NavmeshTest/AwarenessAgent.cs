@@ -15,6 +15,9 @@ public class AwarenessAgent : MonoBehaviour
     [SerializeField] private List<StealthAgent> visibleAgents = new List<StealthAgent>();
     [SerializeField] public List<StealthAgent> VisibleAgents {get {return visibleAgents;}}
 
+    [SerializeField] public List<AlmostVisible> almostVisibleAgents = new List<AlmostVisible>();
+    [SerializeField] public float timeToNotice = 3f;
+
     [Header("Hearing")]
     [SerializeField] private float hearingRadius = 20f;
     [SerializeField] private Vector3 lastSoundDetected;
@@ -23,21 +26,29 @@ public class AwarenessAgent : MonoBehaviour
     [SerializeField] private bool debugView;
     [SerializeField] private Light debugLight;
     [SerializeField] private Color debugLightBaseColor = Color.white;
+    [SerializeField] private Color debugLightAlmostColor = Color.yellow;
     [SerializeField] private Color debugLightDetectedColor = Color.red;
+    
+    [System.Serializable]
+    public struct AlmostVisible
+    {
+        public StealthAgent stealthAgent;
+        public float timeNoticed;
+    }
 
-    void Update()
+    private void Update()
     {
         VisionUpdate();
         DebugLight();
     }
 
-    void VisionUpdate()
+    private void VisionUpdate()
     {
         // Get all entities in lookRadius
         Collider[] inRange = Physics.OverlapSphere(transform.position, lookRadius, visionMask);
         List<StealthAgent> stealthAgents = new List<StealthAgent>();
 
-        // Check all relevant entities
+        // Get StealthAgents
         foreach(Collider col in inRange)
         {
             if(col.transform != transform)
@@ -46,29 +57,52 @@ public class AwarenessAgent : MonoBehaviour
                 if(sAgent) stealthAgents.Add(sAgent);
             }
         }
+
         // Check visibility
         foreach(StealthAgent sAgent in stealthAgents)
         {   
+            // No need to do anytihng if already in visibleAgents list
+            if(visibleAgents.Contains(sAgent)) 
+                continue;
+                
             if(IsLineOfSight(sAgent))
-                AddVisibleTarget(sAgent);
+                AddAlmostVisible(sAgent);
         }
+
+        // Check if enough time passed in line of sight or if still in line of sight
+        List<AlmostVisible> toRemoveAv = new List<AlmostVisible>();
+        foreach(AlmostVisible av in almostVisibleAgents)
+        {
+            // Remove no longer visible
+            if(IsLineOfSight(av.stealthAgent) == false)
+            {
+                toRemoveAv.Add(av);
+                continue;
+            }
+
+            // If enought time passed, move from almost visible to visible list
+            if(Time.time - av.timeNoticed >= timeToNotice)
+            {
+                AddVisible(av.stealthAgent);
+                toRemoveAv.Add(av);
+            }
+        }
+
+        // Remove the agents not visible anymore
+        foreach(AlmostVisible av in toRemoveAv)
+            RemoveAlmostVisible(av);
         
         // Find which agents are not visible anymore
         List<StealthAgent> toRemove = new List<StealthAgent>();
         foreach(StealthAgent s in visibleAgents)
         {
-            if(stealthAgents.Contains(s) == false) 
+            if(IsLineOfSight(s) == false)
                 toRemove.Add(s);
-            else
-            {
-                if(IsLineOfSight(s) == false)
-                    toRemove.Add(s);
-            }
         }
 
         // Remove the agents not visible anymore
         foreach(StealthAgent s in toRemove)
-            visibleAgents.Remove(s);
+            RemoveVisible(s);
     }
 
     private bool IsLineOfSight(StealthAgent sAgent)
@@ -94,15 +128,34 @@ public class AwarenessAgent : MonoBehaviour
         return false;
     }
 
-    void AddVisibleTarget(StealthAgent sAgent)
+    private void AddAlmostVisible(StealthAgent sAgent)
     {
-        /*foreach(StealthAgent s in visibleAgents)
-            if(s == sAgent)
-                return;
-        */
+        // Make sure we don't add duplicates
+        foreach(AlmostVisible av in almostVisibleAgents)
+            if (av.stealthAgent == sAgent) return;
+        
+        // Add to list
+        AlmostVisible newAlmostVisible = new AlmostVisible();
+        newAlmostVisible.timeNoticed = Time.time;
+        newAlmostVisible.stealthAgent = sAgent;
+        almostVisibleAgents.Add(newAlmostVisible);
+    }
+
+    private void RemoveAlmostVisible(AlmostVisible almostVisible)
+    {
+        almostVisibleAgents.Remove(almostVisible);
+    }
+
+    private void AddVisible(StealthAgent sAgent)
+    {
         if(visibleAgents.Contains(sAgent)) return;
         
         visibleAgents.Add(sAgent);
+    }
+
+    private void RemoveVisible(StealthAgent sAgent)
+    {
+        visibleAgents.Remove(sAgent);
     }
 
     public void AddSound(Vector3 soundOrigin)
@@ -116,10 +169,25 @@ public class AwarenessAgent : MonoBehaviour
 
         debugLight.range = lookRadius;
         debugLight.innerSpotAngle = debugLight.spotAngle = visionAngle * 2;
-        debugLight.color = (VisibleAgents.Count > 0)? debugLightDetectedColor : debugLightBaseColor;
+
+        if(VisibleAgents.Count > 0)
+            debugLight.color = debugLightDetectedColor;
+        else if(almostVisibleAgents.Count == 0)
+            debugLight.color = debugLightBaseColor;
+        else
+        {    
+            float time = Mathf.Infinity;
+            foreach(AlmostVisible av in almostVisibleAgents)
+            {
+                if(av.timeNoticed < time)
+                    time = av.timeNoticed;
+            }
+
+            debugLight.color = Color.Lerp(debugLightBaseColor, debugLightAlmostColor, (Time.time - time) / timeToNotice);
+        }
     }
 
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         if(debugView == false) return;
         
