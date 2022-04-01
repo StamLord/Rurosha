@@ -10,8 +10,8 @@ public class CrouchState : PlayerState
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private Vector3 standingColliderSize;
     [SerializeField] private Vector3 croucingColliderSize;
-    [SerializeField] private new CapsuleCollider standCollider;
-    [SerializeField] private new CapsuleCollider crouchCollider;
+    [SerializeField] private CapsuleCollider standCollider;
+    [SerializeField] private CapsuleCollider crouchCollider;
     
     [SerializeField] private float gravity = 20.0f;
 	[SerializeField] private float maxVelocityChange = 10.0f;
@@ -20,6 +20,7 @@ public class CrouchState : PlayerState
 
     [Header("Stealth")]
     [SerializeField] private float crouchVisibility = .7f;
+    [SerializeField] private float crouchDetection = .5f;
     
     [Space(20f)]
 
@@ -55,6 +56,7 @@ public class CrouchState : PlayerState
         standCollider.enabled = false;
 
         SetVisibility(crouchVisibility);
+        SetDetection(crouchDetection);
 
         if(OnCrouchStart != null) OnCrouchStart();
     }
@@ -66,6 +68,7 @@ public class CrouchState : PlayerState
         standCollider.enabled = true;
 
         SetVisibility(1f);
+        SetDetection(1f);
 
         if(OnCrouchEnd != null) OnCrouchEnd();
     }

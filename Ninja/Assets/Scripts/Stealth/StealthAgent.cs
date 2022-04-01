@@ -10,7 +10,14 @@ public class StealthAgent : MonoBehaviour
     public Vector3 EyeLevelPosition{get{return eyeLevel.position + eyeLevelOffset;}}
 
     [Header("Vision")]
-    [SerializeField] private float visibility;
+    [SerializeField] private float visibilityModifier = 1f;
+    [SerializeField] private float detectionModifier = 1f;
+
+    public float Visibility { get{return GetVisibilityModifier();} }
+    public float Detection { get{return GetDetectionModifier();} }
+
+    [SerializeField] private Dictionary<string, float> visibilityMods = new Dictionary<string, float>();
+    [SerializeField] private Dictionary<string, float> detectionMods = new Dictionary<string, float>();
 
     [Header("Sound")]
     [SerializeField] private float walkSound = 3f;
@@ -20,8 +27,6 @@ public class StealthAgent : MonoBehaviour
     
     [SerializeField] private float lastSound;
     [SerializeField] private float soundEvery = 1f;
-
-    public float Visibility { get{return visibility;} }
 
     [Header("Is Seen [DEBUG]")]
     [SerializeField]private float detectedValue;
@@ -56,7 +61,12 @@ public class StealthAgent : MonoBehaviour
 
     public void SetVisibility(float visibility)
     {
-        this.visibility = visibility;
+        this.visibilityModifier = visibility;
+    }
+
+    public void SetDetection(float detection)
+    {
+        this.detectionModifier = detection;
     }
 
     public void SetAwareness(AwarenessAgent agent, float value)
@@ -78,6 +88,44 @@ public class StealthAgent : MonoBehaviour
             if(a.Value > detectedValue)
                 detectedValue = a.Value;
         }
+    }
+
+    public void AddVisibilityModifier(string name, float value)
+    {
+        visibilityMods[name] = value;
+    }
+
+    public void RemoveVisibilityModifier(string name)
+    {
+        visibilityMods.Remove(name);
+    }
+
+    public void AddDetectionModifier(string name, float value)
+    {
+        detectionMods[name] = value;
+    }
+
+    public void RemoveDetectionModifier(string name)
+    {
+        detectionMods.Remove(name);
+    }
+
+    private float GetVisibilityModifier()
+    {
+        float v = visibilityModifier;
+        foreach(KeyValuePair<string, float> mod in visibilityMods)
+            v *= mod.Value;
+        Debug.Log("V:" + v);
+        return v;
+    }
+
+    private float GetDetectionModifier()
+    {
+        float d = detectionModifier;
+        foreach(KeyValuePair<string, float> mod in detectionMods)
+            d *= mod.Value;
+        Debug.Log("D:" + d);
+        return d;
     }
 
     void OnDrawGizmosSelected()

@@ -14,6 +14,11 @@ public class CharacterStateMachine : StateMachine
         stealthAgent.SetVisibility(visibility);
     }
 
+    public void SetDetection(float detection)
+    {
+        stealthAgent.SetDetection(detection);
+    }
+
     [Header("Ground Detection")]
     [SerializeField] protected GroundSensor groundSensor;
     public bool IsGrounded { get {return groundSensor.IsGrounded;}}

@@ -6100,7 +6100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eyeLevel: {fileID: 6944390856666288591}
   eyeLevelOffset: {x: 0, y: -0.1, z: 0}
-  visibility: 1
+  visibilityModifier: 1
+  detectionModifier: 1
   walkSound: 7
   runSound: 12
   crouchSound: 2
@@ -6109,7 +6110,7 @@ MonoBehaviour:
     m_Bits: 2560
   lastSound: 0
   soundEvery: 1
-  seenValue: 0
+  detectedValue: 0
 --- !u!114 &6944390856915565334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6379,6 +6380,7 @@ MonoBehaviour:
   gravity: 20
   maxVelocityChange: 10
   crouchVisibility: 0.7
+  crouchDetection: 0.5
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}
   debugView: 0

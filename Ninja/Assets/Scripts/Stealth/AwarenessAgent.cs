@@ -16,7 +16,8 @@ public class AwarenessAgent : MonoBehaviour
     [SerializeField] public List<StealthAgent> VisibleAgents {get {return visibleAgents;}}
 
     [SerializeField] public List<AlmostVisible> almostVisibleAgents = new List<AlmostVisible>();
-    [SerializeField] public float timeToNotice = 3f;
+    [SerializeField] public float detectRate = 1f;
+    [SerializeField] public float undetectRate = .3f;
 
     [Header("Hearing")]
     [SerializeField] private float hearingRadius = 20f;
@@ -30,10 +31,11 @@ public class AwarenessAgent : MonoBehaviour
     [SerializeField] private Color debugLightDetectedColor = Color.red;
     
     [System.Serializable]
-    public struct AlmostVisible
+    public class AlmostVisible
     {
         public StealthAgent stealthAgent;
         public float timeNoticed;
+        public float detected;
     }
 
     private void Update()
@@ -71,24 +73,31 @@ public class AwarenessAgent : MonoBehaviour
 
         // Loop over "almost visible" agent
         List<AlmostVisible> toRemoveAv = new List<AlmostVisible>();
-        foreach(AlmostVisible av in almostVisibleAgents)
+
+        for(int i = 0; i < almostVisibleAgents.Count; i++)
         {
-            // Remove no longer visible
-            if(IsLineOfSight(av.stealthAgent) == false)
-            {
-                toRemoveAv.Add(av);
-                av.stealthAgent.RemoveAwareness(this);
-                continue;
-            }
+            AlmostVisible av = almostVisibleAgents[i];
+            
+            // If in line of sight, we add to detection until it's 1.
+            // Otherwise, we substract from detection until it's 0
+            // We inverse detection modfier to "undetect" so if in crouch state player is detected slower, he will also be "undetected" faster
+            if(IsLineOfSight(av.stealthAgent))
+                av.detected += (detectRate * av.stealthAgent.Detection * Time.deltaTime);
+            else
+                av.detected -= (undetectRate * Time.deltaTime);
+            
+            // Update stealthAgent of this value
+            av.stealthAgent.SetAwareness(this, av.detected);
 
-            float seenPercentage = (Time.time - av.timeNoticed) / timeToNotice;
-            av.stealthAgent.SetAwareness(this, seenPercentage);
-
-            // If enought time passed, move from almost visible to visible list
-            if(seenPercentage >= 1f)
+            if(av.detected >= 1)
             {
                 AddVisible(av.stealthAgent);
                 toRemoveAv.Add(av);
+            }
+            else if (av.detected <= 0)
+            {
+                toRemoveAv.Add(av);
+                av.stealthAgent.RemoveAwareness(this);
             }
         }
 
@@ -180,15 +189,16 @@ public class AwarenessAgent : MonoBehaviour
         else if(almostVisibleAgents.Count == 0)
             debugLight.color = debugLightBaseColor;
         else
-        {    
-            float time = Mathf.Infinity;
+        {   
+            // Find most detected target 
+            float detect = Mathf.Infinity;
             foreach(AlmostVisible av in almostVisibleAgents)
             {
-                if(av.timeNoticed < time)
-                    time = av.timeNoticed;
+                if(av.detected < detect)
+                    detect = av.detected;
             }
 
-            debugLight.color = Color.Lerp(debugLightBaseColor, debugLightAlmostColor, (Time.time - time) / timeToNotice);
+            debugLight.color = Color.Lerp(debugLightBaseColor, debugLightAlmostColor, detect);
         }
     }
 
@@ -224,18 +234,3 @@ public class AwarenessAgent : MonoBehaviour
 
     }
 }
-//float distance = Vector3.Distance(target.position,transform.position);
-        
-        /*if(distance <= lookRadius)
-        {
-            Vector3 direction = target.position - transform.position;
-            float angle = Vector3.Angle(transform.forward, direction);
-            //Debug.Log(angle);
-            if(angle <= visionAngle)
-            {
-                RaycastHit hit;
-                Physics.Raycast(eyeLevel.position, target.position, out hit, lookRadius);
-                //if(hit.transform.parent == target)
-                    
-            }
-        }*/

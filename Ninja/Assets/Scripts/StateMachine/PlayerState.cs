@@ -19,6 +19,11 @@ public class PlayerState : State
         CharacterStateMachine.SetVisibility(visibility);
     }
 
+    public void SetDetection(float detection)
+    {
+        CharacterStateMachine.SetDetection(detection);
+    }
+
     public bool isGrounded {get {return CharacterStateMachine.IsGrounded;}}
 
     public bool isUnder {get {return CharacterStateMachine.IsUnder;}}
