@@ -2629,7 +2629,7 @@ ParticleSystem:
         m_RotationOrder: 4
     magnitude:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -2638,20 +2638,20 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 1
-          inSlope: -1
-          outSlope: -1
+          inSlope: -10
+          outSlope: -10
           tangentMode: 34
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
+          outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1
+          time: 0.1
           value: 0
-          inSlope: -1
-          outSlope: -1
+          inSlope: -10
+          outSlope: -10
           tangentMode: 34
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.33333334
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -2663,17 +2663,17 @@ ParticleSystem:
           time: 0
           value: 1
           inSlope: 0
-          outSlope: 0
-          tangentMode: 0
+          outSlope: -4.25
+          tangentMode: 65
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
+          time: 0.2
+          value: 0.15
+          inSlope: -4.25
           outSlope: 0
-          tangentMode: 0
+          tangentMode: 5
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
@@ -2684,7 +2684,7 @@ ParticleSystem:
     inWorldSpace: 0
     multiplyDragByParticleSize: 0
     multiplyDragByParticleVelocity: 1
-    dampen: 0
+    dampen: 0.25
     drag:
       serializedVersion: 2
       minMaxState: 1
@@ -14915,7 +14915,7 @@ MonoBehaviour:
   detectionModifier: 0.2
   effectName: SmokeZone
   particleSystem: {fileID: 7422326511286986201}
-  stopAtParticleTime: 30
+  stopAtParticleTime: 50
   effected: []
 --- !u!1001 &6124526301247967469
 PrefabInstance:
