@@ -1697,7 +1697,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2220
+  m_VersionIndex: 2238
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3025,7 +3025,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2217
+  m_VersionIndex: 2235
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -6793,6 +6793,7 @@ MonoBehaviour:
   - {fileID: 923813910}
   - {fileID: 5834352142209536019}
   - {fileID: 1584670585454484595}
+  _debugLogs: 0
   characterStats: {fileID: 6944390856915565334}
   inputState: {fileID: 1496715723}
   stealthAgent: {fileID: 6944390856915565335}
@@ -7092,6 +7093,8 @@ MonoBehaviour:
     - 14
     - 15
   runSpeed: 6
+  jumpOffForce: 5
+  jumpOffHeight: 1
   debugView: 1
   rigidbody: {fileID: 0}
   wallOnLeft: 0
