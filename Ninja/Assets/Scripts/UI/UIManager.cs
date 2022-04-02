@@ -67,7 +67,6 @@ public class UIManager : MonoBehaviour
 
     private void Awake() 
     {
-        Debug.Log(gameObject.name);
         SetupInstance();
         CheckWindows();
     }
