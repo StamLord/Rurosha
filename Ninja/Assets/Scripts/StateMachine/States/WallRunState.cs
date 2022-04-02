@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class WallRunState : PlayerState
 {
-     [Header("Control Settings")]
+    [Header("Control Settings")]
     [SerializeField] private AttributeDependant<float> runDistance;
     [SerializeField] private float runSpeed = 20f;
+    [SerializeField] private float jumpOffForce = 5f;
+    [SerializeField] private float jumpOffHeight = 1f;
 
     [Space(20f)]
 
@@ -71,6 +73,22 @@ public class WallRunState : PlayerState
                 _stateMachine.SwitchState(5);
 
         }
+
+        // Jump off wall
+        if (inputState.Jump.State == VButtonState.PRESS_START) 
+        {
+            // Add force in wall's normal direction
+            rigidbody.velocity += normal * jumpOffForce;
+
+            // Add vertical force component
+            rigidbody.velocity = new Vector3(rigidbody.velocity.x, CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
+
+            // Reset jump button so next state doesn't procees it again
+            inputState.Jump.Set(VButtonState.UNPRESSED);
+
+            // Switch to air state
+            _stateMachine.SwitchState(5);
+        }
     }
 
     protected override void OnExitState()
@@ -79,4 +97,9 @@ public class WallRunState : PlayerState
         if(OnRunEnd != null)
             OnRunEnd();
     }
+
+    float CalculateJumpVerticalSpeed () 
+    {
+        return Mathf.Sqrt(2 * jumpOffHeight * 20);
+	}
 }

@@ -58,6 +58,8 @@ public class AirState : PlayerState
     [SerializeField] private bool debugView;
     [SerializeField] private new Rigidbody rigidbody;
 
+    private Vector3 lastWallRunNormal;
+
     void Awake () 
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -137,24 +139,34 @@ public class AirState : PlayerState
                 rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
         }
 
-        // Jump if below maxAirJumps and not gliding
-        if (inputState.Jump.State == VButtonState.PRESS_START 
-        && airJumps < maxAirJumps 
-        && isGliding == false) 
+        // Jump if not gliding
+        if (inputState.Jump.State == VButtonState.PRESS_START && isGliding == false) 
         {
-            // Start wall running if wall detected (in input direction) and at correct angle. Also player needs to move forward to activate.
-            if(wallDetected && wallAngle > 90 && wallAngle < 140 && inputState.AxisInput.z > 0)
+            // Start wall run if: Wall detected (in input direction), at correct angle and different than last wall normal.
+            // Also player needs to move forward to activate.
+            if(wallDetected 
+                && wallAngle > 90 && wallAngle < 140
+                && wallNormal != lastWallRunNormal 
+                && inputState.AxisInput.z > 0)
             {
+                lastWallRunNormal = wallNormal;
+                // Reset jump button to avoid next state processing it
+                inputState.Jump.Set(VButtonState.UNPRESSED);
                 _stateMachine.SwitchState(6);
                 return;
             }
-
-            // We don't count wall jumps / runs
-            if(wallDetected == false)
+            // Wall jump
+            else if(wallDetected)
+            {
+                _stateMachine.SwitchState(2);
+            }
+            // Perform Air Jump if below maxAirJumps
+            else if(airJumps < maxAirJumps)
+            {
+                if(OnDoubleJumpStart != null) OnDoubleJumpStart();
                 airJumps++;
-            // Perform Air Jump
-            if(OnDoubleJumpStart != null) OnDoubleJumpStart();
-            _stateMachine.SwitchState(2);
+                _stateMachine.SwitchState(2);
+            }
         }
 
         // Dash
@@ -166,6 +178,7 @@ public class AirState : PlayerState
         if (isGrounded && rigidbody.velocity.y <= 0) 
         {
             airJumps = 0;
+            lastWallRunNormal = Vector3.zero;
             _stateMachine.SwitchState(0);
         }
 
