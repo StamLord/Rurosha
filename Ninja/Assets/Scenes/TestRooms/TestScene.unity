@@ -20534,6 +20534,7 @@ MonoBehaviour:
   _currentState: {fileID: 0}
   _states:
   - {fileID: 406668678}
+  _debugLogs: 0
   characterStats: {fileID: 406668679}
   inputState: {fileID: 406668683}
   stealthAgent: {fileID: 0}
@@ -23397,6 +23398,7 @@ MonoBehaviour:
   _currentState: {fileID: 0}
   _states:
   - {fileID: 424726612}
+  _debugLogs: 0
   characterStats: {fileID: 424726614}
   inputState: {fileID: 424726618}
   stealthAgent: {fileID: 0}
@@ -40546,6 +40548,7 @@ MonoBehaviour:
   _currentState: {fileID: 0}
   _states:
   - {fileID: 792486269}
+  _debugLogs: 0
   characterStats: {fileID: 792486270}
   inputState: {fileID: 792486274}
   stealthAgent: {fileID: 0}
@@ -41526,6 +41529,7 @@ MonoBehaviour:
   _currentState: {fileID: 0}
   _states:
   - {fileID: 818126429}
+  _debugLogs: 0
   characterStats: {fileID: 818126430}
   inputState: {fileID: 818126434}
   stealthAgent: {fileID: 0}
@@ -50577,6 +50581,7 @@ MonoBehaviour:
   _currentState: {fileID: 0}
   _states:
   - {fileID: 1072570808}
+  _debugLogs: 0
   characterStats: {fileID: 1072570809}
   inputState: {fileID: 1072570813}
   stealthAgent: {fileID: 0}
@@ -70286,6 +70291,7 @@ MonoBehaviour:
   - {fileID: 1366289407}
   - {fileID: 1366289406}
   - {fileID: 1366289405}
+  _debugLogs: 0
   characterStats: {fileID: 1366289412}
   inputState: {fileID: 1366289413}
   stealthAgent: {fileID: 0}
@@ -88423,6 +88429,7 @@ MonoBehaviour:
   _currentState: {fileID: 0}
   _states:
   - {fileID: 1677415195}
+  _debugLogs: 0
   characterStats: {fileID: 1677415196}
   inputState: {fileID: 1677415200}
   stealthAgent: {fileID: 0}
@@ -111375,7 +111382,7 @@ PrefabInstance:
       objectReference: {fileID: 288942213}
     - target: {fileID: 1131167997, guid: f5e66a43489af3d47bd9d4a74b8f7494, type: 3}
       propertyPath: m_VersionIndex
-      value: 2223
+      value: 2241
       objectReference: {fileID: 0}
     - target: {fileID: 1553674613, guid: f5e66a43489af3d47bd9d4a74b8f7494, type: 3}
       propertyPath: m_Mesh
@@ -111391,7 +111398,12 @@ PrefabInstance:
       objectReference: {fileID: 197267520}
     - target: {fileID: 1553674617, guid: f5e66a43489af3d47bd9d4a74b8f7494, type: 3}
       propertyPath: m_VersionIndex
-      value: 2220
+      value: 2238
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584670585454484595, guid: f5e66a43489af3d47bd9d4a74b8f7494,
+        type: 3}
+      propertyPath: debugView
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6944390856915565329, guid: f5e66a43489af3d47bd9d4a74b8f7494,
         type: 3}
@@ -111401,17 +111413,17 @@ PrefabInstance:
     - target: {fileID: 6944390856915565329, guid: f5e66a43489af3d47bd9d4a74b8f7494,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.25
+      value: -19
       objectReference: {fileID: 0}
     - target: {fileID: 6944390856915565329, guid: f5e66a43489af3d47bd9d4a74b8f7494,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6944390856915565329, guid: f5e66a43489af3d47bd9d4a74b8f7494,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: -3.75
       objectReference: {fileID: 0}
     - target: {fileID: 6944390856915565329, guid: f5e66a43489af3d47bd9d4a74b8f7494,
         type: 3}
