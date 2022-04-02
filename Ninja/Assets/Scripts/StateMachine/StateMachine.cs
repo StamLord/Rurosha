@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
+    [Header("State Machine")]
     [SerializeField] private State _currentState;
     [SerializeField] private State[] _states;
-
+    
+    [SerializeField] private bool _debugLogs;
     public string CurrentState { get{return _currentState.GetType().Name;}}
 
     void Start()
@@ -32,5 +34,8 @@ public class StateMachine : MonoBehaviour
 
         _currentState = _states[stateIndex];
         _currentState.EnterState(this);
+
+        if(_debugLogs)
+            Debug.Log("Entering state: " + stateIndex);
     }
 }

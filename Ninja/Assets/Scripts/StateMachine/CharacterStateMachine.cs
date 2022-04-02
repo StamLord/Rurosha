@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class CharacterStateMachine : StateMachine
 {
+    [Space(20f)]
+
     public CharacterStats characterStats;
     public InputState inputState;
 
     [Header("Stealth Agent")]
     [SerializeField] protected StealthAgent stealthAgent;
+    
     public void SetVisibility(float visibility)
     {
         stealthAgent.SetVisibility(visibility);
