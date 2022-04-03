@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MaterialType {Stone, Wood, Flesh}
-
 public class PhysicalMaterial : MonoBehaviour
 {
     [SerializeField] private MaterialType mType;
@@ -15,29 +13,38 @@ public class PhysicalMaterial : MonoBehaviour
 
     [SerializeField] private GameObject smallBloodPrefab;
     [SerializeField] private GameObject bigBloodPrefab;
+
+    [SerializeField] private GameObject smallSparkPrefab;
+    [SerializeField] private GameObject bigSparkPrefab;
     
-    public void CollideEffect(Vector3 position, int damage = -1)
+    public void CollideEffect(Vector3 position, int damage)
     {
-        switch(mType)
+        CollideEffect(position, damage, mType);
+    }
+
+    public void CollideEffect(Vector3 position, int damage, MaterialType materialType = MaterialType.Stone)
+    {
+        Quaternion rotation = Quaternion.Euler(0, Random.Range(0f,1f) * 360, 0);
+        
+        switch(materialType)
         {
             case MaterialType.Stone:
-                Debug.Log("Spark");
+                Debug.Log("Dust");
                 break;
             case MaterialType.Wood:
                 Debug.Log("Splinter");
                 break;
             case MaterialType.Flesh:
-                Debug.Log("Blood");
                 if(damage > 10 && bigBloodPrefab)
-                {
-                    Quaternion rotation = Quaternion.Euler(0, Random.Range(0f,1f) * 360, 0);
-                    GameObject go = Instantiate(bigBloodPrefab, position, rotation);
-                }
+                    Instantiate(bigBloodPrefab, position, rotation);
                 else if(smallBloodPrefab)
-                {
-                    Quaternion rotation = Quaternion.Euler(0, Random.Range(0f,1f) * 360, 0);
-                    GameObject go = Instantiate(smallBloodPrefab, position, rotation);
-                }
+                    Instantiate(smallBloodPrefab, position, rotation);
+                break;
+            case MaterialType.Metal:
+                if(damage > 10 && bigSparkPrefab)
+                    Instantiate(bigSparkPrefab, position, rotation);
+                else if(smallSparkPrefab)
+                    Instantiate(smallSparkPrefab, position, rotation);
                 break;
         }
     }

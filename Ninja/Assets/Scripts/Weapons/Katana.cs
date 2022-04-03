@@ -146,10 +146,6 @@ public class Katana : WeaponObject, IHitboxResponder
         //Gain Exp
         charStats.IncreaseAttributeExp("strength", strengthExpGain);
         
-        //Collision Effects
-        PhysicalMaterial pMat = collider.GetComponent<PhysicalMaterial>();
-        pMat?.CollideEffect(collider.ClosestPoint(transform.position), hardDamage);
-        
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         hurtbox?.Hit(softDamage, hardDamage, DamageType.Slash);

@@ -94,9 +94,6 @@ public class Kanabo : WeaponObject, IHitboxResponder
     {   
         charStats.IncreaseAttributeExp("strength", strengthExpGain);
         
-        PhysicalMaterial pMat = collider.GetComponent<PhysicalMaterial>();
-        pMat?.CollideEffect(collider.ClosestPointOnBounds(transform.position));
-        
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         hurtbox?.Hit(30, 10);
     }

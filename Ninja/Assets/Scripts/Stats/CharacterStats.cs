@@ -142,6 +142,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    [SerializeField] private bool guardOn;    
+    [SerializeField] private Direction9 guardDirection;
+
     void Start()
     {
         foreach(Hurtbox h in hurtboxes)
@@ -413,11 +416,16 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
-    public void GetHit(int softDamage, int hardDamage, DamageType damageType)
+    public bool GetHit(int softDamage, int hardDamage, DamageType damageType, Direction9 direction)
     {
+        // Check if guarding in right direction
+        if(guardOn && guardDirection == direction)
+            return false;
+        
         Debug.Log(gameObject.name + " was hit for " + softDamage + " / " + hardDamage + " " + damageType + " damage");
         SubHealth(softDamage);
         SubPotentialHealth(hardDamage);
+        return true;
     }
 
     public void Die()

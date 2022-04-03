@@ -1,10 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Hurtbox : MonoBehaviour
 {
     [SerializeField] private List<IHurtboxResponder> _responders = new List<IHurtboxResponder>();
+    [SerializeField] private PhysicalMaterial physicalMaterial;
 
     [Header("Debug")]
     [SerializeField] private bool _debug;
@@ -21,18 +22,32 @@ public class Hurtbox : MonoBehaviour
     }
 
     // Called by weapon scripts after
-    public void Hit(int softDamage, int hardtDamage)
+    public bool Hit(int softDamage, int hardDamage, DamageType damageType = DamageType.Blunt, Direction9 direction = Direction9.CENTER)
     {
-        Hit(softDamage, hardtDamage, DamageType.Blunt);
-    }
-
-    public void Hit(int softDamage, int hardDamage, DamageType damageType)
-    {
+        // Send hit data to all responders and see if atleast 1 returns true
+        bool hit = (_responders.Count > 0)? false : true;
         foreach(IHurtboxResponder r in _responders)
-            r.GetHit(softDamage, hardDamage, damageType);
+            if(r.GetHit(softDamage, hardDamage, damageType, direction))
+                hit = true;
 
-        if(_debug && _material)
-            StartCoroutine(ColorChange(_colorFadeStartDuration, _colorFadeEndDuration));
+        if(hit)
+        {
+            // Hit Effects
+            if(physicalMaterial)
+                physicalMaterial.CollideEffect(transform.position, hardDamage);
+        
+            // Change hurtbox's material color if hit for testing
+            if(_debug && _material)
+                StartCoroutine(ColorChange(_colorFadeStartDuration, _colorFadeEndDuration));
+        }
+        else
+        {
+            // Deflect Effects
+            if(physicalMaterial)
+                physicalMaterial.CollideEffect(transform.position, hardDamage, MaterialType.Metal);
+        }
+
+        return hit;
     }
 
     public void AddResponder(IHurtboxResponder responder)
