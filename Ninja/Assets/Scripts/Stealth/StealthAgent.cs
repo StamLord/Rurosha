@@ -115,7 +115,6 @@ public class StealthAgent : MonoBehaviour
         float v = visibilityModifier;
         foreach(KeyValuePair<string, float> mod in visibilityMods)
             v *= mod.Value;
-        Debug.Log("V:" + v);
         return v;
     }
 
@@ -124,7 +123,6 @@ public class StealthAgent : MonoBehaviour
         float d = detectionModifier;
         foreach(KeyValuePair<string, float> mod in detectionMods)
             d *= mod.Value;
-        Debug.Log("D:" + d);
         return d;
     }
 
