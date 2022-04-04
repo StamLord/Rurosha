@@ -41,6 +41,14 @@ public class AirState : PlayerState
 
     [Space(20f)]
 
+    [Header("Fall Damage")]
+    [SerializeField] private float miniFallDamageVelocity = 2f;
+    [SerializeField] private int FallDamage = 10;
+    [SerializeField] private float minimumFallDamageDistance = 10;
+    private float startY;
+
+    [Space(20f)]
+
     [Header("Glide")]
     [SerializeField] public bool glideOn = false;
     [SerializeField] private float glideGravityMultiplier = .2f;
@@ -73,6 +81,7 @@ public class AirState : PlayerState
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Air State]");
 
+        startY = transform.position.y;
         originalSpeed =  new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
 
         Vector3 inputVector = inputState.AxisInput;
@@ -179,12 +188,29 @@ public class AirState : PlayerState
         {
             airJumps = 0;
             lastWallRunNormal = Vector3.zero;
+            DealFallDamageDistance();
             _stateMachine.SwitchState(0);
         }
 
         // Switch to ClimbState
         if(isClimbing)
             _stateMachine.SwitchState(3);
+    }
+
+    private void DealFallDamageVelocity()
+    {
+        float velocity = transform.TransformVector(rigidbody.velocity).y;
+        if(velocity > miniFallDamageVelocity) return;
+        
+        characterStats.SubHealth(FallDamage * (Mathf.Abs(velocity + miniFallDamageVelocity)));
+    }
+
+    private void DealFallDamageDistance()
+    {
+        float delta = startY - transform.position.y;
+        if(delta < minimumFallDamageDistance) return;
+        int damage = Mathf.RoundToInt(FallDamage * (delta - minimumFallDamageDistance));
+        characterStats.GetHit(damage * 2, damage, DamageType.Blunt, Direction9.CENTER);
     }
 
     private void GetInput()
