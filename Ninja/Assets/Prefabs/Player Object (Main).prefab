@@ -6729,7 +6729,7 @@ MonoBehaviour:
   rigidbody: {fileID: 6944390856915565340}
   speedTimerMultiplier: 0.2
   xValueMultiplier: 1
-  yValueMultiplier: 1
+  yValueMultiplier: 2
 --- !u!114 &2037844329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7488,6 +7488,9 @@ MonoBehaviour:
   climbingStartDistannce: 0.75
   vaultDuration: 0.4
   finalPositionOffset: {x: 0, y: 0, z: 0}
+  miniFallDamageVelocity: 2
+  FallDamage: 10
+  minimumFallDamageDistance: 10
   glideOn: 0
   glideGravityMultiplier: 0.2
   isGliding: 0

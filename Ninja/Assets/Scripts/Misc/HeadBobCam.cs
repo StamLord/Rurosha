@@ -27,22 +27,23 @@ public class HeadBobCam : MonoBehaviour
     void Update()
     {
         string state = playerStateMachine.CurrentState;
-        
-        if(activeInStates.Contains(state) == false)
-            return;
-
         float velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z).magnitude;
+        
+        if(activeInStates.Contains(state) == false || velocity == 0)
+        {
+            timer = 0;
+            return;
+        }
 
         timer += Time.deltaTime * velocity * speedTimerMultiplier;
-        if(timer > 1f || velocity == 0)
+        if(timer > 1f)
             timer -= 1f;
-
+        
         Vector3 nextPosition = originPos + new Vector3(
             xMove.Evaluate(timer) * xValueMultiplier, 
             yMove.Evaluate(timer) * yValueMultiplier, 
             0);
 
-        Vector3 newPosition = Vector3.Lerp(originPos, nextPosition, velocity);
-        transform.localPosition = Vector3.Lerp(transform.localPosition, newPosition, .1f);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, nextPosition, .1f);
     }
 }
