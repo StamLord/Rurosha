@@ -12,6 +12,8 @@ public class DebugConsole : UIWindow
     [SerializeField] private bool showConsole;
     [SerializeField] private GameObject consoleObject;
     [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private GameObject outputParent;
+    private TextMeshProUGUI[] outputs;
 
     [Header("Other References")]
     [SerializeField] private InputDebugWindow inputDebugWindow;
@@ -25,6 +27,11 @@ public class DebugConsole : UIWindow
     private string UnkownParameter(string parameter)
     {
         return "Unknown parameter: " + parameter;
+    }
+
+    private void OnValidate()
+    {
+        outputs = outputParent.GetComponentsInChildren<TextMeshProUGUI>();
     }
 
     private void Awake() 
@@ -117,11 +124,12 @@ public class DebugConsole : UIWindow
 
     public void SubmitInput()
     {
+        // Make sure we have input
         string input = inputField.text;
-
         if(input.Length < 1)
             return;
 
+        // Get command and parameters
         string[] command = input.Split(' ');
         string[] parameters = new string[0];
 
@@ -132,13 +140,26 @@ public class DebugConsole : UIWindow
                 parameters[i] = command[i + 1];
         }
 
+        // Execute command and print output
         string output;
         DebugCommandDatabase.ExecuteCommand(command[0], parameters, out output);
-        if(output.Length > 0) Debug.Log(output);
+        if(output.Length > 0) PrintOutput(output);
 
+        // Add to history
         commandHistory.Add(inputField.text);
         historyIndex = commandHistory.Count;
 
         inputField.text = "";
+    }
+
+    private void PrintOutput(string output)
+    {
+        // Move all previous outputs up
+        int i = 0;
+        for (; i < outputs.Length - 1; i++)
+            outputs[i].text = outputs[i+1].text;
+        
+        // Set new output
+        outputs[i].text = output;
     }
 }
