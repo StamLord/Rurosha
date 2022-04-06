@@ -22,6 +22,11 @@ public class DebugConsole : UIWindow
     [SerializeField] private List<string> commandHistory = new List<string>();
     [SerializeField] private int historyIndex;
 
+    private string UnkownParameter(string parameter)
+    {
+        return "Unknown parameter: " + parameter;
+    }
+
     private void Awake() 
     {
         DebugCommandDatabase.AddCommand(new DebugCommand(
@@ -29,19 +34,26 @@ public class DebugConsole : UIWindow
             "Gives the player 1000 gold.", 
             "rosebud", 
             (string[] paramaters) => {
-                Debug.Log("Invoking rosebud! You rascal!");
+                return "Invoking rosebud! You rascal!";
             }));
 
         DebugCommandDatabase.AddCommand(new DebugCommand(
             "inputdebug", 
             "Turns Input Debug window On / Off", 
-            "inputdebug <on/off>", 
+            "inputdebug <1/0>", 
             (string[] paramaters) => {
                 string p = paramaters[0].ToLower();
-                if(p == "on")
+                if(p == "1")
+                {
                     inputDebugWindow.Show(true);
-                else if(p == "off")
+                    return "InputDebug set to 1";
+                }
+                else if(p == "0")
+                {
                     inputDebugWindow.Show(false);
+                    return "InputDebug set to 0";
+                }
+                return UnkownParameter(p);
             }));
 
         DebugCommandDatabase.AddCommand(new DebugCommand(
@@ -50,6 +62,7 @@ public class DebugConsole : UIWindow
             "spawn <objectname> [optional]<amount>", 
             (string[] paramaters) => {
                 // To Add
+                return "Will be added";
             }));
     }
     private void Update() 
@@ -119,7 +132,9 @@ public class DebugConsole : UIWindow
                 parameters[i] = command[i + 1];
         }
 
-        DebugCommandDatabase.ExecuteCommand(command[0], parameters);
+        string output;
+        DebugCommandDatabase.ExecuteCommand(command[0], parameters, out output);
+        if(output.Length > 0) Debug.Log(output);
 
         commandHistory.Add(inputField.text);
         historyIndex = commandHistory.Count;

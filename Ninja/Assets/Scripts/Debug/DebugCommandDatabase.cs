@@ -27,13 +27,17 @@ public static class DebugCommandDatabase
         return database.ContainsKey(command);
     }
 
-    public static bool ExecuteCommand(string command, string[] parameters)
+    public static bool ExecuteCommand(string command, string[] parameters, out string output)
     {
+        
         DebugCommand dc = GetCommand(command);
         if(dc == null)
+        {
+            output = "Unknown command: " + command;
             return false;
+        }
         
-        dc.Execute(parameters);
+        output = dc.Execute(parameters);
         return true;
     }
 }

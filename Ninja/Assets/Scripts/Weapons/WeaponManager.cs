@@ -62,8 +62,17 @@ public class WeaponManager : MonoBehaviour
             "Adds a weapon to player",
             "addweapon <weapon> <amount>", 
             (string[] parameters) => {
+                if(itemDatabase.ContainsKey(parameters[0]) == false)
+                    return "Unknown weapon: " + parameters[0];
+
+                int num;
+                if(int.TryParse(parameters[1], out num) == false)
+                    return "Parameter is not a number:" + parameters[1];
+                
                 for (int i = 0; i < Int32.Parse(parameters[1]); i++)
                     AddItem(itemDatabase[parameters[0].ToLower()]);
+                
+                return "Added weapon: " + parameters[0] + " x" + parameters[1];
         }));
     }
 

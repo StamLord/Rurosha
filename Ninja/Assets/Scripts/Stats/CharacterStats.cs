@@ -163,7 +163,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
                 "Sets attribute to desired value", 
                 "setattribute <attribute> <level>", 
                 (string[] parameters) => {
-                    SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
+                    bool success = SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
+                    if(success)
+                        return "Set " + parameters[0] + ": " + parameters[1];
+                    return "Unknown attribute: " + (parameters[0]);
                 }));
 
             DebugCommandDatabase.AddCommand(new DebugCommand(
@@ -171,7 +174,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
                 "Sets attribute to desired value", 
                 "setattr <attribute> <level>", 
                 (string[] parameters) => {
-                    SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
+                    bool success = SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
+                    if(success)
+                        return "Set " + parameters[0] + ": " + parameters[1];
+                    return "Unknown attribute: " + (parameters[0]);
                 }));
 
             DebugCommandDatabase.AddCommand(new DebugCommand(
@@ -180,6 +186,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
                 "killme", 
                 (string[] parameters) => {
                     SubHealth(9999f);
+                    return "Killed player";
                 }));
         }
     }

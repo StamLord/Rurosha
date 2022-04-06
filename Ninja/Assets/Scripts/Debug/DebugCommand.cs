@@ -8,7 +8,7 @@ public class DebugCommand
     public string _description { get; private set;}
     public string _format { get; private set;}
 
-    public delegate void Command (string[] parameters);
+    public delegate string Command (string[] parameters);
     private Command _command;
 
     public DebugCommand(string id, string description, string format, Command command)
@@ -20,8 +20,8 @@ public class DebugCommand
         _command = command;
     }
 
-    public void Execute(string[] parameters)
+    public string Execute(string[] parameters)
     {
-        _command.Invoke(parameters);
+        return _command.Invoke(parameters);
     }
 }
