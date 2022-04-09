@@ -1487,7 +1487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1126881416
 Transform:
   m_ObjectHideFlags: 0
@@ -1571,6 +1571,7 @@ MonoBehaviour:
   sliceForce: 2
   maxSlicesPerCut: 20
   newSlices: []
+  idleTransitionSpeed: 10
 --- !u!1 &1131167991
 GameObject:
   m_ObjectHideFlags: 0

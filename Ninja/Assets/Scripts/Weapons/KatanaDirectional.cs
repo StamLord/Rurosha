@@ -28,9 +28,23 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
     [SerializeField] private float maxSlicesPerCut = 10;
     [SerializeField] private List<GameObject> newSlices = new List<GameObject>();
     
+    [Header("Animation")]
+    [SerializeField] private float idleTransitionSpeed = .5f;
+    private int attack_up, attack_upleft, attack_left, attack_downleft, attack_down, attack_downright, attack_right, attack_upright, attack_center;
+
     private void Start()
     {
         hitbox?.SetResponder(this);
+
+        attack_up = Animator.StringToHash("attack_up");
+        attack_upright = Animator.StringToHash("attack_upright");
+        attack_right = Animator.StringToHash("attack_right");
+        attack_downright = Animator.StringToHash("attack_downright");
+        attack_down = Animator.StringToHash("attack_down");
+        attack_downleft = Animator.StringToHash("attack_downleft");
+        attack_left = Animator.StringToHash("attack_left");
+        attack_upleft = Animator.StringToHash("attack_upleft");
+        attack_center = Animator.StringToHash("attack_center");
     }
 
     public Direction9 GetDirection()
@@ -41,6 +55,7 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
     private void Update()
     {
         ProcessMouseMovement();
+        UpdateIdleAnimation();
         ProcessAttackInput();
     }
 
@@ -74,38 +89,53 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
             direction = Direction9.LEFT;
         else if(mouseAngle <= -22.5 && mouseAngle > -67.5)
             direction = Direction9.UPLEFT;
+    }
 
-        // Update Animator
+    private void UpdateIdleAnimation()
+    {   
+        // Get target 2D coords of our blend tree
+        float v = 0;
+        float h = 0;
+
         switch(direction)
         {
             case Direction9.UP:
-                animator.CrossFade("idle_up", .05f);
+                h = 0;
+                v = 1;
                 break;
             case Direction9.UPRIGHT:
-                animator.CrossFade("idle_upright", .05f);
+                h = 1;
+                v = 1;
                 break;
             case Direction9.RIGHT:
-                animator.CrossFade("idle_right", .05f);
+                h = 1;
+                v = 0;
                 break;
             case Direction9.DOWNRIGHT:
-                animator.CrossFade("idle_downright", .05f);
+                h = 1;
+                v = -1;
                 break;
             case Direction9.DOWN:
-                animator.CrossFade("idle_down", .05f);
+                h = 0;
+                v = -1;
                 break;
             case Direction9.DOWNLEFT:
-                animator.CrossFade("idle_downleft", .05f);
+                h = -1;
+                v = -1;
                 break;
             case Direction9.LEFT:
-                animator.CrossFade("idle_left", .05f);
+                h = -1;
+                v = 0;
                 break;
             case Direction9.UPLEFT:
-                animator.CrossFade("idle_upleft", .05f);
-                break;
-            case Direction9.CENTER:
-                animator.CrossFade("idle_center", .05f);
+                h = -1;
+                v = 1;
                 break;
         }
+
+        // Update paramteres of idle blend tree by lerping to target coords for smooth transition
+        animator.SetFloat("V", Mathf.Lerp(animator.GetFloat("V"), v, idleTransitionSpeed * Time.deltaTime));
+        animator.SetFloat("H", Mathf.Lerp(animator.GetFloat("H"), h, idleTransitionSpeed * Time.deltaTime));
     }
 
     private void ProcessAttackInput()
@@ -119,8 +149,53 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
             return;
 
         // Check if attacking
+        // Play attack animation based on current idle animation state
         if(inputState.MouseButton1.State == VButtonState.PRESS_START)
-            animator.SetTrigger("ATTACK");
+        {
+            // Make sure we are not mid attack
+            int curState = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+           
+            if( curState == attack_up ||
+                curState == attack_upright ||
+                curState == attack_right ||
+                curState == attack_downright ||
+                curState == attack_down ||
+                curState == attack_downleft ||
+                curState == attack_left ||
+                curState == attack_upleft ||
+                curState == attack_center )
+                return;
+            
+            
+            // Play animation based on direction
+            switch(direction)
+            {
+                case Direction9.UP:
+                    animator.Play("attack_up");
+                    break;
+                case Direction9.UPRIGHT:
+                    animator.Play("attack_upright");
+                    break;
+                case Direction9.RIGHT:
+                   animator.Play("attack_right");
+                    break;
+                case Direction9.DOWNRIGHT:
+                    animator.Play("attack_downright");
+                    break;
+                case Direction9.DOWN:
+                    animator.Play("attack_down");
+                    break;
+                case Direction9.DOWNLEFT:
+                    animator.Play("attack_downleft");;
+                    break;
+                case Direction9.LEFT:
+                    animator.Play("attack_left");
+                    break;
+                case Direction9.UPLEFT:
+                   animator.Play("attack_upleft");
+                    break;
+            }
+        }
     }
 
     // Called by Hitbox on collision
