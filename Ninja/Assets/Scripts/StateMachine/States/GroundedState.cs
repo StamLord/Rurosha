@@ -108,7 +108,7 @@ public class GroundedState : PlayerState
         }
 
         // Kick
-        if (Input.GetKeyDown(KeyCode.F)) 
+        if (inputState.Kick.State == VButtonState.PRESSED) 
             GetComponent<Kick>().ActivateKick();
 
         // Jump
