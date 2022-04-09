@@ -9,6 +9,7 @@ public class GroundSensor : MonoBehaviour
 
     [Header("Ground Info")]
     [SerializeField] private float groundSlope;
+    [SerializeField] private float maxGroundedSlope = 50;
     [SerializeField] private bool isGrounded;
     public bool IsGrounded {get{return isGrounded;}}
 
@@ -82,8 +83,9 @@ public class GroundSensor : MonoBehaviour
 
                 averageNormal.Normalize();
 
-                isGrounded = ray1 || ray2 || ray3 || ray4;
                 groundSlope = Vector3.Angle(averageNormal, Vector3.up);
+                isGrounded = ray1 || ray2 || ray3 || ray4;
+                isGrounded = isGrounded && groundSlope < maxGroundedSlope;
                 break;
         }
         
