@@ -48,72 +48,45 @@ public class PlayerControls : MonoBehaviour
             Vector3 rawInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             DoubleInputCheck(rawInput);
 
-            //Jump
-            if(Input.GetButtonDown("Jump"))
-                _inputState.Jump.Set(VButtonState.PRESS_START);
-            else if (Input.GetButtonUp("Jump"))
-                _inputState.Jump.Set(VButtonState.PRESS_END);
-            else if (Input.GetButton("Jump"))
-                _inputState.Jump.Set(VButtonState.PRESSED);
-            else
-                _inputState.Jump.Set(VButtonState.UNPRESSED);
+            // Jump
+            UpdateVirtualButton("Jump", _inputState.Jump);
 
             //Run
-            if(Input.GetButtonDown("Run"))
-                _inputState.Run.Set(VButtonState.PRESS_START);
-            else if (Input.GetButtonUp("Run"))
-                _inputState.Run.Set(VButtonState.PRESS_END);
-            else if (Input.GetButton("Run"))
-                _inputState.Run.Set(VButtonState.PRESSED);
-            else
-                _inputState.Run.Set(VButtonState.UNPRESSED);
+            UpdateVirtualButton("Run", _inputState.Run);
 
-            //Crouch
-            if(Input.GetButtonDown("Crouch"))
-                _inputState.Crouch.Set(VButtonState.PRESS_START);
-            else if (Input.GetButtonUp("Crouch"))
-                _inputState.Crouch.Set(VButtonState.PRESS_END);
-            else if (Input.GetButton("Crouch"))
-                _inputState.Crouch.Set(VButtonState.PRESSED);
-            else
-                _inputState.Crouch.Set(VButtonState.UNPRESSED);
+            // Crouch
+            UpdateVirtualButton("Crouch", _inputState.Crouch);
+
+            // Defend
+            UpdateVirtualButton("Defend", _inputState.Defend);
+
+            // Kick
+            UpdateVirtualButton("Kick", _inputState.Kick);
         }
 
         if(interactionDisabled == false)
         {
-            //Use
-            if(Input.GetButtonDown("Use"))
-                _inputState.Use.Set(VButtonState.PRESS_START);
-            else if (Input.GetButtonUp("Use"))
-                _inputState.Use.Set(VButtonState.PRESS_END);
-            else if (Input.GetButton("Use"))
-                _inputState.Use.Set(VButtonState.PRESSED);
-            else
-                _inputState.Use.Set(VButtonState.UNPRESSED);
-        }
+            // Use
+            UpdateVirtualButton("Use", _inputState.Use);
+        
+            // Mouse Button 1
+            UpdateVirtualButton("Fire1", _inputState.MouseButton1);
 
-        if(interactionDisabled == false)
-        {
-            //Mouse Button 1
-            if(Input.GetButtonDown("Fire1"))
-                _inputState.MouseButton1.Set(VButtonState.PRESS_START);
-            else if (Input.GetButtonUp("Fire1"))
-                _inputState.MouseButton1.Set(VButtonState.PRESS_END);
-            else if (Input.GetButton("Fire1"))
-                _inputState.MouseButton1.Set(VButtonState.PRESSED);
-            else
-                _inputState.MouseButton1.Set(VButtonState.UNPRESSED);
-
-            //Mouse Button 2
-            if(Input.GetButtonDown("Fire2"))
-                _inputState.MouseButton2.Set(VButtonState.PRESS_START);
-            else if (Input.GetButtonUp("Fire2"))
-                _inputState.MouseButton2.Set(VButtonState.PRESS_END);
-            else if (Input.GetButton("Fire2"))
-                _inputState.MouseButton2.Set(VButtonState.PRESSED);
-            else
-                _inputState.MouseButton2.Set(VButtonState.UNPRESSED);
+            // Mouse Button 2
+            UpdateVirtualButton("Fire2", _inputState.MouseButton2);
         }
+    }
+
+    private void UpdateVirtualButton(string unityButtonName, VButton virtualButton)
+    {
+        if(Input.GetButtonDown(unityButtonName))
+                virtualButton.Set(VButtonState.PRESS_START);
+            else if (Input.GetButtonUp(unityButtonName))
+                virtualButton.Set(VButtonState.PRESS_END);
+            else if (Input.GetButton(unityButtonName))
+                virtualButton.Set(VButtonState.PRESSED);
+            else
+                virtualButton.Set(VButtonState.UNPRESSED);
     }
 
     private void DoubleInputCheck(Vector3 rawInput)
