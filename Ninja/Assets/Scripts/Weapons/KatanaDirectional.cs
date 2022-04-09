@@ -74,40 +74,53 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
             direction = Direction9.LEFT;
         else if(mouseAngle <= -22.5 && mouseAngle > -67.5)
             direction = Direction9.UPLEFT;
+
+        // Update Animator
+        switch(direction)
+        {
+            case Direction9.UP:
+                animator.CrossFade("idle_up", .05f);
+                break;
+            case Direction9.UPRIGHT:
+                animator.CrossFade("idle_upright", .05f);
+                break;
+            case Direction9.RIGHT:
+                animator.CrossFade("idle_right", .05f);
+                break;
+            case Direction9.DOWNRIGHT:
+                animator.CrossFade("idle_downright", .05f);
+                break;
+            case Direction9.DOWN:
+                animator.CrossFade("idle_down", .05f);
+                break;
+            case Direction9.DOWNLEFT:
+                animator.CrossFade("idle_downleft", .05f);
+                break;
+            case Direction9.LEFT:
+                animator.CrossFade("idle_left", .05f);
+                break;
+            case Direction9.UPLEFT:
+                animator.CrossFade("idle_upleft", .05f);
+                break;
+            case Direction9.CENTER:
+                animator.CrossFade("idle_center", .05f);
+                break;
+        }
     }
 
     private void ProcessAttackInput()
     {
+        // Check if defending
+        bool defending = inputState.Defend.State == VButtonState.PRESSED;
+        animator.SetBool("DEFEND", defending);
+        charStats.SetGuard(defending, direction);
+
+        if(defending)
+            return;
+
+        // Check if attacking
         if(inputState.MouseButton1.State == VButtonState.PRESS_START)
-        {
-            switch(direction)
-            {
-                case Direction9.UP:
-                    animator.SetTrigger("UP");
-                    break;
-                case Direction9.UPRIGHT:
-                    animator.SetTrigger("UPRIGHT");
-                    break;
-                case Direction9.RIGHT:
-                    animator.SetTrigger("RIGHT");
-                    break;
-                case Direction9.DOWNRIGHT:
-                    animator.SetTrigger("DOWNRIGHT");
-                    break;
-                case Direction9.DOWN:
-                    animator.SetTrigger("DOWN");
-                    break;
-                case Direction9.DOWNLEFT:
-                    animator.SetTrigger("DOWNLEFT");
-                    break;
-                case Direction9.LEFT:
-                    animator.SetTrigger("LEFT");
-                    break;
-                case Direction9.UPLEFT:
-                    animator.SetTrigger("UPLEFT");
-                    break;
-            }
-        }
+            animator.SetTrigger("ATTACK");
     }
 
     // Called by Hitbox on collision

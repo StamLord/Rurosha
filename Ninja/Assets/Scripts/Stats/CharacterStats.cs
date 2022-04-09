@@ -142,8 +142,18 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    #region Guard
+
     [SerializeField] private bool guardOn;    
     [SerializeField] private Direction9 guardDirection;
+
+    public void SetGuard(bool isGuarding, Direction9 direction = Direction9.CENTER)
+    {
+        guardOn = isGuarding;
+        guardDirection = direction;    
+    }
+
+    #endregion
 
     void Start()
     {
