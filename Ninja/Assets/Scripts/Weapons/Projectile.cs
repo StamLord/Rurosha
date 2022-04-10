@@ -104,7 +104,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             return Physics.Raycast(transform.position, transform.forward, out hitDetected, speed * 2f * Time.deltaTime, hitMask);
     }
 
-    public void CollisionWith(Collider collider)
+    public void CollisionWith(Collider collider, Hitbox hitbox)
     {
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         if(hurtbox)

@@ -1487,7 +1487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1126881416
 Transform:
   m_ObjectHideFlags: 0
@@ -1572,6 +1572,13 @@ MonoBehaviour:
   maxSlicesPerCut: 20
   newSlices: []
   idleTransitionSpeed: 10
+  maxCombo: 3
+  combo: 
+  specialAttackReady: 0
+  projectile: {fileID: 5051931945670689250, guid: c9920eeda4e5ff34bb4a012a9ebf5f55,
+    type: 3}
+  specialProjDistance: 10
+  specialProjSpeed: 15
 --- !u!1 &1131167991
 GameObject:
   m_ObjectHideFlags: 0
@@ -4494,6 +4501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundSlope: 0
+  maxGroundedSlope: 50
   isGrounded: 0
   direction: 1
   detectionType: 0
@@ -5448,6 +5456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundSlope: 0
+  maxGroundedSlope: 50
   isGrounded: 0
   direction: 0
   detectionType: 1

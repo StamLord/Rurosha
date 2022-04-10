@@ -122,7 +122,7 @@ public class Melee : WeaponObject, IHitboxResponder
         return false;
     }
 
-    public void CollisionWith(Collider collider)
+    public void CollisionWith(Collider collider, Hitbox hitbox)
     {
         // Don't collider with self
         if(collider.transform.root == transform.root) return;

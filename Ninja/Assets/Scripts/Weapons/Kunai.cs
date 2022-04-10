@@ -74,7 +74,7 @@ public class Kunai : WeaponObject, IHitboxResponder
         }
     }
 
-    public void CollisionWith(Collider collider)
+    public void CollisionWith(Collider collider, Hitbox hitbox)
     {
         if(joint) return;
         

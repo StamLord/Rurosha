@@ -64,7 +64,7 @@ public class BombProj : MonoBehaviour, IHitboxResponder
         started = false;
     }
 
-    public void CollisionWith(Collider col)
+    public void CollisionWith(Collider col, Hitbox hitbox)
     {
         // Get Hurtbox
         Hurtbox hurtbox = col.GetComponent<Hurtbox>();

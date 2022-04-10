@@ -63,7 +63,7 @@ public class Hitbox : MonoBehaviour
             {
                 if(collided.Contains(col) == false)
                 {
-                    _responder.CollisionWith(col);
+                    _responder.CollisionWith(col, this);
                     collided.Add(col);
                 }
             }

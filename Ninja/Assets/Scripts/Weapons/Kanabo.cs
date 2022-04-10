@@ -90,7 +90,7 @@ public class Kanabo : WeaponObject, IHitboxResponder
         }
     }
 
-    public void CollisionWith(Collider collider)
+    public void CollisionWith(Collider collider, Hitbox hitbox)
     {   
         charStats.IncreaseAttributeExp("strength", strengthExpGain);
         

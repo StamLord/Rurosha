@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IHitboxResponder
 {
-     void CollisionWith(Collider collider);
+     void CollisionWith(Collider collider, Hitbox hitbox);
 
      void UpdateColliderState(bool newState);
 }

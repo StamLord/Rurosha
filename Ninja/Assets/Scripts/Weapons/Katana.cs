@@ -141,7 +141,7 @@ public class Katana : WeaponObject, IHitboxResponder
     }
 
     // Called by Hitbox on collision
-    public void CollisionWith(Collider collider)
+    public void CollisionWith(Collider collider, Hitbox hitbox)
     {   
         //Gain Exp
         charStats.IncreaseAttributeExp("strength", strengthExpGain);

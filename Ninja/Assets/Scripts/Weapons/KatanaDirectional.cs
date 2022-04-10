@@ -32,6 +32,18 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
     [SerializeField] private float idleTransitionSpeed = .5f;
     private int attack_up, attack_upleft, attack_left, attack_downleft, attack_down, attack_downright, attack_right, attack_upright, attack_center;
 
+    [Header("Combo")]
+    [SerializeField] private int maxCombo = 3;
+    [SerializeField]public List<Direction9> combo = new List<Direction9>();
+    [SerializeField] private bool specialAttackReady;
+    [SerializeField] private Direction9 lastAttackDirection;
+    [SerializeField] private Direction9 lastComboAttackDirection;
+
+    [Header("Special Attack")]
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private float specialProjDistance;
+    [SerializeField] private float specialProjSpeed;
+
     private void Start()
     {
         hitbox?.SetResponder(this);
@@ -195,11 +207,15 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
                    animator.Play("attack_upleft");
                     break;
             }
+
+            lastAttackDirection = direction;
+            if(specialAttackReady) SpecialAttack(direction);
+                
         }
     }
 
     // Called by Hitbox on collision
-    public void CollisionWith(Collider collider)
+    public void CollisionWith(Collider collider, Hitbox hitbox)
     {   
         Vector3 hitPoint = collider.ClosestPoint(transform.position);
 
@@ -207,12 +223,16 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         bool isHit = false;
         if(hurtbox)
-            isHit = hurtbox.Hit(softDamage, hardDamage, DamageType.Slash, direction);
+            isHit = hurtbox.Hit(softDamage, hardDamage, DamageType.Slash, lastAttackDirection);
         
         if(isHit)
         {   
             // Gain Exp
             charStats.IncreaseAttributeExp("strength", strengthExpGain);
+
+            // Add to combo only if this hit is registered by local hitbox and not by projectile aka Special Attack
+            if(hitbox == this.hitbox)
+                AddCombo(lastAttackDirection);
         }
 
         //Slice
@@ -230,7 +250,8 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
 
             GameObject toSlice = collider.gameObject;
 
-            Vector3 normal = hitbox.transform.right;
+            // Use local reference or passed parameter for hitbox (In case of a special attack the projectile has his own hitbox)
+            Vector3 normal =  hitbox.transform.right;
             Vector3 transformedNormal = ((Vector3)(toSlice.transform.localToWorldMatrix.transpose * normal)).normalized;
             Plane plane = new Plane(transformedNormal, toSlice.transform.InverseTransformPoint(hitbox.transform.position));
 
@@ -257,6 +278,58 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
     {
         if(newState == false)
             newSlices.Clear();
+    }
+
+    private void AddCombo(Direction9 hitDirection)
+    {
+        // Make sure it's not the last direction added to combo
+        // Handles cases when combo is cleared but another collision registers by same attack immedietly adding same direction
+        if(lastComboAttackDirection == hitDirection)
+            return;
+
+        // Make sure direction is unique in combo
+        if(combo.Contains(hitDirection))
+            return;
+        
+        combo.Add(hitDirection);
+        lastComboAttackDirection = hitDirection;
+
+        if(combo.Count >= maxCombo)
+        {
+            combo.Clear();
+            specialAttackReady = true;
+        }
+    }
+
+    private void SpecialAttack(Direction9 direction)
+    {
+        specialAttackReady = false;
+        float z = 0;
+
+        if(direction == Direction9.LEFT || direction == Direction9.RIGHT)
+            z = 90;
+        else if(direction == Direction9.UPLEFT || direction == Direction9.DOWNRIGHT)
+            z = 45;
+        else if(direction == Direction9.UPRIGHT || direction == Direction9.DOWNLEFT)
+            z = -45;
+        
+        GameObject p = Instantiate(projectile, hitbox.transform.position + transform.forward, transform.rotation);
+        p.transform.localRotation = Quaternion.Euler(p.transform.localEulerAngles.x, p.transform.localEulerAngles.y ,z);
+        p.GetComponent<Hitbox>().SetResponder(this);
+        StartCoroutine("SpecialProjectile", p);
+    }
+
+    IEnumerator SpecialProjectile(GameObject projectile)
+    {
+        Vector3 origin = projectile.transform.position;
+        while(Vector3.Distance(projectile.transform.position, origin) < specialProjDistance)
+        {
+            projectile.transform.position += projectile.transform.forward * specialProjSpeed * Time.deltaTime;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1f);
+        Destroy(projectile);
     }
 
 }
