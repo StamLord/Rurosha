@@ -37,6 +37,7 @@ public class WeaponEditor : Editor
 
         EditorGUILayout.Space(10);
 
+        weapon.damage = EditorGUILayout.IntField("Damage", weapon.damage);
         weapon.ammo = EditorGUILayout.IntSlider("Ammo", weapon.ammo, 1, 99);
         weapon.stackable = EditorGUILayout.Toggle("Stackable", weapon.stackable);
         weapon.WeaponType = (WeaponType)EditorGUILayout.EnumPopup("Weapon Type", weapon.WeaponType);

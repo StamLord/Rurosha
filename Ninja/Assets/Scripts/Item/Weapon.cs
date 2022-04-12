@@ -8,5 +8,6 @@ public enum WeaponType {MELEE, KNIFE, SWORD, STAFF, KANABO, SHURIKEN, BIG_SHURIK
 public class Weapon : Item
 {
     [SerializeField] public WeaponType WeaponType;
+    [SerializeField] public int damage;
 
 }
