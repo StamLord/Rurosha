@@ -8,10 +8,13 @@ public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private CharacterStats _characterStats;
     public CharacterStats Stats {get {return _characterStats;}}
+
+    [SerializeField] private InputState _inputState;
+    public InputState InputState {get {return _inputState;}}
     
-    [SerializeField] private Transform weaponsHolder;
     [SerializeField] private Item[] items = new Item[10];
     [SerializeField] private int selected = 0;
+    int oldSelected;
     
     [Header("Default Weapon")]
     [SerializeField] private Weapon defaultWeapon;
@@ -30,7 +33,6 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private GameObject _itemBowl;
     [SerializeField] private GameObject _equipment;
 
-    [SerializeField] private WeaponType _lastType;
     [SerializeField] private GameObject _lastActive;
 
     public delegate void ChangeSelectionDeleget(int index);
@@ -43,6 +45,20 @@ public class WeaponManager : MonoBehaviour
 
     void Start()
     {
+        // Prepare weapon objects
+        _melee.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _knife.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _sword.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _staff.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _kanabo.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _shuriken.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _big_shuriken.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _bomb.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _bow.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _item.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _itemBowl.GetComponent<WeaponObject>().SetWeaponManager(this);
+        _equipment.GetComponent<WeaponObject>().SetWeaponManager(this);
+        
         SelectItem();
 
         // Move later to its own class
@@ -76,13 +92,13 @@ public class WeaponManager : MonoBehaviour
         }));
     }
 
-    void Update()
+    private void Update()
     {
-        int oldSelected = selected;
+        oldSelected = selected;
 
         #region Mouse Wheel
 
-        if(Input.GetAxis("Mouse ScrollWheel") > 0f)
+        if(_inputState.ScrollInput > 0f)
         {
             if(selected >= items.Length -1 /*&& weapons[0]*/) 
                 selected = 0;
@@ -90,7 +106,7 @@ public class WeaponManager : MonoBehaviour
                 selected++;
         }
 
-        if(Input.GetAxis("Mouse ScrollWheel") < 0f)
+        if(_inputState.ScrollInput < 0f)
         {
             if(selected <= 0 /*&& weapons[weapons.Length - 1]*/) 
                 selected = items.Length -1;
@@ -101,26 +117,26 @@ public class WeaponManager : MonoBehaviour
         #endregion
         
         #region Num Keys
-
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        
+        if(_inputState.Num1.State == VButtonState.PRESS_START)
             selected = 0;
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        if(_inputState.Num2.State == VButtonState.PRESS_START)
             selected = 1;
-        if(Input.GetKeyDown(KeyCode.Alpha3))
+        if(_inputState.Num3.State == VButtonState.PRESS_START)
             selected = 2;
-        if(Input.GetKeyDown(KeyCode.Alpha4))
+        if(_inputState.Num4.State == VButtonState.PRESS_START)
             selected = 3;
-        if(Input.GetKeyDown(KeyCode.Alpha5))
+        if(_inputState.Num5.State == VButtonState.PRESS_START)
             selected = 4;
-        if(Input.GetKeyDown(KeyCode.Alpha6))
+        if(_inputState.Num6.State == VButtonState.PRESS_START)
             selected = 5;
-        if(Input.GetKeyDown(KeyCode.Alpha7))
+        if(_inputState.Num7.State == VButtonState.PRESS_START)
             selected = 6;
-        if(Input.GetKeyDown(KeyCode.Alpha8))
+        if(_inputState.Num8.State == VButtonState.PRESS_START)
             selected = 7;
-        if(Input.GetKeyDown(KeyCode.Alpha9))
+        if(_inputState.Num9.State == VButtonState.PRESS_START)
             selected = 8;
-        if(Input.GetKeyDown(KeyCode.Alpha0))
+        if(_inputState.Num0.State == VButtonState.PRESS_START)
             selected = 9;
         
         #endregion
@@ -132,7 +148,8 @@ public class WeaponManager : MonoBehaviour
         }   
     }
 
-    void SelectItem()
+    // Perform the selection, disable/enable appropriate objects
+    private void SelectItem()
     {
         if(_lastActive)
             _lastActive.SetActive(false);
@@ -195,10 +212,39 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    void ActivateObject(GameObject gameObject)
+    // Activate gameobject (a held weapon with his own script)
+    private void ActivateObject(GameObject gameObject)
     {
         gameObject?.SetActive(true);
         _lastActive = gameObject;
+    }
+
+    // Select best weapon based on damage
+    public void SelectBestWeapon()
+    {
+        int damage = 0;
+        int index = 0;
+
+        for (var i = 0; i < items.Length; i++)
+        {
+            if(items[i] == null) continue;
+            if(items[i].GetType() == typeof(Weapon))
+            {   
+                Weapon w = (Weapon)items[i];
+                if(w.damage > damage)
+                {
+                    damage = w.damage;
+                    index = i;
+                }
+            }
+        }
+        oldSelected = selected;
+        selected = index;
+        if(selected != oldSelected)
+        {
+            SelectItem();
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }   
     }
 
     public bool AddItem(Item item)
@@ -244,7 +290,7 @@ public class WeaponManager : MonoBehaviour
     }
 
     public void AddItemAtSelection(Item item)
-    {   Debug.Log("Adding item " + item);
+    {   
         items[selected] = item;
         if(ChangeItemEvent != null) ChangeItemEvent(selected, item);
 
@@ -288,5 +334,15 @@ public class WeaponManager : MonoBehaviour
     public int GetAmmo()
     {
         return items[selected].ammo;
+    }
+
+    public Item GetSelectedItem()
+    {
+        return items[selected];
+    }
+
+    public GameObject GetActiveGameObject()
+    {
+        return _lastActive;
     }
 }

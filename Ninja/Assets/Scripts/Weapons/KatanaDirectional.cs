@@ -86,21 +86,26 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
     {
         mouseAngle = Mathf.Atan2(mouseInput.x, mouseInput.y) * Mathf.Rad2Deg;
         if(mouseAngle > -22.5 && mouseAngle <= 22.5)
-            direction = Direction9.UP;
+            SetDirection(Direction9.UP);
         else if(mouseAngle > 22.5 && mouseAngle <= 67.5)
-            direction = Direction9.UPRIGHT;
+            SetDirection(Direction9.UPRIGHT);
         else if(mouseAngle > 67.5 && mouseAngle <= 112.5)
-            direction = Direction9.RIGHT;
+            SetDirection(Direction9.RIGHT);
         else if(mouseAngle > 112.5 && mouseAngle <= 157.5)
-            direction = Direction9.DOWNRIGHT;
+            SetDirection(Direction9.DOWNRIGHT);
         else if(mouseAngle > 157.5 && mouseAngle <= 180 || mouseAngle < -157.5 && mouseAngle < -179)
-            direction = Direction9.DOWN;
+            SetDirection(Direction9.DOWN);
         else if(mouseAngle <= -112.5 && mouseAngle > -157.5)
-            direction = Direction9.DOWNLEFT;
+            SetDirection(Direction9.DOWNLEFT);
         else if(mouseAngle <= -67.5 && mouseAngle > -112.5)
-            direction = Direction9.LEFT;
+            SetDirection(Direction9.LEFT);
         else if(mouseAngle <= -22.5 && mouseAngle > -67.5)
-            direction = Direction9.UPLEFT;
+            SetDirection(Direction9.UPLEFT);
+    }
+
+    public void SetDirection(Direction9 newDirection)
+    {
+        direction = newDirection;
     }
 
     private void UpdateIdleAnimation()

@@ -5,9 +5,10 @@ using UnityEngine;
 public class WeaponObject : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] protected WeaponManager manager;
     [SerializeField] protected Animator animator;
-    [SerializeField] protected InputState inputState;
-    [SerializeField] protected CharacterStats charStats;
+    protected InputState inputState {get {return manager.InputState;}}
+    protected CharacterStats charStats {get {return manager.Stats;}}
 
     void Awake()
     {
@@ -18,6 +19,11 @@ public class WeaponObject : MonoBehaviour
     {
         //InitializeOutline();
         animator = GetComponent<Animator>();
+    }
+
+    public void SetWeaponManager(WeaponManager manager)
+    {
+        this.manager = manager;
     }
 
     public void DrawAnimation()

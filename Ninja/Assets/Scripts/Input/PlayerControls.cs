@@ -74,19 +74,34 @@ public class PlayerControls : MonoBehaviour
 
             // Mouse Button 2
             UpdateVirtualButton("Fire2", _inputState.MouseButton2);
+
+            // Mouse Scroll
+            _inputState.ScrollInput = Input.GetAxis("Mouse ScrollWheel");
+
+            // Alpha numerics
+            UpdateVirtualButton("Alpha1", _inputState.Num1);
+            UpdateVirtualButton("Alpha2", _inputState.Num2);
+            UpdateVirtualButton("Alpha3", _inputState.Num3);
+            UpdateVirtualButton("Alpha4", _inputState.Num4);
+            UpdateVirtualButton("Alpha5", _inputState.Num5);
+            UpdateVirtualButton("Alpha6", _inputState.Num6);
+            UpdateVirtualButton("Alpha7", _inputState.Num7);
+            UpdateVirtualButton("Alpha8", _inputState.Num8);
+            UpdateVirtualButton("Alpha9", _inputState.Num9);
+            UpdateVirtualButton("Alpha0", _inputState.Num0);
         }
     }
 
     private void UpdateVirtualButton(string unityButtonName, VButton virtualButton)
     {
         if(Input.GetButtonDown(unityButtonName))
-                virtualButton.Set(VButtonState.PRESS_START);
-            else if (Input.GetButtonUp(unityButtonName))
-                virtualButton.Set(VButtonState.PRESS_END);
-            else if (Input.GetButton(unityButtonName))
-                virtualButton.Set(VButtonState.PRESSED);
-            else
-                virtualButton.Set(VButtonState.UNPRESSED);
+            virtualButton.Set(VButtonState.PRESS_START);
+        else if (Input.GetButtonUp(unityButtonName))
+            virtualButton.Set(VButtonState.PRESS_END);
+        else if (Input.GetButton(unityButtonName))
+            virtualButton.Set(VButtonState.PRESSED);
+        else
+            virtualButton.Set(VButtonState.UNPRESSED);
     }
 
     private void DoubleInputCheck(Vector3 rawInput)

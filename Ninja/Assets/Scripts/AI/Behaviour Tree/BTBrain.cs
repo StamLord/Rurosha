@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class BTBrain : MonoBehaviour
 {
     [SerializeField] private CharacterStats charStats;
+    [SerializeField] private WeaponManager weaponManager;
     [SerializeField] private InputState inputState;
     [SerializeField] private BTSelector entry;
 
@@ -80,9 +81,19 @@ public class BTBrain : MonoBehaviour
                                 new BTSequence(this, new List<BTNode>()
                                 {
                                     new BTActionNode(this, IsCloseEnoughToAttack),
-                                    new BTActionNode(this, Attack)
+                                    new BTSequence(this, new List<BTNode>()
+                                    {
+                                        new BTActionNode(this, DrawWeapon),
+                                        new BTActionNode(this, PrepareAttack),
+                                        new BTActionNode(this, Wait),
+                                        new BTActionNode(this, Attack)
+                                    }),
                                 }),
-                                new BTActionNode(this, Chase)
+                                new BTSelector(this, new List<BTNode>()
+                                {
+                                    new BTActionNode(this, IsCloseEnoughToAttack),
+                                    new BTActionNode(this, Chase),
+                                }),
                             })
                         }),
                         new BTActionNode(this, Flee)
@@ -142,8 +153,6 @@ public class BTBrain : MonoBehaviour
         // AI
         entry.Evaluate();
         cachedNeighbors = GetNearbyFlockMembers();
-
-        
     }
 
     private List<Transform> GetNearbyFlockMembers()
@@ -214,6 +223,34 @@ public class BTBrain : MonoBehaviour
         return NodeStates.FAILURE;
     }
 
+    NodeStates DrawWeapon()
+    {
+        currentBTNode = "DrawWeapon";
+        // Debug.Log(currentBTNode);
+        // Draw weapon with highest damage
+        weaponManager.SelectBestWeapon();
+        return NodeStates.SUCCESS;
+    }
+
+    NodeStates PrepareAttack()
+    {
+        currentBTNode = "PrepareAttack";
+        // Debug.Log(currentBTNode);
+        Item item = weaponManager.GetSelectedItem();
+        if(item.Equals(typeof(Weapon)))
+        {
+            Weapon w = (Weapon)item;
+            if(w.WeaponType == WeaponType.SWORD)
+            {
+                KatanaDirectional kd = weaponManager.GetActiveGameObject().GetComponent<KatanaDirectional>();
+                // Pick random direction
+                if(kd)
+                    kd.SetDirection((Direction9)Random.Range(0,9)); // Random 1..8
+            }
+        }
+        return NodeStates.SUCCESS;
+    }
+    
     NodeStates Attack()
     {
         currentBTNode = "Attack";
@@ -244,9 +281,13 @@ public class BTBrain : MonoBehaviour
     NodeStates Wait()
     {
         currentBTNode = "Wait";
-        float startWait = (float)blackboard["Wait Start Time"];
+        if((bool)blackboard["Wait Started"] == false)
+        {
+            blackboard["Wait Start Time"] = Time.time;
+            blackboard["Wait Started"] = true;
+        }
 
-        if(Time.time - startWait > timeToWait)
+        if(Time.time - (float)blackboard["Wait Start Time"] > timeToWait)
         {
             blackboard["Wait Started"] = false;
             return NodeStates.SUCCESS;
