@@ -46,18 +46,15 @@ public class WeaponManager : MonoBehaviour
     void Start()
     {
         // Prepare weapon objects
-        _melee.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _knife.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _sword.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _staff.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _kanabo.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _shuriken.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _big_shuriken.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _bomb.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _bow.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _item.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _itemBowl.GetComponent<WeaponObject>().SetWeaponManager(this);
-        _equipment.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_melee)_melee.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_knife)_knife.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_sword)_sword.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_staff)_staff.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_kanabo)_kanabo.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_shuriken)_shuriken.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_big_shuriken)_big_shuriken.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_bomb)_bomb.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_bow)_bow.GetComponent<WeaponObject>().SetWeaponManager(this);
         
         SelectItem();
 
