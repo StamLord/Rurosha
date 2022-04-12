@@ -9,15 +9,16 @@ public class Hurtbox : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool _debug;
-    [SerializeField] private Material _material;
+    [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private Color _baseColor;
     [SerializeField] private Color _hitColor;
     [SerializeField] private float _colorFadeStartDuration = .1f;
     [SerializeField] private float _colorFadeEndDuration = .5f;
+    private Material _material;
     
     public void Start()
     {
-        _material = GetComponentInChildren<MeshRenderer>()?.material;
+        _material = _meshRenderer?.material;
         if(_material) _baseColor = _material.color;
     }
 
