@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class AwarenessAgent : MonoBehaviour
 {
-    [SerializeField] private Transform target;
-
     [Header("Vision")]
     [SerializeField] private Transform eyeLevel;
     [SerializeField] private float lookRadius = 10f;
-    [SerializeField] private float visionAngle = 45f;
+    [SerializeField] private float horizontalVisionAngle = 45f;
+    [SerializeField] private float verticalVisionAngle = 20f;
     [SerializeField] private LayerMask visionMask;
     [SerializeField] private LayerMask blockVisionMask;
     [SerializeField] private List<StealthAgent> visibleAgents = new List<StealthAgent>();
@@ -129,18 +128,36 @@ public class AwarenessAgent : MonoBehaviour
         // Example 1: lookRadius is 10 and visibilit is 1 - Player will be visibile from 10 meters away
         // Example 2: lookRadius is 10 and visibilit is .7 - Player will be visibile from 7 meters away
         if(direction.magnitude > lookRadius * sAgent.Visibility) return false;
+        
+        // Check angle
 
-        float angle = Vector3.Angle(transform.forward, direction);
-        if(angle <= visionAngle)
-        {    
-            // Check line of sight
-            RaycastHit hit;
-            Debug.DrawRay(eyeLevel.position, direction, Color.yellow);
-            bool blocked = Physics.Raycast(eyeLevel.position, direction, out hit, direction.magnitude, blockVisionMask);
-            return (blocked == false);
-        }
+        // Simple angle used for both vertical and horizontal view
+        // float angle = Vector3.Angle(transform.forward, direction);
+        // if(angle > visionAngle)
+        //     return false;
 
-        return false;
+
+        // Split angles for vertical / horizontal
+
+        // Get angle around X axis - Angle between direction to target and a "flattned" direction with y component = 0
+        Vector3 flatYDir = new Vector3(direction.x, 0, direction.z);
+        float angleX = Vector3.Angle(direction, flatYDir);
+        
+        if(angleX > verticalVisionAngle) return false;
+
+        // Get angle around Y axis - We flatten both us and target on y axis ( y = 0) and get angle between them
+        Vector3 tPos = new Vector3(sAgent.transform.position.x, 0, sAgent.transform.position.z);
+        Vector3 lPos = new Vector3(transform.position.x, 0, transform.position.z);
+        Vector3 dir2 = tPos - lPos;
+        float angleY = Vector3.Angle(transform.forward, dir2);
+
+        if(angleY > horizontalVisionAngle) return false;
+
+        // Check line of sight
+        RaycastHit hit;
+        Debug.DrawRay(eyeLevel.position, direction, Color.yellow);
+        bool blocked = Physics.Raycast(eyeLevel.position, direction, out hit, direction.magnitude, blockVisionMask);
+        return (blocked == false);
     }
 
     private void AddAlmostVisible(StealthAgent sAgent)
@@ -182,7 +199,7 @@ public class AwarenessAgent : MonoBehaviour
         if(debugView == false || debugLight == null) return;
 
         debugLight.range = lookRadius;
-        debugLight.innerSpotAngle = debugLight.spotAngle = visionAngle * 2;
+        debugLight.innerSpotAngle = debugLight.spotAngle = verticalVisionAngle * 2;
 
         if(VisibleAgents.Count > 0)
             debugLight.color = debugLightDetectedColor;
@@ -215,10 +232,10 @@ public class AwarenessAgent : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, lookRadius);
 
         Gizmos.color = coneColor;
-        Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(visionAngle, Vector3.up) * eyeLevel.forward * lookRadius);
-        Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(-visionAngle, Vector3.up) * eyeLevel.forward * lookRadius);
-        Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(visionAngle, Vector3.right) * eyeLevel.forward * lookRadius);
-        Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(-visionAngle, Vector3.right) * eyeLevel.forward * lookRadius);
+        Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(horizontalVisionAngle, transform.up) * eyeLevel.forward * lookRadius);
+        Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(-horizontalVisionAngle, transform.up) * eyeLevel.forward * lookRadius);
+        Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(verticalVisionAngle, transform.right) * eyeLevel.forward * lookRadius);
+        Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(-verticalVisionAngle, transform.right) * eyeLevel.forward * lookRadius);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + eyeLevel.forward);
