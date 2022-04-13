@@ -9,7 +9,7 @@ public class Test : MonoBehaviour
     void Start()
     {
         Plane plane = new Plane(Vector3.up, Vector3.zero);
-        GameObject[] slices = Assets.Scripts.Slicer.Slice(plane, toSlice);
+        GameObject[] slices = Slicer.Slice(plane, toSlice);
         Destroy(toSlice);
         Rigidbody rigidbody = slices[1].GetComponent<Rigidbody>();
         rigidbody.AddForce(Vector3.up, ForceMode.Impulse);

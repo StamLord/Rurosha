@@ -266,7 +266,7 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
 
     private IEnumerator SliceCoroutine(Plane plane, GameObject toSlice)
     {
-        GameObject[] slices = Assets.Scripts.Slicer.Slice(plane, toSlice);
+        GameObject[] slices = Slicer.Slice(plane, toSlice);
 
         // Add new sliced objects to a list of objects ignored in any further collisions
         foreach(GameObject s in slices)

@@ -130,10 +130,6 @@ public class Melee : WeaponObject, IHitboxResponder
         //Gain Exp
         charStats.IncreaseAttributeExp("strength", strengthExpGain);
         
-        //Collision Effects
-        PhysicalMaterial pMat = collider.GetComponent<PhysicalMaterial>();
-        if(pMat) pMat.CollideEffect(collider.ClosestPoint(transform.position), hardDamage);
-        
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         if(hurtbox) hurtbox.Hit(softDamage, hardDamage, DamageType.Blunt);

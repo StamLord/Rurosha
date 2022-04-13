@@ -12,9 +12,6 @@ public class NPCEntity : Usable
 
     [SerializeField] private float maxTalkingDistance = 2f;
 
-
-    [SerializeField] private CharacterStats stats;
-
     void Start()
     {
         dialogue = new DialogueNPC(npcName);

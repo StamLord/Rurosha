@@ -33,7 +33,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     [SerializeField] private bool pickupable;
     
     [Tooltip("Will enable this pickup when stopped")]
-    [SerializeField] private Usable pickup;
+    [SerializeField] private GameObject pickup;
 
     [Header ("Collider")]
     [Tooltip("Will enable this collider when stopped")]
@@ -43,7 +43,6 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     void Start()
     {
         lastPosition = transform.position;
-        if(pickupable) pickup = GetComponent<Usable>();
 
         for(int i=0; i < hitbox.Length; i++)
         {
@@ -89,7 +88,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
         transform.SetParent(hitDetected.transform);
         
         if(pickupable && pickup)
-            pickup.enabled = true;
+            pickup.SetActive(true);
         
         if(collider)
             collider.enabled = true;
