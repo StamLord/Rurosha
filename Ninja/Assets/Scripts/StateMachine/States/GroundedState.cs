@@ -111,24 +111,33 @@ public class GroundedState : PlayerState
         if (inputState.Kick.State == VButtonState.PRESSED) 
             GetComponent<Kick>().ActivateKick();
 
-        // Jump
-        if (inputState.Jump.Pressed) 
+        // Switch to AirSTate
+        if (isGrounded == false) 
         {
-            if(isGrounded)
-                _stateMachine.SwitchState(2);
+            _stateMachine.SwitchState(5);
+            return;
+        }
+
+        // Jump
+        if (inputState.Jump.Pressed && isGrounded) 
+        {
+            _stateMachine.SwitchState(2);
+            return;
         }
 
         // Crouch
         if (inputState.Crouch.State == VButtonState.PRESSED) 
+        {
             _stateMachine.SwitchState(1);
-
-        // Switch to AirSTate
-        if (isGrounded == false) 
-            _stateMachine.SwitchState(5);
+            return;
+        }
         
         // Switch to ClimbState
         if(isClimbing)
+        {
             _stateMachine.SwitchState(3);
+            return;
+        }
 
 	    // We apply gravity manually for more tuning control
         if(gravityOn)
