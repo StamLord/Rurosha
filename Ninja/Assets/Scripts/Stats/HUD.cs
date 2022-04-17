@@ -36,7 +36,7 @@ public class HUD : MonoBehaviour
         if(potentialStaminaBar)
         {
             playerStats.PotentialStaminaUpdateEvent += UpdatePotentialStaminaBar;
-            potentialStaminaBar.fillAmount = playerStats.potentialStamina / playerStats.MaxStamina;
+            potentialStaminaBar.fillAmount = playerStats.PotentialStamina / playerStats.MaxStamina;
         }
     }
 

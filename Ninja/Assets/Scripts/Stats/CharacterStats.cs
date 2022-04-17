@@ -99,14 +99,14 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         private set 
         { 
             float oldValue = _stamina;
-            _stamina = Mathf.Clamp(value, 0, potentialStamina); 
+            _stamina = Mathf.Clamp(value, 0, PotentialStamina); 
             
             if (StaminaUpdateEvent != null && oldValue != _stamina)
                 StaminaUpdateEvent(_stamina / MaxStamina); 
         }
     }
 
-    public float potentialStamina 
+    public float PotentialStamina 
     {
         get { return _potentialStamina; }  
         private set 
@@ -174,6 +174,47 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
                 "setattribute <attribute> <level>", 
                 (string[] parameters) => {
                     bool success = SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
+                    if(success)
+                        return "Set " + parameters[0] + ": " + parameters[1];
+                    return "Unknown attribute: " + (parameters[0]);
+                }));
+
+            DebugCommandDatabase.AddCommand(new DebugCommand(
+                "set", 
+                "Sets attribute to desired value", 
+                "set <attribute> <level>", 
+                (string[] parameters) => {
+                    bool success;
+
+                    switch(parameters[0])
+                    {
+                    case "hp":
+                        Health = Int32.Parse(parameters[1]);
+                        success = true;
+                        break;
+                    case "php":
+                        PotentialHealth = Int32.Parse(parameters[1]);
+                        success = true;
+                        break;
+                    case "st":
+                        Stamina = Int32.Parse(parameters[1]);
+                        success = true;
+                        break;
+                    case "pst":
+                        PotentialStamina = Int32.Parse(parameters[1]);
+                        success = true;
+                        break;
+                    default:
+                        // Parse short attribute names
+                        string par = parameters[0];
+                        if(par == "str") par = "strength";
+                        if(par == "agi") par = "agility";
+                        if(par == "dex") par = "dexterity";
+                        if(par == "min" || par == "mnd") par = "mind";
+                        success = SetAttributeLevel(par, Int32.Parse(parameters[1]));
+                        break;
+                    }
+                    
                     if(success)
                         return "Set " + parameters[0] + ": " + parameters[1];
                     return "Unknown attribute: " + (parameters[0]);
@@ -401,7 +442,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             return;
         }
             
-        potentialStamina += amount;
+        PotentialStamina += amount;
     }
 
     public void SubPotentialStamina(float amount)
@@ -412,7 +453,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             return;
         }
             
-        potentialStamina -= amount;
+        PotentialStamina -= amount;
         _potentialStaminaLastDeplete = Time.time;
     }
 
@@ -424,7 +465,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             return false;
         }
 
-        if(potentialStamina < amount)
+        if(PotentialStamina < amount)
             return false;
 
         SubPotentialStamina(amount);
