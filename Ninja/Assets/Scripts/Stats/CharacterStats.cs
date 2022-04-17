@@ -436,8 +436,18 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     public bool GetHit(int softDamage, int hardDamage, DamageType damageType, Direction9 direction)
     {
         // Check if guarding in right direction
-        if(guardOn && guardDirection == direction)
-            return false;
+        if(guardOn)
+        {
+            if(direction == Direction9.UP && guardDirection == Direction9.UP ||
+                direction == Direction9.DOWN && guardDirection == Direction9.DOWN ||
+                direction == Direction9.LEFT && guardDirection == Direction9.RIGHT ||
+                direction == Direction9.RIGHT && guardDirection == Direction9.LEFT ||
+                direction == Direction9.DOWNRIGHT && guardDirection == Direction9.DOWNLEFT ||
+                direction == Direction9.DOWNLEFT && guardDirection == Direction9.DOWNRIGHT ||
+                direction == Direction9.UPLEFT && guardDirection == Direction9.UPRIGHT ||
+                direction == Direction9.UPRIGHT && guardDirection == Direction9.UPLEFT)
+                return false;
+        }
         
         Debug.Log(gameObject.name + " was hit for " + softDamage + " / " + hardDamage + " " + damageType + " damage");
         SubHealth(softDamage);
