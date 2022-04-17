@@ -195,7 +195,7 @@ public class WeaponManager : MonoBehaviour
         }
         else // Item
         {
-            if(items[selected].itemName == ("Rice Bowl") || items[selected].itemName == ("Ramen Bowl"))
+            if(items[selected].itemName == ("Rice") || items[selected].itemName == ("Ramen"))
             {
                 ActivateObject(_itemBowl);
                 _itemBowl?.GetComponent<HeldItem>().SetItem(items[selected]);
