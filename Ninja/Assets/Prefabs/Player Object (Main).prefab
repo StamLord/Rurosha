@@ -602,7 +602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 0}
   _debug: 0
-  _material: {fileID: 0}
+  _meshRenderer: {fileID: 0}
   _baseColor: {r: 0, g: 0, b: 0, a: 0}
   _hitColor: {r: 0, g: 0, b: 0, a: 0}
   _colorFadeStartDuration: 0.1
@@ -927,7 +927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 0}
   _debug: 0
-  _material: {fileID: 0}
+  _meshRenderer: {fileID: 0}
   _baseColor: {r: 0, g: 0, b: 0, a: 0}
   _hitColor: {r: 0, g: 0, b: 0, a: 0}
   _colorFadeStartDuration: 0.1
@@ -1609,7 +1609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 0}
   _debug: 0
-  _material: {fileID: 0}
+  _meshRenderer: {fileID: 0}
   _baseColor: {r: 0, g: 0, b: 0, a: 0}
   _hitColor: {r: 0, g: 0, b: 0, a: 0}
   _colorFadeStartDuration: 0.1
@@ -1782,7 +1782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 0}
   _debug: 0
-  _material: {fileID: 0}
+  _meshRenderer: {fileID: 0}
   _baseColor: {r: 0, g: 0, b: 0, a: 0}
   _hitColor: {r: 0, g: 0, b: 0, a: 0}
   _colorFadeStartDuration: 0.1
@@ -1899,7 +1899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 0}
   _debug: 0
-  _material: {fileID: 0}
+  _meshRenderer: {fileID: 0}
   _baseColor: {r: 0, g: 0, b: 0, a: 0}
   _hitColor: {r: 0, g: 0, b: 0, a: 0}
   _colorFadeStartDuration: 0.1
@@ -2320,6 +2320,8 @@ GameObject:
   - component: {fileID: 1496715723}
   - component: {fileID: 1496715738}
   - component: {fileID: 2138504049}
+  - component: {fileID: 2138504050}
+  - component: {fileID: 2138504051}
   m_Layer: 9
   m_Name: Player Object (Main)
   m_TagString: Untagged
@@ -2486,16 +2488,16 @@ MonoBehaviour:
   HealthRecovery:
     attributeName: Strength
     values:
+    - 2
+    - 4
+    - 6
+    - 8
     - 10
-    - 15
+    - 12
+    - 14
+    - 16
+    - 18
     - 20
-    - 25
-    - 30
-    - 35
-    - 40
-    - 45
-    - 50
-    - 55
   _healthRecoveryStart: 5
   _healthLastDeplete: 0
   PotentialHealthRecovery:
@@ -2612,7 +2614,7 @@ MonoBehaviour:
   _states:
   - {fileID: 8253494154602247536}
   - {fileID: 4243153703830139676}
-  - {fileID: 2138504049}
+  - {fileID: 5416249937546849817}
   - {fileID: 1526170146151346383}
   - {fileID: 923813910}
   - {fileID: 5834352142209536019}
@@ -3021,6 +3023,135 @@ MonoBehaviour:
   wallJumpMinimumSlope: -0.1
   debugView: 0
   rigidbody: {fileID: 6944390856915565340}
+--- !u!82 &2138504050
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6944390856915565342}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &2138504051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6944390856915565342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52facc05b07a1a64d8f0ed1f5f3516f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 0
+  playerTransform: {fileID: 6944390856915565329}
+  t: {fileID: 0}
+  rigidbody: {fileID: 6944390856915565340}
+  source: {fileID: 2138504050}
+  dirtStep: []
+  grassStep:
+  - {fileID: 8300000, guid: 018b09f63d8223c41b6ce2ce93a593ff, type: 3}
+  - {fileID: 8300000, guid: 63971a95c189d2b4fb2527b9ca8929d5, type: 3}
+  - {fileID: 8300000, guid: 0187d2818ce26f943a30cad3fc2b97e7, type: 3}
+  - {fileID: 8300000, guid: f84187193d5b2de4db79b1d35f5619cf, type: 3}
+  - {fileID: 8300000, guid: e821db6682eb63047849def91c3d49dd, type: 3}
+  leavesStep:
+  - {fileID: 8300000, guid: d007b24ba7774144785133de845dd4a0, type: 3}
+  - {fileID: 8300000, guid: ef71c2e8da3213d43a769787abcb8743, type: 3}
+  - {fileID: 8300000, guid: 84799428c0ca97b428353ed939046773, type: 3}
+  - {fileID: 8300000, guid: 3476e1766a007e140990aca4389d4e5a, type: 3}
+  stepCheckEvery: 0.8
+  stepCheckEveryMax: 0.2
+  lastCheck: 0
+  defaultTexture: Grass
 --- !u!1 &8048313138737219164
 GameObject:
   m_ObjectHideFlags: 0
@@ -4559,6 +4690,11 @@ PrefabInstance:
       propertyPath: inputState
       value: 
       objectReference: {fileID: 1496715723}
+    - target: {fileID: 8206658476288867037, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8206658476612405705, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: charStats
@@ -4569,6 +4705,11 @@ PrefabInstance:
       propertyPath: charStats
       value: 
       objectReference: {fileID: 6944390856915565334}
+    - target: {fileID: 8206658476797616788, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: hitMask.m_Bits
+      value: 65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
 --- !u!4 &113064530 stripped
