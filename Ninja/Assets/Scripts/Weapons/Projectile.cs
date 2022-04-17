@@ -54,27 +54,20 @@ public class Projectile : MonoBehaviour, IHitboxResponder
 
     void Update()
     {
-        if(stopped)
-        {
-            for(int i=0; i < hitbox.Length; i++)
-            {
-                if(hitbox[i].GetColliding())
-                    hitbox[i].StopColliding();
-            }
-
-            return;
-        }
+        if(stopped) return;
         
+        // Move forward
         transform.position += transform.forward * speed * Time.deltaTime;
         
+        // Rotate visual object
         if(visual) 
         {
             //visual.transform.Rotate(visualRotationPerSecond.x * Time.deltaTime, 0, 0, Space.Self);
-
             visual.transform.RotateAround(visual.transform.right, visualRotationPerSecond.x * Time.deltaTime);
             visual.transform.RotateAround(transform.forward, visualRotationPerSecond.z * Time.deltaTime);
         }
 
+        // Check collision
         if (CollisionCheck())
             StopProjectile();
 
@@ -84,14 +77,25 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     private void StopProjectile()
     {
         stopped = true;
+
+        // Set correct position and hierarchy
         transform.position = hitDetected.point + transform.forward * penetration;
         transform.SetParent(hitDetected.transform);
         
+        // Activate pickup object
         if(pickupable && pickup)
             pickup.SetActive(true);
         
+        // Enable stationary collider
         if(collider)
             collider.enabled = true;
+
+        // Turn off hitboxes
+        for(int i=0; i < hitbox.Length; i++)
+        {
+            if(hitbox[i].GetColliding())
+                hitbox[i].StopColliding();
+        }
     }
 
     // Make sure we don't fly through colliders due to speed
