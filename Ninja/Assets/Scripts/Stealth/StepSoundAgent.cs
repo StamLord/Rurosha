@@ -4,25 +4,41 @@ using UnityEngine;
 
 public class StepSoundAgent : MonoBehaviour
 {
-    public Transform playerTransform;
-	public Terrain t;
+    [Header("References")]
+    [SerializeField] private bool isActive;
+    [SerializeField] private Transform playerTransform;
+	[SerializeField] private Terrain t;
+    [SerializeField] private new Rigidbody rigidbody;
+    [SerializeField] private AudioSource source;
 
-    public AudioSource source;
+    [Space(20)]
 
-    public AudioClip[] dirtStep;
-    public AudioClip[] grassStep;
-    public AudioClip[] leavesStep;
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip[] dirtStep;
+    [SerializeField] private AudioClip[] grassStep;
+    [SerializeField] private AudioClip[] leavesStep;
 
-    public Rigidbody rigidbody;
-    public GroundedState groundedState;
-    public float stepCheckEvery = .8f;
-    public float stepCheckEveryMax = .2f;
-    float lastCheck;
+    [Space(20)]
 
-    void Update()
+    [Header("Step Interval")]
+    [SerializeField] private float stepCheckEvery = .8f;
+    [SerializeField] private float stepCheckEveryMax = .2f;
+    [SerializeField] private float lastCheck;
+
+    [Space(20)]
+
+    [Header("Default Sound")]
+    [SerializeField]private string defaultTexture = "Grass";
+
+    public void SetActive(bool active)
+    {
+        isActive = active;
+    }
+
+    private void Update()
     {
         float stepInterval = Mathf.Lerp(stepCheckEvery, stepCheckEveryMax, rigidbody.velocity.magnitude / 15f);
-        if(Time.time - lastCheck > stepInterval && rigidbody.velocity.magnitude > 1f && groundedState.IsActive)
+        if(Time.time - lastCheck > stepInterval && rigidbody.velocity.magnitude > 1f && isActive)
         {
             string tex = GetHighestTextureOnTerrain();
             switch(tex)
@@ -47,8 +63,10 @@ public class StepSoundAgent : MonoBehaviour
         }
     }
 
-    string GetHighestTextureOnTerrain()
+    private string GetHighestTextureOnTerrain()
     {
+        if(t == null) return defaultTexture;
+
         float[] values = TerrainChecker.SampleTextures(TerrainChecker.ConvertPosition(playerTransform.position, t), t);
         
         float highestValue = -1f;
