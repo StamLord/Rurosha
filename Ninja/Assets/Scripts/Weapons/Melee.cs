@@ -45,8 +45,9 @@ public class Melee : WeaponObject, IHitboxResponder
     void Update()
     {
         Input();
-        if(Time.time - comboLastAttackTime >= comboResetTime ||
-            currentCombo.Count >= maxComboLength)    
+
+        // Reset combo when enough time since last attack passes
+        if(Time.time - comboLastAttackTime >= comboResetTime)    
             ResetCombo();
     }
 
@@ -106,12 +107,12 @@ public class Melee : WeaponObject, IHitboxResponder
     {
         // Turn list to string for easy comparison.
         // Example: ["left", "left", "right"] => "left,left,right"
-        string current = string.Join(",", currentCombo.ToArray());
+        //string current = string.Join(",", currentCombo.ToArray());
         
         // Search for a combo that matches our current set of attacks
         foreach(Combo c in combos)
         {
-            if(c.combo == current)
+            if(ComboMatches(currentCombo.ToArray(), c.combo))
             {
                 // Transition to animation
                 animator.CrossFade(c.animationState, 0.05f);
@@ -120,6 +121,25 @@ public class Melee : WeaponObject, IHitboxResponder
             }
         }
         return false;
+    }
+
+    private bool ComboMatches(string[] attacks, string combo)
+    {
+        // Turn string of combo to array
+        string[] comboArr = combo.Split(',');
+        
+        // If combo is larger than number of attacks, we don't match it
+        if(comboArr.Length > attacks.Length) return false;
+
+        // Loop over combo
+        // If all attacks performed match combo (we check from last to first), return true
+        for (var i = 0; i < comboArr.Length; i++)
+        {
+            if(comboArr[comboArr.Length - 1 - i] != attacks[attacks.Length - 1 - i])
+                return false;
+        }
+
+        return true;
     }
 
     public void CollisionWith(Collider collider, Hitbox hitbox)
