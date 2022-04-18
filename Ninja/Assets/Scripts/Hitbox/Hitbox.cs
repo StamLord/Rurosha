@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Hitbox : MonoBehaviour
 {
+    [Header("Hitbox Settings")]
     [SerializeField] private Vector3 size = new Vector3(1,1,1);
     [SerializeField] private Vector3 offset = Vector3.zero;
     [SerializeField] private LayerMask hitMask;
     [SerializeField] private bool isActive;
+
+    [Header("Debug Info")]
     [SerializeField] private bool lastActiveState;
     [SerializeField] private IHitboxResponder _responder;
 
@@ -15,10 +18,15 @@ public class Hitbox : MonoBehaviour
 
     private bool activeForOneFrame = false;
 
+    [SerializeField] private Vector3 lastPosition;
+    [SerializeField] private Vector3 velocity;
+    public Vector3 Velocity {get {return velocity;}}
+
     public void StartColliding(bool activeForOneFrame = false)
     {
         isActive = true;    
         this.activeForOneFrame = activeForOneFrame;
+        lastPosition = transform.position + offset;
     }
 
     public void StopColliding()
@@ -36,7 +44,7 @@ public class Hitbox : MonoBehaviour
         _responder = responder;
     }
 
-    void Update()
+    private void Update()
     {
         if(lastActiveState != isActive)
         {    
@@ -73,9 +81,14 @@ public class Hitbox : MonoBehaviour
         }
 
         lastActiveState = isActive;
+        
+        // Calculate Velocity
+        velocity = transform.position + offset - lastPosition;
+        // Track position for next frame velocity calculations
+        lastPosition = transform.position + offset;
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Color red = Color.red;
 

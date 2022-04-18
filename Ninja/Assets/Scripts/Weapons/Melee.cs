@@ -156,7 +156,7 @@ public class Melee : WeaponObject, IHitboxResponder
 
         //Physics
         Rigidbody rb = collider.GetComponent<Rigidbody>();
-        if(rb) rb.AddForce(transform.forward * fistForce, ForceMode.Impulse);
+        if(rb) rb.AddForce(hitbox.Velocity * fistForce, ForceMode.Impulse);
     }
 
     public void UpdateColliderState(bool state)

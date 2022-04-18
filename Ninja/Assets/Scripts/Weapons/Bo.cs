@@ -23,6 +23,9 @@ public class Bo : WeaponObject, IHitboxResponder
     [SerializeField] private Direction9 lastAttackDirection;
     [SerializeField] private Direction9 lastComboAttackDirection;
 
+    [Header("Physics")]
+    [SerializeField] private float pushForce = 20f;
+
     private void Start()
     {
         foreach(Hitbox h in hitboxes)
@@ -81,6 +84,10 @@ public class Bo : WeaponObject, IHitboxResponder
             // Gain Exp
             charStats.IncreaseAttributeExp("strength", strengthExpGain);
         }
+
+        // Physics
+        Rigidbody rb = collider.GetComponent<Rigidbody>();
+        if(rb) rb.AddForce(hitbox.Velocity * pushForce, ForceMode.Impulse);
     }
 
     private void AddCombo(Direction9 hitDirection)
