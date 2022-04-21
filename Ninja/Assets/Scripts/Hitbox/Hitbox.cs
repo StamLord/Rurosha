@@ -48,7 +48,7 @@ public class Hitbox : MonoBehaviour
     {
         if(lastActiveState != isActive)
         {    
-            _responder.UpdateColliderState(isActive);
+            if(_responder != null) _responder.UpdateColliderState(isActive);
             if(isActive == false)
                 collided.Clear();
         }
