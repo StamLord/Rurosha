@@ -28,6 +28,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private GameObject _shuriken;
     [SerializeField] private GameObject _big_shuriken;
     [SerializeField] private GameObject _bomb;
+    [SerializeField] private GameObject _makibishi;
     [SerializeField] private GameObject _bow;
     [SerializeField] private GameObject _item;
     [SerializeField] private GameObject _itemBowl;
@@ -54,6 +55,7 @@ public class WeaponManager : MonoBehaviour
         if(_shuriken)_shuriken.GetComponent<WeaponObject>().SetWeaponManager(this);
         if(_big_shuriken)_big_shuriken.GetComponent<WeaponObject>().SetWeaponManager(this);
         if(_bomb)_bomb.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_makibishi)_makibishi.GetComponent<WeaponObject>().SetWeaponManager(this);
         if(_bow)_bow.GetComponent<WeaponObject>().SetWeaponManager(this);
         
         SelectItem();
@@ -182,6 +184,9 @@ public class WeaponManager : MonoBehaviour
                     break;
                 case WeaponType.BOMB:
                     ActivateObject(_bomb);
+                    break;
+                case WeaponType.MAKIBISHI:
+                    ActivateObject(_makibishi);
                     break;
                 case WeaponType.BOW:
                     break;
