@@ -330,9 +330,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d46cbc4cc1b074c8796ee80959ef0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumVelocity: 0.1
   rigidbody: {fileID: 5373187035755985757}
   hitbox: {fileID: 5373187037787530448}
+  maxVelocityActive: 1
+  minVelocityHurt: 0.1
   softDamage: 2
   hardDamage: 0
   damageType: 2
