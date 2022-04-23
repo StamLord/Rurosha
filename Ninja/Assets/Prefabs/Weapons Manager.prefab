@@ -92,6 +92,7 @@ Transform:
   - {fileID: 8206658475898245644}
   - {fileID: 8206658475186318427}
   - {fileID: 8206658476288867026}
+  - {fileID: 1980210204529279590}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -108,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStats: {fileID: 0}
-  weaponsHolder: {fileID: 0}
+  _inputState: {fileID: 0}
   items:
   - {fileID: 0}
   - {fileID: 0}
@@ -130,11 +131,11 @@ MonoBehaviour:
   _shuriken: {fileID: 1278044656473196556}
   _big_shuriken: {fileID: 8206658476096399398}
   _bomb: {fileID: 8206658475898245647}
-  _bow: {fileID: 0}
+  _makibishi: {fileID: 0}
+  _bow: {fileID: 3938885920157272676}
   _item: {fileID: 6750107000280842123}
   _itemBowl: {fileID: 8755732813976696161}
   _equipment: {fileID: 1176702670223031955}
-  _lastType: 0
   _lastActive: {fileID: 0}
 --- !u!1 &1278044654533710090
 GameObject:
@@ -203,9 +204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e311df4744213479a954cd314a231e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   animator: {fileID: 0}
-  inputState: {fileID: 0}
-  charStats: {fileID: 0}
   player: {fileID: 0}
   rigidPlayer: {fileID: 0}
   staticKunai: {fileID: 1278044656261284948}
@@ -522,6 +522,8 @@ MonoBehaviour:
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &1278044655311501483
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +681,8 @@ MonoBehaviour:
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!54 &8206658475096891583
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -985,6 +989,8 @@ MonoBehaviour:
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &1278044656508673906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,9 +1056,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913a44b78ecb020479e048db96a34219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   animator: {fileID: 0}
-  inputState: {fileID: 0}
-  charStats: {fileID: 0}
   hitbox: {fileID: 1278044655345775746}
   nextAttack: 0
   lastAttack: 0
@@ -1211,9 +1216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721aacab1207991409202deb59eecf9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   animator: {fileID: 0}
-  inputState: {fileID: 0}
-  charStats: {fileID: 0}
   hitboxes:
   - {fileID: 8206658476890964085}
   - {fileID: 8206658475404135320}
@@ -1257,6 +1261,120 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &3745636912101184823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272425914978436127}
+  m_Layer: 7
+  m_Name: Visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1272425914978436127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745636912101184823}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5280966257999277372}
+  m_Father: {fileID: 1980210204529279590}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3938885920157272676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1980210204529279590}
+  - component: {fileID: 5919281775184429634}
+  m_Layer: 7
+  m_Name: Bow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1980210204529279590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3938885920157272676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1272425914978436127}
+  m_Father: {fileID: 1278044654527455677}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5919281775184429634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3938885920157272676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88eebf9039fcec54b8aef748eec0cc9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  animator: {fileID: 0}
+  projectile: {fileID: 0}
+  camera: {fileID: 0}
+  weaponManager: {fileID: 0}
+  origin: {fileID: 5280966257999277372}
+--- !u!1 &4250701373386830488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5280966257999277372}
+  m_Layer: 7
+  m_Name: Arrow Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5280966257999277372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4250701373386830488}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1272425914978436127}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4651238011197458456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,9 +1708,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248580df43889e846b168c79821e1d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   animator: {fileID: 0}
-  inputState: {fileID: 0}
-  charStats: {fileID: 0}
   projectile: {fileID: 5373187035755985752, guid: 39a84fab8d09ede4e8d5d3afd219d802,
     type: 3}
   camera: {fileID: 0}
@@ -2018,6 +2135,8 @@ MonoBehaviour:
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &8206658475554353080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,9 +2441,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248580df43889e846b168c79821e1d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   animator: {fileID: 0}
-  inputState: {fileID: 0}
-  charStats: {fileID: 0}
   projectile: {fileID: 5373187035755985752, guid: d05acc45e11e1a44abedb3d181995c1d,
     type: 3}
   camera: {fileID: 0}
@@ -2634,6 +2752,8 @@ MonoBehaviour:
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!54 &8206658476241470812
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2810,7 +2930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8206658476288867026
 Transform:
   m_ObjectHideFlags: 0
@@ -2877,9 +2997,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e2251b671e4784e90d68c835f9df2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   animator: {fileID: 8206658476288867024}
-  inputState: {fileID: 0}
-  charStats: {fileID: 0}
   direction: 0
   threshold: 0.5
   mouseInput: {x: 0, y: 0}
@@ -4078,9 +4197,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913a44b78ecb020479e048db96a34219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   animator: {fileID: 0}
-  inputState: {fileID: 0}
-  charStats: {fileID: 0}
   hitbox: {fileID: 8206658476241470813}
   nextAttack: 0
   lastAttack: 0
@@ -4141,9 +4259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f13b9cce89d9f488429f23f2f01017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   animator: {fileID: 0}
-  inputState: {fileID: 0}
-  charStats: {fileID: 0}
   hitbox: {fileID: 8206658476241470813}
   nextAttack: 0
   lastAttack: 0
@@ -4257,6 +4374,8 @@ MonoBehaviour:
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!54 &8206658476797616791
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4369,6 +4488,8 @@ MonoBehaviour:
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &8206658477076587338
 GameObject:
   m_ObjectHideFlags: 0
@@ -5542,9 +5663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c83b5622923544cad260c5972ca7b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   animator: {fileID: 1278044654590407813}
-  inputState: {fileID: 0}
-  charStats: {fileID: 0}
   prefab: {fileID: 2728008844794060368, guid: c5ddf0f291f970243a62ef9af7d91317, type: 3}
   _weaponManager: {fileID: 1278044654527455676}
   burstAmount: 3
@@ -5953,9 +6073,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c83b5622923544cad260c5972ca7b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   animator: {fileID: 8206658476176231648}
-  inputState: {fileID: 0}
-  charStats: {fileID: 0}
   prefab: {fileID: 2728008844794060368, guid: 8fc942549c3019d45a08471b1d2478a2, type: 3}
   _weaponManager: {fileID: 1278044654527455676}
   burstAmount: 3

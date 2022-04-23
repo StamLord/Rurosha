@@ -189,6 +189,7 @@ public class WeaponManager : MonoBehaviour
                     ActivateObject(_makibishi);
                     break;
                 case WeaponType.BOW:
+                    ActivateObject(_bow);
                     break;
             }
         }

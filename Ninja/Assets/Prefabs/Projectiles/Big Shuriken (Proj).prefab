@@ -48,10 +48,12 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: -0.4}
   hitMask:
     serializedVersion: 2
-    m_Bits: 2625
+    m_Bits: 64
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &1987326534347629254
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,10 +102,12 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0.4}
   hitMask:
     serializedVersion: 2
-    m_Bits: 2625
+    m_Bits: 64
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &2728008844794060368
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,8 +157,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de228584dad30f459624439cc059add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  softDamage: 5
-  hardDamage: 5
+  softDamage: 30
+  hardDamage: 20
+  pushForce: 5
+  gravity: 1
+  useGlobalGravity: 1
+  customGravity: {x: 0, y: -4, z: 0}
   visualRotationPerSecond: {x: 10, y: 0, z: 1.5}
   parentRotationPerSecond: {x: 0, y: 0, z: 0}
   visual: {fileID: 2728008844794060370}
@@ -173,9 +181,9 @@ MonoBehaviour:
   - {fileID: 4357020292721712329}
   - {fileID: 6145201688679193751}
   - {fileID: 8731462147577538745}
-  pickupable: 1
-  pickup: {fileID: 0}
   collider: {fileID: 6861394814472067686}
+  objectsToActivate: []
+  objectsToDeactivate: []
   objectsCollided: []
 --- !u!114 &1116292965985431855
 MonoBehaviour:
@@ -308,10 +316,12 @@ MonoBehaviour:
   offset: {x: 0, y: -0.4, z: 0}
   hitMask:
     serializedVersion: 2
-    m_Bits: 2625
+    m_Bits: 64
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &6665538541640284819
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,10 +370,12 @@ MonoBehaviour:
   offset: {x: 0, y: 0.4, z: 0}
   hitMask:
     serializedVersion: 2
-    m_Bits: 2625
+    m_Bits: 64
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &8464101928955667332
 GameObject:
   m_ObjectHideFlags: 0
