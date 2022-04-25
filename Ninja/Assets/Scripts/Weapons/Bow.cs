@@ -114,10 +114,16 @@ public class Bow : WeaponObject, IHitboxResponder
     }
 
     private void LoadArrow()
-    {
+    {   
+        // Do nothing if max arrows loaded
+        if(loadedArrows >= maxLoadedArrows)
+            return;
+
         // Check if enough arrows in weaponManager
-        if(loadedArrows < maxLoadedArrows)
-            loadedArrows++;
+        if(manager.RemoveAmmo("Arrow") == false) 
+            return;
+        
+        loadedArrows++;
 
         // Update visual arrow objects 
         UpdateVisualArrows();

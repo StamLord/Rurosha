@@ -6,15 +6,20 @@ using UnityEditor;
 
 public class WeaponManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private CharacterStats _characterStats;
     public CharacterStats Stats {get {return _characterStats;}}
 
     [SerializeField] private InputState _inputState;
     public InputState InputState {get {return _inputState;}}
     
+    [Header("Items")]
     [SerializeField] private Item[] items = new Item[10];
     [SerializeField] private int selected = 0;
     int oldSelected;
+
+    [Header("Ammo")]
+    [SerializeField] Dictionary<string, int> ammo = new Dictionary<string, int>();
     
     [Header("Default Weapon")]
     [SerializeField] private Weapon defaultWeapon;
@@ -250,8 +255,35 @@ public class WeaponManager : MonoBehaviour
         }   
     }
 
+    public void AddAmmo(Ammo item)
+    {
+        if(ammo.ContainsKey(item.itemName))
+            ammo[item.itemName] += item.ammo;
+        else
+            ammo[item.itemName] = item.ammo;
+    }
+
+    public bool RemoveAmmo(string name, int amount = 1)
+    {
+        if(ammo.ContainsKey(name) == false)
+            return false;
+
+        if(ammo[name] < amount)
+            return false;
+            
+        ammo[name] -= amount;
+        return true;
+    }
+
     public bool AddItem(Item item)
     {
+        // Add and exit if it's ammo
+        if(item is Ammo)
+        {
+            AddAmmo((Ammo)item);
+            return true;
+        }
+
         int firstEmpty = -1;
 
         // Same Loop is used to check for stackable 
