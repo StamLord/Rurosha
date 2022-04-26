@@ -501,7 +501,14 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         _isAlive = false;
 
         if(aliveVisual) aliveVisual.SetActive(false);
-        if(deadVisual) deadVisual.SetActive(true);
+        
+        if(deadVisual)
+        { 
+            deadVisual.SetActive(true);
+            // Allign dead object
+            deadVisual.transform.position = aliveVisual.transform.position;
+            deadVisual.transform.rotation = aliveVisual.transform.rotation;
+        }
 
         if(DeathEvent != null)
             DeathEvent();
