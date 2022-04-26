@@ -134,10 +134,14 @@ public class AirState : PlayerState
         // Apply a force that attempts to reach our target velocity
         Vector3 velocity = rigidbody.velocity - originalSpeed;
         Vector3 velocityChange = (targetVelocity - velocity);
+
+
         velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
         velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
         velocityChange.y = 0;
 
+        // Clamp to air control to not gain speed on each jump (due to original speed)
+        velocityChange = Vector3.ClampMagnitude(velocityChange, airControl);
         rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
         if(gravityOn)
@@ -184,7 +188,7 @@ public class AirState : PlayerState
                 _stateMachine.SwitchState(4);
 
         // Switch to GroundedState
-        if (isGrounded && rigidbody.velocity.y <= 0) 
+        if (isGrounded /*&& rigidbody.velocity.y <= 0*/) 
         {
             airJumps = 0;
             lastWallRunNormal = Vector3.zero;
