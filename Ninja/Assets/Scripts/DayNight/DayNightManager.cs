@@ -67,6 +67,16 @@ public class DayNightManager : MonoBehaviour
 
                 return "Invalid time format. Format must be: HH:MM:SS";
             }));
+
+        DebugCommandDatabase.AddCommand(new DebugCommand(
+            "gettime", 
+            "Gets world time in HH:MM:SS", 
+            "gettime",
+            (string[] parameters) => 
+            {
+                DayTime t = GetDayTime();
+                return string.Format("{0}:{1}:{2}", t.hours, t.minutes, t.seconds);
+            }));
     }
 
     private void Update()
