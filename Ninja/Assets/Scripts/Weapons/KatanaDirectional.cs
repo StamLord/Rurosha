@@ -8,7 +8,6 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
     [SerializeField] private Direction9 direction;
     [SerializeField] float threshold = .5f;
     [SerializeField] Vector2 mouseInput;
-    [SerializeField] float mouseDelta;
     [SerializeField] float mouseAngle;
 
     [Header("Damage")]
@@ -76,8 +75,7 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
         if(inputState.MouseButton2.State != VButtonState.PRESSED) return;
 
         mouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        mouseDelta = mouseInput.magnitude;
-        if(mouseDelta < threshold) return;
+        if(mouseInput.magnitude < threshold) return;
 
         CalculateDirection();
     }
