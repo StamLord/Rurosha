@@ -6,8 +6,6 @@ public class SimpleJumpState : PlayerState
 {
     [Header("Jump Start Data")]
     [SerializeField] private float timeStamp;
-    [SerializeField] private Vector3 jumpDirection;
-    [SerializeField] private bool fromGround;
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private float gravity = 20.0f;
     private float lastJumpHeight;
@@ -56,7 +54,6 @@ public class SimpleJumpState : PlayerState
     public delegate void OnJumpChargeDelegate(float percentage);
     public event OnJumpChargeDelegate OnJumpCharge;
 
-    private bool stoppedJump;
 
 	void Awake () 
     {
@@ -70,13 +67,8 @@ public class SimpleJumpState : PlayerState
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Simple Jump State]");
 
-        timeStamp = Time.time;
-        jumpDirection = targetDirection;
-        fromGround = isGrounded;
-        originalSpeed =  new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
-
         // Jump
-        if(fromGround)
+        if(isGrounded)
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
         else
         {
@@ -85,23 +77,19 @@ public class SimpleJumpState : PlayerState
             {
                 rigidbody.velocity = wallNormal * wallJumpForce;
                 rigidbody.velocity = new Vector3(rigidbody.velocity.x, CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
-                return;
             }
             // Double Jump
             else
-            {
-                timeStamp = Time.time;
                 rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateDoubleJumpVerticalSpeed(), rigidbody.velocity.z);
-                stoppedJump = false;
-                return;
-            }
         }
+
+        timeStamp = Time.time;
+        originalSpeed =  new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
     }
 
     protected override void OnExitState()
     {
         base.OnExitState();
-        stoppedJump = false;
     }
 
     public override void OnStateUpdate()
@@ -112,7 +100,6 @@ public class SimpleJumpState : PlayerState
         float completeTime = jumpMaxHeight / jumpVelocity;
         float minCompletion = jumpMinHeight / jumpVelocity;
         float completion = (Time.time - timeStamp) / completeTime;
-        //Debug.Log("Complete: " + completeTime + " Min: " + minCompletion + " Cur: " + completion);
 
         // Input
         inputVector = inputState.AxisInput;
@@ -121,9 +108,10 @@ public class SimpleJumpState : PlayerState
         targetDirection = (transformDirection) ? transform.TransformDirection(inputVector) : inputVector;
         Vector3 targetVelocity = targetDirection;
         targetVelocity *= airControl;
+        Vector3 flatRigidVelocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
 
         // Apply a force that attempts to reach our target velocity
-        Vector3 velocity = rigidbody.velocity - originalSpeed;
+        Vector3 velocity = flatRigidVelocity - originalSpeed;
         Vector3 velocityChange = (targetVelocity - velocity);
         
 
@@ -149,6 +137,7 @@ public class SimpleJumpState : PlayerState
         {
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
             _stateMachine.SwitchState(5);
+            return;
         }
 
         if(gravityOn)
