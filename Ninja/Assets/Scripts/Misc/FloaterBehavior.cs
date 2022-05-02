@@ -6,6 +6,7 @@ public class FloaterBehavior : MonoBehaviour
 {
     [SerializeField] private InputState inputState;
     [SerializeField] private AwarenessAgent awareness;
+    [SerializeField] private CharacterStats characterStats;
     [SerializeField] private new Rigidbody rigidbody;
     [SerializeField] private float maxVelocityChange = 1;
 
@@ -47,6 +48,12 @@ public class FloaterBehavior : MonoBehaviour
 
     private void Update()
     {
+        if(characterStats.IsAlive == false)
+        {
+            rigidbody.velocity = Vector3.zero;
+            return;
+        }
+        
         switch(state)
         {
             case State.IDLE:
