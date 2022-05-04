@@ -77,7 +77,10 @@ public class Hitbox : MonoBehaviour
             }
 
             if(activeForOneFrame)
+            {
                 StopColliding();
+                collided.Clear();
+            }
         }
 
         lastActiveState = isActive;
