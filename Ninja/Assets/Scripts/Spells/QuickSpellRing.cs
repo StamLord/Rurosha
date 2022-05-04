@@ -5,7 +5,8 @@ using UnityEngine;
 public class QuickSpellRing : UIWindow
 {
     [Header("References")]
-    [SerializeField] private List<string> spellNames = new List<string>();
+    
+    [SerializeField] private SpellManager spellManager;
     [SerializeField] private InputState inputState;
     [SerializeField] private Animator animator;
     [SerializeField] private RectTransform selectionImage;
@@ -34,7 +35,7 @@ public class QuickSpellRing : UIWindow
         else
         {
             if(inputState.Defend.State == VButtonState.PRESS_END)
-                Debug.Log("Cast " + spellNames[selected]);
+                spellManager.Cast(selected);
             if(inputState.Defend.State == VButtonState.PRESSED && inputState.Defend.PressTime > pressTimeToOpen)
                 ShowRing();
         }

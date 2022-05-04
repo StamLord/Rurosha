@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd588ee36f979644fa1c864747d7b981, type: 3}
+  m_Name: Typhoon
+  m_EditorClassIdentifier: 
+  spellName: Typhoon
+  spellCost: 10
+  spellObject: {fileID: 8799722557609982149, guid: 54e0154417da6b24ea2f966c50895c10,
+    type: 3}
+  multiCast: 0
+  casterParent: 1
+  healAmount: 0
