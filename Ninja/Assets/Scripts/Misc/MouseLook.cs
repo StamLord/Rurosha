@@ -9,6 +9,7 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private Transform playerBody;
     [SerializeField] private AirState airState;
     [SerializeField] private CrouchState crouchState;
+    [SerializeField] private SitState sitState;
     [SerializeField] private WallRunState wallRunState;
     
     //[SerializeField] private LookState _lookState = LookState.TURN_BODY;
@@ -19,13 +20,18 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float maxRotZ = 1f;
     [SerializeField] private float rotSpeedZ = 2f;
 
+    [Header("Sit FX")]
+    [SerializeField] private float sitHeight;
+    [SerializeField] float standToSitTransitionDuration = .7f;
+    [SerializeField] float sitToStandTransitionDuration = .1f;
+
     [Header("Crouch FX")]
     [SerializeField] private float standHeight;
     [SerializeField] private float crouchHeight;
-    [SerializeField] float heightTransitionDuration = .1f;
+    [SerializeField] float crouchHeightTransitionDuration = .1f;
 
-    private Coroutine crouchCoroutine;
-    private bool isAnimatingCrouch;
+    private Coroutine heightAnimCoroutine;
+    private bool isAnimatingHeight;
 
     [Header("Climb Ledge FX")]
     [SerializeField] private float maxTilt = 20f;
@@ -49,6 +55,8 @@ public class MouseLook : MonoBehaviour
         crouchState.OnCrouchEnd += EndCrouch;
         wallRunState.OnRunStart += StartWallRun;
         wallRunState.OnRunEnd += EndWallRun;
+        sitState.OnSitStart += StartSit;
+        sitState.OnSitEnd += EndSit;
     }
     
     void LateUpdate()
@@ -102,23 +110,39 @@ public class MouseLook : MonoBehaviour
         disabled = true;
     }
 
+    #region Sit
+
+    private void StartSit()
+    {
+        if(isAnimatingHeight) StopCoroutine(heightAnimCoroutine);
+        heightAnimCoroutine = StartCoroutine(HeightTransition(sitHeight, standToSitTransitionDuration));
+    }
+
+    private void EndSit()
+    {
+        if(isAnimatingHeight) StopCoroutine(heightAnimCoroutine);
+        heightAnimCoroutine = StartCoroutine(HeightTransition(standHeight, sitToStandTransitionDuration));
+    }
+    
+    #endregion
+
     #region Crouch
 
     private void StartCrouch()
     {
-        if(isAnimatingCrouch) StopCoroutine(crouchCoroutine);
-        crouchCoroutine = StartCoroutine("HeightTransition", crouchHeight);
+        if(isAnimatingHeight) StopCoroutine(heightAnimCoroutine);
+        heightAnimCoroutine = StartCoroutine(HeightTransition(crouchHeight, crouchHeightTransitionDuration));
     }
 
     private void EndCrouch()
     {
-        if(isAnimatingCrouch) StopCoroutine(crouchCoroutine);
-        crouchCoroutine = StartCoroutine("HeightTransition", standHeight);
+        if(isAnimatingHeight) StopCoroutine(heightAnimCoroutine);
+        heightAnimCoroutine = StartCoroutine(HeightTransition(standHeight, crouchHeightTransitionDuration));
     }
 
-    private IEnumerator HeightTransition(float newHeight)
+    private IEnumerator HeightTransition(float newHeight, float duration)
     {
-        isAnimatingCrouch = true;
+        isAnimatingHeight = true;
 
         // Wait 1 frame so we can check if airState is active 
         // since This function is called on crouch OnStateExit and before air OnStateEnter
@@ -133,11 +157,11 @@ public class MouseLook : MonoBehaviour
         float startHeight = transform.localPosition.y;
         while(transform.localPosition.y != newHeight)
         {
-            float p = (Time.time - startTime) / heightTransitionDuration;
+            float p = (Time.time - startTime) / duration;
             transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Lerp(startHeight, newHeight, p), transform.localPosition.z);
             yield return null;
         }
-        isAnimatingCrouch = false;
+        isAnimatingHeight = false;
     }
 
     #endregion

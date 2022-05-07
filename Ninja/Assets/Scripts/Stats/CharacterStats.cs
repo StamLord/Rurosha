@@ -155,6 +155,14 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    #region Sit
+
+    private bool isSit;
+    [SerializeField] private float sitHealthRecoveryMult = 1.5f;
+    [SerializeField] private float sitStaminaRecoveryMult = 2f;
+
+    #endregion
+
     void Start()
     {
         foreach(Hurtbox h in hurtboxes)
@@ -332,17 +340,20 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         if(_isAlive == false) return;
         
+        float healthMult = (isSit)? sitHealthRecoveryMult : 1;
+        float staminaMult = (isSit)? sitStaminaRecoveryMult : 1;
+
         if(Time.time - _healthLastDeplete > _healthRecoveryStart) 
-            AddHealth(_healthRecovery * Time.deltaTime);
+            AddHealth(_healthRecovery * healthMult * Time.deltaTime);
 
         if(Time.time - _potentialHealthLastDeplete > _potentialHealthRecoveryStart) 
-            AddPotentialHealth(_potentialHealthRecovery * Time.deltaTime);
+            AddPotentialHealth(_potentialHealthRecovery * healthMult * Time.deltaTime);
 
         if(Time.time - _staminaLastDeplete > _staminaRecoveryStart) 
-            AddStamina(_staminaRecovery * Time.deltaTime);
+            AddStamina(_staminaRecovery * staminaMult * Time.deltaTime);
 
         if(Time.time - _potentialStaminaLastDeplete > _potentialStaminaRecoveryStart) 
-            AddPotentialStamina(_potentialStaminaRecovery * Time.deltaTime);
+            AddPotentialStamina(_potentialStaminaRecovery * staminaMult * Time.deltaTime);
     }
 
     #region Health Change
@@ -529,4 +540,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         return false;
     }
     
+    public void SetSit(bool state)
+    {
+        isSit = state;
+    }
 }

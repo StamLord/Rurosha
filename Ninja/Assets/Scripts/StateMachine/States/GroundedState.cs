@@ -15,14 +15,12 @@ public class GroundedState : PlayerState
     [Space(20f)]
     
     [Header("Stats")]
-    [SerializeField] private CharacterStats characterStats;
     [SerializeField] private float staminaDepleteRate = 20f;
     [SerializeField] private float potentialStaminaDepleteRate = 2f;
     [SerializeField] private float enduranceExpGain = .01f;
     [SerializeField] private float gravity = 20.0f;
 
     [Header("Input Data")]
-    [SerializeField] private InputState inputState;
     [SerializeField] private Vector3 inputVector;
     [SerializeField] private Vector3 targetDirection;
 	[SerializeField] private float maxVelocityChange = 10.0f;
@@ -54,8 +52,6 @@ public class GroundedState : PlayerState
     {
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Ground State]");
-        characterStats = ((CharacterStateMachine)_stateMachine).characterStats;
-        inputState = ((CharacterStateMachine)_stateMachine).inputState;
     }
 
     public override void OnStateUpdate()
@@ -126,7 +122,7 @@ public class GroundedState : PlayerState
         }
 
         // Crouch
-        if (inputState.Crouch.State == VButtonState.PRESSED) 
+        if (inputState.Crouch.Pressed) 
         {
             _stateMachine.SwitchState(1);
             return;
@@ -136,6 +132,13 @@ public class GroundedState : PlayerState
         if(isClimbing)
         {
             _stateMachine.SwitchState(3);
+            return;
+        }
+
+        // Switch to SitState
+        if (inputState.Sit.Pressed && inputState.AxisInput.magnitude == 0) 
+        {
+            _stateMachine.SwitchState(7);
             return;
         }
 

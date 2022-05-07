@@ -65,6 +65,9 @@ public class PlayerControls : MonoBehaviour
 
             // Spell
             UpdateVirtualButton("Spell", _inputState.Spell);
+
+            // Sit
+            UpdateVirtualButton("Sit", _inputState.Sit);
         }
 
         if(interactionDisabled == false)
