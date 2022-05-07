@@ -106,14 +106,12 @@ public class MouseLook : MonoBehaviour
 
     private void StartCrouch()
     {
-        //transform.localPosition = new Vector3(transform.localPosition.x, crouchHeight, transform.localPosition.z);
         if(isAnimatingCrouch) StopCoroutine(crouchCoroutine);
         crouchCoroutine = StartCoroutine("HeightTransition", crouchHeight);
     }
 
     private void EndCrouch()
     {
-        //transform.localPosition = new Vector3(transform.localPosition.x, standHeight, transform.localPosition.z);
         if(isAnimatingCrouch) StopCoroutine(crouchCoroutine);
         crouchCoroutine = StartCoroutine("HeightTransition", standHeight);
     }
@@ -121,6 +119,16 @@ public class MouseLook : MonoBehaviour
     private IEnumerator HeightTransition(float newHeight)
     {
         isAnimatingCrouch = true;
+
+        // Wait 1 frame so we can check if airState is active 
+        // since This function is called on crouch OnStateExit and before air OnStateEnter
+        yield return null;
+
+        // Don't animate camera while we are falling.
+        // This prevents weird camera movement up when we end crouch due to falling
+        while(airState.IsActive)
+            yield return null;
+        
         float startTime = Time.time;
         float startHeight = transform.localPosition.y;
         while(transform.localPosition.y != newHeight)
@@ -158,8 +166,6 @@ public class MouseLook : MonoBehaviour
         while (Time.time - startTime < wallRunDuration)
         {
             float p = (Time.time - startTime) / wallRunDuration;
-            
-            
 
             transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, Mathf.Lerp(startZ, angle, p));
             yield return null;

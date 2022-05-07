@@ -8,8 +8,6 @@ public class CrouchState : PlayerState
     [SerializeField] private float walkSpeed = 10.0f;
     [SerializeField] private float airControl = 5f;
     [SerializeField] private bool gravityOn = true;
-    [SerializeField] private Vector3 standingColliderSize;
-    [SerializeField] private Vector3 croucingColliderSize;
     [SerializeField] private CapsuleCollider standCollider;
     [SerializeField] private CapsuleCollider crouchCollider;
     
@@ -98,11 +96,17 @@ public class CrouchState : PlayerState
         }
         // Air
         else 
-            rigidbody.AddForce(targetVelocity * airControl, ForceMode.Acceleration);
+        {
+            _stateMachine.SwitchState(5);
+            return;
+        }
 
-        // Crouch
+        // Stand up
         if (inputState.Crouch.State == VButtonState.UNPRESSED && isUnder == false)
+        {
             _stateMachine.SwitchState(0);
+            return;
+        }
 
 	    // We apply gravity manually for more tuning control
         if(gravityOn)
