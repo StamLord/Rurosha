@@ -136,6 +136,11 @@ public class DayNightManager : MonoBehaviour
         return time / dayInRealSeconds;
     }
 
+    public float GetTime()
+    {
+        return time;
+    }
+
     private DayTime GetDayTime()
     {
         int hours = Mathf.FloorToInt(time / 3600);
