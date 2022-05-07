@@ -5,15 +5,29 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    public Image healthBar;
-    public Image potentialHealthBar;
+    [Header("References")]
+    [SerializeField] private CharacterStats playerStats;
 
-    public Image staminaBar;
-    public Image potentialStaminaBar;
+    [SerializeField] private Image healthBar;
+    [SerializeField] private Image potentialHealthBar;
 
-    public CharacterStats playerStats;
+    [SerializeField] private Image staminaBar;
+    [SerializeField] private Image potentialStaminaBar;
 
-    void Start()
+    [SerializeField] private Image lowHealth;
+
+    [Header("Low Health Settings")]
+    [SerializeField] private float lowHealthThreshold = .2f;
+    [SerializeField] private float showLowHealthDuration = .2f;
+    [SerializeField] private float hideLowHealthDuration = 1f;
+    [SerializeField] private float lowHealthPulseRate = 1f;
+    [SerializeField] private float lowHealthPulseMinAlpha = .7f;
+
+    private Coroutine animLowHealth;
+    private bool isAnimLowHealth;
+    private bool lowHealthDisplayed;
+
+    private void Start()
     {
         if(healthBar)
         {
@@ -39,24 +53,75 @@ public class HUD : MonoBehaviour
             potentialStaminaBar.fillAmount = playerStats.PotentialStamina / playerStats.MaxStamina;
         }
     }
-
-    void UpdateHealthBar(float health)
+    
+    private void Update() 
     {
-        healthBar.fillAmount = health;
+        // Pulsate low health overlay
+        if(lowHealthDisplayed && isAnimLowHealth == false)
+        {
+            float t = (Mathf.Sin(Time.time * lowHealthPulseRate) + 1) / 2;
+            Color color = lowHealth.color;
+            color.a = Mathf.Lerp(lowHealthPulseMinAlpha, 1f, t);
+            lowHealth.color = color;
+        }
     }
 
-    void UpdatePotentialHealthBar(float potentialHealth)
+    private void UpdateHealthBar(float health)
+    {
+        healthBar.fillAmount = health;
+        
+        // Show low health overlay
+        if(health < lowHealthThreshold && lowHealthDisplayed == false)
+        {
+            if(isAnimLowHealth)
+                StopCoroutine(animLowHealth);
+            animLowHealth = StartCoroutine("DisplayLowHealth", true);
+            lowHealthDisplayed = true;
+        }
+        // Hide low health overlay
+        else if(health > lowHealthThreshold && lowHealthDisplayed == true)
+        {
+            if(isAnimLowHealth)
+                StopCoroutine(animLowHealth);
+            animLowHealth = StartCoroutine("DisplayLowHealth", false);
+            lowHealthDisplayed = false;
+        }
+    }
+
+    private void UpdatePotentialHealthBar(float potentialHealth)
     {
         potentialHealthBar.fillAmount = potentialHealth;
     }
 
-    void UpdateStaminaBar(float stamina)
+    private void UpdateStaminaBar(float stamina)
     {
         staminaBar.fillAmount = stamina;
     }
 
-    void UpdatePotentialStaminaBar(float potentialStamina)
+    private void UpdatePotentialStaminaBar(float potentialStamina)
     {
         potentialStaminaBar.fillAmount = potentialStamina;
+    }
+
+    private IEnumerator DisplayLowHealth(bool show)
+    {
+        isAnimLowHealth = true;
+
+        float startTime = Time.time;
+        float duration = (show)? showLowHealthDuration : hideLowHealthDuration;
+
+        while(Time.time - startTime < duration)
+        {
+            Color color = lowHealth.color;
+            color.a = (Time.time - startTime) / duration;
+            if(show == false)
+                color.a = 1 - color.a;
+
+            lowHealth.color = color;
+
+            yield return null;
+        }
+
+        isAnimLowHealth = false;
     }
 }
