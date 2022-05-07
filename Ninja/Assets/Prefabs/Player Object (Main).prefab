@@ -2316,12 +2316,12 @@ GameObject:
   - component: {fileID: 923813910}
   - component: {fileID: 5834352142209536019}
   - component: {fileID: 1584670585454484595}
-  - component: {fileID: 1298875502}
   - component: {fileID: 1496715723}
   - component: {fileID: 1496715738}
   - component: {fileID: 2138504049}
   - component: {fileID: 2138504050}
   - component: {fileID: 2138504051}
+  - component: {fileID: 2138504045}
   m_Layer: 9
   m_Name: Player Object (Main)
   m_TagString: Untagged
@@ -2927,19 +2927,6 @@ MonoBehaviour:
   debugView: 0
   rigidbody: {fileID: 0}
   wallOnLeft: 0
---- !u!114 &1298875502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6944390856915565342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f82bb089f43704c48bef85fb0e614598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeFactor: 0.25
 --- !u!114 &1496715723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3019,7 +3006,7 @@ MonoBehaviour:
   targetDirection: {x: 0, y: 0, z: 0}
   targetVelocity: {x: 0, y: 0, z: 0}
   maxVelocityChange: 10
-  transformDirection: 0
+  transformDirection: 1
   wallJumpOn: 1
   wallJumpForce: 10
   wallJumpMinimumSlope: -0.1
@@ -3154,6 +3141,30 @@ MonoBehaviour:
   stepCheckEveryMax: 0.2
   lastCheck: 0
   defaultTexture: Grass
+--- !u!114 &2138504045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6944390856915565342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1682be3587537294882f167722d90188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  learned: []
+  prepared:
+  - {fileID: 11400000, guid: 991b72205509a3d47abfb60cbfb674dd, type: 2}
+  - {fileID: 11400000, guid: e81d2417c9e9302449d01b788601ed1d, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  characterStats: {fileID: 6944390856915565334}
+  camera: {fileID: 6944390856666288588}
 --- !u!1 &8048313138737219164
 GameObject:
   m_ObjectHideFlags: 0

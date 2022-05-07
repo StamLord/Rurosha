@@ -29,14 +29,14 @@ public class QuickSpellRing : UIWindow
         {
             GetSelection();
             UpdateSelectionImage();
-            if(inputState.Defend.State == VButtonState.PRESS_END)
+            if(inputState.Spell.State == VButtonState.PRESS_END)
                 HideRing();
         }
         else
         {
-            if(inputState.Defend.State == VButtonState.PRESS_END)
+            if(inputState.Spell.State == VButtonState.PRESS_END)
                 spellManager.Cast(selected);
-            if(inputState.Defend.State == VButtonState.PRESSED && inputState.Defend.PressTime > pressTimeToOpen)
+            if(inputState.Spell.State == VButtonState.PRESSED && inputState.Spell.PressTime > pressTimeToOpen)
                 ShowRing();
         }
     }

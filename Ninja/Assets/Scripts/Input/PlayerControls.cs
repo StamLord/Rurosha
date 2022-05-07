@@ -62,6 +62,9 @@ public class PlayerControls : MonoBehaviour
 
             // Kick
             UpdateVirtualButton("Kick", _inputState.Kick);
+
+            // Spell
+            UpdateVirtualButton("Spell", _inputState.Spell);
         }
 
         if(interactionDisabled == false)
