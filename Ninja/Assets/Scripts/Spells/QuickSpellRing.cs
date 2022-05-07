@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class QuickSpellRing : UIWindow
 {
@@ -10,6 +11,7 @@ public class QuickSpellRing : UIWindow
     [SerializeField] private InputState inputState;
     [SerializeField] private Animator animator;
     [SerializeField] private RectTransform selectionImage;
+    [SerializeField] private TextMeshProUGUI[] spellText;
 
     [Header("Ring Settings")]
     [SerializeField] private int selectionsNum = 8;
@@ -62,8 +64,15 @@ public class QuickSpellRing : UIWindow
         selectionImage.localRotation = Quaternion.Euler(0, 0, selected * -45);
     }
 
+    private void UpdateSpellNames()
+    {
+        for(int i = 0; i < spellText.Length; i++)
+            spellText[i].text = spellManager.GetPreparedSpellName(i);
+    }
+
     private void ShowRing()
     {
+        UpdateSpellNames();
         animator.Play("show");
         visible = true;
         UIManager.Instance.AddWindow(this, false, true, true);
