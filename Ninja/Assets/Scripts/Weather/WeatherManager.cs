@@ -29,6 +29,33 @@ public class WeatherManager : MonoBehaviour
     {
         SetWeather(0);
         offset = transform.position - follow.position;
+
+        DebugCommandDatabase.AddCommand(new DebugCommand(
+            "setweather",
+            "Sets weather to a specific id",
+            "class  <id>",
+            (string[] parameters) => {
+                int i;
+                bool success = int.TryParse(parameters[0], out i);
+                if(success)
+                    success = SetWeather(i);
+
+                if(success)
+                    return "Weather set to id: " + i;
+                else
+                    return "Incorrect or out of bounds id.";
+            }
+        ));
+
+        DebugCommandDatabase.AddCommand(new DebugCommand(
+            "clearweather",
+            "Clears the weather.",
+            "clearweather",
+            (string[] parameters) => {
+                ClearWeather();
+                return "Weather cleared.";
+            }
+        ));
     }
 
     private void Update() 
@@ -41,12 +68,12 @@ public class WeatherManager : MonoBehaviour
         transform.position = follow.position + offset;
     }
 
-    public void SetWeather(int index)
+    public bool SetWeather(int index)
     {
-        if(index >= weathers.Length)
+        if(index >= weathers.Length || weathers[index] == null)
         {
             ClearWeather();
-            return;
+            return false;
         }
         
         if(active) 
@@ -56,6 +83,7 @@ public class WeatherManager : MonoBehaviour
         active = weathers[index];
 
         lastChange = dayNightManager.GetTime();
+        return true;
     }
 
     public void ClearWeather()
