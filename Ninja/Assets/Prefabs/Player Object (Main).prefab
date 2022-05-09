@@ -2099,13 +2099,17 @@ MonoBehaviour:
   playerBody: {fileID: 6944390856915565329}
   airState: {fileID: 5834352142209536019}
   crouchState: {fileID: 4243153703830139676}
+  sitState: {fileID: 2205105155448379905}
   wallRunState: {fileID: 1584670585454484595}
   inputState: {fileID: 1496715723}
   maxRotZ: 1
   rotSpeedZ: 10
+  sitHeight: 0.7
+  standToSitTransitionDuration: 0.7
+  sitToStandTransitionDuration: 0.1
   standHeight: 1.7
   crouchHeight: 1
-  heightTransitionDuration: 0.1
+  crouchHeightTransitionDuration: 0.1
   maxTilt: 20
   ledgeTiltDuration: 0.5
   isClimbingLedge: 0
@@ -2276,6 +2280,7 @@ MonoBehaviour:
   m_CameraType: 0
   m_Cameras:
   - {fileID: 1270626752}
+  - {fileID: 0}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -2316,6 +2321,7 @@ GameObject:
   - component: {fileID: 923813910}
   - component: {fileID: 5834352142209536019}
   - component: {fileID: 1584670585454484595}
+  - component: {fileID: 2205105155448379905}
   - component: {fileID: 1496715723}
   - component: {fileID: 1496715738}
   - component: {fileID: 2138504049}
@@ -2552,6 +2558,8 @@ MonoBehaviour:
   _potentialStaminaLastDeplete: 0
   guardOn: 0
   guardDirection: 0
+  sitHealthRecoveryMult: 1.5
+  sitStaminaRecoveryMult: 2
 --- !u!114 &439103427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2619,6 +2627,7 @@ MonoBehaviour:
   - {fileID: 923813910}
   - {fileID: 5834352142209536019}
   - {fileID: 1584670585454484595}
+  - {fileID: 2205105155448379905}
   _debugLogs: 1
   characterStats: {fileID: 6944390856915565334}
   inputState: {fileID: 1496715723}
@@ -2658,12 +2667,10 @@ MonoBehaviour:
     - 20
   gravityOn: 1
   standingColliderSize: {x: 0, y: 2, z: 0}
-  characterStats: {fileID: 0}
   staminaDepleteRate: 20
   potentialStaminaDepleteRate: 2
   enduranceExpGain: 0.01
   gravity: 120
-  inputState: {fileID: 0}
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}
   maxVelocityChange: 10
@@ -2694,8 +2701,6 @@ MonoBehaviour:
   walkSpeed: 2
   airControl: 5
   gravityOn: 1
-  standingColliderSize: {x: 0, y: 2, z: 0}
-  croucingColliderSize: {x: 0, y: 1, z: 0}
   standCollider: {fileID: 1702522207}
   crouchCollider: {fileID: 1450019840}
   gravity: 20
@@ -2927,6 +2932,24 @@ MonoBehaviour:
   debugView: 0
   rigidbody: {fileID: 0}
   wallOnLeft: 0
+--- !u!114 &2205105155448379905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6944390856915565342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01c2266cc9a85144da0908667cbc1bfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  characterStateMachine: {fileID: 0}
+  standCollider: {fileID: 0}
+  sitCollider: {fileID: 0}
+  debugView: 0
 --- !u!114 &1496715723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4663,6 +4686,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2548753066745287304, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3131417658823918979, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: characterStats
@@ -4698,6 +4726,26 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 6944390856666288591}
+    - target: {fileID: 8206658476292956832, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8206658476292956835, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8206658476547805999, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
 --- !u!4 &113064530 stripped

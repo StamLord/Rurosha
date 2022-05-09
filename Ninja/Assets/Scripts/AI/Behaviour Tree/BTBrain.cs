@@ -85,7 +85,6 @@ public class BTBrain : MonoBehaviour
                                     {
                                         new BTActionNode(this, DrawWeapon),
                                         new BTActionNode(this, PrepareAttack),
-                                        new BTActionNode(this, Wait),
                                         new BTActionNode(this, Attack)
                                     }),
                                 }),
@@ -235,9 +234,14 @@ public class BTBrain : MonoBehaviour
     NodeStates PrepareAttack()
     {
         currentBTNode = "PrepareAttack";
+        if(blackboard.ContainsKey("Last PrepareAttack") && Time.time < (float)blackboard["Last PrepareAttack"] + 2f)
+            return NodeStates.FAILURE;
+
+        blackboard["Last PrepareAttack"] = Time.time;
+
         // Debug.Log(currentBTNode);
         Item item = weaponManager.GetSelectedItem();
-        if(item.Equals(typeof(Weapon)))
+        if(item.GetType() == typeof(Weapon))
         {
             Weapon w = (Weapon)item;
             if(w.WeaponType == WeaponType.SWORD)
@@ -248,6 +252,11 @@ public class BTBrain : MonoBehaviour
                     kd.SetDirection((Direction9)Random.Range(0,9)); // Random 1..8
             }
         }
+
+        if(blackboard.ContainsKey("Last PrepareAttack Direction") && Time.time < (float)blackboard["Last PrepareAttack Direction"] + 1f)
+            return NodeStates.FAILURE;
+        blackboard["Last PrepareAttack Direction"] = Time.time;
+
         return NodeStates.SUCCESS;
     }
     
