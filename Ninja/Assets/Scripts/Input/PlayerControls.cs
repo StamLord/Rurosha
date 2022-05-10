@@ -32,14 +32,6 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private bool movementDisabled;
     [SerializeField] private bool interactionDisabled;
 
-    void Start() 
-    {
-        UIManager.OnDisableMovement += DisableMovement;
-        UIManager.OnEnableMovement += EnableMovement;
-        UIManager.OnEnableInteraction += EnableInteraction;
-        UIManager.OnDisableInteraction += DisableInteraction;
-    }
-
     void Update()
     {
         if(movementDisabled == false)
@@ -208,23 +200,23 @@ public class PlayerControls : MonoBehaviour
             doubleRightReady = false;
     }
 
-    private void DisableMovement()
+    public void DisableMovement()
     {
         movementDisabled = true;
     }
 
-    private void EnableMovement()
+    public void EnableMovement()
     {
         movementDisabled = false;
     }
 
-    private void DisableInteraction()
+    public void DisableInteraction()
     {
         interactionDisabled = true;
         _inputState.Use.Set(VButtonState.UNPRESSED);
     }
 
-    private void EnableInteraction()
+    public void EnableInteraction()
     {
         interactionDisabled = false;
     }

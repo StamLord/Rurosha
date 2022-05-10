@@ -2,14 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UIWindow : MonoBehaviour{}
+public abstract class UIWindow : MonoBehaviour
+{
+    public virtual void ProcessInput(Vector3 axis, bool select){}
+    public virtual bool Select(int index){return false;}
+    public virtual void Open(){}
+    public virtual void Close(){}
+}
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private InputState inputState;
+    [SerializeField] private PlayerControls playerControls;
     [SerializeField] private List<UIWindow> activeWindows = new List<UIWindow>();
     private bool _disabledMouse;
     private bool _disabledMovement;
     private bool _disabledInteraction;
+    
 
     #region Singleton
 
@@ -70,6 +79,42 @@ public class UIManager : MonoBehaviour
         SetupInstance();
         CheckWindows();
     }
+    private void Update() 
+    {
+        ProcessInput();
+    }
+
+    private void ProcessInput()
+    {
+        if(activeWindows.Count == 0)
+            return;
+        
+        // Pass input only to last window opened
+        UIWindow window = activeWindows[activeWindows.Count - 1];
+
+        if(inputState.Num1.State == VButtonState.PRESS_START)
+            window.Select(0);
+        else if(inputState.Num2.State == VButtonState.PRESS_START)
+            window.Select(1);
+        else if(inputState.Num3.State == VButtonState.PRESS_START)
+            window.Select(2);
+        else if(inputState.Num4.State == VButtonState.PRESS_START)
+            window.Select(3);
+        else if(inputState.Num5.State == VButtonState.PRESS_START)
+            window.Select(4);
+        else if(inputState.Num6.State == VButtonState.PRESS_START)
+            window.Select(5);
+        else if(inputState.Num7.State == VButtonState.PRESS_START)
+            window.Select(6);
+        else if(inputState.Num8.State == VButtonState.PRESS_START)
+            window.Select(7);
+        else if(inputState.Num9.State == VButtonState.PRESS_START)
+            window.Select(8);
+        else if(inputState.Num0.State == VButtonState.PRESS_START)
+            window.Select(9);
+        else
+            window.ProcessInput(inputState.AxisInput, inputState.Use.State == VButtonState.PRESS_START);
+    }
     
     public void AddWindow(UIWindow window, bool disableMovement = false, bool disableMouse = false, bool disableInteraction = false)
     {
@@ -117,11 +162,13 @@ public class UIManager : MonoBehaviour
         {
             _disabledMovement = false;
             if(OnEnableMovement != null) OnEnableMovement();
+            playerControls.EnableMovement();
         }
         else // Disable
         {
             _disabledMovement = true;
             if(OnDisableMovement != null) OnDisableMovement();
+            playerControls.DisableMovement();
         }
     }
 
@@ -131,11 +178,13 @@ public class UIManager : MonoBehaviour
         {
             _disabledInteraction = false;
             if(OnEnableInteraction != null) OnEnableInteraction();
+            playerControls.EnableInteraction();
         }
         else // Disable
         {
             _disabledInteraction = true;
             if(OnDisableInteraction != null) OnDisableInteraction();
+            playerControls.DisableInteraction();
         }
     }
 }
