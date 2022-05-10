@@ -18,7 +18,7 @@ public class WeatherManager : MonoBehaviour
     [SerializeField] private ParticleSystem active;
     [SerializeField] private float lastChange;
     
-    private Vector3 offset;
+    private float yOffset;
 
     private void OnValidate() 
     {
@@ -27,8 +27,8 @@ public class WeatherManager : MonoBehaviour
 
     private void Start() 
     {
-        SetWeather(0);
-        offset = transform.position - follow.position;
+        SetWeather(weatherOnStart);
+        yOffset = transform.position.y - follow.position.y;
 
         DebugCommandDatabase.AddCommand(new DebugCommand(
             "setweather",
@@ -43,7 +43,7 @@ public class WeatherManager : MonoBehaviour
                 if(success)
                     return "Weather set to id: " + i;
                 else
-                    return "Incorrect or out of bounds id.";
+                    return string.Format("Incorrect or out of bounds id. Valid range is [{0}..{1}]", 0, weathers.Length - 1);
             }
         ));
 
@@ -65,12 +65,12 @@ public class WeatherManager : MonoBehaviour
             SetWeather(Random.Range(0, weathers.Length));
 
         // Move weather with player
-        transform.position = follow.position + offset;
+        transform.position = follow.position + Vector3.up * yOffset;
     }
 
     public bool SetWeather(int index)
     {
-        if(index >= weathers.Length || weathers[index] == null)
+        if(index < 0 || index >= weathers.Length || weathers[index] == null)
         {
             ClearWeather();
             return false;
