@@ -2,14 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UIWindow : MonoBehaviour
-{
-    public virtual void ProcessInput(Vector3 axis, bool select){}
-    public virtual bool Select(int index){return false;}
-    public virtual void Open(){}
-    public virtual void Close(){}
-}
-
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private InputState inputState;

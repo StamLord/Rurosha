@@ -8,7 +8,6 @@ public class MultipleChoiceWindow : UIWindow
     private enum InputDirection {VERTICAL, HORIZONTAL, BOTH};
 
     [Header("References")]
-    [SerializeField] private Animator animator;
     [SerializeField] private Button[] choices;
 
     [Header("Selection")]
@@ -32,7 +31,6 @@ public class MultipleChoiceWindow : UIWindow
             return;
         
         int dir = (inverseDirection)? -1 : 1;
-        Debug.Log(axis);
         switch(inputDirection)
         {
             case InputDirection.VERTICAL:
@@ -75,17 +73,5 @@ public class MultipleChoiceWindow : UIWindow
 
         choices[selection].onClick.Invoke();
         return true;
-    }
-
-    public override void Open()
-    {
-        animator.Play("show");
-        UIManager.Instance.AddWindow(this);
-    }
-
-    public override void Close()
-    {
-        animator.Play("hide");
-        UIManager.Instance.RemoveWindow(this);
     }
 }
