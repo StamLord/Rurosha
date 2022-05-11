@@ -11,3 +11,5 @@ public enum DamageType {Blunt, Slash, Pierce}
 public enum EquipmentType {Head, Torso, Legs, Arms, Feet}
 
 public enum WeightClass {LIGHT, MEDIUM, HEAVY}
+
+public enum ChakraType {EARTH, WATER, FIRE, WIND, VOID, WOOD, THUNDER, METAL, ICE}
