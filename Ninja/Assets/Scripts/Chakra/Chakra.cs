@@ -11,6 +11,7 @@ public class Chakra
     
     public ChakraType Type {get {return type;}}
     public float Amount {get {return amount;}}
+    public float TotalAmount { get {return amount + full;}}
     public int Full {get {return full;}}
 
     public bool Add(float value)
@@ -30,7 +31,7 @@ public class Chakra
     public bool Remove(float value)
     {
         amount -= value;
-        bool overflow = amount - value < 0f;
+        bool overflow = amount - value <= 0f;
 
         while(amount <= 0)
         {

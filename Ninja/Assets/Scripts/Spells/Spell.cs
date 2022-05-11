@@ -6,7 +6,10 @@ using UnityEngine;
 public class Spell : ScriptableObject 
 {
     public string spellName;
-    public int spellCost;
+
+    public float spellCost;
+    public ChakraType chakraType;
+
     public GameObject spellObject;
     public bool multiCast;
     public bool casterParent;
@@ -20,7 +23,7 @@ public class Spell : ScriptableObject
         casterParent = this.casterParent;
         inheritRotation = this.inheritRotation;
 
-        if(characterStats.DepleteStamina(spellCost) == false)
+        if(characterStats.DepleteChakra(chakraType, spellCost) == false)
             return false;
 
         // Apply immediate effects

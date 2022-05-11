@@ -163,6 +163,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    [SerializeField] private ChakraManager chakraManager;
+
     void Start()
     {
         foreach(Hurtbox h in hurtboxes)
@@ -543,5 +545,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     public void SetSit(bool state)
     {
         isSit = state;
+    }
+
+    public bool DepleteChakra(ChakraType type, float amount)
+    {
+        return chakraManager.DepleteChakra(type, amount);
     }
 }

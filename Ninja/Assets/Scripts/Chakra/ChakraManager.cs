@@ -47,4 +47,19 @@ public class ChakraManager : MonoBehaviour
 
         lastTimeUpdate = time;
     }
+
+    public bool DepleteChakra(ChakraType type, float amount)
+    {
+        if(dict.ContainsKey(type))
+        {
+            bool enough = amount <= dict[type].TotalAmount;
+            if(enough)
+            {
+                dict[type].Remove(amount);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
