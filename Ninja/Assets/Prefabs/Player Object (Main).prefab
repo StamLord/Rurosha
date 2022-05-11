@@ -2280,7 +2280,6 @@ MonoBehaviour:
   m_CameraType: 0
   m_Cameras:
   - {fileID: 1270626752}
-  - {fileID: 0}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -2328,6 +2327,7 @@ GameObject:
   - component: {fileID: 2138504050}
   - component: {fileID: 2138504051}
   - component: {fileID: 2138504045}
+  - component: {fileID: 2138504071}
   m_Layer: 9
   m_Name: Player Object (Main)
   m_TagString: Untagged
@@ -2560,6 +2560,7 @@ MonoBehaviour:
   guardDirection: 0
   sitHealthRecoveryMult: 1.5
   sitStaminaRecoveryMult: 2
+  chakraManager: {fileID: 2138504071}
 --- !u!114 &439103427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2947,8 +2948,8 @@ MonoBehaviour:
   _stateMachine: {fileID: 0}
   isActive: 0
   characterStateMachine: {fileID: 0}
-  standCollider: {fileID: 0}
-  sitCollider: {fileID: 0}
+  standCollider: {fileID: 1702522207}
+  sitCollider: {fileID: 1450019840}
   debugView: 0
 --- !u!114 &1496715723
 MonoBehaviour:
@@ -3188,6 +3189,49 @@ MonoBehaviour:
   - {fileID: 0}
   characterStats: {fileID: 6944390856915565334}
   camera: {fileID: 6944390856666288588}
+--- !u!114 &2138504071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6944390856915565342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0252e1bca5abcac458239a071457c2da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseChakras:
+  - type: 0
+    amount: 0
+    full: 0
+  - type: 1
+    amount: 0
+    full: 0
+  - type: 2
+    amount: 0
+    full: 0
+  - type: 3
+    amount: 0
+    full: 0
+  - type: 4
+    amount: 0
+    full: 0
+  advancedChakras:
+  - type: 5
+    amount: 0
+    full: 0
+  - type: 6
+    amount: 0
+    full: 0
+  - type: 7
+    amount: 0
+    full: 0
+  - type: 8
+    amount: 0
+    full: 0
+  timeManager: {fileID: 0}
+  chargeRate: 1
 --- !u!1 &8048313138737219164
 GameObject:
   m_ObjectHideFlags: 0
