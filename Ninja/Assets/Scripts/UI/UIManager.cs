@@ -84,7 +84,9 @@ public class UIManager : MonoBehaviour
         // Pass input only to last window opened
         UIWindow window = activeWindows[activeWindows.Count - 1];
 
-        if(inputState.Num1.State == VButtonState.PRESS_START)
+        if(inputState.MouseButton2.State == VButtonState.PRESS_START)
+            window.Back();
+        else if(inputState.Num1.State == VButtonState.PRESS_START)
             window.Select(0);
         else if(inputState.Num2.State == VButtonState.PRESS_START)
             window.Select(1);

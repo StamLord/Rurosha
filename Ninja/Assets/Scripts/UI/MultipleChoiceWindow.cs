@@ -14,6 +14,7 @@ public class MultipleChoiceWindow : UIWindow
     [SerializeField] private InputDirection inputDirection;
     [SerializeField] private bool inverseDirection;
     [SerializeField] private float inputInterval = .1f; 
+    [SerializeField] private bool closeOnSelect;
 
     [Header("Real Time Data")]
     [SerializeField] private int selection = 0;
@@ -64,6 +65,8 @@ public class MultipleChoiceWindow : UIWindow
     {
         selection = Mathf.Clamp(value, 0, choices.Length - 1);
         choices[selection].Select();
+        if(closeOnSelect)
+            Close();
     }
 
     public override bool Select(int index)

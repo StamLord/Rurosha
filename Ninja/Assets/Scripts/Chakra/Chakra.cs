@@ -8,6 +8,7 @@ public class Chakra
     [SerializeField] private ChakraType type;
     [SerializeField] private float amount;
     [SerializeField] private int full;
+    [SerializeField] private int maxFull = 1;
     
     public ChakraType Type {get {return type;}}
     public float Amount {get {return amount;}}
@@ -19,11 +20,15 @@ public class Chakra
         amount += value;
         bool overflow = amount + value > 1f;
 
-        while(amount >= 1f)
+        // Calculate full rounds
+        while(amount >= 1f && full < maxFull -1)
         {
             amount -= 1f;
             full++;
         }
+
+        // Clamp in case above loop did not trigger due to being on last full round
+        if(amount > 1f) amount = 1f;
 
         return overflow;
     }
