@@ -11,6 +11,12 @@ public class ChakraUIWindow : MultipleChoiceWindow
 
     private ChakraType selected;
 
+    private void Start() 
+    {
+         foreach(ChakraUIButton i in chakraImages)
+            i.SetContext(this);
+    }
+
     private void Update() 
     {
         // Update chakra button values
