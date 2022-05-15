@@ -46,9 +46,11 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     [SerializeField] private new Collider collider;
 
     [Tooltip("Activate when stopped")]
+    [SerializeField] private float activateDelay = 0;
     [SerializeField] private GameObject[] objectsToActivate;
 
     [Header ("Deactivate when stopped")]
+    [SerializeField] private float deactivateDelay = 0;
     [SerializeField] private GameObject[] objectsToDeactivate;
 
     [SerializeField] private List<GameObject> objectsCollided = new List<GameObject>();
@@ -132,10 +134,10 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             collider.enabled = true;
 
         // Activate objects
-        SetObjectsActives(objectsToActivate, true);
+        SetObjectsActiveDelay(objectsToActivate, true, activateDelay);
 
         // Deactivate objects
-        SetObjectsActives(objectsToDeactivate, false);
+        SetObjectsActiveDelay(objectsToDeactivate, false, deactivateDelay);
     }
 
     private void StopHitbox()
@@ -150,7 +152,13 @@ public class Projectile : MonoBehaviour, IHitboxResponder
         stoppedHitbox = true;
     }
 
-    private void SetObjectsActives(GameObject[] objects, bool state)
+    private IEnumerator SetObjectsActiveDelay(GameObject[] objects, bool state, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SetObjectsActive(objects, state);
+    }
+
+    private void SetObjectsActive(GameObject[] objects, bool state)
     {
         for(int i = 0; i < objects.Length; i++)
             objects[i].SetActive(state);
