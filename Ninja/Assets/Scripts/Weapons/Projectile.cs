@@ -8,13 +8,19 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     [SerializeField] private int softDamage = 5;
     [SerializeField] private int hardDamage = 5;
 
+    [Space (10)]
+
     [Header("Force")]
     [SerializeField] private float pushForce = 5;
+
+    [Space (10)]
 
     [Header("Gravity")]
     [SerializeField] private bool gravity;
     [SerializeField] private bool useGlobalGravity;
     [SerializeField] private Vector3 customGravity;
+
+    [Space (10)]
 
     [Header("Visual")]
     [SerializeField] private Vector3 visualRotationPerSecond;
@@ -23,6 +29,8 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     [SerializeField] private Vector3 minRotation;
     [SerializeField] private Vector3 maxRotation;
     [SerializeField] private float penetration = -.1f;
+
+    [Space (10)]
 
     [Header("Trajectory")]
     [SerializeField] private float speed;
@@ -33,27 +41,39 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     [SerializeField] private RaycastHit hitDetected;
     [SerializeField] private LayerMask hitMask;
 
-    private float startTime;
-    private Vector3 startPos;
-    private Vector3 startSpeed;
+    [Space (10)]
 
     [Header("Hitbox")]
     [SerializeField] private Hitbox[] hitbox;
     private bool stoppedHitbox;
 
+    [Space (10)]
+
     [Header ("Collider")]
     [Tooltip("Will enable this collider when stopped")]
     [SerializeField] private new Collider collider;
+
+    [Space (10)]
 
     [Tooltip("Activate when stopped")]
     [SerializeField] private float activateDelay = 0;
     [SerializeField] private GameObject[] objectsToActivate;
 
+    [Space (10)]
+
     [Header ("Deactivate when stopped")]
     [SerializeField] private float deactivateDelay = 0;
     [SerializeField] private GameObject[] objectsToDeactivate;
 
+    [Space (10)]
+
+    [Header ("Real Time Data")]
     [SerializeField] private List<GameObject> objectsCollided = new List<GameObject>();
+    [SerializeField] private Transform ignoreTransform;
+
+    private float startTime;
+    private Vector3 startPos;
+    private Vector3 startSpeed;
 
     void Start()
     {
@@ -69,6 +89,11 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             hitbox[i].StartColliding();
         }
 
+    }
+
+    public void SetIgnoreTransform(Transform transform)
+    {
+        ignoreTransform = transform;
     }
 
     void Update()
@@ -167,10 +192,16 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     // Make sure we don't fly through colliders due to speed
     private bool CollisionCheck()
     {   
+        bool hit;
+
         if(lastPositionCheck)
-            return Physics.Raycast(lastPosition, transform.position - lastPosition, out hitDetected, speed * 2f * Time.deltaTime, hitMask);
+            hit = Physics.Raycast(lastPosition, transform.position - lastPosition, out hitDetected, speed * 2f * Time.deltaTime, hitMask);
         else
-            return Physics.Raycast(transform.position, transform.forward, out hitDetected, speed * 2f * Time.deltaTime, hitMask);
+            hit = Physics.Raycast(transform.position, transform.forward, out hitDetected, speed * 2f * Time.deltaTime, hitMask);
+
+        if(hit && hitDetected.transform.root == ignoreTransform)
+                hit = false;
+        return hit;
     }
 
     public void CollisionWith(Collider collider, Hitbox hitbox)

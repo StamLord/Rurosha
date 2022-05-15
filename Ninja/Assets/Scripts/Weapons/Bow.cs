@@ -186,7 +186,11 @@ public class Bow : WeaponObject, IHitboxResponder
             foreach(GameObject arr in arrows)
             {
                 if(arr.activeSelf == false) continue;
-                GameObject proj = Instantiate(projectile, arr.transform.position, arr.transform.rotation);
+                Projectile proj = Instantiate(projectile, arr.transform.position, arr.transform.rotation).GetComponent<Projectile>();
+
+                // Set this transform's root to be ignored by the projectile
+                if(proj)
+                    proj.SetIgnoreTransform(transform.root);
             }
         }
 
