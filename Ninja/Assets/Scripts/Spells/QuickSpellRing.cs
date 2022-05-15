@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class QuickSpellRing : UIWindow
@@ -12,6 +11,17 @@ public class QuickSpellRing : UIWindow
     [SerializeField] private Animator animator;
     [SerializeField] private RectTransform selectionImage;
     [SerializeField] private TextMeshProUGUI[] spellText;
+    [SerializeField] private Image[] spellType;
+
+    [SerializeField] private Sprite earthIcon;
+    [SerializeField] private Sprite waterIcon;
+    [SerializeField] private Sprite fireIcon;
+    [SerializeField] private Sprite windIcon;
+    [SerializeField] private Sprite voidIcon;
+    [SerializeField] private Sprite woodIcon;
+    [SerializeField] private Sprite metalIcon;
+    [SerializeField] private Sprite lightningIcon;
+    [SerializeField] private Sprite iceIcon;
 
     [Header("Ring Settings")]
     [SerializeField] private int selectionsNum = 8;
@@ -70,9 +80,58 @@ public class QuickSpellRing : UIWindow
             spellText[i].text = spellManager.GetPreparedSpellName(i);
     }
 
+    private void UpdateSpellTypes()
+    {
+        for(int i = 0; i < spellType.Length; i++)
+        {
+            Spell spell = spellManager.GetPreparedSpell(i);
+            if(spell == null)
+            {
+                spellType[i].enabled = false;
+                continue;
+            }
+            else
+                spellType[i].enabled = true;
+
+            Sprite img = null;
+            switch(spell.chakraType)
+            {
+                case ChakraType.EARTH:
+                    img = earthIcon;
+                    break;
+                case ChakraType.WATER:
+                    img = waterIcon;
+                    break;
+                case ChakraType.FIRE:
+                    img = fireIcon;
+                    break;
+                case ChakraType.WIND:
+                    img = windIcon;
+                    break;
+                case ChakraType.VOID:
+                    img = voidIcon;
+                    break;
+                case ChakraType.WOOD:
+                    img = woodIcon;
+                    break;
+                case ChakraType.METAL:
+                    img = metalIcon;
+                    break;
+                case ChakraType.THUNDER:
+                    img = lightningIcon;
+                    break;
+                case ChakraType.ICE:
+                    img = iceIcon;
+                    break;
+            }
+            spellType[i].sprite = img;
+        }
+    }
+
     private void ShowRing()
     {
         UpdateSpellNames();
+        UpdateSpellTypes();
         animator.Play("show");
         visible = true;
         UIManager.Instance.AddWindow(this, false, true, true);

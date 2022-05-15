@@ -50,6 +50,14 @@ public class SpellManager : MonoBehaviour
         return prepared[index].spellName;
     }
 
+    public Spell GetPreparedSpell(int index)
+    {
+        if(index >= prepared.Length || prepared[index] == null)
+            return null;
+
+        return prepared[index];
+    }
+
     public bool Cast(int preparedIndex)
     {
         Spell spell = prepared[preparedIndex];
