@@ -4,12 +4,34 @@ using UnityEngine;
 
 public class ChakraManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Chakra[] baseChakras;
     [SerializeField] private Chakra[] advancedChakras;
     [SerializeField] private ChakraType focused;
     [SerializeField] Dictionary<ChakraType, Chakra> dict = new Dictionary<ChakraType, Chakra>();
     [SerializeField] private DayNightManager timeManager;
-    [SerializeField] private float chargeRate = 1f; // Per DayNightManager hour
+
+    [Header("Charging Rate")]
+    [SerializeField] private float baseChargeRate = 1f; 
+    [SerializeField] private float zodiacChargeMult = 2f; // When zodiac hour matches element
+    [SerializeField] private float focusChargeMult = 1.5f; // When focused
+
+    [Header("Charging Rate")]
+    Dictionary<Zodiac, ChakraType> zodiacElements = new Dictionary<Zodiac, ChakraType> 
+    {
+        {Zodiac.RAT, ChakraType.WATER},
+        {Zodiac.OX, ChakraType.VOID},
+        {Zodiac.TIGER, ChakraType.WIND},
+        {Zodiac.RABBIT, ChakraType.WIND},
+        {Zodiac.DRAGON, ChakraType.VOID},
+        {Zodiac.SNAKE, ChakraType.FIRE},
+        {Zodiac.HORSE, ChakraType.FIRE},
+        {Zodiac.GOAT, ChakraType.VOID},
+        {Zodiac.MONKEY, ChakraType.EARTH},
+        {Zodiac.ROOSTER, ChakraType.EARTH},
+        {Zodiac.DOG, ChakraType.VOID},
+        {Zodiac.BOAR, ChakraType.WATER},
+    };
 
     private float lastTimeUpdate;
 
@@ -51,9 +73,26 @@ public class ChakraManager : MonoBehaviour
 
         // Add charge amount for time passed
         foreach(Chakra c in baseChakras)
-            c.Add(delta * chargeRate);
+            Charge(c, delta * baseChargeRate);
 
         lastTimeUpdate = time;
+    }
+
+    private void Charge(Chakra chakra, float amount)
+    {
+        float mult = 1;
+
+        Zodiac z = timeManager.GetZodiacHour();
+        if(zodiacElements.ContainsKey(z))
+        {
+            if(chakra.Type == zodiacElements[z])
+                mult *= zodiacChargeMult;
+        }
+
+        if(chakra.Type == focused)
+            mult *= focusChargeMult;
+
+        chakra.Add(amount * mult);
     }
 
     public bool DepleteChakra(ChakraType type, float amount)

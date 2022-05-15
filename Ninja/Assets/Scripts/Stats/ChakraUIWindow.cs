@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ChakraUIWindow : MultipleChoiceWindow
 {
@@ -9,7 +8,8 @@ public class ChakraUIWindow : MultipleChoiceWindow
 
     [SerializeField] private ChakraUIButton[] chakraImages;
 
-    private ChakraType selected;
+    private ChakraUIButton selected;
+    private ChakraUIButton lastFocus;
 
     private void Start() 
     {
@@ -24,20 +24,20 @@ public class ChakraUIWindow : MultipleChoiceWindow
             i.UpdateValue(characterStats.GetChakraAmount(i.Type));
     }
 
-    public void Select(Vector3 position, ChakraType type)
+    public void Select(Vector3 position, ChakraUIButton button)
     {
         if(convertWindow.IsOpen)
         {
-            convertWindow.Initialize(this, selected, type, characterStats.GetChakraAmount(selected), characterStats.GetChakraAmount(type), 1f);
+            convertWindow.Initialize(this, selected.Type, button.Type, characterStats.GetChakraAmount(selected.Type), characterStats.GetChakraAmount(button.Type), 1f);
         }
         else
         {
-            selected = type;    
-            OpenActionWindow(position, type);
+            selected = button;    
+            OpenActionWindow(position);
         }
     }
 
-    public void OpenActionWindow(Vector3 position, ChakraType type)
+    public void OpenActionWindow(Vector3 position)
     {
         actionWindow.Open();
         actionWindow.transform.position = position;
@@ -46,7 +46,7 @@ public class ChakraUIWindow : MultipleChoiceWindow
     public void StartConvert()
     {
         convertWindow.Open();
-        convertWindow.Initialize(this, selected, selected, characterStats.GetChakraAmount(selected), 0, 1f);
+        convertWindow.Initialize(this, selected.Type, selected.Type, characterStats.GetChakraAmount(selected.Type), 0, 1f);
     }
 
     public void ApplyConvert(ChakraType from, ChakraType to, float amount)
@@ -56,6 +56,14 @@ public class ChakraUIWindow : MultipleChoiceWindow
 
     public void Focus()
     {
-        characterStats.Focus(selected);
+        characterStats.Focus(selected.Type);
+        UpdateFocus(selected);
+    }
+
+    private void UpdateFocus(ChakraUIButton button)
+    {
+        if(lastFocus) lastFocus.ShowFocus(false);
+        button.ShowFocus(true);
+        lastFocus = button;
     }
 }

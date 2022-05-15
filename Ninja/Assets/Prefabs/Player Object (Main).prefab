@@ -2988,6 +2988,7 @@ MonoBehaviour:
   doubleTapWindow: 0.25
   movementDisabled: 0
   interactionDisabled: 0
+  mouseDisabled: 0
 --- !u!114 &2138504049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3241,7 +3242,9 @@ MonoBehaviour:
     maxFull: 1
   focused: 0
   timeManager: {fileID: 0}
-  chargeRate: 1
+  baseChargeRate: 0.5
+  zodiacChargeMult: 2
+  focusChargeMult: 1.5
 --- !u!1 &8048313138737219164
 GameObject:
   m_ObjectHideFlags: 0
