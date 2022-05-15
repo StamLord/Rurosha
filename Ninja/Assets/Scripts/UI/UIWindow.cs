@@ -4,6 +4,9 @@ public class UIWindow : MonoBehaviour
 {
     [SerializeField] protected Animator animator;
     [SerializeField] private bool closeOnBack;
+    [SerializeField] private bool disableMovement;
+    [SerializeField] private bool disableMouse;
+    [SerializeField] private bool disableInteraction;
 
     private bool isOpen;
     public bool IsOpen {get {return isOpen;}}
@@ -22,7 +25,7 @@ public class UIWindow : MonoBehaviour
         isOpen = true;
         if(animator)
             animator.Play("show");
-        UIManager.Instance.AddWindow(this);
+        UIManager.Instance.AddWindow(this, disableMovement, disableMouse, disableInteraction);
     }
 
     public virtual void Close()
@@ -30,6 +33,6 @@ public class UIWindow : MonoBehaviour
         isOpen = false;
         if(animator)
             animator.Play("hide");
-        UIManager.Instance.RemoveWindow(this);
+        UIManager.Instance.RemoveWindow(this, disableMovement, disableMouse, disableInteraction);
     }
 }

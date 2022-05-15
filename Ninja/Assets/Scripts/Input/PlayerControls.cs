@@ -31,6 +31,7 @@ public class PlayerControls : MonoBehaviour
 
     [SerializeField] private bool movementDisabled;
     [SerializeField] private bool interactionDisabled;
+    [SerializeField] private bool mouseDisabled;
 
     void Update()
     {
@@ -67,14 +68,7 @@ public class PlayerControls : MonoBehaviour
             // Use
             UpdateVirtualButton("Use", _inputState.Use);
         
-            // Mouse Button 1
-            UpdateVirtualButton("Fire1", _inputState.MouseButton1);
-
-            // Mouse Button 2
-            UpdateVirtualButton("Fire2", _inputState.MouseButton2);
-
-            // Mouse Scroll
-            _inputState.ScrollInput = Input.GetAxis("Mouse ScrollWheel");
+            
 
             // Alpha numerics
             UpdateVirtualButton("Alpha1", _inputState.Num1);
@@ -87,6 +81,18 @@ public class PlayerControls : MonoBehaviour
             UpdateVirtualButton("Alpha8", _inputState.Num8);
             UpdateVirtualButton("Alpha9", _inputState.Num9);
             UpdateVirtualButton("Alpha0", _inputState.Num0);
+        }
+
+        if(mouseDisabled == false)
+        {
+            // Mouse Button 1
+            UpdateVirtualButton("Fire1", _inputState.MouseButton1);
+
+            // Mouse Button 2
+            UpdateVirtualButton("Fire2", _inputState.MouseButton2);
+
+            // Mouse Scroll
+            _inputState.ScrollInput = Input.GetAxis("Mouse ScrollWheel");
         }
     }
 
@@ -219,6 +225,16 @@ public class PlayerControls : MonoBehaviour
     public void EnableInteraction()
     {
         interactionDisabled = false;
+    }
+
+    public void EnableMouse()
+    {
+        mouseDisabled = false;
+    }
+
+    public void DisableMouse()
+    {
+        mouseDisabled = true;
     }
 }
 

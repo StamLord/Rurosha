@@ -142,11 +142,13 @@ public class UIManager : MonoBehaviour
         {
             _disabledMouse = false;
             if(OnEnableMouse != null) OnEnableMouse();
+            playerControls.EnableMouse();
         }
         else // Disable
         {
             _disabledMouse = true;
             if(OnDisableMouse != null) OnDisableMouse();
+            playerControls.DisableMouse();
         }
     }
 
