@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class DayNightManager : MonoBehaviour
 {
     [Header("Time Display")]
     [SerializeField] private float time;
     [SerializeField] private DayTime dayTime;
+    [SerializeField] private Zodiac zodiacHour;
 
     [Header("Time Settings")]
     [SerializeField] private float dayInRealHours;
@@ -24,6 +24,8 @@ public class DayNightManager : MonoBehaviour
     private float dayInRealSeconds;
     private float sunRiseRealSeconds;
     private float sunSetRealSeconds;
+    private int zodiacNumber;
+    private float zodiacDayPercentage;
 
     [System.Serializable]
     public struct DayTime
@@ -46,6 +48,9 @@ public class DayNightManager : MonoBehaviour
         dayInRealSeconds = dayInRealHours * 60 * 60 * timeMultiplier;
         sunRiseRealSeconds = sunRiseHour / 24 * dayInRealSeconds;
         sunSetRealSeconds = sunSetHour / 24 * dayInRealSeconds;
+
+        zodiacNumber =  Enum.GetNames(typeof(Zodiac)).Length;
+        zodiacDayPercentage = dayInRealSeconds / zodiacNumber;
 
         DebugCommandDatabase.AddCommand(new DebugCommand(
             "settime", 
@@ -86,7 +91,10 @@ public class DayNightManager : MonoBehaviour
         UpdateAmbient();
 
         if(Application.platform == RuntimePlatform.WindowsEditor)
+        {
             dayTime = GetDayTime();
+            zodiacHour = GetZodiacHour();
+        }
     }
 
     private void ProgressTime()
@@ -157,5 +165,20 @@ public class DayNightManager : MonoBehaviour
         totalTime += seconds;
 
         time = totalTime;
+    }
+
+    public Zodiac GetZodiacHour()
+    {
+        // Set back time 1 hour (rat starts at 23:00 and not 00:00)
+        float t = time - dayInRealSeconds / 24;
+        if(t < 0)
+            t += dayInRealSeconds;
+        
+        // Round upwards (23:59 aka time .99 should be rounded up to zodiac 0 aka rat)
+        int z = Mathf.CeilToInt(t / zodiacDayPercentage);
+        if(z >= zodiacNumber)
+            z -= zodiacNumber;
+
+        return (Zodiac)z;
     }
 }

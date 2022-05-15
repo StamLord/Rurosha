@@ -13,3 +13,5 @@ public enum EquipmentType {Head, Torso, Legs, Arms, Feet}
 public enum WeightClass {LIGHT, MEDIUM, HEAVY}
 
 public enum ChakraType {EARTH, WATER, FIRE, WIND, VOID, WOOD, THUNDER, METAL, ICE}
+
+public enum Zodiac {RAT, OX, TIGER, RABBIT, DRAGON, SNAKE, HORSE, GOAT, MONKEY, ROOSTER, DOG, BOAR}
