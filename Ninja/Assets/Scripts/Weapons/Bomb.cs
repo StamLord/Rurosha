@@ -85,17 +85,16 @@ public class Bomb : WeaponObject
     private void StartAimMultiple()
     {
         isAimingMultiple = true;
-        ShowTrajectory(0, true);
-        ShowTrajectory(1, true);
-        ShowTrajectory(2, true);
+        int ammo = weaponManager.GetAmmo();
+        for(int i = 0; i < ammo && i < lineRenderer.Length; i++)
+            ShowTrajectory(i, true);
     }
 
     private void CancelAimMultiple()
     {
         isAimingMultiple = false;
-        ShowTrajectory(0, false);
-        ShowTrajectory(1, false);
-        ShowTrajectory(2, false);
+        for(int i = 0; i < lineRenderer.Length; i++)
+            ShowTrajectory(i, false);
     }
 
     private void ThrowBomb(int index)
