@@ -1453,6 +1453,7 @@ MonoBehaviour:
   - {x: 0, y: -0.5, z: 0}
   upModifier: 0.2
   throwForce: 10
+  displayTrajectory: 0
   collisionMask:
     serializedVersion: 2
     m_Bits: 1
@@ -6501,6 +6502,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.25, z: 0}
   upModifier: 0.2
   throwForce: 20
+  displayTrajectory: 0
   collisionMask:
     serializedVersion: 2
     m_Bits: 1
@@ -7234,6 +7236,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.25, z: 0}
   upModifier: 0.2
   throwForce: 20
+  displayTrajectory: 0
   collisionMask:
     serializedVersion: 2
     m_Bits: 1
@@ -10439,12 +10442,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 1278044654590407813}
-  prefab: {fileID: 2728008844794060368, guid: c5ddf0f291f970243a62ef9af7d91317, type: 3}
-  _weaponManager: {fileID: 1278044654527455676}
+  projectile: {fileID: 0}
+  camera: {fileID: 0}
+  origins: []
+  upModifier: 0
+  throwForce: 0
   burstAmount: 3
   burstRange: 1
   burstSpread: 45
   lastShot: 0
+  aimTimeScale: 0.25
+  timeBeforeAimStart: 0.25
+  displayTrajectory: 0
+  lineRenderer: []
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  endOnCollision: 0
+  numPoints: 50
+  timeBetweenPoints: 0.1
   maxAngle:
     attributeName: Dexterity
     values:
@@ -10924,12 +10940,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 8206658476176231648}
-  prefab: {fileID: 2728008844794060368, guid: 8fc942549c3019d45a08471b1d2478a2, type: 3}
-  _weaponManager: {fileID: 1278044654527455676}
+  projectile: {fileID: 0}
+  camera: {fileID: 0}
+  origins: []
+  upModifier: 0
+  throwForce: 0
   burstAmount: 3
   burstRange: 1
   burstSpread: 45
   lastShot: 0
+  aimTimeScale: 0.25
+  timeBeforeAimStart: 0.25
+  displayTrajectory: 0
+  lineRenderer: []
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  endOnCollision: 0
+  numPoints: 50
+  timeBetweenPoints: 0.1
   maxAngle:
     attributeName: Dexterity
     values:
