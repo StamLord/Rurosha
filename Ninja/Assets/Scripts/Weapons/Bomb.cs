@@ -18,6 +18,7 @@ public class Bomb : WeaponObject
     [SerializeField] private float throwForce;
 
     [Header("Trajectory Settings")]
+    [SerializeField] private bool displayTrajectory;
     [SerializeField] private LayerMask collisionMask;
     [SerializeField] private bool endOnCollision;
 
@@ -111,7 +112,8 @@ public class Bomb : WeaponObject
 
     private void ShowTrajectory(int i, bool state)
     {
-        lineRenderer[i].enabled = state;
+        if(displayTrajectory)
+            lineRenderer[i].enabled = state;
     }
 
     private void UpdateTrajectory(int index)
