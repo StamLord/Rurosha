@@ -20,6 +20,7 @@ public class Shuriken : WeaponObject
     [SerializeField] private float aimTimeScale = .25f;
     [SerializeField] private float timeBeforeAimStart = .25f;
     private float aimStart;
+    private bool aimCanceled;
     private bool isAiming;
     private int mode; // 0 Single, 1 Horizontal, 2 Vertical, 3 Cross
 
@@ -46,15 +47,18 @@ public class Shuriken : WeaponObject
         switch (inputState.MouseButton1.State)
         {
             case VButtonState.PRESS_START:
+                aimCanceled = false;
                 if(isAiming == false)
                     aimStart = Time.time;
                 break;
             case VButtonState.PRESSED:
-                if(Time.time - aimStart >= timeBeforeAimStart)
+                if(isAiming == false && 
+                    aimCanceled == false && 
+                    Time.time - aimStart >= timeBeforeAimStart)
                     StartAim();
                 break;
             case VButtonState.PRESS_END:
-                if(Time.time < lastShot + shootRate.GetValue(manager.Stats))
+                if(aimCanceled || Time.time < lastShot + shootRate.GetValue(manager.Stats))
                     return;
 
                 float step = burstRange / (burstAmount - 1);
@@ -167,6 +171,7 @@ public class Shuriken : WeaponObject
     private void CancelAim()
     {
         isAiming = false;
+        aimCanceled = true;
         Time.timeScale = 1f;
         ShowTrajectory(0, false);
     }
