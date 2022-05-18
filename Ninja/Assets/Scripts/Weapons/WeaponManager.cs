@@ -10,6 +10,9 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private CharacterStats _characterStats;
     public CharacterStats Stats {get {return _characterStats;}}
 
+    [SerializeField] private Camera _camera;
+    public Camera Camera {get {return _camera;}}
+
     [SerializeField] private InputState _inputState;
     public InputState InputState {get {return _inputState;}}
     
@@ -41,8 +44,11 @@ public class WeaponManager : MonoBehaviour
 
     [SerializeField] private GameObject _lastActive;
 
-    public delegate void ChangeSelectionDeleget(int index);
-    public event ChangeSelectionDeleget ChangeSelectionEvent;
+    public delegate void ChangeSelectionDelegate(int index);
+    public event ChangeSelectionDelegate ChangeSelectionEvent;
+
+    public delegate void ChangeCursorDelegate(CursorType cursor);
+    public event ChangeCursorDelegate ChangeCursorEvent;
 
     public delegate void ChangeItemDeleget(int index, Item item, int stack = 0);
     public event ChangeItemDeleget ChangeItemEvent;
@@ -379,5 +385,11 @@ public class WeaponManager : MonoBehaviour
     public GameObject GetActiveGameObject()
     {
         return _lastActive;
+    }
+
+    public void SetCursor(CursorType cursorType)
+    {
+        if(ChangeCursorEvent != null)
+            ChangeCursorEvent(cursorType);
     }
 }

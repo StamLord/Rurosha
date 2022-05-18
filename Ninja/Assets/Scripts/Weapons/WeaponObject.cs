@@ -9,6 +9,7 @@ public class WeaponObject : MonoBehaviour
     [SerializeField] protected Animator animator;
     protected InputState inputState {get {return manager.InputState;}}
     protected CharacterStats charStats {get {return manager.Stats;}}
+    protected new Camera camera {get {return manager.Camera;}}
 
     void Awake()
     {
