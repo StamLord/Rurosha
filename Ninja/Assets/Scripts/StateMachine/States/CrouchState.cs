@@ -82,7 +82,7 @@ public class CrouchState : PlayerState
         Vector3 targetVelocity = targetDirection;
 
         // Ground Control
-	    if (isGrounded) 
+	    if (IsGrounded) 
         {
             targetVelocity *= walkSpeed;
 

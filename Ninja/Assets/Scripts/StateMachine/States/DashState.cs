@@ -62,7 +62,7 @@ public class DashState : PlayerState
             Time.time - startTime >= distance / dashSpeed)
         {
             rigidbody.velocity = Vector3.zero;
-            if(isGrounded)
+            if(IsGrounded)
                 _stateMachine.SwitchState(1);
             else
                 _stateMachine.SwitchState(5);

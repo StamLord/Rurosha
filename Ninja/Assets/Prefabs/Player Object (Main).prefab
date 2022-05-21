@@ -1291,6 +1291,7 @@ MonoBehaviour:
   groundSlope: 0
   maxGroundedSlope: 50
   isGrounded: 0
+  groundNormal: {x: 0, y: 0, z: 0}
   direction: 1
   detectionType: 0
   groundSphereRadius: 0.3
@@ -1692,6 +1693,7 @@ MonoBehaviour:
   groundSlope: 0
   maxGroundedSlope: 50
   isGrounded: 0
+  groundNormal: {x: 0, y: 0, z: 0}
   direction: 0
   detectionType: 1
   groundSphereRadius: 0.3
@@ -2666,11 +2668,13 @@ MonoBehaviour:
     - 16
     - 18
     - 20
+  slopeSlideSpeed: 10
+  minSlideAngle: 30
   gravityOn: 1
   standingColliderSize: {x: 0, y: 2, z: 0}
   staminaDepleteRate: 20
   potentialStaminaDepleteRate: 2
-  enduranceExpGain: 0.01
+  agilityExpGain: 0.01
   gravity: 120
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}

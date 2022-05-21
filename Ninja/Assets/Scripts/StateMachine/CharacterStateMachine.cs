@@ -25,6 +25,8 @@ public class CharacterStateMachine : StateMachine
     [Header("Ground Detection")]
     [SerializeField] protected GroundSensor groundSensor;
     public bool IsGrounded { get {return groundSensor.IsGrounded;}}
+    public float GroundSlope { get {return groundSensor.GroundSlope;}}
+    public Vector3 GroundNormal { get {return groundSensor.GroundNormal;}}
 
     [Header("Ceiling Detection")]
     [SerializeField] protected GroundSensor ceilSensor;

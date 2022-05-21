@@ -24,7 +24,9 @@ public class PlayerState : State
         CharacterStateMachine.SetDetection(detection);
     }
 
-    public bool isGrounded {get {return CharacterStateMachine.IsGrounded;}}
+    public bool IsGrounded {get {return CharacterStateMachine.IsGrounded;}}
+    public float GroundSlope {get {return CharacterStateMachine.GroundSlope;}}
+    public Vector3 GroundNormal {get {return CharacterStateMachine.GroundNormal;}}
 
     public bool isUnder {get {return CharacterStateMachine.IsUnder;}}
 

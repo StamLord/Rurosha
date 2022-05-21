@@ -68,7 +68,7 @@ public class SimpleJumpState : PlayerState
         if(debugView) Debug.Log("State: Entered [Simple Jump State]");
 
         // Jump
-        if(isGrounded)
+        if(IsGrounded)
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
         else
         {
@@ -125,7 +125,7 @@ public class SimpleJumpState : PlayerState
         
         if (rigidbody.velocity.y <= 0) 
         {
-            if (isGrounded)
+            if (IsGrounded)
                 _stateMachine.SwitchState(0);
             else
                 _stateMachine.SwitchState(5);

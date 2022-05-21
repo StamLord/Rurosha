@@ -67,7 +67,7 @@ public class WallRunState : PlayerState
 
         if(reachedMaxDist|| velocityDropped || stillOnWall == false)
         {
-            if(isGrounded)
+            if(IsGrounded)
                 _stateMachine.SwitchState(1);
             else
                 _stateMachine.SwitchState(5);

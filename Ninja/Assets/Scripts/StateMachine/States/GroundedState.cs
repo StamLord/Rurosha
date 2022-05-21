@@ -9,6 +9,8 @@ public class GroundedState : PlayerState
     [Header("Control Settings")]
     [SerializeField] private float walkSpeed = 10.0f;
     [SerializeField] private AttributeDependant<float> _runSpeed;
+    [SerializeField] private float slopeSlideSpeed = 10.0f;
+    [SerializeField] private float minSlideAngle = 30f;
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private Vector3 standingColliderSize;
     
@@ -17,7 +19,7 @@ public class GroundedState : PlayerState
     [Header("Stats")]
     [SerializeField] private float staminaDepleteRate = 20f;
     [SerializeField] private float potentialStaminaDepleteRate = 2f;
-    [SerializeField] private float enduranceExpGain = .01f;
+    [SerializeField] private float agilityExpGain = .01f;
     [SerializeField] private float gravity = 20.0f;
 
     [Header("Input Data")]
@@ -68,19 +70,32 @@ public class GroundedState : PlayerState
         Vector3 targetVelocity = targetDirection;
 
         // Ground Control
-        if (isGrounded) 
+        if (IsGrounded) 
         {
             // Running
             if(inputVector != Vector3.zero && inputState.Run.State == VButtonState.PRESSED)
             {
                 if(characterStats.DepleteStamina(staminaDepleteRate * Time.deltaTime))
                 {
-                    characterStats.IncreaseAttributeExp("endurance", enduranceExpGain * Time.deltaTime);
+                    characterStats.IncreaseAttributeExp("agility", agilityExpGain * Time.deltaTime);
                     characterStats.DepletePotentailStamina(potentialStaminaDepleteRate * Time.deltaTime);
 
                     // Set relevant speed
                     //targetVelocity *= runSpeedPerAgilityLevel[characterStats.GetAttributeLevel("agility") - 1];
                     targetVelocity *= _runSpeed.GetValue(characterStats);
+
+                    // Slide down slopes
+                    if(GroundSlope > minSlideAngle) 
+                    {
+                        Vector3 slopeSide = Vector3.Cross(GroundNormal, Vector3.up);
+                        Vector3 slopeDown = Vector3.Cross(GroundNormal, slopeSide);
+
+                        // Make sure we are going down the slope
+                        Vector3 projected = Vector3.ProjectOnPlane(targetVelocity, GroundNormal);
+                        float dotProduct = Vector3.Dot(slopeDown.normalized, projected.normalized);
+                        if(dotProduct > .8f)
+                            targetVelocity += slopeDown * slopeSlideSpeed;
+                    }
 
                 }
                 else
@@ -108,14 +123,14 @@ public class GroundedState : PlayerState
             GetComponent<Kick>().ActivateKick();
 
         // Switch to AirSTate
-        if (isGrounded == false) 
+        if (IsGrounded == false) 
         {
             _stateMachine.SwitchState(5);
             return;
         }
 
         // Jump
-        if (inputState.Jump.Pressed && isGrounded) 
+        if (inputState.Jump.Pressed && IsGrounded) 
         {
             _stateMachine.SwitchState(2);
             return;

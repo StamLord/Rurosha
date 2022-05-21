@@ -188,7 +188,7 @@ public class AirState : PlayerState
                 _stateMachine.SwitchState(4);
 
         // Switch to GroundedState
-        if (isGrounded /*&& rigidbody.velocity.y <= 0*/) 
+        if (IsGrounded /*&& rigidbody.velocity.y <= 0*/) 
         {
             airJumps = 0;
             lastWallRunNormal = Vector3.zero;

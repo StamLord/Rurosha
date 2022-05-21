@@ -77,7 +77,7 @@ public class JumpState : PlayerState
         
         _timeStamp = Time.time;
         _jumpDirection = targetDirection;
-        _fromGround = isGrounded;
+        _fromGround = IsGrounded;
 
         if(_fromGround == false)
         {
@@ -114,7 +114,7 @@ public class JumpState : PlayerState
         Vector3 targetVelocity = targetDirection;
 
         // Ground Control
-        if (isGrounded) 
+        if (IsGrounded) 
         {
             if(inputState.Run.State == VButtonState.PRESSED)
             {
@@ -149,7 +149,7 @@ public class JumpState : PlayerState
                 OnJumpCharge(pressTime / maxPressTime);
 
             // Release of jump button
-            if (inputState.Jump.State == VButtonState.UNPRESSED && isGrounded) 
+            if (inputState.Jump.State == VButtonState.UNPRESSED && IsGrounded) 
             {    
                 rigidbody.velocity = new Vector3(rigidbody.velocity.x,  CalculateJumpVerticalSpeed(), rigidbody.velocity.z);
                 ResetCharging();
