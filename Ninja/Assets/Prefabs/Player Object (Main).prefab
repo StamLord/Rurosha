@@ -1004,7 +1004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1800498566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.01}
+  m_LocalPosition: {x: 0, y: 0.018, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3382,7 +3382,7 @@ MonoBehaviour:
   prepared:
   - {fileID: 11400000, guid: 991b72205509a3d47abfb60cbfb674dd, type: 2}
   - {fileID: 11400000, guid: e81d2417c9e9302449d01b788601ed1d, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: e5d7fb4e3419eb04fa529426ef28ff41, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -4847,6 +4847,81 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 1551188740537858101}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2299315325196898881
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3429342130462978894}
+    m_Modifications:
+    - target: {fileID: 2299315325191128787, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_Name
+      value: Grappling Pull VFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.043300003
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.092999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.49999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.86602545
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -120
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299315325191128788, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2e67ce143dd484d49b1c95e1cd82aebe, type: 3}
+--- !u!198 &5772439 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2299315325191128790, guid: 2e67ce143dd484d49b1c95e1cd82aebe,
+    type: 3}
+  m_PrefabInstance: {fileID: 2299315325196898881}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2890678754290144421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4934,6 +5009,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: -2577548232221058511, guid: f26b39a2ed1e25f4b81d21a389c434af,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -2577548232221058511, guid: f26b39a2ed1e25f4b81d21a389c434af,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2577548232221058511, guid: f26b39a2ed1e25f4b81d21a389c434af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 635547659545568360, guid: f26b39a2ed1e25f4b81d21a389c434af,
         type: 3}
       propertyPath: m_Layer
@@ -4961,6 +5051,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f26b39a2ed1e25f4b81d21a389c434af, type: 3}
+--- !u!1 &1919917294875613861 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5568371526223589888, guid: f26b39a2ed1e25f4b81d21a389c434af,
+    type: 3}
+  m_PrefabInstance: {fileID: 2890678754290144421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3429342130462978894 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f26b39a2ed1e25f4b81d21a389c434af,
@@ -5112,6 +5208,11 @@ PrefabInstance:
       objectReference: {fileID: 6944390854823740390}
     - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
+      propertyPath: pullVfx
+      value: 
+      objectReference: {fileID: 5772439}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
       propertyPath: projectile
       value: 
       objectReference: {fileID: 5248171932173236031, guid: b85efb8a4ef11ec468401bd2615b1d3f,
@@ -5136,6 +5237,11 @@ PrefabInstance:
       propertyPath: grappleOrigin
       value: 
       objectReference: {fileID: 1800498567}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: spinningCylinder
+      value: 
+      objectReference: {fileID: 1919917294875613861}
     - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: characterStateMachine
