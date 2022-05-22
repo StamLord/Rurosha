@@ -38,6 +38,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private GameObject _bomb;
     [SerializeField] private GameObject _makibishi;
     [SerializeField] private GameObject _bow;
+    [SerializeField] private GameObject _grappling_hook;
     [SerializeField] private GameObject _item;
     [SerializeField] private GameObject _itemBowl;
     [SerializeField] private GameObject _equipment;
@@ -68,6 +69,7 @@ public class WeaponManager : MonoBehaviour
         if(_bomb)_bomb.GetComponent<WeaponObject>().SetWeaponManager(this);
         if(_makibishi)_makibishi.GetComponent<WeaponObject>().SetWeaponManager(this);
         if(_bow)_bow.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_grappling_hook)_grappling_hook.GetComponent<WeaponObject>().SetWeaponManager(this);
         
         SelectItem();
 
@@ -201,6 +203,9 @@ public class WeaponManager : MonoBehaviour
                     break;
                 case WeaponType.BOW:
                     ActivateObject(_bow);
+                    break;
+                case WeaponType.GRAPPLING_HOOK:
+                    ActivateObject(_grappling_hook);
                     break;
             }
         }

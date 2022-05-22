@@ -17,4 +17,11 @@ public class Pickup : PhysicalObject
                 Destroy(transform.gameObject);
         }
     }
+
+    public void Use(WeaponManager manager)
+    {
+        if(_item)
+            if(manager.AddItem(_item))
+                Destroy(transform.gameObject);
+    }
 }

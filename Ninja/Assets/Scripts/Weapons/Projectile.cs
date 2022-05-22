@@ -75,6 +75,9 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     private Vector3 startPos;
     private Vector3 startSpeed;
 
+    public delegate void ProjecitleStopDelegate(RaycastHit hit);
+    public event ProjecitleStopDelegate OnProjecitleStop;
+
     void Start()
     {
         startTime = Time.time;
@@ -163,6 +166,10 @@ public class Projectile : MonoBehaviour, IHitboxResponder
 
         // Deactivate objects
         SetObjectsActiveDelay(objectsToDeactivate, false, deactivateDelay);
+
+        // Notify listeners
+        if(OnProjecitleStop != null)
+            OnProjecitleStop(hitDetected);
     }
 
     private void StopHitbox()

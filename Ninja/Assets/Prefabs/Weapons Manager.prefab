@@ -3043,6 +3043,7 @@ MonoBehaviour:
   _bomb: {fileID: 8206658475898245647}
   _makibishi: {fileID: 1490965673}
   _bow: {fileID: 3938885920157272676}
+  _grappling_hook: {fileID: 1278044655267218402}
   _item: {fileID: 6750107000280842123}
   _itemBowl: {fileID: 8755732813976696161}
   _equipment: {fileID: 1176702670223031955}
@@ -3269,17 +3270,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95fe9e4c8ac766042a0856e47aa2c4b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  animator: {fileID: 0}
   player: {fileID: 0}
-  joint: {fileID: 0}
   lr: {fileID: 0}
-  grappleMask:
-    serializedVersion: 2
-    m_Bits: 1
+  characterStateMachine: {fileID: 0}
+  grappleState: {fileID: 0}
+  projectile: {fileID: 0}
+  springForce: 100
+  springDamper: 10
   grappleOrigin: {fileID: 1278044656024170873}
-  grappleTo: {fileID: 0}
+  pullRate: 10
+  rigidPullForce: 5
+  maxFlyTime: 1
+  pickupPullSpeed: 30
+  pickupDistance: 1
+  animationPoints: 30
+  animationWaves: 5
+  animationWaveHeight: 0.2
+  animationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  state: 0
   grapplePoint: {x: 0, y: 0, z: 0}
-  started: 0
-  maxDistance: 20
+  grappleTo: {fileID: 0}
+  rigidGrappleTo: {fileID: 0}
+  pickupGrappleTo: {fileID: 0}
+  joint: {fileID: 0}
+  projInstance: {fileID: 0}
 --- !u!120 &1278044655267218404
 LineRenderer:
   m_ObjectHideFlags: 0
