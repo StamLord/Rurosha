@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Hitbox : MonoBehaviour
 {
+    private enum HitboxShape {BOX, SPHERE}
+
     [Header("Hitbox Settings")]
+    [SerializeField] private HitboxShape shape;
     [SerializeField] private Vector3 size = new Vector3(1,1,1);
     [SerializeField] private Vector3 offset = Vector3.zero;
     [SerializeField] private LayerMask hitMask;
@@ -55,17 +58,18 @@ public class Hitbox : MonoBehaviour
 
         if(isActive)
         {
+            Collider[] colliders = new Collider[0];
             Vector3 centerOffset = transform.position + transform.TransformVector(offset);
-            Vector3 sizeScaled = new Vector3(transform.lossyScale.x * size.x, transform.lossyScale.y * size.y, transform.lossyScale.z * size.z);
-            
-            Collider[] colliders = Physics.OverlapBox(centerOffset, sizeScaled / 2, transform.rotation, hitMask);
-
-            // Debug.DrawLine(transform.position, transform.position + transform.TransformVector(offset), Color.red, 1f);
-
-            // Debug.DrawLine(centerOffset, centerOffset + transform.right * sizeScaled.x / 2, Color.yellow, 1f);
-            // Debug.DrawLine(centerOffset, centerOffset + transform.up * sizeScaled.y / 2, Color.yellow, 1f);
-            // Debug.DrawLine(centerOffset, centerOffset + transform.forward * sizeScaled.z / 2, Color.yellow, 1f);
-            // Debug.Break();
+                    Vector3 sizeScaled = new Vector3(transform.lossyScale.x * size.x, transform.lossyScale.y * size.y, transform.lossyScale.z * size.z);
+            switch(shape)
+            {
+                case HitboxShape.BOX:
+                    colliders = Physics.OverlapBox(centerOffset, sizeScaled *.5f, transform.rotation, hitMask);
+                    break;
+                case HitboxShape.SPHERE:
+                    colliders = Physics.OverlapSphere(centerOffset, sizeScaled.x, hitMask);
+                    break;
+            }
 
             foreach(Collider col in colliders)
             {
@@ -94,11 +98,18 @@ public class Hitbox : MonoBehaviour
     private void OnDrawGizmos()
     {
         Color red = Color.red;
-
         red.a = (isActive) ? .75f : .25f;
         Gizmos.color = red;
-
         Gizmos.matrix = this.transform.localToWorldMatrix;
-        Gizmos.DrawCube(offset, size);
+
+        switch(shape)
+        {
+            case HitboxShape.BOX:
+                Gizmos.DrawCube(offset, size);
+                break;
+            case HitboxShape.SPHERE:
+                Gizmos.DrawSphere(offset, size.x);
+                break;
+        }
     }
 }
