@@ -60,8 +60,9 @@ public class DayNightManager : MonoBehaviour
             {
                 string[] splitTime = parameters[0].Split(':');
                 int hours, minutes, seconds;
-                
+
                 if(splitTime.Length == 3)
+                {
                     if(int.TryParse(splitTime[0], out hours))
                         if(int.TryParse(splitTime[1], out minutes))
                             if(int.TryParse(splitTime[2], out seconds))
@@ -69,6 +70,24 @@ public class DayNightManager : MonoBehaviour
                                 SetDayTime(hours, minutes, seconds);
                                 return "World time was set to: " + parameters[0];
                             }
+                }
+                else if(splitTime.Length == 2)
+                {
+                    if(int.TryParse(splitTime[0], out hours))
+                        if(int.TryParse(splitTime[1], out minutes))
+                        {
+                            SetDayTime(hours, minutes, 0);
+                            return "World time was set to: " + parameters[0] + ":00";
+                        }
+                }
+                else if(splitTime.Length == 1)
+                {
+                    if(int.TryParse(splitTime[0], out hours))
+                    {
+                        SetDayTime(hours, 0, 0);
+                        return "World time was set to: " + parameters[0] + ":00:00";
+                    }
+                }
 
                 return "Invalid time format. Format must be: HH:MM:SS";
             }));
