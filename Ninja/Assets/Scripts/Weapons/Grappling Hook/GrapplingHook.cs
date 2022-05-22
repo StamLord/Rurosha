@@ -30,6 +30,8 @@ public class GrapplingHook : WeaponObject
     [SerializeField] private int animationWaves = 5;
     [SerializeField] private float animationWaveHeight = .2f;
     [SerializeField] private AnimationCurve animationCurve;
+    [SerializeField] private ParticleSystem pullVfx;
+    [SerializeField] private GameObject spinningCylinder;
 
     [Header("Real Time Data")]
     [SerializeField] private State state;
@@ -51,6 +53,7 @@ public class GrapplingHook : WeaponObject
     {
         ProcessInput();
         DrawRope();
+        SpinCylinder();
     }
 
     private void ProcessInput()
@@ -71,16 +74,26 @@ public class GrapplingHook : WeaponObject
                     StopGrapple();
                 else if(inputState.MouseButton1.State == VButtonState.PRESS_START)
                 {
+                    SpinCylinder(360f * Time.deltaTime);
                     // Pull pickup to you and add item
                     if(pickupGrappleTo && pickupPullStarted == false)
                         StartCoroutine("PullPickup");
                     // Pull rigidbody to you
                     else if(rigidGrappleTo)
+                    {
+                        if(pullVfx.isStopped) pullVfx.Play();
                         rigidGrappleTo.AddForce((grappleOrigin.position - rigidGrappleTo.position) * rigidPullForce, ForceMode.VelocityChange);
+                    }
                 }
                 // Slowly pull yourself to target
                 else if(inputState.MouseButton1.State == VButtonState.PRESSED)
-                        joint.maxDistance -= Time.deltaTime * pullRate;
+                {
+                    joint.maxDistance -= Time.deltaTime * pullRate;
+                    if(pullVfx.isStopped) pullVfx.Play();
+                    SpinCylinder(360f * Time.deltaTime);
+                }
+                else
+                    pullVfx.Stop();
                 break;
         }
     }
@@ -213,5 +226,20 @@ public class GrapplingHook : WeaponObject
             rigidGrappleTo.isKinematic = false;
 
         pickupPullStarted = false;
+    }
+
+    private void SpinCylinder()
+    {
+        switch(state)
+        {
+            case State.FIRING:
+                SpinCylinder(-720 * Time.deltaTime);
+                break;
+        }
+    }
+
+    private void SpinCylinder(float amount)
+    {
+        spinningCylinder.transform.Rotate(new Vector3(amount, 0, 0));
     }
 }
