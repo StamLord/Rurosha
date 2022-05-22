@@ -159,6 +159,7 @@ public class GrapplingHook : WeaponObject
     private void StopGrapple()
     {
         state = State.READY;
+        pullVfx.Stop();
         
         if(pickupPullStarted)
             StopCoroutine("PullPickup");
