@@ -5309,6 +5309,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
+      propertyPath: animationWaveHeightOverTime.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
       propertyPath: animationCurve.m_Curve.Array.data[0].tangentMode
       value: 34
       objectReference: {fileID: 0}
@@ -5321,6 +5326,46 @@ PrefabInstance:
         type: 3}
       propertyPath: animationCurve.m_Curve.Array.data[2].tangentMode
       value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: animationWaveHeightOverTime.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: animationWaveHeightOverTime.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: animationWaveHeightOverTime.m_Curve.Array.data[0].inSlope
+      value: -2.5032046
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: animationWaveHeightOverTime.m_Curve.Array.data[1].inSlope
+      value: -0.060365856
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: animationWaveHeightOverTime.m_Curve.Array.data[0].outSlope
+      value: -2.5032046
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: animationWaveHeightOverTime.m_Curve.Array.data[1].inWeight
+      value: 0.30551416
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: animationWaveHeightOverTime.m_Curve.Array.data[1].outSlope
+      value: -0.060365856
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044655267218407, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: animationWaveHeightOverTime.m_Curve.Array.data[0].outWeight
+      value: 0.058122206
       objectReference: {fileID: 0}
     - target: {fileID: 1278044656024170870, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}

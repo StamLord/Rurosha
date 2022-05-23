@@ -26,9 +26,11 @@ public class GrapplingHook : WeaponObject
     private bool pickupPullStarted;
 
     [Header("Animation")]
+    [SerializeField] private Vector3 ropeProjectileOffset;
     [SerializeField] private int animationPoints = 10;
     [SerializeField] private int animationWaves = 5;
     [SerializeField] private float animationWaveHeight = .2f;
+    [SerializeField] private AnimationCurve animationWaveHeightOverTime;
     [SerializeField] private AnimationCurve animationCurve;
     [SerializeField] private ParticleSystem pullVfx;
     [SerializeField] private GameObject spinningCylinder;
@@ -191,8 +193,8 @@ public class GrapplingHook : WeaponObject
                 for (int i = 0; i < animationPoints; i++)
                 {
                     float p = (float)i / animationPoints;
-                    Vector3 pos = Vector3.Lerp(grappleOrigin.position, projInstance.transform.position, p);
-                    pos += projInstance.transform.up * Mathf.Sin(p * animationWaves * Mathf.PI) * animationWaveHeight * animationCurve.Evaluate(p);
+                    Vector3 pos = Vector3.Lerp(grappleOrigin.position, projInstance.transform.position + projInstance.transform.TransformVector(ropeProjectileOffset), p);
+                    pos += projInstance.transform.up * Mathf.Sin(p * animationWaves * Mathf.PI) * animationWaveHeight * animationCurve.Evaluate(p) * animationWaveHeightOverTime.Evaluate((Time.time - fireStartTime) / maxFlyTime);
                     lr.SetPosition(i, pos);
                 }
 
@@ -202,7 +204,7 @@ public class GrapplingHook : WeaponObject
                     lr.enabled = true;
                 lr.positionCount = 2;
                 lr.SetPosition(0, grappleOrigin.position);
-                lr.SetPosition(1, projInstance.transform.position);
+                lr.SetPosition(1, projInstance.transform.position + projInstance.transform.TransformVector(ropeProjectileOffset));
                 break;
         }
     }

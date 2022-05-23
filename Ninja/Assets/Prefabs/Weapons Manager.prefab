@@ -3288,9 +3288,16 @@ MonoBehaviour:
   maxFlyTime: 1
   pickupPullSpeed: 30
   pickupDistance: 1
+  ropeProjectileOffset: {x: 0, y: 0, z: -0.23}
   animationPoints: 30
   animationWaves: 5
   animationWaveHeight: 0.2
+  animationWaveHeightOverTime:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   animationCurve:
     serializedVersion: 2
     m_Curve: []
