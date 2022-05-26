@@ -25,6 +25,11 @@ public class GrapplingHook : WeaponObject
     private float fireStartTime;
     private bool pickupPullStarted;
 
+    [Header("Aim Settings")]
+    [SerializeField] private float aimFixDistance = 50;
+    [SerializeField] private float aimMinDistance = .5f;
+    [SerializeField] private LayerMask aimFixLayer;
+
     [Header("Animation")]
     [SerializeField] private Vector3 ropeProjectileOffset;
     [SerializeField] private int animationPoints = 10;
@@ -108,18 +113,36 @@ public class GrapplingHook : WeaponObject
         // Get direction of projectile from hand to target
         RaycastHit hit;
         Vector3 direction;
-        if(Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 50f))
-            direction = hit.point - grappleOrigin.position;
-        else
-            direction = camera.transform.position + camera.transform.forward * 50 - grappleOrigin.position;
+        bool raycast = Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, aimFixDistance, aimFixLayer);
+        bool tooClose = false;
 
-        // Instantiate and orient projectile
+        if(raycast)
+        {
+            tooClose = Vector3.Distance(hit.point, camera.transform.position) < aimMinDistance;
+            direction = hit.point - grappleOrigin.position;
+        }
+        else
+            direction = camera.transform.position + camera.transform.forward * aimFixDistance - grappleOrigin.position;
+
+
+        // Instantiate and Prepare projectile
         projInstance = Instantiate(projectile, grappleOrigin.position, Quaternion.identity).GetComponent<Projectile>();
-        projInstance.transform.forward = direction;
-        
-        // Prepare projectile
         projInstance.SetIgnoreTransform(transform.root);
         projInstance.OnProjecitleStop += StartGrapple;
+
+        // Position and orient
+        if(tooClose)
+        {
+            projInstance.transform.forward = camera.transform.position + camera.transform.forward * aimFixDistance - grappleOrigin.position;
+            // If we didn't hit ourselves, stop projectile
+            if(hit.transform.root != transform.root)
+            {
+                projInstance.transform.position = hit.point;
+                projInstance.StopProjectile(hit);
+            }
+        }
+        else
+            projInstance.transform.forward = direction;
     }
 
     private void StartGrapple(RaycastHit hit)

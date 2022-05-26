@@ -97,6 +97,8 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     public void SetIgnoreTransform(Transform transform)
     {
         ignoreTransform = transform;
+        foreach(Hitbox h in hitbox)
+            h.SetIgnoreTransform(transform);
     }
 
     void Update()
@@ -137,23 +139,23 @@ public class Projectile : MonoBehaviour, IHitboxResponder
 
         // Check collision
         if (CollisionCheck())
-            StopProjectile();
+            StopProjectile(hitDetected);
 
         lastPosition = transform.position;
     }
 
-    private void StopProjectile()
+    public void StopProjectile(RaycastHit hit)
     {
         stopped = true;
 
         // Set correct position and hierarchy
-        transform.position = hitDetected.point + transform.forward * penetration;
-        transform.SetParent(hitDetected.transform, true);
+        transform.position = hit.point + transform.forward * penetration;
+        transform.SetParent(hit.transform, true);
         
         // Apply physics
-        Rigidbody rb = hitDetected.transform.GetComponent<Rigidbody>();
+        Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
         if(rb == null)
-            rb = hitDetected.transform.GetComponentInParent<Rigidbody>();
+            rb = hit.transform.GetComponentInParent<Rigidbody>();
         if(rb)
             rb.AddForce(transform.forward * pushForce, ForceMode.Impulse);
 
@@ -169,7 +171,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
 
         // Notify listeners
         if(OnProjecitleStop != null)
-            OnProjecitleStop(hitDetected);
+            OnProjecitleStop(hit);
     }
 
     private void StopHitbox()
@@ -207,7 +209,8 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             hit = Physics.Raycast(transform.position, transform.forward, out hitDetected, speed * 2f * Time.deltaTime, hitMask);
 
         if(hit && hitDetected.transform.root == ignoreTransform)
-                hit = false;
+            hit = false;
+
         return hit;
     }
 

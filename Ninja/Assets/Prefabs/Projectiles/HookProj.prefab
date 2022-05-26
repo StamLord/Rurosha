@@ -694,7 +694,6 @@ GameObject:
   - component: {fileID: 5248171932173236028}
   - component: {fileID: 5248171932173236029}
   - component: {fileID: 5248171932173236030}
-  - component: {fileID: 8726597129875349312}
   - component: {fileID: 6058809591785331382}
   m_Layer: 10
   m_Name: HookProj
@@ -756,8 +755,7 @@ MonoBehaviour:
   activateDelay: 0
   objectsToActivate: []
   deactivateDelay: 0.5
-  objectsToDeactivate:
-  - {fileID: 0}
+  objectsToDeactivate: []
   objectsCollided: []
   ignoreTransform: {fileID: 0}
 --- !u!114 &5248171932173236030
@@ -772,6 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shape: 0
   size: {x: 0.1, y: 0.1, z: 0.25}
   offset: {x: 0, y: 0, z: -0.1}
   hitMask:
@@ -782,20 +781,6 @@ MonoBehaviour:
   collided: []
   lastPosition: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
---- !u!136 &8726597129875349312
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5248171932173236031}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.06
-  m_Height: 0.25
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: -0.12}
 --- !u!114 &6058809591785331382
 MonoBehaviour:
   m_ObjectHideFlags: 0

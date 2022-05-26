@@ -25,6 +25,8 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private Vector3 velocity;
     public Vector3 Velocity {get {return velocity;}}
 
+    private Transform ignoreTransform;
+
     public void StartColliding(bool activeForOneFrame = false)
     {
         isActive = true;    
@@ -47,6 +49,11 @@ public class Hitbox : MonoBehaviour
         _responder = responder;
     }
 
+    public void SetIgnoreTransform(Transform transform)
+    {
+        ignoreTransform = transform;
+    }
+
     private void Update()
     {
         if(lastActiveState != isActive)
@@ -58,9 +65,11 @@ public class Hitbox : MonoBehaviour
 
         if(isActive)
         {
+            // Get colliders in range
             Collider[] colliders = new Collider[0];
             Vector3 centerOffset = transform.position + transform.TransformVector(offset);
-                    Vector3 sizeScaled = new Vector3(transform.lossyScale.x * size.x, transform.lossyScale.y * size.y, transform.lossyScale.z * size.z);
+            Vector3 sizeScaled = new Vector3(transform.lossyScale.x * size.x, transform.lossyScale.y * size.y, transform.lossyScale.z * size.z);
+
             switch(shape)
             {
                 case HitboxShape.BOX:
@@ -73,6 +82,11 @@ public class Hitbox : MonoBehaviour
 
             foreach(Collider col in colliders)
             {
+                // Skip ignore
+                if(col.transform.root == ignoreTransform)
+                    continue;
+                
+                // Collide if we didn't already collide with it
                 if(collided.Contains(col) == false)
                 {
                     _responder.CollisionWith(col, this);
