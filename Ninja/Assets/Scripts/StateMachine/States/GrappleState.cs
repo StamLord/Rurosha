@@ -40,7 +40,6 @@ public class GrappleState : PlayerState
         // targetVelocity = ropeForward * inputVector.z + ropeRight * inputVector.x;
 
         targetVelocity = targetDirection * speed;
-        Debug.Log(targetVelocity);
         
         // Move Rigidbody
         rigidbody.AddForce(targetVelocity, ForceMode.Acceleration);

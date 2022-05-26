@@ -12,7 +12,6 @@ public class GroundedState : PlayerState
     [SerializeField] private float slopeSlideSpeed = 10.0f;
     [SerializeField] private float minSlideAngle = 30f;
     [SerializeField] private bool gravityOn = true;
-    [SerializeField] private Vector3 standingColliderSize;
     
     [Space(20f)]
     
