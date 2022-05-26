@@ -8,8 +8,6 @@ public class CrouchState : PlayerState
     [SerializeField] private float walkSpeed = 10.0f;
     [SerializeField] private float airControl = 5f;
     [SerializeField] private bool gravityOn = true;
-    [SerializeField] private CapsuleCollider standCollider;
-    [SerializeField] private CapsuleCollider crouchCollider;
     
     [SerializeField] private float gravity = 20.0f;
 	[SerializeField] private float maxVelocityChange = 10.0f;
@@ -50,8 +48,8 @@ public class CrouchState : PlayerState
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Crouch State]");
         
-        crouchCollider.enabled = true;
-        standCollider.enabled = false;
+        colliderManager.SetBody(ColliderManager.BodyCollider.CROUCH);
+        colliderManager.SetLegs(ColliderManager.BodyCollider.CROUCH);
 
         SetVisibility(crouchVisibility);
         SetDetection(crouchDetection);
@@ -62,8 +60,8 @@ public class CrouchState : PlayerState
     protected override void OnExitState()
     {
         base.OnExitState();
-        crouchCollider.enabled = false;
-        standCollider.enabled = true;
+        colliderManager.SetBody(ColliderManager.BodyCollider.STAND);
+        colliderManager.SetLegs(ColliderManager.BodyCollider.STAND);
 
         SetVisibility(1f);
         SetDetection(1f);

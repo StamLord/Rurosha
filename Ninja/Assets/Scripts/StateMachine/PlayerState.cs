@@ -13,6 +13,7 @@ public class PlayerState : State
 
     public InputState inputState { get { return CharacterStateMachine.inputState; }}
     public CharacterStats characterStats { get { return CharacterStateMachine.characterStats; }}
+    public ColliderManager colliderManager { get {return CharacterStateMachine.colliderManager; }}
 
     public void SetVisibility(float visibility)
     {
