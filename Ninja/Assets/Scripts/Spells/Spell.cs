@@ -9,18 +9,24 @@ public class Spell : ScriptableObject
 
     public float spellCost;
     public ChakraType chakraType;
+    
+    public enum CastType {UNSTOPPABLE, STOPPABLE, CONTINUOUS}
+    public CastType castType;
 
     public GameObject spellObject;
     public bool multiCast;
-    public bool casterParent;
+
+    public enum ParentType {NONE, TRANSFORM, CAMERA}
+    public ParentType parentType;
+
     public bool inheritRotation;
 
     public int healAmount;
 
-    public bool Cast(CharacterStats characterStats, out GameObject spellObject, out bool casterParent, out bool inheritRotation)
+    public bool Cast(CharacterStats characterStats, out GameObject spellObject, out ParentType parentType, out bool inheritRotation)
     {
         spellObject = this.spellObject;
-        casterParent = this.casterParent;
+        parentType = this.parentType;
         inheritRotation = this.inheritRotation;
 
         if(characterStats.DepleteChakra(chakraType, spellCost) == false)

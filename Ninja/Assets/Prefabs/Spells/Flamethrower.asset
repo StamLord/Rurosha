@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd588ee36f979644fa1c864747d7b981, type: 3}
-  m_Name: Earth Stomp
+  m_Name: Flamethrower
   m_EditorClassIdentifier: 
-  spellName: Earth Stomp
-  spellCost: 0.2
-  chakraType: 0
+  spellName: Flamethrower
+  spellCost: 0.01
+  chakraType: 2
   castType: 0
-  spellObject: {fileID: 5239417034969217828, guid: 53b13b78097f18142a61771671a0c61d,
+  spellObject: {fileID: 5239417034969217828, guid: a3e80b3a8dbb38641b94faae60046a7b,
     type: 3}
   multiCast: 0
-  parentType: 0
-  inheritRotation: 0
+  parentType: 2
+  inheritRotation: 1
   healAmount: 0

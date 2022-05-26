@@ -8,6 +8,9 @@ public class SpellManager : MonoBehaviour
     [SerializeField] private Spell[] prepared;
     [SerializeField] private CharacterStats characterStats;
     [SerializeField] private new Camera camera;
+    
+    [SerializeField] private Spell activeSpell;
+    [SerializeField] private SpellObject activeObject;
 
     Dictionary<string, SpellObject> spellObjects = new Dictionary<string, SpellObject>();
 
@@ -63,9 +66,9 @@ public class SpellManager : MonoBehaviour
         Spell spell = prepared[preparedIndex];
 
         GameObject spellObject;
-        bool casterParent;
+        Spell.ParentType parentType;
         bool inheritRotation;
-        bool success = spell.Cast(characterStats, out spellObject, out casterParent, out inheritRotation);
+        bool success = spell.Cast(characterStats, out spellObject, out parentType, out inheritRotation);
         
         if(success == false)
             return false;
@@ -75,45 +78,70 @@ public class SpellManager : MonoBehaviour
         {
             SpellObject spellObj = spellObjects[spell.spellName];
 
-            // Position
-            spellObj.transform.position = characterStats.transform.position + spellObj.offset;
-            
-            // Rotation
-            if(inheritRotation)
-                if(camera)
-                    spellObj.transform.rotation = camera.transform.rotation;
-                else
-                    spellObj.transform.rotation = characterStats.transform.rotation;
+            // Position and rotate
+            switch(parentType)
+            {
+                case Spell.ParentType.TRANSFORM:
+                    spellObj.transform.SetParent(characterStats.transform);
+                    spellObj.transform.localPosition = spellObj.offset;
+                    if(inheritRotation)
+                        spellObj.transform.rotation = characterStats.transform.rotation;
+                    break;
+                case Spell.ParentType.CAMERA:
+                    spellObj.transform.SetParent(camera.transform);
+                    spellObj.transform.localPosition = spellObj.offset;
+                    if(inheritRotation)
+                        spellObj.transform.rotation = camera.transform.rotation;
+                    break;
+            }
             
             spellObj.Activate(this);
+            activeObject = spellObj;
         }
         // Instantiate and keep reference for future activation
         else
         {
             GameObject obj = Instantiate(spellObject, characterStats.transform.position, Quaternion.identity);
-
-            if(casterParent)
-                obj.transform.SetParent(characterStats.transform);
-
-            // Rotation
-            if(inheritRotation)
-                if(camera)
-                    obj.transform.rotation = camera.transform.rotation;
-                else
-                    obj.transform.rotation = characterStats.transform.rotation;
-
             SpellObject spellObj = obj.GetComponent<SpellObject>();
-            
-            // Position
-            obj.transform.position += spellObj.offset;
+
+            // Parent, position and rotate
+            switch(parentType)
+            {
+                case Spell.ParentType.TRANSFORM:
+                    obj.transform.SetParent(characterStats.transform);
+                    obj.transform.localPosition = spellObj.offset;
+                    if(inheritRotation)
+                        obj.transform.rotation = characterStats.transform.rotation;
+                    break;
+                case Spell.ParentType.CAMERA:
+                    obj.transform.SetParent(camera.transform);
+                    obj.transform.localPosition = spellObj.offset;
+                    if(inheritRotation)
+                        obj.transform.rotation = camera.transform.rotation;
+                    break;
+            }
 
             if(spellObj)
             {
                 spellObjects[spell.spellName] = spellObj;
                 spellObj.Activate(this);
+                activeObject = spellObj;
             }
         }
 
+        activeSpell = spell;
         return true;
+    }
+
+    public void Stop()
+    {
+        if(activeObject)
+        {
+            activeObject.Stop();
+            activeObject = null;
+        }
+
+        if(activeSpell)
+            activeSpell = null;
     }
 }

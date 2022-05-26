@@ -6,4 +6,5 @@ public abstract class SpellObject : MonoBehaviour
 {
     public Vector3 offset;
     public abstract void Activate(SpellManager manager);
+    public virtual void Stop(){}
 }
