@@ -3288,6 +3288,11 @@ MonoBehaviour:
   maxFlyTime: 1
   pickupPullSpeed: 30
   pickupDistance: 1
+  aimFixDistance: 50
+  aimMinDistance: 0.5
+  aimFixLayer:
+    serializedVersion: 2
+    m_Bits: 0
   ropeProjectileOffset: {x: 0, y: 0, z: -0.23}
   animationPoints: 30
   animationWaves: 5
