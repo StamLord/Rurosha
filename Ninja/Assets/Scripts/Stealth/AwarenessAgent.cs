@@ -37,17 +37,30 @@ public class AwarenessAgent : MonoBehaviour
         public float detected;
     }
 
+    private List<StealthAgent> agentsInRange = new List<StealthAgent>();
+    private List<AlmostVisible> almostVisibleToRemove= new List<AlmostVisible>();
+    private List<StealthAgent> agentsToRemove= new List<StealthAgent>();
+
+    public delegate void onSeeAgentDelegate(StealthAgent agent);
+    public event onSeeAgentDelegate OnSeeAgent;
+
+    public delegate void onLoseAgentDelegate(StealthAgent agent);
+    public event onLoseAgentDelegate OnLoseAgent;
+
+    public delegate void onHearSoundDelegate(Vector3 position);
+    public event onHearSoundDelegate OnHearSound;
+
     private void Update()
     {
         VisionUpdate();
-        DebugLight();
+        //DebugLight();
     }
 
     private void VisionUpdate()
     {
         // Get all entities in lookRadius
         Collider[] inRange = Physics.OverlapSphere(transform.position, lookRadius, visionMask);
-        List<StealthAgent> stealthAgents = new List<StealthAgent>();
+        agentsInRange.Clear();
 
         // Get StealthAgents
         foreach(Collider col in inRange)
@@ -55,12 +68,12 @@ public class AwarenessAgent : MonoBehaviour
             if(col.transform != transform)
             {   
                 StealthAgent sAgent = col.transform.root.GetComponent<StealthAgent>();
-                if(sAgent) stealthAgents.Add(sAgent);
+                if(sAgent) agentsInRange.Add(sAgent);
             }
         }
-
+        
         // Check visibility
-        foreach(StealthAgent sAgent in stealthAgents)
+        foreach(StealthAgent sAgent in agentsInRange)
         {   
             // No need to do anytihng if already in visibleAgents list
             if(visibleAgents.Contains(sAgent)) 
@@ -71,7 +84,7 @@ public class AwarenessAgent : MonoBehaviour
         }
 
         // Loop over "almost visible" agent
-        List<AlmostVisible> toRemoveAv = new List<AlmostVisible>();
+        almostVisibleToRemove.Clear();
 
         for(int i = 0; i < almostVisibleAgents.Count; i++)
         {
@@ -91,29 +104,29 @@ public class AwarenessAgent : MonoBehaviour
             if(av.detected >= 1)
             {
                 AddVisible(av.stealthAgent);
-                toRemoveAv.Add(av);
+                almostVisibleToRemove.Add(av);
             }
             else if (av.detected <= 0)
             {
-                toRemoveAv.Add(av);
+                almostVisibleToRemove.Add(av);
                 av.stealthAgent.RemoveAwareness(this);
             }
         }
 
         // Remove the agents not visible anymore
-        foreach(AlmostVisible av in toRemoveAv)
+        foreach(AlmostVisible av in almostVisibleToRemove)
             RemoveAlmostVisible(av);
         
         // Find which agents are not visible anymore
-        List<StealthAgent> toRemove = new List<StealthAgent>();
+        agentsToRemove.Clear();
         foreach(StealthAgent s in visibleAgents)
         {
             if(IsLineOfSight(s) == false)
-                toRemove.Add(s);
+                agentsToRemove.Add(s);
         }
 
         // Remove the agents not visible anymore
-        foreach(StealthAgent s in toRemove)
+        foreach(StealthAgent s in agentsToRemove)
         {
             s.RemoveAwareness(this);
             RemoveVisible(s);
@@ -182,16 +195,24 @@ public class AwarenessAgent : MonoBehaviour
     {
         if(visibleAgents.Contains(sAgent)) return;
         visibleAgents.Add(sAgent);
+        
+        if(OnSeeAgent != null)
+            OnSeeAgent(sAgent);
     }
 
     private void RemoveVisible(StealthAgent sAgent)
     {
         visibleAgents.Remove(sAgent);
+
+        if(OnLoseAgent != null)
+            OnLoseAgent(sAgent);
     }
 
     public void AddSound(Vector3 soundOrigin)
     {
         lastSoundDetected = soundOrigin;
+        if(OnHearSound != null)
+            OnHearSound(soundOrigin);
     }
 
     private void DebugLight()

@@ -52,6 +52,9 @@ public class GroundedState : PlayerState
     protected override void OnEnterState()
     {
         base.OnEnterState();
+        
+        SetSoundType(StealthAgent.SoundType.WALK);
+
         if(debugView) Debug.Log("State: Entered [Ground State]");
     }
 

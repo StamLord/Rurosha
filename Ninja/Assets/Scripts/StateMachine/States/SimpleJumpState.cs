@@ -85,6 +85,8 @@ public class SimpleJumpState : PlayerState
 
         timeStamp = Time.time;
         originalSpeed =  new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+        
+        SetSoundType(StealthAgent.SoundType.NONE);
     }
 
     protected override void OnExitState()

@@ -86,6 +86,8 @@ public class AirState : PlayerState
 
         Vector3 inputVector = inputState.AxisInput;
         inputVector.Normalize();
+
+        SetSoundType(StealthAgent.SoundType.NONE);
     }
 
     public override void OnStateUpdate()

@@ -24,6 +24,8 @@ public class StealthAgent : MonoBehaviour
     [SerializeField] private float runSound = 5f;
     [SerializeField] private float crouchSound = .5f;
     [SerializeField] private LayerMask soundMask;
+    public enum SoundType {WALK, RUN, CROUCH, NONE}
+    [SerializeField] private SoundType soundType;
     
     [SerializeField] private float lastSound;
     [SerializeField] private float soundEvery = 1f;
@@ -34,18 +36,29 @@ public class StealthAgent : MonoBehaviour
     [SerializeField]private Dictionary<AwarenessAgent, float> awareness = new Dictionary<AwarenessAgent, float>();
     public Dictionary<AwarenessAgent, float> Awareness {get {return awareness;}}
 
-    void Update()
+    private void Update()
     {
         UpdateHighestDetection();
 
         if(Time.time - lastSound >= soundEvery)
-        {    
-            CreateSound(walkSound);
+        {
+            switch(soundType)
+            {
+                case SoundType.WALK:
+                    CreateSound(walkSound);
+                    break;
+                case SoundType.RUN:
+                    CreateSound(runSound);
+                    break;
+                case SoundType.CROUCH:
+                    CreateSound(crouchSound);
+                    break;
+            }
             lastSound = Time.time;
         }
     }
 
-    void CreateSound(float radius)
+    private void CreateSound(float radius)
     {
         Collider[] inRange = Physics.OverlapSphere(transform.position, radius, soundMask);
         
@@ -61,12 +74,17 @@ public class StealthAgent : MonoBehaviour
 
     public void SetVisibility(float visibility)
     {
-        this.visibilityModifier = visibility;
+        visibilityModifier = visibility;
     }
 
     public void SetDetection(float detection)
     {
-        this.detectionModifier = detection;
+        detectionModifier = detection;
+    }
+
+    public void SetSoundType(SoundType type)
+    {
+        soundType = type;
     }
 
     public void SetAwareness(AwarenessAgent agent, float value)
@@ -126,13 +144,25 @@ public class StealthAgent : MonoBehaviour
         return d;
     }
 
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         Color soundColor = Color.black;
         soundColor.a = .5f;
 
         Gizmos.color = soundColor;
-        Gizmos.DrawWireSphere(transform.position, walkSound);
+
+        switch(soundType)
+        {
+            case SoundType.WALK:
+                Gizmos.DrawWireSphere(transform.position, walkSound);
+                break;
+            case SoundType.RUN:
+                Gizmos.DrawWireSphere(transform.position, runSound);
+                break;
+            case SoundType.CROUCH:
+                Gizmos.DrawWireSphere(transform.position, crouchSound);
+                break;
+        }
     }
 
 }

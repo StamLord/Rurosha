@@ -23,6 +23,11 @@ public class CharacterStateMachine : StateMachine
         stealthAgent.SetDetection(detection);
     }
 
+    public void SetSoundType(StealthAgent.SoundType type)
+    {
+        stealthAgent.SetSoundType(type);
+    }
+
     [Header("Ground Detection")]
     [SerializeField] protected GroundSensor groundSensor;
     public bool IsGrounded { get {return groundSensor.IsGrounded;}}

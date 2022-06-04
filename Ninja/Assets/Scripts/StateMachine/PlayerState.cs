@@ -25,6 +25,11 @@ public class PlayerState : State
         CharacterStateMachine.SetDetection(detection);
     }
 
+    public void SetSoundType(StealthAgent.SoundType type)
+    {
+        CharacterStateMachine.SetSoundType(type);
+    }
+
     public bool IsGrounded {get {return CharacterStateMachine.IsGrounded;}}
     public float GroundSlope {get {return CharacterStateMachine.GroundSlope;}}
     public Vector3 GroundNormal {get {return CharacterStateMachine.GroundNormal;}}

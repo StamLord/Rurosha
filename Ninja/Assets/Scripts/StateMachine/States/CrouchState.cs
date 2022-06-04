@@ -53,6 +53,7 @@ public class CrouchState : PlayerState
 
         SetVisibility(crouchVisibility);
         SetDetection(crouchDetection);
+        SetSoundType(StealthAgent.SoundType.CROUCH);
 
         if(OnCrouchStart != null) OnCrouchStart();
     }

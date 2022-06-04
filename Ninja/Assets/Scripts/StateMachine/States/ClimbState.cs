@@ -66,7 +66,7 @@ public class ClimbState : PlayerState
         if(debugView) Debug.Log("State: Entered [Climb State]");
 
         rigidbody.isKinematic = true;
-
+        SetSoundType(StealthAgent.SoundType.NONE);
         inputState = ((CharacterStateMachine)_stateMachine).inputState;
     }
 

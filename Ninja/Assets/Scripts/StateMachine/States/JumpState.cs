@@ -79,6 +79,8 @@ public class JumpState : PlayerState
         _jumpDirection = targetDirection;
         _fromGround = IsGrounded;
 
+        SetSoundType(StealthAgent.SoundType.NONE);
+
         if(_fromGround == false)
         {
             if (wallJumpOn && wallDetected && wallNormal.y >= wallJumpMinimumSlope)
