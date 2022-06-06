@@ -18,6 +18,10 @@ public class AwarenessAgent : MonoBehaviour
     [SerializeField] public float detectRate = 1f;
     [SerializeField] public float undetectRate = .3f;
 
+    [SerializeField] public bool alert;
+    [SerializeField] public float alertDetectRate = 10f;
+    [SerializeField] public float alertUndetectRate = .1f;
+
     [Header("Hearing")]
     [SerializeField] private float hearingRadius = 20f;
     [SerializeField] private Vector3 lastSoundDetected;
@@ -56,6 +60,11 @@ public class AwarenessAgent : MonoBehaviour
         //DebugLight();
     }
 
+    public void SetAlert(bool state)
+    {
+        alert = state;
+    }
+
     private void VisionUpdate()
     {
         // Get all entities in lookRadius
@@ -85,6 +94,14 @@ public class AwarenessAgent : MonoBehaviour
 
         // Loop over "almost visible" agent
         almostVisibleToRemove.Clear();
+        
+        float detect = detectRate;
+        float undetect = undetectRate;
+        if(alert)
+        {
+            detect = alertDetectRate;
+            undetect = alertUndetectRate;
+        }
 
         for(int i = 0; i < almostVisibleAgents.Count; i++)
         {
@@ -94,9 +111,9 @@ public class AwarenessAgent : MonoBehaviour
             // Otherwise, we substract from detection until it's 0
             // We inverse detection modfier to "undetect" so if in crouch state player is detected slower, he will also be "undetected" faster
             if(IsLineOfSight(av.stealthAgent))
-                av.detected += (detectRate * av.stealthAgent.Detection * Time.deltaTime);
+                av.detected += (detect * av.stealthAgent.Detection * Time.deltaTime);
             else
-                av.detected -= (undetectRate * Time.deltaTime);
+                av.detected -= (undetect * Time.deltaTime);
             
             // Update stealthAgent of this value
             av.stealthAgent.SetAwareness(this, av.detected);

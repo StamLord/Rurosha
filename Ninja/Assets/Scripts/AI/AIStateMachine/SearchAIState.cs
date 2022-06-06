@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SearchAIState : AIState
 {
@@ -16,6 +17,11 @@ public class SearchAIState : AIState
     private float waitStart;
     private bool waiting;
 
+    private float lookStartTime;
+    private float lookDuration = 1f;
+    private bool looking;
+    private Coroutine lookThenMove;
+
     protected override void OnEnterState()
     {
         lastSeen = AIStateMachine.enemyLastSeen;
@@ -25,8 +31,11 @@ public class SearchAIState : AIState
         AIStateMachine.AwarenessAgent.OnSeeAgent += SeeTarget;
         AIStateMachine.AwarenessAgent.OnHearSound += HearSound;
 
-        target = lastSeen;
-        MoveTo(lastSeen + lastDir);
+        // Alertness
+        AIStateMachine.AwarenessAgent.SetAlert(true);
+
+        target = lastSeen + lastDir;
+        MoveTo(target);
         searchStart = Time.time;
 
         if(debug)
@@ -38,12 +47,15 @@ public class SearchAIState : AIState
         // End search when time passes
         if(Time.time - searchStart >= maxSearchTime)
         {
+            // Switch to IdleAIState
             AIStateMachine.SwitchState(0);
             return;
         }
 
-        LookTowards(lastSeen);
-
+        // Look towrads target location unless running LookThenMove coroutine
+        if(looking == false)
+            LookTowards(target);
+        
         if(waiting == false)
         {
             if(TooFar(target, distanceThreshold) == false)
@@ -63,6 +75,8 @@ public class SearchAIState : AIState
     protected override void OnExitState()
     {
         AIStateMachine.AwarenessAgent.OnSeeAgent -= SeeTarget;
+        AIStateMachine.AwarenessAgent.OnHearSound -= HearSound;
+        AIStateMachine.AwarenessAgent.SetAlert(false);
     }
 
     private void SeeTarget(StealthAgent agent)
@@ -74,9 +88,29 @@ public class SearchAIState : AIState
 
     private void HearSound(Vector3 origin)
     {
-        target = origin;
+        if(looking)
+            StopCoroutine(lookThenMove);
+        else
+            lookStartTime = Time.time; // Only get time if on first sound so multiple sound don't reset count
+        
+        lookThenMove = StartCoroutine("LookThenMove", origin);
+    }
+
+    private IEnumerator LookThenMove(Vector3 target)
+    {
+        looking = true;
+
+        while(Time.time - lookStartTime < lookDuration)
+        {
+            LookTowards(target);
+            yield return null;
+        }
+
+        this.target = target;
         if(MoveTo(target))
             waiting = false;
+
+        looking = false;
     }
     
     private void OnDrawGizmos() 

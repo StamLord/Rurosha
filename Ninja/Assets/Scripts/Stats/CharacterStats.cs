@@ -163,6 +163,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    public delegate void HitDelegate();
+    public event HitDelegate OnHit;
+
     [SerializeField] private ChakraManager chakraManager;
 
     void Start()
@@ -432,7 +435,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         _staminaLastDeplete = Time.time;
     }
 
-    public bool DepleteStamina(float amount)
+    public bool DepleteStamina(float amount, bool greedy = false)
     {
         if(amount < 0)
         {
@@ -441,7 +444,11 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         }
 
         if(Stamina < amount)
+        {
+            if(greedy)
+                SubStamina(amount);
             return false;
+        }
 
         SubStamina(amount);
         return true;
@@ -489,10 +496,15 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     public bool GetHit(int softDamage, int hardDamage, DamageType damageType, Direction9 direction)
     {
+        // Send hit event - Can be listened to by AI
+        if(OnHit != null)
+            OnHit();
+        
         // Check if guarding in right direction
         if(guardOn)
         {
-            if(direction == Direction9.UP && guardDirection == Direction9.UP ||
+            if( direction == Direction9.CENTER ||
+                direction == Direction9.UP && guardDirection == Direction9.UP ||
                 direction == Direction9.DOWN && guardDirection == Direction9.DOWN ||
                 direction == Direction9.LEFT && guardDirection == Direction9.RIGHT ||
                 direction == Direction9.RIGHT && guardDirection == Direction9.LEFT ||

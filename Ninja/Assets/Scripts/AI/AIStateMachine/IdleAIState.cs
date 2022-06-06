@@ -9,6 +9,7 @@ public class IdleAIState : AIState
     [SerializeField] private float maxRoamRadius = 10f;
     [SerializeField] private float idleDuration = 5f;
     [SerializeField] private float distanceThreshold = 1f;
+    [SerializeField] private float investigateSounds;
 
     private float waitStart;
     private bool waiting;
@@ -17,7 +18,9 @@ public class IdleAIState : AIState
     protected override void OnEnterState()
     {
         target = GenerateNextPosition(transform.position, minRoamRadius, maxRoamRadius);
+        AIStateMachine.CharacterStats.OnHit += Hit;
         AIStateMachine.AwarenessAgent.OnSeeAgent += SeeTarget;
+        AIStateMachine.AwarenessAgent.OnHearSound += HearSound;
         waiting = true;
 
         if(debug)
@@ -26,6 +29,9 @@ public class IdleAIState : AIState
 
     public override void OnStateUpdate()
     {
+        // Turn towards next position along path
+        LookTowards(AIStateMachine.GetNextPosition());
+
         if(waiting == false)
         {
             if(TooFar(target, distanceThreshold) == false)
@@ -44,9 +50,17 @@ public class IdleAIState : AIState
 
     protected override void OnExitState()
     {
+        AIStateMachine.CharacterStats.OnHit -= Hit;
         AIStateMachine.AwarenessAgent.OnSeeAgent -= SeeTarget;
+        AIStateMachine.AwarenessAgent.OnHearSound -= HearSound;
     }
     
+    private void Hit()
+    {
+        // Switch to SearchAIState
+        AIStateMachine.SwitchState(2);
+    }
+
     private void SeeTarget(StealthAgent agent)
     {
         // Considered enemy?
@@ -54,6 +68,11 @@ public class IdleAIState : AIState
         // Switch to FightAIState
         AIStateMachine.enemy = agent;
         AIStateMachine.SwitchState(1);
+    }
+
+    private void HearSound(Vector3 origin)
+    {
+        // Switch to InvestigateAIState
     }
 
     private void OnDrawGizmos() 

@@ -18,11 +18,6 @@ public class AIInput : MonoBehaviour
     private RaycastHit sweepHit;
     private bool jumpStarted;
 
-    private void Start() 
-    {
-        navMeshAgent.isStopped = true;
-    }
-
     public bool CalculatePath(Vector3 target)
     {
         // Try to sample target on NavMesh
@@ -47,7 +42,11 @@ public class AIInput : MonoBehaviour
         pathPoint = 0;
         pathStarted = true;
         lastTarget = target;
-        return navMeshAgent.CalculatePath(target, path);
+
+        navMeshAgent.enabled = true;
+        bool success = navMeshAgent.CalculatePath(target, path);
+        navMeshAgent.enabled = false;
+        return success;
     }
 
     public Vector3 GetPathPosition()
@@ -117,6 +116,97 @@ public class AIInput : MonoBehaviour
         inputState.Jump.Set(VButtonState.UNPRESSED);
         jumpStarted = false;
         Debug.Log("JumpEnd");
+    }
+
+    public void PressButton(string button)
+    {
+        StartCoroutine("SimulateButtonPress", button);
+    }
+
+    public void HoldButton(string button)
+    {
+        StartCoroutine("SimulateHoldButton", button);
+    }
+
+    public void StopHoldButton(string button)
+    {
+        StartCoroutine("SimulateStopHoldButton", button);
+    }
+
+    private VButton GetVButton(string button)
+    {
+        VButton b = inputState.MouseButton1;
+
+        switch(button)
+        {
+            case "MB1":
+                b = inputState.MouseButton1;
+                break;
+            case "MB2":
+                b = inputState.MouseButton2;
+                break;
+            case "1":
+                b = inputState.Num1;
+                break;
+            case "2":
+                b = inputState.Num2;
+                break;
+            case "3":
+                b = inputState.Num3;
+                break;
+            case "4":
+                b = inputState.Num4;
+                break;
+            case "5":
+                b = inputState.Num5;
+                break;
+            case "6":
+                b = inputState.Num6;
+                break;
+            case "7":
+                b = inputState.Num7;
+                break;
+            case "8":
+                b = inputState.Num8;
+                break;
+            case "9":
+                b = inputState.Num9;
+                break;
+            case "0":
+                b = inputState.Num0;
+                break;
+            case "defense":
+                b = inputState.Defend;
+                break;
+        }
+
+        return b;
+    }
+
+    private IEnumerator SimulateButtonPress(string button)
+    {
+        VButton b = GetVButton(button);
+        b.Set(VButtonState.PRESS_START);
+        yield return null;
+        b.Set(VButtonState.PRESS_END);
+        yield return null;
+        b.Set(VButtonState.UNPRESSED);
+    }
+
+    private IEnumerator SimulateHoldButton(string button)
+    {
+        VButton b = GetVButton(button);
+        b.Set(VButtonState.PRESS_START);
+        yield return null;
+        b.Set(VButtonState.PRESSED);
+    }
+
+    private IEnumerator SimulateStopHoldButton(string button)
+    {
+        VButton b = GetVButton(button);
+        b.Set(VButtonState.PRESS_END);
+        yield return null;
+        b.Set(VButtonState.UNPRESSED);
     }
 
     private void OnDrawGizmos() 

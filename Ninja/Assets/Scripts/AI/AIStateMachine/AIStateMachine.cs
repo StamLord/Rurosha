@@ -5,8 +5,12 @@ using UnityEngine.AI;
 
 public class AIStateMachine : StateMachine
 {
+    [SerializeField] private CharacterStats characterStats;
+    public CharacterStats CharacterStats {get{return characterStats;}}
+    
     [SerializeField] private AwarenessAgent awarenessAgent;
     public AwarenessAgent AwarenessAgent {get{return awarenessAgent;}}
+    
     [SerializeField] private AIInput aiInput;
     
     public StealthAgent enemy;
@@ -23,6 +27,26 @@ public class AIStateMachine : StateMachine
     public void ClearPath()
     {
         aiInput.ClearPath();
+    }
+
+    public Vector3 GetNextPosition()
+    {
+        return aiInput.GetPathPosition();
+    }
+
+    public void PressButton(string button)
+    {
+        aiInput.PressButton(button);
+    }
+
+    public void HoldButton(string button)
+    {
+        aiInput.HoldButton(button);
+    }
+
+    public void StopHoldButton(string button)
+    {
+        aiInput.StopHoldButton(button);
     }
 
     public void SetDebugColor(Color color)

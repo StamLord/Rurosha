@@ -23,19 +23,34 @@ public class AIState : State
         aiStateMachine.ClearPath();
     }
 
-    protected void LookTowards(Vector3 target)
+    protected void LookTowards(Vector3 target, float speedMult = 1f)
     {
         Vector3 direction = target - transform.position;
         direction.y = 0;
         direction.Normalize();
 
         if(direction.magnitude == 0) return;
-        transform.forward = Vector3.Lerp(transform.forward, direction, turnSpeed * Time.deltaTime);;
+        transform.forward = Vector3.Lerp(transform.forward, direction, turnSpeed * speedMult * Time.deltaTime);;
     }
 
     protected bool TooFar(Vector3 target, float distanceThreshold)
     {
         return Vector3.Distance(transform.position, target) > distanceThreshold;
+    }
+
+    protected void PressButton(string button)
+    {
+        AIStateMachine.PressButton(button);
+    }
+
+    protected void HoldButton(string button)
+    {
+        AIStateMachine.HoldButton(button);
+    }
+
+    protected void StopHoldButton(string button)
+    {
+        AIStateMachine.StopHoldButton(button);
     }
 
     protected Vector3 GenerateNextPosition(Vector3 origin, float minRoamRadius, float maxRoamRadius)

@@ -11,21 +11,21 @@ public class CharacterStateMachine : StateMachine
     public ColliderManager colliderManager;
 
     [Header("Stealth Agent")]
-    [SerializeField] protected StealthAgent stealthAgent;
+    [SerializeField] private StealthAgent stealthAgent;
     
     public void SetVisibility(float visibility)
     {
-        stealthAgent.SetVisibility(visibility);
+        if(stealthAgent) stealthAgent.SetVisibility(visibility);
     }
 
     public void SetDetection(float detection)
     {
-        stealthAgent.SetDetection(detection);
+        if(stealthAgent) stealthAgent.SetDetection(detection);
     }
 
     public void SetSoundType(StealthAgent.SoundType type)
     {
-        stealthAgent.SetSoundType(type);
+        if(stealthAgent) stealthAgent.SetSoundType(type);
     }
 
     [Header("Ground Detection")]
