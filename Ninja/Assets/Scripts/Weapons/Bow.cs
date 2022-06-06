@@ -11,6 +11,8 @@ public class Bow : WeaponObject, IHitboxResponder
     [SerializeField] private GameObject arrow;
     [SerializeField] private List<GameObject> arrows = new List<GameObject>();
     [SerializeField] private float yArrowOffset = .1f;
+    [SerializeField] private bool arrowsConverge;
+    [SerializeField] private float arrowSpread = 30f;
 
     [Space(20)]
 
@@ -147,7 +149,10 @@ public class Bow : WeaponObject, IHitboxResponder
             bool active = (i < loadedArrows);
             arrows[i].SetActive(active);
             if(active)
+            {
                 arrows[i].transform.position = origin.position + origin.up * (i * yArrowOffset - midPoint);
+                arrows[i].transform.localEulerAngles = Vector3.zero;
+            }
         }
     }
 
@@ -160,18 +165,29 @@ public class Bow : WeaponObject, IHitboxResponder
         bool aimHit = Physics.Raycast(camera.position, camera.forward, out hit, raycastDistance, raycastMask);
         Debug.DrawRay(camera.position, camera.forward * raycastDistance, Color.green);
 
-        // Aim arrows at target
+        float angleStep = arrowSpread / (loadedArrows - 1);
+        float firstAngle = arrowSpread / 2;
+
+        // Aim arrows at target or spread
+        int activeIndex = 0;
         for(int i = 0; i < arrows.Count; i++)
         {
             // Skip inactive
             if(arrows[i].activeSelf == false) continue;
 
             // Rotate towards target
-            if(aimHit)
+            if(arrowsConverge && aimHit || loadedArrows == 1 && aimHit)
             {    
                 Quaternion rot = Quaternion.LookRotation(hit.point - arrows[i].transform.position, Vector3.up);
                 arrows[i].transform.rotation = rot;
             }
+            else 
+            {
+                Vector3 eulerAngles = new Vector3(firstAngle - angleStep * activeIndex, 0, 0);
+                arrows[i].transform.localEulerAngles = eulerAngles;
+            }
+
+            activeIndex++;
         }
     }
 
