@@ -46,6 +46,24 @@ public class WeaponObject : MonoBehaviour
     {
         animator.Play("AltUse");
     }
-
     
+    private void OnEnable() 
+    {
+        DrawWeapon();    
+    }
+
+    private void OnDisable() 
+    {
+        SheathWeapon();    
+    }
+
+    protected virtual void DrawWeapon()
+    {
+
+    }
+
+    protected virtual void SheathWeapon()
+    {
+
+    }
 }
