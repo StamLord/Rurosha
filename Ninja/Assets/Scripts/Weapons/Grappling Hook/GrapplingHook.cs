@@ -88,7 +88,7 @@ public class GrapplingHook : WeaponObject
                     // Pull rigidbody to you
                     else if(rigidGrappleTo)
                     {
-                        if(pullVfx.isStopped) pullVfx.Play();
+                        joint.maxDistance = 1;
                         rigidGrappleTo.AddForce((grappleOrigin.position - rigidGrappleTo.position) * rigidPullForce, ForceMode.VelocityChange);
                     }
                 }
