@@ -35,6 +35,9 @@ public class QuickSpellRing : UIWindow
     private bool visible;
     private float prevTimeScale;
 
+    public delegate void SpellChangeDelgate(Spell spell);
+    public event SpellChangeDelgate OnSpellChange;
+
     private void Update()
     {
         if(visible)
@@ -66,7 +69,11 @@ public class QuickSpellRing : UIWindow
         if(angle < 0)
              angle += 360;
         
+        int prevSelected = selected;
         selected = Mathf.FloorToInt(angle / (360 / selectionsNum));
+        if(prevSelected != selected)
+            if(OnSpellChange != null)
+                OnSpellChange(spellManager.GetPreparedSpell(selected));
     }
 
     private void UpdateSelectionImage()
