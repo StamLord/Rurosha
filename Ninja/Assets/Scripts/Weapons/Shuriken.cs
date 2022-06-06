@@ -209,6 +209,11 @@ public class Shuriken : WeaponObject
     private void SwitchMode()
     {
         mode = (mode > 2)? 0 : mode + 1;
+        UpdateCursor();
+    }
+
+    private void UpdateCursor()
+    {
         CursorType cursor = CursorType.SINGLE;
 
         switch(mode)
@@ -228,6 +233,18 @@ public class Shuriken : WeaponObject
         }
 
         manager.SetCursor(cursor);
+    }
+
+    protected override void DrawWeapon()
+    {
+        base.DrawWeapon();
+        UpdateCursor();
+    }
+
+    protected override void SheathWeapon()
+    {
+        base.SheathWeapon();
+        manager.SetCursor(CursorType.SINGLE);
     }
 }
 
