@@ -150,7 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1284276817081915286}
   - component: {fileID: 297401784288392675}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Stationary Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 2228348283272827149}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.02
   m_Height: 1
   m_Direction: 2
@@ -783,7 +783,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1311
+  m_VersionIndex: 1314
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -883,7 +883,7 @@ GameObject:
   - component: {fileID: 8726597129875349312}
   - component: {fileID: 6058809591785331382}
   - component: {fileID: 888196319161079562}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: ArrowProj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -938,7 +938,7 @@ MonoBehaviour:
   lastPosition: {x: 0, y: 0, z: 0}
   hitMask:
     serializedVersion: 2
-    m_Bits: 2625
+    m_Bits: 65
   hitbox:
   - {fileID: 5248171932173236030}
   collider: {fileID: 297401784288392675}
@@ -961,6 +961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shape: 0
   size: {x: 0.1, y: 0.1, z: 0.1}
   offset: {x: 0, y: 0, z: 1}
   hitMask:
