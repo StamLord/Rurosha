@@ -159,6 +159,13 @@ public class Melee : WeaponObject, IHitboxResponder
         if(rb) rb.AddForce(hitbox.Velocity * fistForce, ForceMode.Impulse);
     }
 
+    public void GuardedBy(Collider collider, Hitbox hitbox)
+    {
+        // Play guarded animation
+        // Depelte stamina
+        // Stun if run out of stamina
+    }
+    
     public void UpdateColliderState(bool state)
     {
          

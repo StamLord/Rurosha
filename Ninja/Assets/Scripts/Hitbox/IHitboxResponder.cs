@@ -5,6 +5,8 @@ using UnityEngine;
 public interface IHitboxResponder
 {
      void CollisionWith(Collider collider, Hitbox hitbox);
+     
+     void GuardedBy(Collider collider, Hitbox hitbox);
 
      void UpdateColliderState(bool newState);
 }

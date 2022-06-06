@@ -262,6 +262,13 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
         }
     }
 
+    public void GuardedBy(Collider collider, Hitbox hitbox)
+    {
+        // Play guarded animation
+        // Depelte stamina
+        // Stun if run out of stamina
+    }
+
     private IEnumerator SliceCoroutine(Plane plane, GameObject toSlice)
     {
         GameObject[] slices = Slicer.Slice(plane, toSlice);

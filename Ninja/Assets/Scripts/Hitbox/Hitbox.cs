@@ -11,6 +11,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private Vector3 size = new Vector3(1,1,1);
     [SerializeField] private Vector3 offset = Vector3.zero;
     [SerializeField] private LayerMask hitMask;
+    [SerializeField] private LayerMask guardMask;
     [SerializeField] private bool isActive;
 
     [Header("Debug Info")]
@@ -65,10 +66,30 @@ public class Hitbox : MonoBehaviour
 
         if(isActive)
         {
-            // Get colliders in range
-            Collider[] colliders = new Collider[0];
             Vector3 centerOffset = transform.position + transform.TransformVector(offset);
             Vector3 sizeScaled = new Vector3(transform.lossyScale.x * size.x, transform.lossyScale.y * size.y, transform.lossyScale.z * size.z);
+
+            // Check if hitbox hits a guard collider
+            Collider[] guardColliders = new Collider[0];
+            switch(shape)
+            {
+                case HitboxShape.BOX:
+                    guardColliders = Physics.OverlapBox(centerOffset, sizeScaled *.5f, transform.rotation, guardMask);
+                    break;
+                case HitboxShape.SPHERE:
+                    guardColliders = Physics.OverlapSphere(centerOffset, sizeScaled.x, guardMask);
+                    break;
+            }
+
+            // If hitbox guarded by anything we inform responder and don't proceed
+            if(guardColliders.Length > 0)
+            {
+                _responder.GuardedBy(guardColliders[0], this);
+                return;
+            }
+            
+            // Get colliders in range
+            Collider[] colliders = new Collider[0];
 
             switch(shape)
             {

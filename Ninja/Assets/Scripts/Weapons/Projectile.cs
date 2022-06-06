@@ -228,6 +228,13 @@ public class Projectile : MonoBehaviour, IHitboxResponder
         }
     }
 
+    public void GuardedBy(Collider collider, Hitbox hitbox)
+    {
+        // Play guarded animation
+        // Depelte stamina
+        // Stun if run out of stamina
+    }
+    
     public void UpdateColliderState(bool state)
     {
         if(state == false)

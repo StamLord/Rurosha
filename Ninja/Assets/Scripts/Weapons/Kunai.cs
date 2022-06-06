@@ -106,6 +106,13 @@ public class Kunai : WeaponObject, IHitboxResponder
         StartHanging();
     }
 
+    public void GuardedBy(Collider collider, Hitbox hitbox)
+    {
+        // Play guarded animation
+        // Depelte stamina
+        // Stun if run out of stamina
+    }
+
     public void UpdateColliderState(bool newState)
     {
 

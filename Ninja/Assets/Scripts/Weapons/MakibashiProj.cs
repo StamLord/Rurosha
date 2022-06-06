@@ -47,4 +47,11 @@ public class MakibashiProj : MonoBehaviour, IHitboxResponder
         if(state == false)
             objectsCollided.Clear();
     }
+
+    public void GuardedBy(Collider collider, Hitbox hitbox)
+    {
+        // Play guarded animation
+        // Depelte stamina
+        // Stun if run out of stamina
+    }
 }

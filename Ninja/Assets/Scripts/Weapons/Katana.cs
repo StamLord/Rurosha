@@ -5,6 +5,8 @@ using UnityEngine;
 public class Katana : WeaponObject, IHitboxResponder
 {
     [SerializeField] private Hitbox hitbox;
+    [SerializeField] private Collider guard;
+    [SerializeField] private ParticleSystem guardVfx;
 
     [SerializeField] private bool nextAttack;
     [SerializeField] private int lastAttack; // 0 left 1 right
@@ -49,6 +51,11 @@ public class Katana : WeaponObject, IHitboxResponder
     [SerializeField] private float mouseDeltaMargin = 1f;
     [SerializeField] private KatanaStance stance = KatanaStance.Medium;
 
+    [Header("Stun Settings")]
+    [SerializeField] private float staminaCostOnGuardedAttack;
+    [SerializeField] private float stunDuration = 3f;
+    [SerializeField] private bool stunned;
+
     public delegate void stanceSwitchDeltaDelegate(KatanaStance stance);
     public event stanceSwitchDeltaDelegate StanceSwitchDeltaEvent;
 
@@ -61,6 +68,7 @@ public class Katana : WeaponObject, IHitboxResponder
     void Start()
     {
         hitbox?.SetResponder(this);
+        hitbox.SetIgnoreTransform(transform.root);
     }
 
     void Update()
@@ -148,7 +156,8 @@ public class Katana : WeaponObject, IHitboxResponder
         
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
-        hurtbox?.Hit(softDamage, hardDamage, DamageType.Slash);
+        if(hurtbox)
+            hurtbox.Hit(softDamage, hardDamage, DamageType.Slash);
 
         //Slice
         Sliceable sliceable = collider.GetComponent<Sliceable>();
@@ -171,6 +180,36 @@ public class Katana : WeaponObject, IHitboxResponder
 
             StartCoroutine(SliceCoroutine(plane, toSlice));
         }
+    }
+
+    public void GuardedBy(Collider collider, Hitbox hitbox)
+    {
+        // Depelte stamina
+        bool outOfStamina = !charStats.DepleteStamina(staminaCostOnGuardedAttack, true);
+
+        // Stun if run out of stamina
+        if(outOfStamina) 
+            Stun();
+        else // Play guarded animation
+            animator.Play("katana_blocked");
+
+        // VFX
+        guardVfx?.Play();
+    }
+
+    private void Stun()
+    {
+        StartCoroutine("StunCoroutine");
+    }
+
+    private IEnumerator StunCoroutine()
+    {
+        stunned = true;
+        animator.Play("katana_stun_start");
+        animator.SetBool("STUN", true);
+        yield return new WaitForSeconds(stunDuration);
+        stunned = false;
+        animator.SetBool("STUN", false);
     }
 
     private IEnumerator SliceCoroutine(Plane plane, GameObject toSlice)
@@ -260,9 +299,14 @@ public class Katana : WeaponObject, IHitboxResponder
 
     public void Method1()
     {
+        if(stunned)
+            return;
+        
         // MB1  + MB2 = Defend
-        bool defend = (inputState.MouseButton1.Pressed && inputState.MouseButton2.Pressed);
+        bool defend = inputState.Defend.Pressed;//(inputState.MouseButton1.Pressed && inputState.MouseButton2.Pressed);
         animator.SetBool("Defending", defend);
+        guard.enabled = defend;
+        charStats.SetGuard(defend);
 
         if(defend)
             return;

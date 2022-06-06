@@ -2651,6 +2651,7 @@ MonoBehaviour:
   soundMask:
     serializedVersion: 2
     m_Bits: 2560
+  soundType: 0
   lastSound: 0
   soundEvery: 1
   detectedValue: 0
@@ -2849,7 +2850,7 @@ MonoBehaviour:
   - {fileID: 1584670585454484595}
   - {fileID: 2205105155448379905}
   - {fileID: 5279788705151545591}
-  _debugLogs: 1
+  _debugLogs: 0
   characterStats: {fileID: 6944390856915565334}
   inputState: {fileID: 1496715723}
   colliderManager: {fileID: 2527385649069118756}
@@ -5094,7 +5095,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].x
-      value: 35.050003
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].y
@@ -5102,11 +5103,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: -0.49999768
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 35.050003
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].y
@@ -5114,11 +5115,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: -0.49999768
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].x
-      value: 35.050003
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].y
@@ -5126,7 +5127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].z
-      value: -0.49999768
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 1490965675, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: camera
@@ -5137,6 +5138,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapons Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: _sword
+      value: 
+      objectReference: {fileID: 6944390856736947496}
     - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: _camera
@@ -5399,6 +5405,11 @@ PrefabInstance:
       propertyPath: animationWaveHeightOverTime.m_Curve.Array.data[0].outWeight
       value: 0.058122206
       objectReference: {fileID: 0}
+    - target: {fileID: 1278044655345775746, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: hitMask.m_Bits
+      value: 65
+      objectReference: {fileID: 0}
     - target: {fileID: 1278044656024170870, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_IsActive
@@ -5500,6 +5511,12 @@ Transform:
 --- !u!4 &6944390855830905279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1278044655267218405, guid: e0128e86a9a29e74b80317cb98468768,
+    type: 3}
+  m_PrefabInstance: {fileID: 8206658475264025178}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6944390856736947496 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1278044656508673906, guid: e0128e86a9a29e74b80317cb98468768,
     type: 3}
   m_PrefabInstance: {fileID: 8206658475264025178}
   m_PrefabAsset: {fileID: 0}

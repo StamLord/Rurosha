@@ -115,4 +115,11 @@ public class Bo : WeaponObject, IHitboxResponder
     {
         return;
     }
+
+    public void GuardedBy(Collider collider, Hitbox hitbox)
+    {
+        // Play guarded animation
+        // Depelte stamina
+        // Stun if run out of stamina
+    }
 }
