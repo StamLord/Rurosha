@@ -110,6 +110,12 @@ public class ChakraManager : MonoBehaviour
         return false;
     }
 
+    public void ChargeChakra(ChakraType type, float amount)
+    {
+        if(dict.ContainsKey(type))
+            dict[type].Add(amount);
+    }
+
     public void Focus(ChakraType type)
     {
         focused = type;

@@ -18,6 +18,7 @@ public class Pickup : PhysicalObject
         }
     }
 
+    // Used by Grappling Hook to pcik up items
     public void Use(WeaponManager manager)
     {
         if(_item)

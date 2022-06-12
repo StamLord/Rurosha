@@ -564,6 +564,11 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         return chakraManager.DepleteChakra(type, amount);
     }
 
+    public void ChargeChakra(ChakraType type, float amount)
+    {
+        chakraManager.ChargeChakra(type, amount);
+    }
+
     public void Convert(ChakraType from, ChakraType to, float amount)
     {
         chakraManager.Convert(from, to, amount, 1f);

@@ -67,12 +67,12 @@ public class Interactor : MonoBehaviour
     public delegate void updateCarryTimerDelegate(float time);
     public event updateCarryTimerDelegate UpdateCarryTimerEvent;
 
-    void Start()
+    private void Start()
     {
         InitializeCarry();        
     }
 
-    void InitializeCarry()
+    private void InitializeCarry()
     {
         switch(carryType)
         {
@@ -102,7 +102,7 @@ public class Interactor : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         CheckObject();
 
@@ -142,12 +142,12 @@ public class Interactor : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         UpdateCarriedObject();
     }
     
-    void CheckObject()
+    private void CheckObject()
     {
         //Debug.DrawRay(camera.position, camera.forward * interactionRange);
         RaycastHit hit;
@@ -164,7 +164,7 @@ public class Interactor : MonoBehaviour
         ClearSelection();
     }
 
-    void ClearSelection()
+    private void ClearSelection()
     {
         _currentSelection?.Highlight(false);
         _currentSelection = null;
@@ -173,7 +173,7 @@ public class Interactor : MonoBehaviour
             SelectionChangeEvent("");
     }
 
-    void ChangeSelection(Usable usable)
+    private void ChangeSelection(Usable usable)
     {
         if(_currentSelection) ClearSelection();
         usable.Highlight(true);
@@ -183,7 +183,7 @@ public class Interactor : MonoBehaviour
             SelectionChangeEvent(_currentSelection.GetText());
     }
 
-    void StartCarry()
+    private void StartCarry()
     {
         if(_currentSelection == null) return;
         
@@ -230,7 +230,7 @@ public class Interactor : MonoBehaviour
         }
     }
 
-    void StopCarry()
+    private void StopCarry()
     {
         switch(carryType)
         {
@@ -263,7 +263,7 @@ public class Interactor : MonoBehaviour
         carriedObject = null;
     }
 
-    void UpdateCarriedObject()
+    private void UpdateCarriedObject()
     {
         if(isCarrying == false || carryType != CarryType.PHYSICS)
             return;
@@ -275,7 +275,12 @@ public class Interactor : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
+    public void ChargeChakra(ChakraType type, float amount)
+    {
+        _characterStats.ChargeChakra(type, amount);
+    }
+
+    private void OnDrawGizmos()
     {
         if(!debugView) return;
         
