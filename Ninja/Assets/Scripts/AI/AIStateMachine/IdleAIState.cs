@@ -64,7 +64,13 @@ public class IdleAIState : AIState
     private void SeeTarget(StealthAgent agent)
     {
         // Considered enemy?
+        string targetFaction = agent.GetComponent<CharacterStats>().Faction;
+        float relation = AIStateMachine.CharacterStats.GetRelationship(targetFaction);
+        if(relation > -.5f)
+            return;
+
         // Brave enough?
+        
         // Switch to FightAIState
         AIStateMachine.enemy = agent;
         AIStateMachine.SwitchState(1);

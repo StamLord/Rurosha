@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour, IHurtboxResponder
 {
+    [Header("Faction")]
+    [SerializeField] private Faction faction;
+    public string Faction {get{return faction.FactionName;}}
+    
+    [Header("Hurtboxes")]
     [SerializeField] private Hurtbox[] hurtboxes;
     
     [Header("Attributes")]
@@ -582,5 +587,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     public float GetChakraAmount(ChakraType type)
     {
         return chakraManager.GetChakraAmount(type);
+    }
+
+    public float GetRelationship(string factionName)
+    {
+        return faction.GetRelationship(factionName);
     }
 }
