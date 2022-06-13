@@ -57,6 +57,6 @@ public class AIState : State
     {
         float distance = Random.Range(minRoamRadius, maxRoamRadius);
         Vector2 onCircle = Random.insideUnitCircle * distance;
-        return new Vector3(onCircle.x, 0, onCircle.y) + transform.position;
+        return new Vector3(onCircle.x, 0, onCircle.y) + origin;
     }
 }

@@ -10,6 +10,8 @@ public class IdleAIState : AIState
     [SerializeField] private float idleDuration = 5f;
     [SerializeField] private float distanceThreshold = 1f;
     [SerializeField] private float investigateSounds;
+    [SerializeField] private ScheduleAgent scheduleAgent;
+    [SerializeField] private TownManager townManager;
 
     private float waitStart;
     private bool waiting;
@@ -42,7 +44,16 @@ public class IdleAIState : AIState
         }
         else if(Time.time - waitStart >= idleDuration)
         {
-            target = GenerateNextPosition(transform.position, minRoamRadius, maxRoamRadius);
+            Task t = scheduleAgent.GetCurrentTask();
+            Vector3 coords;
+            float radius;
+            bool locationExists = townManager.GetLocation(t.location, out coords, out radius);
+
+            if(locationExists)
+                target = GenerateNextPosition(coords, radius, radius);
+            else
+                target = GenerateNextPosition(transform.position, minRoamRadius, maxRoamRadius);
+
             if(MoveTo(target))
                 waiting = false;
         }
