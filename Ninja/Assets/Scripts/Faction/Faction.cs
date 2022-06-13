@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Faction", menuName = "Ninja/Faction", order = 0)]
+[CreateAssetMenu(fileName = "Faction", menuName = "Faction", order = 0)]
 public class Faction : ScriptableObject 
 {
     [SerializeField] private string factionName;
