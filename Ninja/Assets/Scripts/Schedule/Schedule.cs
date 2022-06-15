@@ -15,4 +15,11 @@ public struct Task
     public float hours;
     public float minutes;
     public string location;
+
+    public Task (string location = "", float hours = 0f, float minutes = 0f)
+    {
+        this.location = location;
+        this.hours = hours;
+        this.minutes = minutes;
+    }
 }
