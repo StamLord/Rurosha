@@ -14,6 +14,7 @@ public class AIInput : MonoBehaviour
     [SerializeField] private int pathPoints;
     [SerializeField] private bool pathStarted;
     [SerializeField] private Vector3 lastTarget;
+    [SerializeField] private bool jumpOverObstacles;
 
     private RaycastHit sweepHit;
     private bool jumpStarted;
@@ -84,11 +85,15 @@ public class AIInput : MonoBehaviour
             // Perform input
             inputState.AxisInput = dir;
             
-            bool sweepTest = rigidbody.SweepTest(dir, out sweepHit, 1f);
-            if(sweepTest && sweepHit.point.y > transform.position.y)
-                if(jumpStarted == false)
-                    StartCoroutine("Jump", 1f);
-
+            // Jump if encounter obstacle
+            if(jumpOverObstacles)
+            {
+                bool sweepTest = rigidbody.SweepTest(dir, out sweepHit, 1f);
+                Debug.Log(sweepHit.transform.name);
+                if(sweepTest && sweepHit.point.y > transform.position.y)
+                    if(jumpStarted == false)
+                        StartCoroutine("Jump", 1f);
+            }
 
             // Advance to next point if close enough and end path if last point
             if(Vector3.Distance(transform.position, GetPathPosition()) < pointDistance)
