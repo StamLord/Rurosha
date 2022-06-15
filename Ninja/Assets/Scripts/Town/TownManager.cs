@@ -8,10 +8,14 @@ public class TownManager : MonoBehaviour
 
     public bool GetLocation(string name, out Vector3 coords, out float radius)
     {
-        name = name.ToLower();
-        bool found = false;
         coords = Vector3.zero;
         radius = 0f;
+
+        if(string.IsNullOrEmpty(name))
+            return false;
+        
+        name = name.ToLower();
+        bool found = false;
 
         foreach(Location l in town.locations)
         {
