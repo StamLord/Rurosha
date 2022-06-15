@@ -51,6 +51,7 @@ public class AIStateMachine : StateMachine
 
     public void SetDebugColor(Color color)
     {
-        meshRenderer.material.color = color;
+        if(meshRenderer)
+            meshRenderer.material.color = color;
     }
 }
