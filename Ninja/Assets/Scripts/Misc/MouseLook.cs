@@ -20,6 +20,11 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float maxRotZ = 1f;
     [SerializeField] private float rotSpeedZ = 2f;
 
+    [Header("Roll FX")]
+    [SerializeField] private float rollDuration = .5f;
+    [SerializeField] private bool rolling;
+    [SerializeField] private AnimationCurve rollSpeedCurve;
+
     [Header("Sit FX")]
     [SerializeField] private float sitHeight;
     [SerializeField] float standToSitTransitionDuration = .7f;
@@ -51,6 +56,7 @@ public class MouseLook : MonoBehaviour
         UIManager.OnEnableMouse += Enable;
 
         airState.OnVaultStart += StartClimbLedgeTilt;
+        airState.OnRollStart += StartRoll;
         crouchState.OnCrouchStart += StartCrouch;
         crouchState.OnCrouchEnd += EndCrouch;
         wallRunState.OnRunStart += StartWallRun;
@@ -93,11 +99,13 @@ public class MouseLook : MonoBehaviour
                 zRotation = Mathf.Min(zRotation, targetZRot);
         }
 
-        // Rotate Camera
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, zRotation);
-        
-        // Rotate transform
-        playerBody.Rotate(Vector3.up * mouseX);
+        if(rolling == false)
+        {
+            // Rotate Camera
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, zRotation);
+            // Rotate transform
+            playerBody.Rotate(Vector3.up * mouseX);
+        }
     }
 
     private void Enable()
@@ -244,6 +252,30 @@ public class MouseLook : MonoBehaviour
         }
 
         isClimbingLedge = false;
+    }
+
+    #endregion
+
+    #region Roll
+
+    private void StartRoll()
+    {
+        StartCoroutine("Roll");
+    }
+
+    private IEnumerator Roll()
+    {
+        rolling = true;
+        Vector3 startRot = transform.localEulerAngles;
+        Vector3 endRot = transform.localEulerAngles + new Vector3(360, 0 ,0);
+        float start = Time.time;
+        while (Time.time - start < rollDuration)
+        {
+            float p = (Time.time - start) / rollDuration;
+            transform.localEulerAngles = Vector3.Lerp(startRot, endRot, rollSpeedCurve.Evaluate(p));
+            yield return null;
+        }
+        rolling = false;
     }
 
     #endregion

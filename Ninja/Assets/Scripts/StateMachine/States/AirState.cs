@@ -5,8 +5,6 @@ using UnityEngine;
 public class AirState : PlayerState
 {
     [Header("Control Settings")]
-    [SerializeField] private float colliderHeight;
-    [SerializeField] private new CapsuleCollider collider;
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private float gravity = 20.0f;
     [SerializeField] private float airControl = 5f;
@@ -39,12 +37,17 @@ public class AirState : PlayerState
     public delegate void VaultStartDelegate();
     public event VaultStartDelegate OnVaultStart;
 
+    public delegate void RollStartDelegate();
+    public event RollStartDelegate OnRollStart;
+
     [Space(20f)]
 
     [Header("Fall Damage")]
     [SerializeField] private float miniFallDamageVelocity = 2f;
     [SerializeField] private int FallDamage = 10;
     [SerializeField] private float minimumFallDamageDistance = 10;
+    [SerializeField] private float minRollHeight = 2f;
+    [SerializeField] private float rollWindow = .1f;
     private float startY;
 
     [Space(20f)]
@@ -73,7 +76,6 @@ public class AirState : PlayerState
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.freezeRotation = true;
         rigidbody.useGravity = false;
-        collider = GetComponent<CapsuleCollider>();
 	}
 
     protected override void OnEnterState()
@@ -194,7 +196,19 @@ public class AirState : PlayerState
         {
             airJumps = 0;
             lastWallRunNormal = Vector3.zero;
+            
+            // If timed roll (Crouch button) - No fall damage
+            if(RollCheck())
+            {
+                // Switch to RollState
+                _stateMachine.SwitchState(9);
+                if(OnRollStart != null)
+                    OnRollStart();
+                return;
+            }
+
             DealFallDamageDistance();
+            // GroundState
             _stateMachine.SwitchState(0);
         }
 
@@ -209,6 +223,14 @@ public class AirState : PlayerState
         if(velocity > miniFallDamageVelocity) return;
         
         characterStats.SubHealth(FallDamage * (Mathf.Abs(velocity + miniFallDamageVelocity)));
+    }
+
+    private bool RollCheck()
+    {
+        float delta = startY - transform.position.y;
+        return (delta >= minRollHeight &&
+            inputState.Crouch.Pressed &&
+            inputState.Crouch.PressTime < rollWindow);
     }
 
     private void DealFallDamageDistance()
