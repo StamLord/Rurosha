@@ -74,11 +74,17 @@ public class AwarenessAgent : MonoBehaviour
         // Get StealthAgents
         foreach(Collider col in inRange)
         {
-            if(col.transform != transform)
-            {   
-                StealthAgent sAgent = col.transform.root.GetComponent<StealthAgent>();
-                if(sAgent) agentsInRange.Add(sAgent);
-            }
+            // Don't check ourselves
+            if(col.transform.root == transform.root) continue;
+            
+            // Not the best detection method, but collider heirarchy should look like this:
+            // root
+            // |-> Alive (StealthAgent sits here)
+            //   |-> Colliders Parent
+            //      |-> Collider
+            StealthAgent sAgent = col.transform.parent.parent.GetComponent<StealthAgent>();
+            Debug.Log(sAgent);
+            if(sAgent) agentsInRange.Add(sAgent);
         }
         
         // Check visibility

@@ -66,7 +66,12 @@ public class StealthAgent : MonoBehaviour
         {
             if(col.transform != transform)
             {   
-                AwarenessAgent aAgent = col.transform.GetComponent<AwarenessAgent>();
+                // Not the best detection method, but collider heirarchy should look like this:
+                // root
+                // |-> Alive (StealthAgent sits here)
+                //   |-> Colliders Parent
+                //      |-> Collider
+                AwarenessAgent aAgent = col.transform.parent.parent.GetComponent<AwarenessAgent>();
                 if(aAgent) aAgent.AddSound(transform.position);
             }
         }

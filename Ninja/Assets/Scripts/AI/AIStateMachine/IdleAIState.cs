@@ -75,11 +75,11 @@ public class IdleAIState : AIState
     private void SeeTarget(StealthAgent agent)
     {
         // Considered enemy?
-        string targetFaction = agent.GetComponent<CharacterStats>().Faction;
+        string targetFaction = agent.transform.root.GetComponent<CharacterStats>().Faction;
         float relation = AIStateMachine.CharacterStats.GetRelationship(targetFaction);
         if(relation > -.5f)
             return;
-
+        
         // Brave enough?
         
         // Switch to FightAIState
