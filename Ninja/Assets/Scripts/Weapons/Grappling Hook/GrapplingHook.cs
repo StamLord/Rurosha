@@ -51,11 +51,6 @@ public class GrapplingHook : WeaponObject
 
     private enum State {READY, FIRING, GRAPPLED}
 
-    void Awake()
-    {
-        player = transform.root.gameObject;
-    }
-
     void Update()
     {
         ProcessInput();
