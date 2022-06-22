@@ -83,7 +83,6 @@ public class AwarenessAgent : MonoBehaviour
             //   |-> Colliders Parent
             //      |-> Collider
             StealthAgent sAgent = col.transform.parent.parent.GetComponent<StealthAgent>();
-            Debug.Log(sAgent);
             if(sAgent) agentsInRange.Add(sAgent);
         }
         
