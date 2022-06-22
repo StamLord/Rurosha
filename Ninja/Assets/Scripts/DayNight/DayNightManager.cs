@@ -42,6 +42,30 @@ public class DayNightManager : MonoBehaviour
         }
     }
 
+    public delegate void hourPassedDelegate(DayTime time);
+    public delegate void minutePassedDelegate(DayTime time);
+
+    public event hourPassedDelegate OnHourPassed;
+    public event minutePassedDelegate OnMinutePassed;
+
+    #region Singleton
+
+    public static DayNightManager instance;
+
+    private void Awake() 
+    {
+        if(instance != null)
+        {
+            Debug.LogWarning("More than 1 instance of DayNightManager!");
+            Destroy(this);
+            return;
+        }
+
+        instance = this;
+    }
+
+    #endregion
+
     private void Start() 
     {
         timeMultiplier = 24 / dayInRealHours;
@@ -109,18 +133,35 @@ public class DayNightManager : MonoBehaviour
         UpdateSun();
         UpdateAmbient();
 
+        // Only in editor, update values that can be observed in the inspector
         if(Application.platform == RuntimePlatform.WindowsEditor)
         {
-            dayTime = GetDayTime();
             zodiacHour = GetZodiacHour();
         }
     }
 
     private void ProgressTime()
     {
+        // Advance time
         time += Time.deltaTime * timeMultiplier;
+
+        // New day
         if(time >= dayInRealSeconds)
             time -= dayInRealSeconds;
+
+        int mm = dayTime.minutes;
+        int hh = dayTime.hours;
+        dayTime = GetDayTime();
+
+        // Call minute event
+        if(dayTime.minutes != mm)
+            if(OnMinutePassed != null)
+                OnMinutePassed(dayTime);
+
+        // Call hour event
+        if(dayTime.hours != hh)
+            if(OnHourPassed != null)
+                OnHourPassed(dayTime);
     }
 
     private void UpdateSun()
