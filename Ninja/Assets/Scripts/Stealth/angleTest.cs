@@ -31,7 +31,5 @@ public class angleTest : MonoBehaviour
     private void OnDrawGizmos() 
     {
         Vector3 dir = (target.position - transform.position).normalized;
-        Handles.Label(transform.position + dir * .2f + transform.up * .2f, "" + angleX);
-        Handles.Label(transform.position + dir * .2f + transform.right * .2f, "" + angleY);
     }
 }
