@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 40.23, y: -25.440804, z: -52.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8209490762663382066}
   - {fileID: 6388433950206316864}
@@ -82,7 +83,7 @@ MonoBehaviour:
   outline: {fileID: 0}
   interactionText: Pick Up
   weightClass: 0
-  _item: {fileID: 11400000, guid: 2d5e2e2d992ca1d4ba1c12d3f6a47a09, type: 2}
+  item: {fileID: 11400000, guid: 2d5e2e2d992ca1d4ba1c12d3f6a47a09, type: 2}
 --- !u!54 &8209490762107581802
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,6 +127,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8209490762107581797}
   m_RootOrder: 0

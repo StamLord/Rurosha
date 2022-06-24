@@ -74,7 +74,7 @@ MonoBehaviour:
   outline: {fileID: 0}
   interactionText: Pick Up
   weightClass: 0
-  _item: {fileID: 11400000, guid: a71b0f71deea78a4cafcb5d6f3d601bb, type: 2}
+  item: {fileID: 11400000, guid: a71b0f71deea78a4cafcb5d6f3d601bb, type: 2}
 --- !u!54 &773845066800303049
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    played: 0
 --- !u!114 &4393361718423627396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24628,14 +24629,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shape: 0
   size: {x: 6, y: 6, z: 6}
   offset: {x: 0, y: 0, z: 0}
   hitMask:
     serializedVersion: 2
     m_Bits: 2147483647
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
   isActive: 0
   lastActiveState: 0
   collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1001 &6729049427813217921
 PrefabInstance:
   m_ObjectHideFlags: 0

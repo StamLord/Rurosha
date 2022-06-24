@@ -33,15 +33,25 @@ public class WeaponEditor : Editor
         EditorGUILayout.Space(10);
         
         weapon.model = (Mesh)EditorGUILayout.ObjectField("Model", weapon.model, typeof(Mesh), true);
+        weapon.material = (Material)EditorGUILayout.ObjectField("Material", weapon.material, typeof(Material), true);
+        
+        EditorGUILayout.Space(10);
+
         weapon.itemName = EditorGUILayout.DelayedTextField("Name", weapon.itemName);
 
         EditorGUILayout.Space(10);
 
+        weapon.cost = EditorGUILayout.IntField("Cost", weapon.cost);
         weapon.damage = EditorGUILayout.IntField("Damage", weapon.damage);
         weapon.ammo = EditorGUILayout.IntSlider("Ammo", weapon.ammo, 1, 99);
+        weapon.durability = EditorGUILayout.Slider("Durability", weapon.durability, 0, 1);
         weapon.stackable = EditorGUILayout.Toggle("Stackable", weapon.stackable);
         weapon.WeaponType = (WeaponType)EditorGUILayout.EnumPopup("Weapon Type", weapon.WeaponType);
         //EditorGUI.HelpBox(new Rect(100,100, 50, 50), "Test", MessageType.None);
+
+        EditorGUILayout.Space(10);
+
+        weapon.pickup = (GameObject)EditorGUILayout.ObjectField("Pickup", weapon.pickup, typeof(GameObject), true);
 
     }
 

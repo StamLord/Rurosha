@@ -116,7 +116,7 @@ MonoBehaviour:
   outline: {fileID: 0}
   interactionText: Pick Up
   weightClass: 0
-  _item: {fileID: 11400000, guid: 5d9be340166ff2340963e2ca46c190db, type: 2}
+  item: {fileID: 11400000, guid: 5d9be340166ff2340963e2ca46c190db, type: 2}
 --- !u!54 &773845066800303049
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -393,11 +393,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shape: 0
   size: {x: 0.25, y: 0.25, z: 0.25}
   offset: {x: 0, y: 0.1, z: 0}
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
   isActive: 1
   lastActiveState: 0
   collided: []
