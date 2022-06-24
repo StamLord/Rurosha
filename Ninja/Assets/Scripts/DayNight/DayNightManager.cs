@@ -209,7 +209,7 @@ public class DayNightManager : MonoBehaviour
         return time;
     }
 
-    private DayTime GetDayTime()
+    public DayTime GetDayTime()
     {
         int hours = Mathf.FloorToInt(time / 3600);
         int minutes = Mathf.FloorToInt((time - hours * 3600) / 60);

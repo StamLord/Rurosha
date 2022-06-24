@@ -6,7 +6,7 @@ public class Lantern : TimeBased
 {
     [SerializeField] private new Light light;
     [SerializeField] private MeshRenderer meshRenderer;
-
+    
     protected override void StartAction()
     {
         base.StartAction();

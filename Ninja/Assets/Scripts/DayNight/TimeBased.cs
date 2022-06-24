@@ -19,6 +19,9 @@ public class TimeBased : MonoBehaviour
             DayNightManager.instance.OnHourPassed += EndEvent;
         else
             DayNightManager.instance.OnMinutePassed += EndEvent;
+
+        StartEvent(DayNightManager.instance.GetDayTime());
+        EndEvent(DayNightManager.instance.GetDayTime());
     }
 
     private void StartEvent(DayNightManager.DayTime time)
