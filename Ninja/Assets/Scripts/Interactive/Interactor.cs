@@ -153,7 +153,8 @@ public class Interactor : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(_camera.position, _camera.forward, out hit, _interactionRange, _interactionMask))
         {
-            Usable usable = hit.transform.GetComponent<Usable>();
+            // Important to use collider.transform and not hit.transform (Gets parent collider transform)
+            Usable usable = hit.collider.transform.GetComponent<Usable>();
             if(usable) 
             {
                 ChangeSelection(usable);
