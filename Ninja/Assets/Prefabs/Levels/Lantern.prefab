@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 4245030662886067382}
   - component: {fileID: 2190409195173382064}
   - component: {fileID: 7612681896472409422}
-  - component: {fileID: 1104841159478482488}
+  - component: {fileID: 649770747}
   m_Layer: 0
   m_Name: Rigid
   m_TagString: Untagged
@@ -124,8 +124,8 @@ Rigidbody:
   m_GameObject: {fileID: 6512240120937059984}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 8
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -144,8 +144,8 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.3
   m_Center: {x: 0, y: 0, z: 0}
---- !u!59 &1104841159478482488
-HingeJoint:
+--- !u!145 &649770747
+SpringJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -154,26 +154,14 @@ HingeJoint:
   m_ConnectedBody: {fileID: 2808400890596861332}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 1.77, z: 0}
-  m_Axis: {x: 1, y: 1, z: 1}
   m_AutoConfigureConnectedAnchor: 0
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_UseSpring: 1
-  m_Spring:
-    spring: 0.1
-    damper: 0.02
-    targetPosition: 0
-  m_UseMotor: 0
-  m_Motor:
-    targetVelocity: 0
-    force: 0
-    freeSpin: 0
-  m_UseLimits: 0
-  m_Limits:
-    min: 0
-    max: 0
-    bounciness: 0
-    bounceMinVelocity: 0.2
-    contactDistance: 0
+  serializedVersion: 2
+  m_Spring: 100
+  m_Damper: 10
+  m_MinDistance: 0
+  m_MaxDistance: 0
+  m_Tolerance: 0.025
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
