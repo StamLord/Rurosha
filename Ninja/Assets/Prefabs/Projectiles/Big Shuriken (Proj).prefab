@@ -44,11 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shape: 0
   size: {x: 0.18, y: 0.18, z: 0.18}
   offset: {x: 0, y: 0, z: -0.4}
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
   isActive: 0
   lastActiveState: 0
   collided: []
@@ -98,11 +102,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shape: 0
   size: {x: 0.18, y: 0.18, z: 0.18}
   offset: {x: 0, y: 0, z: 0.4}
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
   isActive: 0
   lastActiveState: 0
   collided: []
@@ -182,9 +190,12 @@ MonoBehaviour:
   - {fileID: 6145201688679193751}
   - {fileID: 8731462147577538745}
   collider: {fileID: 6861394814472067686}
+  activateDelay: 0
   objectsToActivate: []
+  deactivateDelay: 0
   objectsToDeactivate: []
   objectsCollided: []
+  ignoreTransform: {fileID: 0}
 --- !u!114 &1116292965985431855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +229,7 @@ MonoBehaviour:
   outline: {fileID: 0}
   interactionText: Pickup
   weightClass: 0
-  _item: {fileID: 11400000, guid: a9c2ea825a6dbe34a8e1a1c01749adfc, type: 2}
+  item: {fileID: 11400000, guid: a9c2ea825a6dbe34a8e1a1c01749adfc, type: 2}
 --- !u!65 &6861394814472067686
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -312,11 +323,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shape: 0
   size: {x: 0.18, y: 0.18, z: 0.18}
   offset: {x: 0, y: -0.4, z: 0}
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
   isActive: 0
   lastActiveState: 0
   collided: []
@@ -366,11 +381,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shape: 0
   size: {x: 0.18, y: 0.18, z: 0.18}
   offset: {x: 0, y: 0.4, z: 0}
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
   isActive: 0
   lastActiveState: 0
   collided: []

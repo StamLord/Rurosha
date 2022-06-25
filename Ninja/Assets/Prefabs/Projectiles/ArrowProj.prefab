@@ -967,6 +967,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
   isActive: 0
   lastActiveState: 0
   collided: []
@@ -1019,4 +1022,4 @@ MonoBehaviour:
   outline: {fileID: 0}
   interactionText: Pick Up
   weightClass: 0
-  _item: {fileID: 11400000, guid: 73eb56d4e8d00e347b35e62672ab15aa, type: 2}
+  item: {fileID: 11400000, guid: 73eb56d4e8d00e347b35e62672ab15aa, type: 2}
