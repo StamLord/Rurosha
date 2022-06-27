@@ -302,8 +302,8 @@ public class Katana : WeaponObject, IHitboxResponder
         if(stunned)
             return;
         
-        // MB1  + MB2 = Defend
-        bool defend = inputState.Defend.Pressed;//(inputState.MouseButton1.Pressed && inputState.MouseButton2.Pressed);
+        // Defend
+        bool defend = inputState.Defend.Pressed; //(inputState.MouseButton1.Pressed && inputState.MouseButton2.Pressed);
         animator.SetBool("Defending", defend);
         guard.enabled = defend;
         charStats.SetGuard(defend);
@@ -335,10 +335,10 @@ public class Katana : WeaponObject, IHitboxResponder
             }
         }
         // RMB
-        else if(inputState.MouseButton2.State == VButtonState.PRESS_START)
+        else
         {
-            animator.SetTrigger("RMB");
-            charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+            animator.SetBool("CHARGE RMB", inputState.MouseButton2.Pressed);
+            //charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
         }
     }
 
