@@ -37,6 +37,17 @@ public class Katana : WeaponObject, IHitboxResponder
     [SerializeField] private int hardDamage = 10;
     [SerializeField] private float chanceToBleed = .25f;
 
+    [Header("Charge Settings")]
+    [SerializeField] private float minCharge = .2f;
+    [SerializeField] private float maxCharge = 2f;
+    [SerializeField] private ParticleSystem chargeVfx;
+    [SerializeField] private ParticleSystem chargeEndVfx;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private float specialProjDistance;
+    [SerializeField] private float specialProjSpeed;
+    private float chargeTime;
+    private bool chargeEndPlayed;
+
     [Header("Stats")]
     [SerializeField] private float leftAttackStaminaCost= 2f;
     [SerializeField] private float rightAttackStaminaCost= 2f;
@@ -46,15 +57,15 @@ public class Katana : WeaponObject, IHitboxResponder
     [SerializeField] private float strengthExpGain = .01f;
     [SerializeField] private float dexterityExpGain = .01f;
     
-    [Header("Stance Settings")]
-    [SerializeField] private float mouseDelta;
-    [SerializeField] private float mouseDeltaMargin = 1f;
-    [SerializeField] private KatanaStance stance = KatanaStance.Medium;
-
     [Header("Stun Settings")]
     [SerializeField] private float staminaCostOnGuardedAttack;
     [SerializeField] private float stunDuration = 3f;
     [SerializeField] private bool stunned;
+
+    [Header("Stance Settings")]
+    [SerializeField] private float mouseDelta;
+    [SerializeField] private float mouseDeltaMargin = 1f;
+    [SerializeField] private KatanaStance stance = KatanaStance.Medium;
 
     public delegate void stanceSwitchDeltaDelegate(KatanaStance stance);
     public event stanceSwitchDeltaDelegate StanceSwitchDeltaEvent;
@@ -334,12 +345,79 @@ public class Katana : WeaponObject, IHitboxResponder
                 }
             }
         }
-        // RMB
-        else
+        // RMB Pressed
+        else if(inputState.MouseButton2.Pressed)
         {
-            animator.SetBool("CHARGE RMB", inputState.MouseButton2.Pressed);
-            //charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+            animator.SetBool("CHARGE RMB", true);
+            chargeTime = inputState.MouseButton2.PressTime;
         }
+        // RMB End Press
+        else if(inputState.MouseButton2.State == VButtonState.PRESS_END)
+        {
+            animator.SetBool("CHARGE RMB", false);
+
+            // Create projectile slash
+            if(chargeTime >= maxCharge)
+            {
+                if(animator.GetCurrentAnimatorStateInfo(0).IsName("katana_right_1_charge"))
+                    SpecialAttack(Direction9.UP);
+                else if(animator.GetCurrentAnimatorStateInfo(0).IsName("katana_right_2_charge"))
+                    SpecialAttack(Direction9.RIGHT);
+                if(animator.GetCurrentAnimatorStateInfo(0).IsName("katana_right_3_charge"))
+                    SpecialAttack(Direction9.DOWNRIGHT);
+            }
+            chargeTime = 0;
+            chargeEndPlayed = false;
+
+            charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+        }
+
+        // VFX
+        if(chargeTime > .2f)
+        {
+            // VFX Start
+            if(chargeVfx.isPlaying == false)
+                chargeVfx.Play();
+
+            if(chargeTime > maxCharge && chargeEndPlayed == false)
+            {
+                chargeEndVfx.Play();
+                chargeEndPlayed = true;
+            }
+        }
+        // VFX End
+        else if(chargeVfx.isPlaying)
+            chargeVfx.Stop();
+    }
+
+    private void SpecialAttack(Direction9 direction)
+    {
+        float z = 0;
+
+        if(direction == Direction9.LEFT || direction == Direction9.RIGHT)
+            z = 90;
+        else if(direction == Direction9.UPLEFT || direction == Direction9.DOWNRIGHT)
+            z = 45;
+        else if(direction == Direction9.UPRIGHT || direction == Direction9.DOWNLEFT)
+            z = -45;
+        
+        GameObject p = Instantiate(projectile, hitbox.transform.position + transform.forward, transform.rotation);
+        p.transform.rotation = Quaternion.Euler(p.transform.rotation.eulerAngles.x, p.transform.rotation.eulerAngles.y ,z);
+        p.GetComponent<Hitbox>().SetResponder(this);
+        StartCoroutine("SpecialProjectile", p);
+    }
+
+    IEnumerator SpecialProjectile(GameObject projectile)
+    {
+        Vector3 origin = projectile.transform.position;
+        while(Vector3.Distance(projectile.transform.position, origin) < specialProjDistance)
+        {
+            projectile.transform.position += projectile.transform.forward * specialProjSpeed * Time.deltaTime;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1f);
+        Destroy(projectile);
     }
 
     public void Method2()

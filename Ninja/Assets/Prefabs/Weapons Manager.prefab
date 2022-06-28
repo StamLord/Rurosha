@@ -4051,18 +4051,24 @@ MonoBehaviour:
   softDamage: 20
   hardDamage: 10
   chanceToBleed: 0.25
+  minCharge: 0.2
+  maxCharge: 2
+  chargeVfx: {fileID: 0}
+  projectile: {fileID: 0}
+  specialProjDistance: 0
+  specialProjSpeed: 0
   leftAttackStaminaCost: 0
   rightAttackStaminaCost: 0
   stabAttackStaminaCost: 0
   crouchAttackStaminaCost: 0
   strengthExpGain: 0.01
   dexterityExpGain: 0.01
-  mouseDelta: 0
-  mouseDeltaMargin: 5
-  stance: 1
   staminaCostOnGuardedAttack: 20
   stunDuration: 3
   stunned: 0
+  mouseDelta: 0
+  mouseDeltaMargin: 5
+  stance: 1
 --- !u!95 &1278044656508673908
 Animator:
   serializedVersion: 4
@@ -14069,18 +14075,24 @@ MonoBehaviour:
   softDamage: 20
   hardDamage: 10
   chanceToBleed: 0.25
+  minCharge: 0.2
+  maxCharge: 2
+  chargeVfx: {fileID: 0}
+  projectile: {fileID: 0}
+  specialProjDistance: 0
+  specialProjSpeed: 0
   leftAttackStaminaCost: 15
   rightAttackStaminaCost: 15
   stabAttackStaminaCost: 7
   crouchAttackStaminaCost: 2
   strengthExpGain: 0.01
   dexterityExpGain: 0.01
-  mouseDelta: 0
-  mouseDeltaMargin: 1
-  stance: 1
   staminaCostOnGuardedAttack: 0
   stunDuration: 3
   stunned: 0
+  mouseDelta: 0
+  mouseDeltaMargin: 1
+  stance: 1
 --- !u!95 &8206658476612405706
 Animator:
   serializedVersion: 4
