@@ -47,6 +47,7 @@ public class Katana : WeaponObject, IHitboxResponder
     [SerializeField] private float specialProjSpeed;
     private float chargeTime;
     private bool chargeEndPlayed;
+    private Pool pool;
 
     [Header("Stats")]
     [SerializeField] private float leftAttackStaminaCost= 2f;
@@ -80,6 +81,7 @@ public class Katana : WeaponObject, IHitboxResponder
     {
         hitbox?.SetResponder(this);
         hitbox.SetIgnoreTransform(transform.root);
+        pool = new Pool(projectile, 1);
     }
 
     void Update()
@@ -401,8 +403,9 @@ public class Katana : WeaponObject, IHitboxResponder
         else if(direction == Direction9.UPRIGHT || direction == Direction9.DOWNLEFT)
             z = -45;
         
-        GameObject p = Instantiate(projectile, hitbox.transform.position + transform.forward, transform.rotation);
-        p.transform.rotation = Quaternion.Euler(p.transform.rotation.eulerAngles.x, p.transform.rotation.eulerAngles.y ,z);
+        GameObject p = pool.Get();
+        p.transform.position = hitbox.transform.position + transform.forward;
+        p.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y ,z);
         p.GetComponent<Hitbox>().SetResponder(this);
         StartCoroutine("SpecialProjectile", p);
     }
@@ -417,7 +420,7 @@ public class Katana : WeaponObject, IHitboxResponder
         }
 
         yield return new WaitForSeconds(1f);
-        Destroy(projectile);
+        pool.Return(projectile);
     }
 
     public void Method2()
