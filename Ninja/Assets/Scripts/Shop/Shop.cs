@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class Shop : MonoBehaviour
 {
@@ -22,20 +21,19 @@ public class Shop : MonoBehaviour
 
     [Header("VFX")]
     [SerializeField] private Transform coinOrigin;
-    [SerializeField] private GameObject coinPrefab;
     [SerializeField] private float coinInterval = .2f;
     [SerializeField] private float coinLifetime= 3f;
     [SerializeField] private Vector3 minRotation;
     [SerializeField] private Vector3 maxRotation;
-    [SerializeField] private int coinStartAmount;
+
+    [Header("Pool")]
+    [SerializeField] private PoolData poolData;
     private Pool pool;
-    
 
     private void Start() 
     {
         UpdateAllVisual();
-
-        pool = new Pool(coinPrefab, coinStartAmount);
+        pool = poolData.Pool;
     }
 
     private void UpdateAllVisual() 
