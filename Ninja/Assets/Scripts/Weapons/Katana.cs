@@ -40,7 +40,8 @@ public class Katana : WeaponObject, IHitboxResponder
     [Header("Charge Settings")]
     [SerializeField] private float minCharge = .2f;
     [SerializeField] private float maxCharge = 2f;
-    [SerializeField] private ParticleSystem chargeVfx;
+    [SerializeField] private ParticleSystem chargingVfx;
+    [SerializeField] private ParticleSystem chargedVfx;
     [SerializeField] private ParticleSystem chargeEndVfx;
     [SerializeField] private GameObject projectile;
     [SerializeField] private float specialProjDistance;
@@ -377,19 +378,30 @@ public class Katana : WeaponObject, IHitboxResponder
         // VFX
         if(chargeTime > .2f)
         {
-            // VFX Start
-            if(chargeVfx.isPlaying == false)
-                chargeVfx.Play();
-
-            if(chargeTime > maxCharge && chargeEndPlayed == false)
+            // Fully charged
+            if(chargeTime >= maxCharge)
             {
-                chargeEndVfx.Play();
-                chargeEndPlayed = true;
+                if(chargeEndPlayed == false)
+                {
+                    chargeEndVfx.Play();
+                    chargingVfx.Stop();
+                    chargedVfx.Play();
+                    chargeEndPlayed = true;
+                }
+            }
+            // Charging
+            else
+            {
+                if(chargingVfx.isPlaying == false)
+                    chargingVfx.Play();
             }
         }
         // VFX End
-        else if(chargeVfx.isPlaying)
-            chargeVfx.Stop();
+        else
+        {
+            if(chargingVfx.isPlaying) chargingVfx.Stop();
+            if(chargedVfx.isPlaying) chargedVfx.Stop();
+        }
     }
 
     private void SpecialAttack(Direction9 direction)
