@@ -418,11 +418,15 @@ public class Katana : WeaponObject, IHitboxResponder
         GameObject p = pool.Get();
         p.transform.position = hitbox.transform.position + transform.forward;
         p.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y ,z);
-        p.GetComponent<Hitbox>().SetResponder(this);
-        StartCoroutine("SpecialProjectile", p);
+        Hitbox hit = p.GetComponent<Hitbox>();
+        if(hit) 
+        {
+            hit.SetResponder(this);
+            StartCoroutine("SpecialProjectile", hit);
+        }
     }
 
-    IEnumerator SpecialProjectile(GameObject projectile)
+    IEnumerator SpecialProjectile(Hitbox projectile)
     {
         Vector3 origin = projectile.transform.position;
         while(Vector3.Distance(projectile.transform.position, origin) < specialProjDistance)
@@ -432,7 +436,8 @@ public class Katana : WeaponObject, IHitboxResponder
         }
 
         yield return new WaitForSeconds(1f);
-        pool.Return(projectile);
+        projectile.ForgetCollided(); // Forget all colided objects so far so we can reuse this object
+        pool.Return(projectile.gameObject);
     }
 
     public void Method2()

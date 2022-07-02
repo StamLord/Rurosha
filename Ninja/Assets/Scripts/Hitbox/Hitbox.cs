@@ -40,6 +40,11 @@ public class Hitbox : MonoBehaviour
         isActive = false;
     }
 
+    public void ForgetCollided()
+    {
+        collided.Clear();
+    }
+
     public bool GetColliding()
     {
         return isActive;
