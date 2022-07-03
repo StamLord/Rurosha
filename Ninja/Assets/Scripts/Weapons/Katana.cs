@@ -320,7 +320,7 @@ public class Katana : WeaponObject, IHitboxResponder
         bool defend = inputState.Defend.Pressed; //(inputState.MouseButton1.Pressed && inputState.MouseButton2.Pressed);
         animator.SetBool("Defending", defend);
         guard.enabled = defend;
-        charStats.SetGuard(defend);
+        //charStats.SetGuard(defend);
 
         if(defend)
             return;
