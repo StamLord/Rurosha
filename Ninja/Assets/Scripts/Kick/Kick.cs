@@ -30,6 +30,10 @@ public class Kick : MonoBehaviour, IHitboxResponder
 
         // Rigidbody
         Rigidbody rb = collider.GetComponent<Rigidbody>();
+
+        if(rb == null)
+            rb = collider.transform.parent.GetComponent<Rigidbody>();
+        
         if(rb)
         {
             Vector3 closestPoint = collider.ClosestPoint(hitbox.Position);
