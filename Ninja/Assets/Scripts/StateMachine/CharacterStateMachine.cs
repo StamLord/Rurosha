@@ -9,6 +9,7 @@ public class CharacterStateMachine : StateMachine
     public CharacterStats characterStats;
     public InputState inputState;
     public ColliderManager colliderManager;
+    public Kick kick;
 
     [Header("Stealth Agent")]
     [SerializeField] private StealthAgent stealthAgent;

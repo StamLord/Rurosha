@@ -14,6 +14,8 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private LayerMask guardMask;
     [SerializeField] private bool isActive;
 
+    public Vector3 Position { get { return transform.position + offset;}}
+    
     [Header("Debug Info")]
     [SerializeField] private bool lastActiveState;
     [SerializeField] private IHitboxResponder _responder;

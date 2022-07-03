@@ -12022,6 +12022,7 @@ MonoBehaviour:
   slopeSlideSpeed: 10
   minSlideAngle: 30
   gravityOn: 1
+  kick: {fileID: 59200985}
   staminaDepleteRate: 20
   potentialStaminaDepleteRate: 2
   agilityExpGain: 0.01
@@ -12086,7 +12087,10 @@ MonoBehaviour:
   kickForce: 5
   kickUpwardsModifier: 1
   kickRadius: 1
-  kickTransform: {fileID: 8439819084809610562}
+  softDamage: 5
+  hardDamage: 10
+  damageType: 0
+  hitbox: {fileID: 1828010141}
 --- !u!114 &59200986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13289,6 +13293,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8439819084809610562}
+  - component: {fileID: 1828010141}
   m_Layer: 9
   m_Name: Kick End
   m_TagString: Untagged
@@ -13304,13 +13309,39 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8048313138737219164}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0.50000006}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4427612664954766696}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1828010141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8048313138737219164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shape: 1
+  size: {x: 0.7, y: 0.7, z: 0.7}
+  offset: {x: 0, y: 0.5, z: 1}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 65
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 32768
+  isActive: 0
+  lastActiveState: 0
+  collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &9093053890701156537
 GameObject:
   m_ObjectHideFlags: 0
@@ -19703,7 +19734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].x
-      value: 0.5
+      value: 38.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].y
@@ -19711,11 +19742,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: 45.8
+      value: -0.25000018
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 0.5
+      value: 38.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].y
@@ -19723,11 +19754,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: 45.8
+      value: -0.25000018
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].x
-      value: 0.5
+      value: 38.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].y
@@ -19735,7 +19766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].z
-      value: 45.8
+      value: -0.25000018
       objectReference: {fileID: 0}
     - target: {fileID: 1490965675, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: camera
@@ -20046,7 +20077,7 @@ PrefabInstance:
     - target: {fileID: 1278044656508673906, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1278044656508673911, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
