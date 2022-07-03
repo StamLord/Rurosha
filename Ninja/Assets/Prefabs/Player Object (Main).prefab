@@ -12022,7 +12022,6 @@ MonoBehaviour:
   slopeSlideSpeed: 10
   minSlideAngle: 30
   gravityOn: 1
-  kick: {fileID: 59200985}
   staminaDepleteRate: 20
   potentialStaminaDepleteRate: 2
   agilityExpGain: 0.01
@@ -12067,6 +12066,7 @@ MonoBehaviour:
   characterStats: {fileID: 6944390856915565334}
   inputState: {fileID: 59200974}
   colliderManager: {fileID: 2527385649069118756}
+  kick: {fileID: 59200985}
   stealthAgent: {fileID: 59200987}
   groundSensor: {fileID: 1031901065}
   ceilSensor: {fileID: 478293799}
@@ -19734,7 +19734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].x
-      value: 38.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].y
@@ -19742,11 +19742,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: -0.25000018
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 38.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].y
@@ -19754,11 +19754,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: -0.25000018
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].x
-      value: 38.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].y
@@ -19766,7 +19766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].z
-      value: -0.25000018
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 1490965675, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: camera
