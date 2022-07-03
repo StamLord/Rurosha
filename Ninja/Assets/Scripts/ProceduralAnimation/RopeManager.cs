@@ -38,7 +38,7 @@ public class RopeManager : MonoBehaviour
         // Create segments
         for(int i = 0; i < segmentsNum; i++)
         {
-            GameObject go = Instantiate(segmentPrefab, startPos + dir * segLength * .5f + dir * segLength * i, Quaternion.identity);
+            GameObject go = Instantiate(segmentPrefab, startPos + dir * segLength * .5f + dir * segLength * i, Quaternion.identity, transform);
             segments.Add(go);
 
             Vector3 scale = go.transform.localScale;
@@ -46,14 +46,14 @@ public class RopeManager : MonoBehaviour
             go.transform.localScale = scale;
 
             Rigidbody rb = go.GetComponent<Rigidbody>();
-            HingeJoint hj = go.GetComponent<HingeJoint>();
+            ConfigurableJoint cj = go.GetComponent<ConfigurableJoint>();
 
             if(i == 0 && startFixed || i == segmentsNum - 1 && endFixed)
                 rb.isKinematic = true;
 
-            hj.connectedBody = lastRigidbody;
-            hj.autoConfigureConnectedAnchor = false;
-            hj.anchor = new Vector3(0, segLength * .5f, 0);
+            cj.connectedBody = lastRigidbody;
+            cj.autoConfigureConnectedAnchor = false;
+            cj.anchor = new Vector3(0, segLength * .5f, 0);
 
             lastRigidbody = rb;
         }
