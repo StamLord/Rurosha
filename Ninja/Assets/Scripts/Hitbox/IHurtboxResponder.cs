@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IHurtboxResponder
 {
-    bool GetHit(int softDamage, int hardDamage, DamageType damageType, Direction9 direction);
+    bool GetHit(StealthAgent agent, int softDamage, int hardDamage, DamageType damageType, Direction9 direction);
 }

@@ -81,9 +81,9 @@ public class SearchAIState : AIState
 
     private void SeeTarget(StealthAgent agent)
     {
-        // Switch to FightAIState
-        AIStateMachine.enemy = agent;
-        AIStateMachine.SwitchState(1);
+        // If this is our enemy we were looking for, switch to FightAIState
+        if(agent == AIStateMachine.enemy)
+            AIStateMachine.SwitchState(1);
     }
 
     private void HearSound(Vector3 origin)

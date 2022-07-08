@@ -10,6 +10,9 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private CharacterStats _characterStats;
     public CharacterStats Stats {get {return _characterStats;}}
 
+    [SerializeField] private StealthAgent _stealthAgent;
+    public StealthAgent Agent {get {return _stealthAgent;}}
+
     [SerializeField] private Camera _camera;
     public Camera Camera {get {return _camera;}}
 

@@ -226,7 +226,7 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         bool isHit = false;
         if(hurtbox)
-            isHit = hurtbox.Hit(softDamage, hardDamage, DamageType.Slash, lastAttackDirection);
+            isHit = hurtbox.Hit(agent, softDamage, hardDamage, DamageType.Slash, lastAttackDirection);
         
         if(isHit)
         {   

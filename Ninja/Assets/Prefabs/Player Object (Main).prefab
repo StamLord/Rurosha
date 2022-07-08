@@ -11594,6 +11594,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   characterStats: {fileID: 6944390856915565334}
+  stealthAgent: {fileID: 0}
   camera: {fileID: 6944390856666288588}
   activeSpell: {fileID: 0}
   activeObject: {fileID: 0}
@@ -12084,6 +12085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41cca2e957e2bd641b3ba72b525256c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 59200987}
   kickForce: 5
   kickUpwardsModifier: 1
   kickRadius: 1
@@ -19807,6 +19809,11 @@ PrefabInstance:
       propertyPath: _inputState
       value: 
       objectReference: {fileID: 59200974}
+    - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: _stealthAgent
+      value: 
+      objectReference: {fileID: 59200987}
     - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: _characterStats

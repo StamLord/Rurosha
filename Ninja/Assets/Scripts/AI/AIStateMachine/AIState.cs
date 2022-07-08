@@ -59,4 +59,20 @@ public class AIState : State
         Vector2 onCircle = Random.insideUnitCircle * distance;
         return new Vector3(onCircle.x, 0, onCircle.y) + origin;
     }
+
+    private float GetRelationship(StealthAgent agent)
+    {
+        string targetFaction = agent.transform.root.GetComponent<CharacterStats>().Faction;
+        return AIStateMachine.CharacterStats.GetRelationship(targetFaction);
+    }
+
+    protected bool IsEnemy(StealthAgent agent)
+    {
+        return GetRelationship(agent) <= -.5f; // -50% and below is an enemy
+    }
+
+    protected bool IsAlly(StealthAgent agent)
+    {
+        return GetRelationship(agent) >= .5f; // 50% and up is an ally
+    }
 }

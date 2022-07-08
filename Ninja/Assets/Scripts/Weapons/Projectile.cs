@@ -222,7 +222,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             // Avoid triggering multiple hurtboxes with the same parent GameObject
             if(objectsCollided.Contains(hurtbox.transform.parent.gameObject) == false)
             {
-                hurtbox.Hit(softDamage, hardDamage, DamageType.Pierce);
+                hurtbox.Hit(null, softDamage, hardDamage, DamageType.Pierce);
                 objectsCollided.Add(hurtbox.transform.root.gameObject);
             }        
         }

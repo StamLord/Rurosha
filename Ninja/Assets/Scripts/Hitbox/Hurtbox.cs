@@ -23,12 +23,12 @@ public class Hurtbox : MonoBehaviour
     }
 
     // Called by weapon scripts after
-    public bool Hit(int softDamage, int hardDamage, DamageType damageType = DamageType.Blunt, Direction9 direction = Direction9.CENTER)
+    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, DamageType damageType = DamageType.Blunt, Direction9 direction = Direction9.CENTER)
     {
         // Send hit data to all responders and see if atleast 1 returns true
         bool hit = (_responders.Count > 0)? false : true;
         foreach(IHurtboxResponder r in _responders)
-            if(r.GetHit(softDamage, hardDamage, damageType, direction))
+            if(r.GetHit(agent, softDamage, hardDamage, damageType, direction))
                 hit = true;
 
         if(hit)

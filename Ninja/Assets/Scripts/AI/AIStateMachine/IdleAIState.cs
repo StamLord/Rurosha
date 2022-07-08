@@ -66,18 +66,32 @@ public class IdleAIState : AIState
         AIStateMachine.AwarenessAgent.OnHearSound -= HearSound;
     }
     
-    private void Hit()
+    private void Hit(StealthAgent agent)
     {
-        // Switch to SearchAIState
+        // If an ally we don't care
+        if(IsAlly(agent))
+            return;
+        
+        AIStateMachine.enemy = agent;
+
+        // If enemy is visible we switch to Fight
+        foreach(StealthAgent a in AIStateMachine.AwarenessAgent.VisibleAgents)
+        {
+            if(agent == a)
+            {
+                AIStateMachine.SwitchState(1);
+                return;
+            }
+        }
+
+        // Otherwise, switch to SearchAIState
         AIStateMachine.SwitchState(2);
     }
 
     private void SeeTarget(StealthAgent agent)
     {
-        // Considered enemy?
-        string targetFaction = agent.transform.root.GetComponent<CharacterStats>().Faction;
-        float relation = AIStateMachine.CharacterStats.GetRelationship(targetFaction);
-        if(relation > -.5f)
+        // If not an enemy, do nothing
+        if(IsEnemy(agent) == false)
             return;
         
         // Brave enough?

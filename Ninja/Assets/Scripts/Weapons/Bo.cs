@@ -77,7 +77,7 @@ public class Bo : WeaponObject, IHitboxResponder
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         bool isHit = false;
         if(hurtbox)
-            isHit = hurtbox.Hit(softDamage, hardDamage, DamageType.Blunt, lastComboAttackDirection);
+            isHit = hurtbox.Hit(agent, softDamage, hardDamage, DamageType.Blunt, lastComboAttackDirection);
         
         if(isHit)
         {   

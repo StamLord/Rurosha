@@ -7,6 +7,8 @@ public class SpellManager : MonoBehaviour
     [SerializeField] private List<Spell> learned = new List<Spell>();
     [SerializeField] private Spell[] prepared;
     [SerializeField] private CharacterStats characterStats;
+    [SerializeField] private StealthAgent stealthAgent;
+    public StealthAgent Agent { get { return stealthAgent;}}
     [SerializeField] private new Camera camera;
     
     [SerializeField] private Spell activeSpell;

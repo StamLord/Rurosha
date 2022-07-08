@@ -238,7 +238,7 @@ public class AirState : PlayerState
         float delta = startY - transform.position.y;
         if(delta < minimumFallDamageDistance) return;
         int damage = Mathf.RoundToInt(FallDamage * (delta - minimumFallDamageDistance));
-        characterStats.GetHit(damage * 2, damage, DamageType.Blunt, Direction9.CENTER);
+        characterStats.GetHit(null, damage * 2, damage, DamageType.Blunt, Direction9.CENTER);
     }
 
     private void GetInput()

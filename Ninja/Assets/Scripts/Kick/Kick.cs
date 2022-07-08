@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Kick : MonoBehaviour, IHitboxResponder
 {
+    [Header("Reference")]
+    [SerializeField] private StealthAgent agent;
+    
     [Header("Physics")]
     [SerializeField] private float kickForce = 5f;
     [SerializeField] private float kickUpwardsModifier = 1f;
@@ -26,7 +29,7 @@ public class Kick : MonoBehaviour, IHitboxResponder
         // Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         if(hurtbox)
-            hurtbox.Hit(softDamage, hardDamage, damageType);
+            hurtbox.Hit(agent, softDamage, hardDamage, damageType);
 
         // Rigidbody
         Rigidbody rb = collider.GetComponent<Rigidbody>();

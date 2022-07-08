@@ -171,7 +171,7 @@ public class Katana : WeaponObject, IHitboxResponder
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         if(hurtbox)
-            hurtbox.Hit(softDamage, hardDamage, DamageType.Slash);
+            hurtbox.Hit(agent, softDamage, hardDamage, DamageType.Slash);
 
         //Slice
         Sliceable sliceable = collider.GetComponent<Sliceable>();
