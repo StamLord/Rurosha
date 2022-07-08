@@ -92,6 +92,8 @@ public class Hitbox : MonoBehaviour
             if(guardColliders.Length > 0)
             {
                 _responder.GuardedBy(guardColliders[0], this);
+                StopColliding();
+                collided.Clear();
                 return;
             }
             
