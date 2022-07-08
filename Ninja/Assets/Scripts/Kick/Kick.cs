@@ -9,6 +9,7 @@ public class Kick : MonoBehaviour, IHitboxResponder
     
     [Header("Physics")]
     [SerializeField] private float kickForce = 5f;
+    [SerializeField] private float enemyKickForce = 15f;
     [SerializeField] private float kickUpwardsModifier = 1f;
     [SerializeField] private float kickRadius = 1f;
     
@@ -29,7 +30,13 @@ public class Kick : MonoBehaviour, IHitboxResponder
         // Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         if(hurtbox)
+        {
             hurtbox.Hit(agent, softDamage, hardDamage, damageType);
+
+            // Push enemies
+            if(hurtbox.Rigidbody)
+                hurtbox.Rigidbody.AddForce(transform.forward * enemyKickForce + Vector3.up * kickUpwardsModifier, ForceMode.Impulse);
+        }
 
         // Rigidbody
         Rigidbody rb = collider.GetComponent<Rigidbody>();

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Hurtbox : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private List<IHurtboxResponder> _responders = new List<IHurtboxResponder>();
     [SerializeField] private PhysicalMaterial physicalMaterial;
+    [SerializeField] private Rigidbody rigidbody;
+    public Rigidbody Rigidbody { get {return rigidbody;}}
 
     [Header("Debug")]
     [SerializeField] private bool _debug;
