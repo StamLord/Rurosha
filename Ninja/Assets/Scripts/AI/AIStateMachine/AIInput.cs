@@ -15,6 +15,11 @@ public class AIInput : MonoBehaviour
     [SerializeField] private bool pathStarted;
     [SerializeField] private Vector3 lastTarget;
     [SerializeField] private bool jumpOverObstacles;
+    
+    [SerializeField] private bool avoidObstacles;
+    [SerializeField] private float avoidRadius = 1;
+    [SerializeField] private float avoidForce = 1;
+    [SerializeField] private LayerMask avoidMask;
 
     private RaycastHit sweepHit;
     private bool jumpStarted;
@@ -82,6 +87,20 @@ public class AIInput : MonoBehaviour
             Vector3 dir = GetPathPosition() - transform.position;
             dir.y = 0;
 
+            // NPC avoidance
+            if(avoidObstacles)
+            {
+                Collider[] colliders = Physics.OverlapSphere(transform.position, avoidRadius, avoidMask);
+                Vector3 delta = Vector3.zero;
+                foreach(Collider c in colliders)
+                {
+                    if(c.transform.root == transform.root) continue;
+                    delta += (transform.position - c.transform.position) * avoidForce;
+                }
+                Debug.Log(delta);
+                dir += delta;
+            }
+
             // Perform input
             inputState.AxisInput = dir;
             
@@ -105,7 +124,6 @@ public class AIInput : MonoBehaviour
 
     private IEnumerator Jump(float holdTime)
     {
-        Debug.Log("Jump");
         jumpStarted = true;
         float timeStarted = Time.time;
 
@@ -120,7 +138,6 @@ public class AIInput : MonoBehaviour
         yield return null;
         inputState.Jump.Set(VButtonState.UNPRESSED);
         jumpStarted = false;
-        Debug.Log("JumpEnd");
     }
 
     public void PressButton(string button)
@@ -216,6 +233,10 @@ public class AIInput : MonoBehaviour
 
     private void OnDrawGizmos() 
     {
+        if(avoidObstacles)
+            Gizmos.DrawWireSphere(transform.position, avoidRadius);
+
+
         if(path == null) return;
         
         for (var i = 0; i < path.corners.Length; i++)
@@ -225,6 +246,5 @@ public class AIInput : MonoBehaviour
             if(i > 0)
                 Gizmos.DrawLine(path.corners[i-1], path.corners[i]);
         }
-        
     }
 }
