@@ -68,7 +68,6 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     [Space (10)]
 
     [Header ("Pickup Reference")]
-    [SerializeField] private bool replaceWithPickupWhenStopped;
     [SerializeField] private GameObject pickup;
 
     [Header ("Real Time Data")]
@@ -176,10 +175,6 @@ public class Projectile : MonoBehaviour, IHitboxResponder
         // Notify listeners
         if(OnProjecitleStop != null)
             OnProjecitleStop(hit);
-
-        // Replace with Pickup
-        if(replaceWithPickupWhenStopped)
-            ReplaceWithPickup();
     }
 
     private void StopHitbox()
@@ -249,13 +244,11 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             objectsCollided.Clear();
     }
 
-    public void ReplaceWithPickup()
+    public GameObject ReplaceWithPickup()
     {
         GameObject go = Instantiate(pickup, transform.position, transform.rotation, transform.parent);
         go.transform.localScale = transform.localScale;
-        Pickup p = go.GetComponent<Pickup>();
-        if(p)
-            p.SetRigidActive(false);
         Destroy(gameObject);
+        return go;
     }
 }

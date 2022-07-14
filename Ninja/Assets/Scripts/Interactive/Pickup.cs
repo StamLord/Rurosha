@@ -37,10 +37,13 @@ public class Pickup : PhysicalObject
                 
                 // If we have child pickups,
                 // we unparent them so they are not destroyed
-                Pickup[] childPickups = GetComponentsInChildren<Pickup>();
-                foreach(Pickup p in childPickups)
+                Projectile[] childPickups = GetComponentsInChildren<Projectile>();
+                foreach(Projectile proj in childPickups)
                 {
-                    if(p == this) continue;
+                    if(proj.transform == transform) continue; // Ignore ourselves
+                    GameObject go = proj.ReplaceWithPickup();
+                    Pickup p = go.GetComponent<Pickup>();
+                    if(p == null) continue;
                     p.transform.SetParent(transform.parent);
                     p.SetRigidActive(true);
                 }
