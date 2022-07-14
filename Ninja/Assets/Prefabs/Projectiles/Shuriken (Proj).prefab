@@ -195,6 +195,8 @@ MonoBehaviour:
   deactivateDelay: 0
   objectsToDeactivate:
   - {fileID: 8464101928955667332}
+  replaceWithPickupWhenStopped: 1
+  pickup: {fileID: 773845066800303054, guid: f00a7c7e1d43cdb4d9691f7ca3a71fd4, type: 3}
   objectsCollided: []
   ignoreTransform: {fileID: 0}
 --- !u!114 &1116292965985431855
@@ -230,6 +232,7 @@ MonoBehaviour:
   outline: {fileID: 0}
   interactionText: Pickup
   weightClass: 0
+  rigidbody: {fileID: 0}
   item: {fileID: 11400000, guid: 691ebfc88b4130c4da1cf663f21b7032, type: 2}
 --- !u!65 &6861394814472067686
 BoxCollider:

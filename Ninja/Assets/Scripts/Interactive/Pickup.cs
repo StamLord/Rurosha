@@ -35,12 +35,22 @@ public class Pickup : PhysicalObject
                 if(OnPickup != null)
                     OnPickup(item);
                 
+                // If we have child pickups,
+                // we unparent them so they are not destroyed
+                Pickup[] childPickups = GetComponentsInChildren<Pickup>();
+                foreach(Pickup p in childPickups)
+                {
+                    if(p == this) continue;
+                    p.transform.SetParent(transform.parent);
+                    p.SetRigidActive(true);
+                }
+
                 Destroy(transform.gameObject);
             }
         }
     }
 
-    // Used by Grappling Hook to pcik up items
+    // Used by Grappling Hook to pick up items
     public void Use(WeaponManager manager)
     {
         if(item)
