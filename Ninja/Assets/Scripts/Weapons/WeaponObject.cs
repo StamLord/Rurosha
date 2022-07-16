@@ -12,6 +12,8 @@ public class WeaponObject : MonoBehaviour
     protected StealthAgent agent {get {return manager.Agent;}}
     protected new Camera camera {get {return manager.Camera;}}
 
+    public bool drawn;
+
     void Awake()
     {
         Initialize();
@@ -20,7 +22,7 @@ public class WeaponObject : MonoBehaviour
     public void Initialize()
     {
         //InitializeOutline();
-        animator = GetComponent<Animator>();
+        if(animator == null) animator = GetComponent<Animator>();
     }
 
     public void SetWeaponManager(WeaponManager manager)
@@ -28,43 +30,45 @@ public class WeaponObject : MonoBehaviour
         this.manager = manager;
     }
 
-    public void DrawAnimation()
+    protected virtual void DrawAnimation()
     {
         animator.Play("Draw");
     }
 
-    public void SheethAnimation()
+    protected virtual void SheathAnimation()
     {
         animator.Play("Sheeth");
     }
 
-    public void UseAnimation()
+    protected void UseAnimation()
     {
         animator.Play("Use");
     }
 
-    public void AltUseAnimation()
+    protected void AltUseAnimation()
     {
         animator.Play("AltUse");
     }
     
-    private void OnEnable() 
-    {
-        DrawWeapon();    
-    }
+    // private void OnEnable() 
+    // {
+    //     DrawWeapon();
+    // }
 
-    private void OnDisable() 
-    {
-        SheathWeapon();    
-    }
+    // private void OnDisable() 
+    // {
+    //     SheathWeapon();    
+    // }
 
     protected virtual void DrawWeapon()
     {
-
+        drawn = true;
+        DrawAnimation();
     }
 
     protected virtual void SheathWeapon()
     {
-
+        drawn = false;
+        SheathAnimation();
     }
 }
