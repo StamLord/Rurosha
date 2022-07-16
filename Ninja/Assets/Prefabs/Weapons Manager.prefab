@@ -1440,6 +1440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   projectile: {fileID: 5373187035755985752, guid: 3ecefd2173f23f04d9cdb7b05661b62f,
     type: 3}
   camera: {fileID: 0}
@@ -2718,6 +2719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   softDamage: 20
   hardDamage: 10
   chanceToBleed: 0.25
@@ -3131,6 +3133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   player: {fileID: 0}
   rigidPlayer: {fileID: 0}
   staticKunai: {fileID: 1278044656261284948}
@@ -3286,6 +3289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   player: {fileID: 0}
   lr: {fileID: 0}
   characterStateMachine: {fileID: 0}
@@ -4031,6 +4035,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   hitbox: {fileID: 1278044655345775746}
   guard: {fileID: 6976487158393640913}
   guardVfx: {fileID: 5797145477176175113}
@@ -4462,6 +4467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   hitboxes:
   - {fileID: 8206658476890964085}
   - {fileID: 8206658475404135320}
@@ -4591,6 +4597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   projectile: {fileID: 5248171932173236031, guid: 7c09edecc83f8a3418d4ac96982f3085,
     type: 3}
   camera: {fileID: 0}
@@ -11559,6 +11566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   projectile: {fileID: 5373187035755985752, guid: 39a84fab8d09ede4e8d5d3afd219d802,
     type: 3}
   camera: {fileID: 0}
@@ -12297,6 +12305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   projectile: {fileID: 5373187035755985752, guid: d05acc45e11e1a44abedb3d181995c1d,
     type: 3}
   camera: {fileID: 0}
@@ -12858,6 +12867,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 8206658476288867024}
+  drawn: 0
   direction: 0
   threshold: 0.5
   mouseInput: {x: 0, y: 0}
@@ -14057,6 +14067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   hitbox: {fileID: 8206658476241470813}
   guard: {fileID: 0}
   guardVfx: {fileID: 0}
@@ -14132,6 +14143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  drawn: 0
   hitbox: {fileID: 8206658476241470813}
   nextAttack: 0
   lastAttack: 0
@@ -15544,6 +15556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 1278044654590407813}
+  drawn: 0
   projectile: {fileID: 0}
   origins: []
   upModifier: 0
@@ -16127,6 +16140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 8206658476176231648}
+  drawn: 0
   projectile: {fileID: 2728008844794060368, guid: 8fc942549c3019d45a08471b1d2478a2,
     type: 3}
   origins: []
