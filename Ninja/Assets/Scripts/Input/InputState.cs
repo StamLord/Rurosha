@@ -25,6 +25,7 @@ public class InputState : MonoBehaviour
     public VButton Kick = new VButton();
     public VButton Spell = new VButton();
     public VButton Sit = new VButton();
+    public VButton Draw = new VButton();
     
     public VButton MouseButton1 = new VButton();
     public VButton MouseButton2 = new VButton();
