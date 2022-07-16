@@ -10,6 +10,8 @@ public class AIState : State
             return (aiStateMachine == null)? aiStateMachine = (AIStateMachine)_stateMachine : aiStateMachine; 
             }}
 
+    public CharacterStats Stats { get { return AIStateMachine.CharacterStats;}}
+
     [SerializeField] protected float turnSpeed = 1f;
     [SerializeField] protected bool debug;
 

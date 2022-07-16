@@ -4,7 +4,8 @@ using System.Collections;
 public class FightAIState : AIState
 {
     [Header("Movement")]
-    [SerializeField] private float enemyDistance = 3f;
+    [SerializeField] private float circleRange = 5f;
+    [SerializeField] private float attackRange = 2f;
     [SerializeField] private float pathRecalculateDistance = 3f;
     [SerializeField] private float faceEnemyDistance = 5f;
 
@@ -20,12 +21,32 @@ public class FightAIState : AIState
     private StealthAgent enemy;
     private Vector3 lastPathTarget;
     private Coroutine attackCoroutine;
-    public bool canAttack = true;
+    public bool canAttack = false;
+    public bool canAdvance = false;
     public bool defending;
+
+    private TargetManager targetManager;
 
     protected override void OnEnterState()
     {
         enemy = (AIStateMachine.enemy)? AIStateMachine.enemy : null;
+
+        // Register to target manager
+        if(enemy)
+        {
+            targetManager = enemy.GetComponent<TargetManager>();
+            if(targetManager)
+            {
+                targetManager.AddFighter(this);
+                Stats.DeathEvent += OnDeath;
+            }
+            else
+            {
+                canAttack = true;
+                canAdvance = true;
+            }
+        }
+        
         lastPathTarget = enemy.transform.position;
         MoveTo(enemy.transform.position);
 
@@ -33,8 +54,7 @@ public class FightAIState : AIState
 
         // Draw weapon
         PressButton("2");
-        canAttack = true;
-
+        
         if(debug)
             AIStateMachine.SetDebugColor(Color.red);
     }
@@ -48,15 +68,21 @@ public class FightAIState : AIState
             LookTowards(enemy.transform.position);
 
         // Move to player when distance between AI and player too big and when player moved enough from his last position we calculated path
-        bool inAtkRange = !TooFar(enemy.transform.position, enemyDistance);
-        if(inAtkRange == false &&
-            Vector3.Distance(enemy.transform.position, lastPathTarget) > pathRecalculateDistance)
+        
+        float distance = (canAdvance)? attackRange : circleRange; // Different distance based on whether we can advance (according to TaskManager)
+        Vector3 dir = (transform.position - enemy.transform.position).normalized; // Vector from us to enemy
+        Vector3 target = enemy.transform.position + dir * distance; // Get point at needed distance from enemy
+
+        bool inRange = Vector3.Distance(transform.position, target) <= .3f;
+
+        // Recalculate if too far or target position changed enough
+        if(inRange == false || Vector3.Distance(target, lastPathTarget) > pathRecalculateDistance)
         {
-            lastPathTarget = enemy.transform.position;
-            MoveTo(enemy.transform.position);
+            lastPathTarget = target;
+            MoveTo(target);
         }
         
-        if (inAtkRange &&   // Attack if in range and 
+        if (inRange &&   // Attack if in range and 
             canAttack)      // Not already attacking
         {
             // Aggressive chance roll
@@ -98,6 +124,10 @@ public class FightAIState : AIState
     protected override void OnExitState()
     {
         AIStateMachine.AwarenessAgent.OnLoseAgent -= LoseAgent;
+        Stats.DeathEvent -= OnDeath;
+        
+        if(targetManager)
+            targetManager.RemoveFighter(this);
     }
 
     private void LoseAgent(StealthAgent agent)
@@ -129,7 +159,11 @@ public class FightAIState : AIState
         }
 
         yield return new WaitForSeconds(waitAfterAttack);
-        canAttack = true;
+
+        if(targetManager)
+            targetManager.FinishedAttack(this);
+        else
+            canAttack = true;
     }
 
     private IEnumerator DontAttack(float wait)
@@ -138,6 +172,16 @@ public class FightAIState : AIState
         yield return new WaitForSeconds(wait);
         canAttack = true;
     }
+
+    public void AllowAttack(bool allow)
+    {
+        canAttack = allow;
+    }
+
+    public void AllowAdvance(bool allow)
+    {
+        canAdvance = allow;
+    }
     
     private void OnDrawGizmos() 
     {
@@ -145,5 +189,10 @@ public class FightAIState : AIState
 
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(enemy.transform.position + Vector3.up * .5f, .5f);
+    }
+
+    private void OnDeath()
+    {
+        targetManager.RemoveFighter(this);
     }
 }
