@@ -53,19 +53,32 @@ public class Melee : WeaponObject, IHitboxResponder
 
     private void Input()
     {
-        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        if(inputState.Draw.State == VButtonState.PRESS_END)
+        {
+            if(drawn)
+                SheathWeapon();
+            else
+                DrawWeapon();
+            return;
+        }
 
         // Defend (LMB + RMB)
         bool defend = (inputState.MouseButton1.State == VButtonState.PRESSED &&
         inputState.MouseButton2.State == VButtonState.PRESSED);
-        animator.SetBool("DEFEND", defend);
+        animator.SetBool("defend", defend);
         if(defend)
             return;
+        
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
         
         // Left Attack (LMB)
         if(inputState.MouseButton1.State == VButtonState.PRESS_END)
         {
-            if(state.IsName("idle") || state.IsName("fist_left_chain") || state.IsName("fist_right_chain"))
+            if(drawn == false)
+            {
+                DrawWeapon();
+            }
+            else if(state.IsName("idle") || state.IsName("fist_left_chain") || state.IsName("fist_right_chain"))
             {
                 if(charStats.DepleteStamina(leftAttackStaminaCost))
                 {
@@ -79,7 +92,11 @@ public class Melee : WeaponObject, IHitboxResponder
         // Right Attack (RMB)
         else if(inputState.MouseButton2.State == VButtonState.PRESS_END)
         {
-            if(state.IsName("idle") || state.IsName("fist_left_chain") || state.IsName("fist_right_chain"))
+            if(drawn == false)
+            {
+                DrawWeapon();
+            }
+            else if(state.IsName("idle") || state.IsName("fist_left_chain") || state.IsName("fist_right_chain"))
             {
                 if(charStats.DepleteStamina(rightAttackStaminaCost))
                 {
@@ -169,5 +186,15 @@ public class Melee : WeaponObject, IHitboxResponder
     public void UpdateColliderState(bool state)
     {
          
+    }
+
+    protected override void DrawAnimation()
+    {
+        animator.CrossFade("melee_drawn", .1f);
+    }
+
+    protected override void SheathAnimation()
+    {
+        animator.CrossFade("melee_idle", .1f);
     }
 }
