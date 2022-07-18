@@ -8,8 +8,10 @@ public class TargetManager : MonoBehaviour
     [SerializeField] private List<FightAIState> pendingFighters = new List<FightAIState>();
 
     [SerializeField] private int maxActive;
+    [SerializeField] private float timeBeforeNextAttacker = 2f;
+    private float lastAttackTime;
 
-    private FightAIState lastAttacker;
+    [SerializeField] private FightAIState lastAttacker;
 
     public void AddFighter(FightAIState fighter)
     {
@@ -33,21 +35,44 @@ public class TargetManager : MonoBehaviour
             RemoveActive(fighter);
     }
 
+    public bool ActiveToPending(FightAIState fighter)
+    {
+        if(activeFighters.Contains(fighter) == false)
+            return false;
+
+        // It should not be removed as it will be promoted again to active
+        if(pendingFighters.Count == 0)
+            return false;
+        
+        // Remove from active
+        RemoveActive(fighter);
+
+        // Add to pending
+        pendingFighters.Add(fighter);
+
+        return true;
+    }
+
     private void RemovePending(FightAIState fighter)
     {
-        if(pendingFighters.Contains(fighter))
-            pendingFighters.Remove(fighter);
+        pendingFighters.Remove(fighter);
     }
 
     private void RemoveActive(FightAIState fighter)
     {
-        if(activeFighters.Contains(fighter))
-            activeFighters.Remove(fighter);
+        activeFighters.Remove(fighter);
+        fighter.AllowAdvance(false);
 
         if(activeFighters.Count < maxActive)
             NextActive();
 
         if(lastAttacker == fighter)
+            NextAttacker();
+    }
+
+    private void Update() 
+    {
+        if(Time.time - lastAttackTime > timeBeforeNextAttacker)
             NextAttacker();
     }
 
@@ -64,18 +89,27 @@ public class TargetManager : MonoBehaviour
         
         // First one can attack
         if(activeFighters.Count == 1) 
+        {
+            lastAttacker = f;
             f.AllowAttack(true);
+        }
     }
 
     private void NextAttacker()
     {
+        if(activeFighters.Count == 0)
+            return;
+        
         FightAIState f = activeFighters[0];
-        f.AllowAttack(true);
+        if(lastAttacker) lastAttacker.AllowAttack(false);
         lastAttacker = f;
+        f.AllowAttack(true);
     }
 
     public void FinishedAttack(FightAIState fighter)
     {
+        lastAttackTime = Time.time;
+
         // Move to back of list
         activeFighters.Remove(fighter);
         activeFighters.Add(fighter);

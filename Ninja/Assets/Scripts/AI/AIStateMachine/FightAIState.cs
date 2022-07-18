@@ -69,11 +69,13 @@ public class FightAIState : AIState
 
         // Move to player when distance between AI and player too big and when player moved enough from his last position we calculated path
         
-        float distance = (canAdvance)? attackRange : circleRange; // Different distance based on whether we can advance (according to TaskManager)
         Vector3 dir = (transform.position - enemy.transform.position).normalized; // Vector from us to enemy
-        Vector3 target = enemy.transform.position + dir * distance; // Get point at needed distance from enemy
+        Vector3 circleTarget = enemy.transform.position + dir * circleRange; // Get point at needed distance from enemy
+        Vector3 attackTarget = enemy.transform.position + dir * attackRange; // Get point at needed distance from enemy
+        Vector3 target = (canAdvance)? attackTarget : circleTarget; // Relevant target for us
 
-        bool inRange = Vector3.Distance(transform.position, target) <= .3f;
+        float distaneFromTarget = Vector3.Distance(transform.position, target); // Our distance from our target position (circle or attack range)
+        bool inRange = distaneFromTarget <= .3f; // We allow for .3f to be the threshold to account for inconsistency in moving
 
         // Recalculate if too far or target position changed enough
         if(inRange == false || Vector3.Distance(target, lastPathTarget) > pathRecalculateDistance)
