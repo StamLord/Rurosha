@@ -116,7 +116,8 @@ MonoBehaviour:
   outline: {fileID: 0}
   interactionText: Pick Up
   weightClass: 0
-  _item: {fileID: 11400000, guid: 2b01d59d4370f3e4aa2582de87890498, type: 2}
+  rigidbody: {fileID: 0}
+  item: {fileID: 11400000, guid: 2b01d59d4370f3e4aa2582de87890498, type: 2}
 --- !u!136 &5747355510902007130
 CapsuleCollider:
   m_ObjectHideFlags: 0
