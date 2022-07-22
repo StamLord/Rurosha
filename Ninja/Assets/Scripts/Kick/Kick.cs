@@ -6,6 +6,7 @@ public class Kick : MonoBehaviour, IHitboxResponder
 {
     [Header("Reference")]
     [SerializeField] private StealthAgent agent;
+    [SerializeField] private Animator animator;
     
     [Header("Physics")]
     [SerializeField] private float kickForce = 5f;
@@ -62,8 +63,17 @@ public class Kick : MonoBehaviour, IHitboxResponder
 
     }
 
-    public void ActivateKick()
+    public void ActivateKick(Vector3 movement)
     {
+        if(movement.z < 0)              // Back
+            animator.Play("snap_kick", 2);
+        else if(movement.x < 0)         // Left
+            animator.Play("right_kick", 2);
+        else if(movement.x > 0)         // Right
+            animator.Play("left_kick", 2);
+        else                            // Forward
+            animator.Play("push_kick", 2);
+        
         hitbox.StartColliding(true);
     }
 }

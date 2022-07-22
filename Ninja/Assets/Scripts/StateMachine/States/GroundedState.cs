@@ -122,7 +122,7 @@ public class GroundedState : PlayerState
 
         // Kick
         if (inputState.Kick.State == VButtonState.PRESS_START) 
-            kick.ActivateKick();
+            kick.ActivateKick(inputState.AxisInput);
 
         // Switch to AirSTate
         if (IsGrounded == false) 
