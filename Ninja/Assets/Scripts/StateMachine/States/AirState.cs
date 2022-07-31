@@ -186,6 +186,10 @@ public class AirState : PlayerState
             }
         }
 
+        // Kick
+        if (inputState.Kick.State == VButtonState.PRESS_START) 
+            kick.AirKick();
+        
         // Dash
         if(inputState.DoubleForward || inputState.DoubleBack || inputState.DoubleLeft || inputState.DoubleRight)
             if(characterStats.DepleteStamina(20))

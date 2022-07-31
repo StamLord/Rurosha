@@ -144,6 +144,10 @@ public class SimpleJumpState : PlayerState
 
         if(gravityOn)
             rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
+
+        // Kick
+        if (inputState.Kick.State == VButtonState.PRESS_START) 
+            kick.AirKick();
     }
 
     float CalculateJumpVerticalSpeed () 

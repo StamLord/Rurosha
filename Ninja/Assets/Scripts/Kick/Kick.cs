@@ -7,23 +7,25 @@ public class Kick : MonoBehaviour, IHitboxResponder
     [Header("Reference")]
     [SerializeField] private StealthAgent agent;
     [SerializeField] private Animator animator;
+    [SerializeField] private Hitbox[] hitbox;
     
     [Header("Physics")]
     [SerializeField] private float kickForce = 5f;
     [SerializeField] private float enemyKickForce = 15f;
     [SerializeField] private float kickUpwardsModifier = 1f;
-    [SerializeField] private float kickRadius = 1f;
     
     [Header("Damage")]
     [SerializeField] private int softDamage = 5;
     [SerializeField] private int hardDamage = 10;
     [SerializeField] private DamageType damageType = DamageType.Blunt;
-    [SerializeField] private Hitbox hitbox;
 
     private void Start() 
     {
-        hitbox.SetIgnoreTransform(transform.root);
-        hitbox.SetResponder(this);
+        foreach (Hitbox h in hitbox)
+        {
+            h.SetIgnoreTransform(transform.root);
+            h.SetResponder(this);
+        }
     }
 
     public void CollisionWith(Collider collider, Hitbox hitbox)
@@ -73,7 +75,10 @@ public class Kick : MonoBehaviour, IHitboxResponder
             animator.Play("left_kick", 2);
         else                            // Forward
             animator.Play("push_kick", 2);
-        
-        hitbox.StartColliding(true);
+    }
+
+    public void AirKick()
+    {
+        animator.Play("flying_kick", 2);
     }
 }
