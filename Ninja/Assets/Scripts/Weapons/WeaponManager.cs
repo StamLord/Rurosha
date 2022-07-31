@@ -18,6 +18,8 @@ public class WeaponManager : MonoBehaviour
 
     [SerializeField] private InputState _inputState;
     public InputState InputState {get {return _inputState;}}
+
+    [SerializeField] private Transform dropOrigin;
     
     [Header("Items")]
     [SerializeField] private Item[] items = new Item[10];
@@ -153,6 +155,13 @@ public class WeaponManager : MonoBehaviour
             selected = 8;
         if(_inputState.Num0.State == VButtonState.PRESS_START)
             selected = 9;
+        
+        #endregion
+
+        #region Drop
+
+        if(_inputState.Drop.State == VButtonState.PRESS_START)
+            DropItem();
         
         #endregion
 
@@ -378,6 +387,18 @@ public class WeaponManager : MonoBehaviour
         else
             if(ChangeItemEvent != null) ChangeItemEvent(selected, item, item.ammo);
 
+    }
+
+    public void DropItem()
+    {
+        // Create pickup object
+        Instantiate(items[selected].pickup, dropOrigin.position, Quaternion.identity);
+
+        // Remove selected item
+        if(items[selected].stackable)
+            DepleteItem();
+        else
+            RemoveItem();
     }
 
     public int GetAmmo()

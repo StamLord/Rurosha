@@ -64,6 +64,9 @@ public class PlayerControls : MonoBehaviour
 
             // Draw
             UpdateVirtualButton("Draw", _inputState.Draw);
+
+            // Draw
+            UpdateVirtualButton("Drop", _inputState.Drop);
         }
 
         if(interactionDisabled == false)
