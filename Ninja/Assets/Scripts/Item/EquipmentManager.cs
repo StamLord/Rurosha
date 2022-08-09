@@ -58,6 +58,37 @@ public class EquipmentManager : MonoBehaviour
         return oldEquipment;
     }
 
+    public Equipment UnEquip(EquipmentType slot)
+    {
+        Equipment oldEquipment = null;
+
+        switch(slot)
+        {
+            case EquipmentType.Head:
+                oldEquipment = head;
+                head = null;
+                break;
+            case EquipmentType.Torso:
+                oldEquipment = torso;
+                torso = null;
+                break;
+            case EquipmentType.Legs:
+                oldEquipment = legs;
+                legs = null;
+                break;
+            case EquipmentType.Arms:
+                oldEquipment = arms;
+                arms = null;
+                break;
+            case EquipmentType.Feet:
+                oldEquipment = feet;
+                feet = null;
+                break;
+        }
+
+        return oldEquipment;
+    }
+
     public Defense GetDefense()
     {
         Defense defense = new Defense();
