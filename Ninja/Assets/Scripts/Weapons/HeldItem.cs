@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeldItem : MonoBehaviour
+public class HeldItem : WeaponObject
 {
-    [SerializeField] private CharacterStats characterStats;
-    [SerializeField] private WeaponManager weaponManager;
     [SerializeField] private MeshFilter meshFilter;
     [SerializeField] private MeshRenderer meshRenderer;
-    [SerializeField] private Animator animator;
 
     [SerializeField] private Item item;
     [SerializeField] private Consumable consumable;
@@ -17,7 +14,7 @@ public class HeldItem : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButton(0))
+        if(inputState.MouseButton1.Pressed)
         {
             animator?.SetBool("Using", true);
             if(consumable)
@@ -44,20 +41,20 @@ public class HeldItem : MonoBehaviour
             ActivateConsumableEffects(1f);
 
         if(consumable.leftoverItem) 
-            weaponManager.AddItemAtSelection(consumable.leftoverItem);
+            manager.AddItemAtSelection(consumable.leftoverItem);
         else
-            weaponManager.DepleteItem();
+            manager.DepleteItem();
     }
 
-    void ActivateConsumableEffects(float fraction)
+    private void ActivateConsumableEffects(float fraction)
     {
-        characterStats.AddHealth(consumable.healthRestore * fraction);
-        characterStats.AddPotentialHealth(consumable.potentialHealthRestore * fraction);
-        characterStats.AddStamina(consumable.staminaRestore * fraction);
-        characterStats.AddPotentialStamina(consumable.potentialStaminaRestore * fraction);
+        charStats.AddHealth(consumable.healthRestore * fraction);
+        charStats.AddPotentialHealth(consumable.potentialHealthRestore * fraction);
+        charStats.AddStamina(consumable.staminaRestore * fraction);
+        charStats.AddPotentialStamina(consumable.potentialStaminaRestore * fraction);
     }
 
-    public void SetItem(Item item)
+    public override void SetItem(Item item)
     {
         this.item = item;
         if(item is Consumable)
@@ -70,12 +67,6 @@ public class HeldItem : MonoBehaviour
             consumable = null;
 
         UpdateVisual();
-    }
-
-    void UpdateVisual()
-    {
-        if(meshFilter) meshFilter.mesh = item.model;
-        if(meshRenderer) meshRenderer.material = item.material;
     }
 }
 

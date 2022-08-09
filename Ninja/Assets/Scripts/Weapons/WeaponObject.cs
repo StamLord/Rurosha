@@ -7,12 +7,16 @@ public class WeaponObject : MonoBehaviour
     [Header("References")]
     [SerializeField] protected WeaponManager manager;
     [SerializeField] protected Animator animator;
+    [SerializeField] private MeshFilter meshFilter;
+    [SerializeField] private MeshRenderer meshRenderer;
     protected InputState inputState {get {return manager.InputState;}}
     protected CharacterStats charStats {get {return manager.Stats;}}
     protected StealthAgent agent {get {return manager.Agent;}}
     protected new Camera camera {get {return manager.Camera;}}
 
-    public bool drawn;
+    [Header("Debug Info")]
+    [SerializeField] private bool drawn;
+    [SerializeField] private Item item;
 
     void Awake()
     {
@@ -28,6 +32,12 @@ public class WeaponObject : MonoBehaviour
     public void SetWeaponManager(WeaponManager manager)
     {
         this.manager = manager;
+    }
+
+    public virtual void SetItem(Item item)
+    {
+        this.item = item;
+        UpdateVisual();
     }
 
     protected virtual void DrawAnimation()
@@ -70,5 +80,11 @@ public class WeaponObject : MonoBehaviour
     {
         drawn = false;
         SheathAnimation();
+    }
+
+    protected void UpdateVisual()
+    {
+        if(meshFilter) meshFilter.mesh = item.model;
+        if(meshRenderer) meshRenderer.material = item.material;
     }
 }

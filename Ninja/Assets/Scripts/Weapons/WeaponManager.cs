@@ -248,6 +248,7 @@ public class WeaponManager : MonoBehaviour
     {
         gameObject?.SetActive(true);
         _lastActive = gameObject;
+        gameObject?.GetComponent<WeaponObject>().SetItem(items[selected]);
     }
 
     // Select best weapon based on damage
