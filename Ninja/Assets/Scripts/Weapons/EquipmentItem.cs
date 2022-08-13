@@ -2,35 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentItem : MonoBehaviour
+public class EquipmentItem : WeaponObject
 {
-    [SerializeField] private WeaponManager weaponManager;
     [SerializeField] private EquipmentManager equipmentManager;
-    [SerializeField] private MeshFilter meshFilter;
-
-    [SerializeField] private Equipment equipment;
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(inputState.MouseButton1.State == VButtonState.PRESS_START)
         {
-            Equipment old = equipmentManager.Equip(equipment);
+            Equipment old = equipmentManager.Equip((Equipment)item);
             if(old)
-                weaponManager.AddItemAtSelection(old);
+                manager.AddItemAtSelection(old);
             else
-                weaponManager.RemoveItem();
+                manager.RemoveItem();
         }
-    }
-
-    public void SetEquipment(Equipment equipment)
-    {
-        this.equipment = equipment;
-        Debug.Log(equipment);
-        UpdateVisual();
-    }
-
-    void UpdateVisual()
-    {
-        meshFilter.mesh = equipment.model;
     }
 }

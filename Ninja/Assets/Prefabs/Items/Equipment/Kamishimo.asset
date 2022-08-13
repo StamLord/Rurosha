@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c35159d795dff4b820988cf8baf533, type: 3}
+  m_Name: Kamishimo
+  m_EditorClassIdentifier: 
+  model: {fileID: 4300002, guid: 9413e02bbd88e964b905b98c5f42ced0, type: 3}
+  material: {fileID: 0}
+  itemName: Kamishimo
+  stackable: 0
+  _ammo: 0
+  durability: 0
+  cost: 1
+  pickup: {fileID: 0}
+  equipmentType: 1
+  equipmentLayer: 1
+  visualIndex: 3
+  bluntDefense: 1
+  slashDefense: 1
+  pierceDefense: 1

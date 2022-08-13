@@ -75,6 +75,8 @@ public class WeaponManager : MonoBehaviour
         if(_makibishi)_makibishi.GetComponent<WeaponObject>().SetWeaponManager(this);
         if(_bow)_bow.GetComponent<WeaponObject>().SetWeaponManager(this);
         if(_grappling_hook)_grappling_hook.GetComponent<WeaponObject>().SetWeaponManager(this);
+
+        if(_equipment)_equipment.GetComponent<WeaponObject>().SetWeaponManager(this);
         
         SelectItem();
 
@@ -225,7 +227,6 @@ public class WeaponManager : MonoBehaviour
         else if (items[selected] is Equipment)
         {
             ActivateObject(_equipment);
-            _equipment?.GetComponent<EquipmentItem>().SetEquipment((Equipment)items[selected]);
         }
         else // Item
         {
@@ -248,7 +249,12 @@ public class WeaponManager : MonoBehaviour
     {
         gameObject?.SetActive(true);
         _lastActive = gameObject;
-        gameObject?.GetComponent<WeaponObject>().SetItem(items[selected]);
+        if(items[selected])
+        {
+            WeaponObject wo = gameObject.GetComponent<WeaponObject>();
+            if(wo)
+                wo.SetItem(items[selected]); // Change all references to WeaponObject so we don't need to search for component
+        }
     }
 
     // Select best weapon based on damage

@@ -1440,7 +1440,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   projectile: {fileID: 5373187035755985752, guid: 3ecefd2173f23f04d9cdb7b05661b62f,
     type: 3}
   camera: {fileID: 0}
@@ -2719,7 +2722,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   softDamage: 20
   hardDamage: 10
   chanceToBleed: 0.25
@@ -2967,9 +2973,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a53cdf68171594aa64528134139501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponManager: {fileID: 1278044654527455676}
-  equipmentManager: {fileID: 0}
+  manager: {fileID: 0}
+  animator: {fileID: 0}
   meshFilter: {fileID: 3852948861532004015}
+  meshRenderer: {fileID: 0}
+  drawn: 0
+  item: {fileID: 0}
+  equipmentManager: {fileID: 0}
   equipment: {fileID: 0}
 --- !u!1 &1278044654527455674
 GameObject:
@@ -3134,7 +3144,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   player: {fileID: 0}
   rigidPlayer: {fileID: 0}
   staticKunai: {fileID: 1278044656261284948}
@@ -3290,7 +3303,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   player: {fileID: 0}
   lr: {fileID: 0}
   characterStateMachine: {fileID: 0}
@@ -4036,7 +4052,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   hitbox: {fileID: 1278044655345775746}
   guard: {fileID: 6976487158393640913}
   guardVfx: {fileID: 5797145477176175113}
@@ -4468,7 +4487,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   hitboxes:
   - {fileID: 8206658476890964085}
   - {fileID: 8206658475404135320}
@@ -4598,7 +4620,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   projectile: {fileID: 5248171932173236031, guid: 7c09edecc83f8a3418d4ac96982f3085,
     type: 3}
   camera: {fileID: 0}
@@ -6389,9 +6414,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbed2ced8833d4445bbbb7f40bb9c710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponManager: {fileID: 1278044654527455676}
+  manager: {fileID: 0}
   animator: {fileID: 271818249473575996}
-  characterStats: {fileID: 0}
+  meshFilter: {fileID: 2631325593204217798}
+  meshRenderer: {fileID: 7877634901844794737}
+  drawn: 0
+  item: {fileID: 0}
   meshFilter: {fileID: 2631325593204217798}
   meshRenderer: {fileID: 7877634901844794737}
   item: {fileID: 0}
@@ -11567,7 +11595,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   projectile: {fileID: 5373187035755985752, guid: 39a84fab8d09ede4e8d5d3afd219d802,
     type: 3}
   camera: {fileID: 0}
@@ -12306,7 +12337,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   projectile: {fileID: 5373187035755985752, guid: d05acc45e11e1a44abedb3d181995c1d,
     type: 3}
   camera: {fileID: 0}
@@ -12868,7 +12902,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 8206658476288867024}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   direction: 0
   threshold: 0.5
   mouseInput: {x: 0, y: 0}
@@ -14068,7 +14105,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   hitbox: {fileID: 8206658476241470813}
   guard: {fileID: 0}
   guardVfx: {fileID: 0}
@@ -14144,7 +14184,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   hitbox: {fileID: 8206658476241470813}
   nextAttack: 0
   lastAttack: 0
@@ -14706,9 +14749,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbed2ced8833d4445bbbb7f40bb9c710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponManager: {fileID: 1278044654527455676}
+  manager: {fileID: 0}
   animator: {fileID: 8206658476942909079}
-  characterStats: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 3822525843153018348}
+  drawn: 0
+  item: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 3822525843153018348}
   item: {fileID: 0}
@@ -15557,7 +15603,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 1278044654590407813}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   projectile: {fileID: 0}
   origins: []
   upModifier: 0
@@ -16141,7 +16190,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   animator: {fileID: 8206658476176231648}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   drawn: 0
+  item: {fileID: 0}
   projectile: {fileID: 2728008844794060368, guid: 8fc942549c3019d45a08471b1d2478a2,
     type: 3}
   origins: []

@@ -15,8 +15,8 @@ public class WeaponObject : MonoBehaviour
     protected new Camera camera {get {return manager.Camera;}}
 
     [Header("Debug Info")]
-    [SerializeField] private bool drawn;
-    [SerializeField] private Item item;
+    [SerializeField] protected bool drawn;
+    [SerializeField] protected Item item;
 
     void Awake()
     {

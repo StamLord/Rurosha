@@ -34,11 +34,13 @@ public class EquipmentEditor : Editor
 
         // Stats
         equipment.equipmentType = (EquipmentType)EditorGUILayout.EnumPopup("Equipment Type", equipment.equipmentType);
+        equipment.equipmentLayer = (EquipmentLayer)EditorGUILayout.EnumPopup("Equipment Layer", equipment.equipmentLayer);
         
         EditorGUILayout.Space(10);
         
         equipment.model = (Mesh)EditorGUILayout.ObjectField("Model", equipment.model, typeof(Mesh), true);
         equipment.itemName = EditorGUILayout.DelayedTextField("Name", equipment.itemName);
+        equipment.visualIndex = EditorGUILayout.IntSlider("Visual", equipment.visualIndex, 0, 100);
 
         EditorGUILayout.Space(10);
 

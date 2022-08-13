@@ -4,11 +4,37 @@ using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour
 {
-    [SerializeField] Equipment head;
-    [SerializeField] Equipment torso;
-    [SerializeField] Equipment legs;
-    [SerializeField] Equipment arms;
-    [SerializeField] Equipment feet;
+    [Header("Equipped")]
+    [SerializeField] private Equipment head;
+    [SerializeField] private Equipment torso;
+    [SerializeField] private Equipment legs;
+    [SerializeField] private Equipment arms;
+    [SerializeField] private Equipment feet;
+
+    [SerializeField] private Equipment head2;
+    [SerializeField] private Equipment torso2;
+    [SerializeField] private Equipment legs2;
+    [SerializeField] private Equipment arms2;
+    [SerializeField] private Equipment feet2;
+
+    [Header("Visual")]
+    [SerializeField] private GameObject[] vHead;
+    [SerializeField] private GameObject[] vTorso;
+    [SerializeField] private GameObject[] vLegs;
+    [SerializeField] private GameObject[] vArms;
+    [SerializeField] private GameObject[] vFeet;
+
+    private int lastVHead;
+    private int lastVTorso;
+    private int lastVLegs;
+    private int lastVArms;
+    private int lastVFeet;
+
+    private int lastVHead2;
+    private int lastVTorso2;
+    private int lastVLegs2;
+    private int lastVArms2;
+    private int lastVFeet2;
 
     public struct Defense
     {
@@ -24,69 +50,263 @@ public class EquipmentManager : MonoBehaviour
         switch(equipment.equipmentType)
         {
             case EquipmentType.Head:
-                
-                oldEquipment = head;
-                head = equipment;
-
+                switch(equipment.equipmentLayer)
+                {
+                    case EquipmentLayer.UNDER:
+                        oldEquipment = head;
+                        head = equipment;
+                        break;
+                    case EquipmentLayer.OVER:
+                        oldEquipment = head2;
+                        head2 = equipment;
+                        break;
+                }
                 break;
             case EquipmentType.Torso:
-
-                oldEquipment = torso;
-                torso = equipment;
-
+                switch(equipment.equipmentLayer)
+                {
+                    case EquipmentLayer.UNDER:
+                        oldEquipment = torso;
+                        torso = equipment;
+                        break;
+                    case EquipmentLayer.OVER:
+                        oldEquipment = torso2;
+                        torso2 = equipment;
+                        break;
+                }
                 break;
             case EquipmentType.Legs:
-
-                oldEquipment = legs;
-                legs = equipment;
-
+                switch(equipment.equipmentLayer)
+                {
+                    case EquipmentLayer.UNDER:
+                        oldEquipment = legs;
+                        legs = equipment;
+                        break;
+                    case EquipmentLayer.OVER:
+                        oldEquipment = legs2;
+                        legs2 = equipment;
+                        break;
+                }
                 break;
             case EquipmentType.Arms:
-
-                oldEquipment = arms;
-                arms = equipment;
-
+                switch(equipment.equipmentLayer)
+                {
+                    case EquipmentLayer.UNDER:
+                        oldEquipment = arms;
+                        arms = equipment;
+                        break;
+                    case EquipmentLayer.OVER:
+                        oldEquipment = arms2;
+                        arms2 = equipment;
+                        break;
+                }
                 break;
             case EquipmentType.Feet:
-
-                oldEquipment = feet;
-                feet = equipment;
-
+                switch(equipment.equipmentLayer)
+                {
+                    case EquipmentLayer.UNDER:
+                        oldEquipment = feet;
+                        feet = equipment;
+                        break;
+                    case EquipmentLayer.OVER:
+                        oldEquipment = feet2;
+                        feet2 = equipment;
+                        break;
+                }
                 break;
         }
 
+        UpdateVisual(equipment.equipmentType, equipment.equipmentLayer);
         return oldEquipment;
     }
 
-    public Equipment UnEquip(EquipmentType slot)
+    public Equipment UnEquip(EquipmentType slot, EquipmentLayer layer)
     {
         Equipment oldEquipment = null;
 
         switch(slot)
         {
             case EquipmentType.Head:
-                oldEquipment = head;
-                head = null;
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        oldEquipment = head;
+                        head = null;
+                        break;
+                    case EquipmentLayer.OVER:
+                        oldEquipment = head2;
+                        head2 = null;
+                        break;
+                }
                 break;
             case EquipmentType.Torso:
-                oldEquipment = torso;
-                torso = null;
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        oldEquipment = torso;
+                        torso = null;
+                        break;
+                    case EquipmentLayer.OVER:
+                        oldEquipment = torso2;
+                        torso2 = null;
+                        break;
+                }
                 break;
             case EquipmentType.Legs:
-                oldEquipment = legs;
-                legs = null;
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        oldEquipment = legs;
+                        legs = null;
+                        break;
+                    case EquipmentLayer.OVER:
+                        oldEquipment = legs2;
+                        legs2 = null;
+                        break;
+                }
                 break;
             case EquipmentType.Arms:
-                oldEquipment = arms;
-                arms = null;
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        oldEquipment = arms;
+                        arms = null;
+                        break;
+                    case EquipmentLayer.OVER:
+                        oldEquipment = arms2;
+                        arms2 = null;
+                        break;
+                }
                 break;
             case EquipmentType.Feet:
-                oldEquipment = feet;
-                feet = null;
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        oldEquipment = feet;
+                        feet = null;
+                        break;
+                    case EquipmentLayer.OVER:
+                        oldEquipment = feet2;
+                        feet2 = null;
+                        break;
+                }
                 break;
         }
 
+        UpdateVisual(slot, layer);
         return oldEquipment;
+    }
+
+    private void UpdateVisual(EquipmentType slot, EquipmentLayer layer)
+    {
+        switch(slot)
+        {
+            case EquipmentType.Head:
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        vHead[lastVHead].SetActive(false);
+                        if(head)
+                        {
+                            vHead[head.visualIndex].SetActive(true);
+                            lastVHead = head.visualIndex;
+                        }
+                        break;
+                    case EquipmentLayer.OVER:
+                        vHead[lastVHead2].SetActive(false);
+                        if(head2)
+                        {
+                            vHead[head2.visualIndex].SetActive(true);
+                            lastVHead2 = head2.visualIndex;
+                        }
+                        break;
+                }
+                break;
+            case EquipmentType.Torso:
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        vTorso[lastVTorso].SetActive(false);
+                        if(torso)
+                        {
+                            vTorso[torso.visualIndex].SetActive(true);
+                            lastVTorso = torso.visualIndex;
+                        }
+                        break;
+                    case EquipmentLayer.OVER:
+                        vTorso[lastVTorso2].SetActive(false);
+                        if(torso2)
+                        {
+                            vTorso[torso2.visualIndex].SetActive(true);
+                            lastVTorso2 = torso2.visualIndex;
+                        }
+                        break;
+                }
+                break;
+            case EquipmentType.Legs:
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        vLegs[lastVLegs].SetActive(false);
+                        if(legs)
+                        {
+                            vLegs[legs.visualIndex].SetActive(true);
+                            lastVLegs = legs.visualIndex;
+                        }
+                        break;
+                    case EquipmentLayer.OVER:
+                        vLegs[lastVLegs2].SetActive(false);
+                        if(legs2)
+                        {
+                            vLegs[legs2.visualIndex].SetActive(true);
+                            lastVLegs2 = legs2.visualIndex;
+                        }
+                        break;
+                }
+                break;
+            case EquipmentType.Arms:
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        vArms[lastVArms].SetActive(false);
+                        if(arms)
+                        {
+                            vArms[arms.visualIndex].SetActive(true);
+                            lastVArms = arms.visualIndex;
+                        }
+                        break;
+                    case EquipmentLayer.OVER:
+                        vArms[lastVArms2].SetActive(false);
+                        if(arms2)
+                        {
+                            vArms[arms2.visualIndex].SetActive(true);
+                            lastVArms2 = arms2.visualIndex;
+                        }
+                        break;
+                }
+                break;
+            case EquipmentType.Feet:
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        vFeet[lastVFeet].SetActive(false);
+                        if(feet)
+                        {
+                            vFeet[feet.visualIndex].SetActive(true);
+                            lastVFeet = feet.visualIndex;
+                        }
+                        break;
+                    case EquipmentLayer.OVER:
+                        vFeet[lastVFeet2].SetActive(false);
+                        if(feet2)
+                        {
+                            vFeet[feet2.visualIndex].SetActive(true);
+                            lastVFeet2 = feet2.visualIndex;
+                        }
+                        break;
+                }
+                break;
+        }
     }
 
     public Defense GetDefense()

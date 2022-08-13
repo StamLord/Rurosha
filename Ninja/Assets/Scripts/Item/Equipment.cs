@@ -6,6 +6,9 @@ using UnityEngine;
 public class Equipment : Item
 {
     public EquipmentType equipmentType;
+    public EquipmentLayer equipmentLayer;
+
+    public int visualIndex;
 
     public int bluntDefense;
     public int slashDefense;
