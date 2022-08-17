@@ -6,6 +6,10 @@ using UnityEngine;
 public class Pickup : PhysicalObject
 {
     [SerializeField] private Item item;
+    [SerializeField] private bool randomize;
+
+    [SerializeField] private MeshFilter meshFilter;
+    [SerializeField] private MeshRenderer meshRenderer;
 
     public delegate bool attemptPickupDelegate(Item item, Interactor interactor);
     public event attemptPickupDelegate OnAttemptPickup;
@@ -13,9 +17,32 @@ public class Pickup : PhysicalObject
     public delegate void pickupDelegate(Item item);
     public event pickupDelegate OnPickup;
 
+    private void Awake() 
+    {
+        if(randomize)
+        {
+            item.Randomize();
+            UpdateVisual();
+        }
+    }
+
     public void SetItem(Item item)
     {
         this.item = item;
+        UpdateVisual();
+    }
+
+    private void UpdateVisual()
+    {
+        if(item is Equipment)
+        {
+            item = Instantiate(item);
+            Equipment e = (Equipment)item;
+            meshRenderer.material.SetColor("_Base_Color_1", RandomEquipmentManager.instance.GetColor(e.color1));
+            meshRenderer.material.SetColor("_Base_Color_2", RandomEquipmentManager.instance.GetColor(e.color2));
+            meshRenderer.material.SetTexture("_Pattern", RandomEquipmentManager.instance.GetPattern(e.pattern));
+            meshRenderer.material.SetColor("_Pattern_Color", RandomEquipmentManager.instance.GetColor(e.color1));
+        }
     }
 
     public override void Use(Interactor interactor)

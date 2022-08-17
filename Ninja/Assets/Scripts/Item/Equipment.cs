@@ -13,5 +13,17 @@ public class Equipment : Item
     public int bluntDefense;
     public int slashDefense;
     public int pierceDefense;
+
+    public int color1;
+    public int color2;
+    public int pattern;
+
+    public override void Randomize()
+    {
+        base.Randomize();
+        color1 = RandomEquipmentManager.instance.GetRandomColor();
+        color2 = RandomEquipmentManager.instance.GetRandomColor();
+        pattern = RandomEquipmentManager.instance.GetRandomPattern();
+    }
 }
 
