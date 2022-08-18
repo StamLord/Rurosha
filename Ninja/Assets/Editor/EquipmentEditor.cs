@@ -48,6 +48,10 @@ public class EquipmentEditor : Editor
         equipment.slashDefense = EditorGUILayout.IntSlider("Slash", equipment.slashDefense, 1, 10);
         equipment.pierceDefense = EditorGUILayout.IntSlider("Pierce", equipment.pierceDefense, 1, 10);
 
+        EditorGUILayout.Space(10);
+
+        equipment.pickup = (GameObject)EditorGUILayout.ObjectField("Pickup", equipment.pickup, typeof(GameObject), true);
+
         //EditorGUI.HelpBox(new Rect(100,100, 50, 50), "Test", MessageType.None);
 
     }
