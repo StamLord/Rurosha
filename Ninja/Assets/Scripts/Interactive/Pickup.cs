@@ -21,6 +21,7 @@ public class Pickup : PhysicalObject
     {
         if(randomize)
         {
+            item = Instantiate(item); // Create instance so we change the copy and not the default item
             item.Randomize();
             UpdateVisual();
         }
@@ -36,7 +37,6 @@ public class Pickup : PhysicalObject
     {
         if(item is Equipment)
         {
-            item = Instantiate(item);
             Equipment e = (Equipment)item;
             meshRenderer.material.SetColor("_Base_Color_1", RandomEquipmentManager.instance.GetColor(e.color1));
             meshRenderer.material.SetColor("_Base_Color_2", RandomEquipmentManager.instance.GetColor(e.color2));
@@ -50,14 +50,14 @@ public class Pickup : PhysicalObject
         base.Use(interactor);
 
         if(item)
-        {   
+        {
             if(OnAttemptPickup != null)
             {
                 bool success = OnAttemptPickup(item, interactor);
                 if(success == false) return;
             }
 
-            if(interactor.WeaponManager.AddItem(item))
+            if(interactor.AddItem(item, this))
             {
                 if(OnPickup != null)
                     OnPickup(item);
@@ -75,13 +75,13 @@ public class Pickup : PhysicalObject
                     p.SetRigidActive(true);
                 }
 
-                Destroy(transform.gameObject);
+                //Destroy(transform.gameObject);
             }
         }
     }
 
     // Used by Grappling Hook to pick up items
-    public void Use(WeaponManager manager)
+    public void Use(Inventory manager)
     {
         if(item)
             if(manager.AddItem(item))

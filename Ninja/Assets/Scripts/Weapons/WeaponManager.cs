@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class WeaponManager : MonoBehaviour
+public class WeaponManager : MonoBehaviour, Inventory
 {
     [Header("References")]
     [SerializeField] private CharacterStats _characterStats;
@@ -60,6 +60,21 @@ public class WeaponManager : MonoBehaviour
     public event ChangeItemDeleget ChangeItemEvent;
 
     public static Dictionary<string, Item> itemDatabase = new Dictionary<string, Item>();
+
+    [Header("Pickup Pools")]
+    [SerializeField] private Stack<Pickup>[] pickups = 
+    {
+        new Stack<Pickup>(),
+        new Stack<Pickup>(),
+        new Stack<Pickup>(),
+        new Stack<Pickup>(),
+        new Stack<Pickup>(),
+        new Stack<Pickup>(),
+        new Stack<Pickup>(),
+        new Stack<Pickup>(),
+        new Stack<Pickup>(),
+        new Stack<Pickup>(),
+    };
 
     void Start()
     {
@@ -305,8 +320,9 @@ public class WeaponManager : MonoBehaviour
         return true;
     }
 
-    public bool AddItem(Item item)
+    public bool AddItem(Item item, Pickup pickup = null)
     {
+        
         // Add and exit if it's ammo
         if(item is Ammo)
         {
@@ -333,6 +349,7 @@ public class WeaponManager : MonoBehaviour
                 items[i].ammo += item.ammo;
                 if(ChangeItemEvent != null) ChangeItemEvent(i, item, items[i].ammo);
                 SelectItem();
+                PoolPickup(i, pickup);
                 return true;
             }
         }
@@ -348,10 +365,18 @@ public class WeaponManager : MonoBehaviour
 
             if(ChangeItemEvent != null) ChangeItemEvent(firstEmpty, item);
             SelectItem();
+            PoolPickup(firstEmpty, pickup);
             return true;
         }
-
+        
         return false;
+    }
+
+    private void PoolPickup(int index, Pickup pickup)
+    {
+        // Pool the pickup so we can drop later
+        pickups[index].Push(pickup);
+        pickup.gameObject.SetActive(false);
     }
 
     public void AddItemAtSelection(Item item)
@@ -399,7 +424,25 @@ public class WeaponManager : MonoBehaviour
     public void DropItem()
     {
         // Create pickup object
-        Instantiate(items[selected].pickup, dropOrigin.position, Quaternion.identity);
+        // If cached we reactivate it
+        if(pickups[selected].Count > 0)
+        {
+            Pickup p = pickups[selected].Pop();
+            p.gameObject.SetActive(true);
+            p.gameObject.transform.position = dropOrigin.position;
+            p.gameObject.transform.rotation = Quaternion.identity;
+        }
+        // If not cached we instantiate from the item object reference and prepare it
+        else
+        {
+            GameObject go = Instantiate(items[selected].pickup);
+            go.transform.position = dropOrigin.position;
+            go.transform.rotation = Quaternion.identity;
+
+            // Set the unique values like random colors
+            Pickup p = go.GetComponent<Pickup>();
+            (p)?.SetItem(items[selected]);
+        }
 
         // Remove selected item
         if(items[selected].stackable)

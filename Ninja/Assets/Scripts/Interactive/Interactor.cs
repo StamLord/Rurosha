@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface Inventory
+{
+    public bool AddItem(Item item, Pickup pickup = null);
+}
+
 public class Interactor : MonoBehaviour
 {
     public enum CarryType {FIXED, PHYSICS, JOINT};
@@ -9,10 +14,9 @@ public class Interactor : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform _camera;
     [SerializeField] private Transform _carryPoint;
-    [SerializeField] private WeaponManager _weaponManager;
+    [SerializeField] private GameObject _weaponManager; private Inventory _inventory; // Workaround so we can have _weaponManager exposed in the inspector
     [SerializeField] private InputState _inputState;
     [SerializeField] private CharacterStats _characterStats;
-    public WeaponManager WeaponManager { get {return _weaponManager;} }
 
     [Space(10)]
 
@@ -70,6 +74,13 @@ public class Interactor : MonoBehaviour
     private void Start()
     {
         InitializeCarry();        
+    }
+
+    // Workaround so we can have _weaponManager exposed in the inspector
+    private void OnValidate() 
+    {
+        if(_weaponManager != null)
+            _inventory = _weaponManager.GetComponent<Inventory>();    
     }
 
     private void InitializeCarry()
@@ -279,6 +290,11 @@ public class Interactor : MonoBehaviour
     public void ChargeChakra(ChakraType type, float amount)
     {
         _characterStats.ChargeChakra(type, amount);
+    }
+
+    public bool AddItem(Item item, Pickup pickup = null)
+    {
+        return _inventory.AddItem(item, pickup);
     }
 
     private void OnDrawGizmos()

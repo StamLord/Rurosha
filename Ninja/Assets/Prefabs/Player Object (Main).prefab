@@ -12295,7 +12295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 6944390856666288591}
   _carryPoint: {fileID: 3757884392799871078}
-  _weaponManager: {fileID: 6944390854823740390}
+  _weaponManager: {fileID: 6944390854823740384}
   _inputState: {fileID: 59200974}
   _characterStats: {fileID: 6944390856915565334}
   _interactionRange: 2
@@ -21354,13 +21354,19 @@ ParticleSystem:
     type: 3}
   m_PrefabInstance: {fileID: 8206658475264025178}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6944390854823740384 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1278044654527455674, guid: e0128e86a9a29e74b80317cb98468768,
+    type: 3}
+  m_PrefabInstance: {fileID: 8206658475264025178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6944390854823740390 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
     type: 3}
   m_PrefabInstance: {fileID: 8206658475264025178}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6944390854823740384}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39545c1c2040b7a4781c2f475c31ff9e, type: 3}
