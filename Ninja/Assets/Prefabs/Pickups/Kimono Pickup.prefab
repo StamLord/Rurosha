@@ -72,7 +72,7 @@ MonoBehaviour:
   weightClass: 0
   rigidbody: {fileID: 3757323023975108846}
   item: {fileID: 11400000, guid: 2979db9d0416cfc4bbfae4b1f6ceb0c6, type: 2}
-  randomize: 0
+  randomize: 1
   meshFilter: {fileID: 125102092736782570}
   meshRenderer: {fileID: 2763104577114543136}
 --- !u!54 &3757323023975108846
@@ -102,7 +102,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.1}
+  m_Size: {x: 0.5, y: 0.1, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3757323024475821576
 GameObject:

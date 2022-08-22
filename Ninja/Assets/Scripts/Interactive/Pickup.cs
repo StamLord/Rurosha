@@ -41,7 +41,7 @@ public class Pickup : PhysicalObject
             meshRenderer.material.SetColor("_Base_Color_1", RandomEquipmentManager.instance.GetColor(e.color1));
             meshRenderer.material.SetColor("_Base_Color_2", RandomEquipmentManager.instance.GetColor(e.color2));
             meshRenderer.material.SetTexture("_Pattern", RandomEquipmentManager.instance.GetPattern(e.pattern));
-            meshRenderer.material.SetColor("_Pattern_Color", RandomEquipmentManager.instance.GetColor(e.color1));
+            meshRenderer.material.SetColor("_Pattern_Color", RandomEquipmentManager.instance.GetColor(e.patternColor));
         }
     }
 

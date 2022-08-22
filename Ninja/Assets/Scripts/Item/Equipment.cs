@@ -17,6 +17,7 @@ public class Equipment : Item
     public int color1;
     public int color2;
     public int pattern;
+    public int patternColor;
 
     public override void Randomize()
     {
@@ -24,6 +25,7 @@ public class Equipment : Item
         color1 = RandomEquipmentManager.instance.GetRandomColor();
         color2 = RandomEquipmentManager.instance.GetRandomColor();
         pattern = RandomEquipmentManager.instance.GetRandomPattern();
+        patternColor = RandomEquipmentManager.instance.GetRandomColor();
     }
 }
 
