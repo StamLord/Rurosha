@@ -43,6 +43,70 @@ public class EquipmentManager : MonoBehaviour
         public int pierceDefense;
     }
 
+    public string GetEquipmentName(EquipmentType type, EquipmentLayer layer)
+    {
+        switch(type)
+        {
+            case EquipmentType.Head:
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        if(head) return head.itemName;
+                        break;
+                    case EquipmentLayer.OVER:
+                        if(head2) return head2.itemName;
+                        break;
+                }
+                break;
+            case EquipmentType.Torso:
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        if(torso) return torso.itemName;
+                        break;
+                    case EquipmentLayer.OVER:
+                        if(torso2) return torso2.itemName;
+                        break;
+                }
+                break;
+            case EquipmentType.Arms:
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        if(arms) return arms.itemName;
+                        break;
+                    case EquipmentLayer.OVER:
+                        if(arms2) return arms2.itemName;
+                        break;
+                }
+                break;
+            case EquipmentType.Legs:
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        if(legs) return legs.itemName;
+                        break;
+                    case EquipmentLayer.OVER:
+                        if(legs2) return legs2.itemName;
+                        break;
+                }
+                break;
+            case EquipmentType.Feet:
+                switch(layer)
+                {
+                    case EquipmentLayer.UNDER:
+                        if(feet) return feet.itemName;
+                        break;
+                    case EquipmentLayer.OVER:
+                        if(feet2) return feet2.itemName;
+                        break;
+                }
+                break;
+        }
+        
+        return "";
+    }
+
     public Equipment Equip(Equipment equipment)
     {
         Equipment oldEquipment = null;
