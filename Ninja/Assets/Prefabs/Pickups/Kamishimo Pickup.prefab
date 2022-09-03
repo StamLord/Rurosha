@@ -104,8 +104,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8990138252791195718}
-  m_LocalRotation: {x: 0, y: 0, z: -0.0010034913, w: 0.9999995}
-  m_LocalPosition: {x: 1.2510206, y: 0.52312696, z: 1.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 39.093105, y: 1.6815352, z: -14.591768}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -149,7 +149,7 @@ MonoBehaviour:
   weightClass: 0
   rigidbody: {fileID: 8990138252791195716}
   item: {fileID: 11400000, guid: 256909f1639b9004eb84e3e65d8077ed, type: 2}
-  randomize: 0
+  randomize: 1
   meshFilter: {fileID: 5900381214299287269}
   meshRenderer: {fileID: 8504672112548682287}
 --- !u!54 &8990138252791195716
@@ -179,7 +179,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.5, z: 0.1}
+  m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &7045670080570459819
 PrefabInstance:
@@ -247,7 +247,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 2df13ede3d9221744b7b2e0bd8f60aae, type: 2}
+      objectReference: {fileID: 2100000, guid: c8f8a66625abdc54fa081d22d4997839, type: 2}
     - target: {fileID: 919132149155446097, guid: 9cfc06e47bf10794e93444538709fb58,
         type: 3}
       propertyPath: m_Name
