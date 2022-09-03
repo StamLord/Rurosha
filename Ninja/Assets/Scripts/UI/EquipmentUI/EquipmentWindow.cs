@@ -7,8 +7,9 @@ public class EquipmentWindow : UIWindow
 {
     [SerializeField] private GameObject container;
     [SerializeField] private EquipmentManager equipmentManager;
-    [SerializeField] private WeaponManager weaponManager;
-    
+    [SerializeField] private Interactor interactor;
+    [SerializeField] private Transform dropOrigin;
+
     [SerializeField] private TextMeshProUGUI head;
     [SerializeField] private TextMeshProUGUI torso;
     [SerializeField] private TextMeshProUGUI legs;
@@ -54,7 +55,23 @@ public class EquipmentWindow : UIWindow
 
     private void UnEquip(EquipmentType type, EquipmentLayer layer)
     {
-        equipmentManager.UnEquip(type, layer);
+        Equipment old = equipmentManager.UnEquip(type, layer);
+        
+        if(old) 
+        {
+            // Try to add item and create drop if not able 
+            if(interactor.AddItem(old, old.pickup.GetComponent<Pickup>()) == false)
+            {
+                GameObject go = Instantiate(old.pickup);
+                go.transform.position = dropOrigin.position;
+                go.transform.rotation = Quaternion.identity;
+
+                // Set the unique values like random colors
+                Pickup p = go.GetComponent<Pickup>();
+                (p)?.SetItem(old);
+            }
+        }
+        
         UpdateVisual();
     }
 
