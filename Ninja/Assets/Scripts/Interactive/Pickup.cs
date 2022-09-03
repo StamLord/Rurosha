@@ -38,10 +38,13 @@ public class Pickup : PhysicalObject
         if(item is Equipment)
         {
             Equipment e = (Equipment)item;
-            meshRenderer.material.SetColor("_Base_Color_1", RandomEquipmentManager.instance.GetColor(e.color1));
-            meshRenderer.material.SetColor("_Base_Color_2", RandomEquipmentManager.instance.GetColor(e.color2));
-            meshRenderer.material.SetTexture("_Pattern", RandomEquipmentManager.instance.GetPattern(e.pattern));
-            meshRenderer.material.SetColor("_Pattern_Color", RandomEquipmentManager.instance.GetColor(e.patternColor));
+            if(meshRenderer)
+            {
+                meshRenderer.material.SetColor("_Base_Color_1", RandomEquipmentManager.instance.GetColor(e.color1));
+                meshRenderer.material.SetColor("_Base_Color_2", RandomEquipmentManager.instance.GetColor(e.color2));
+                meshRenderer.material.SetTexture("_Pattern", RandomEquipmentManager.instance.GetPattern(e.pattern));
+                meshRenderer.material.SetColor("_Pattern_Color", RandomEquipmentManager.instance.GetColor(e.patternColor));
+            }
         }
     }
 
@@ -75,7 +78,7 @@ public class Pickup : PhysicalObject
                     p.SetRigidActive(true);
                 }
 
-                //Destroy(transform.gameObject);
+                Destroy(transform.gameObject);
             }
         }
     }
