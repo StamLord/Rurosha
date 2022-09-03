@@ -61,20 +61,8 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     public static Dictionary<string, Item> itemDatabase = new Dictionary<string, Item>();
 
-    [Header("Pickup Pools")]
-    [SerializeField] private Stack<Pickup>[] pickups = 
-    {
-        new Stack<Pickup>(),
-        new Stack<Pickup>(),
-        new Stack<Pickup>(),
-        new Stack<Pickup>(),
-        new Stack<Pickup>(),
-        new Stack<Pickup>(),
-        new Stack<Pickup>(),
-        new Stack<Pickup>(),
-        new Stack<Pickup>(),
-        new Stack<Pickup>(),
-    };
+    //[Header("Pickup Pools")]
+    //Dictionary<Item, Pickup> pickups = new Dictionary<Item, Pickup>();
 
     void Start()
     {
@@ -322,7 +310,6 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     public bool AddItem(Item item, Pickup pickup = null)
     {
-        
         // Add and exit if it's ammo
         if(item is Ammo)
         {
@@ -349,38 +336,42 @@ public class WeaponManager : MonoBehaviour, Inventory
                 items[i].ammo += item.ammo;
                 if(ChangeItemEvent != null) ChangeItemEvent(i, item, items[i].ammo);
                 SelectItem();
-                PoolPickup(i, pickup);
+                if(pickup)
+                    PoolPickup(item, pickup);
                 return true;
             }
         }
         
         if(firstEmpty != -1)
         {
-            // if(item is Weapon)
-            //     items[firstEmpty] = Instantiate((Weapon)item);
-            // else if(item is Equipment)
-            //     items[firstEmpty] = Instantiate((Equipment)item);
-            // else
-                items[firstEmpty] = Instantiate(item);
+            items[firstEmpty] = Instantiate(item);
 
             if(ChangeItemEvent != null) ChangeItemEvent(firstEmpty, item);
+
             SelectItem();
-            PoolPickup(firstEmpty, pickup);
+            if(pickup)
+                PoolPickup(item, pickup);
+
             return true;
         }
         
         return false;
     }
 
-    private void PoolPickup(int index, Pickup pickup)
+    private void PoolPickup(Item item, Pickup pickup)
     {
         // Pool the pickup so we can drop later
-        pickups[index].Push(pickup);
-        pickup.gameObject.SetActive(false);
+        //pickups[item] = pickup;
+        //pickup.gameObject.SetActive(false);
+
+        Destroy(pickup.gameObject);
     }
 
     public void AddItemAtSelection(Item item)
     {   
+        if(items[selected] != null)
+            RemoveItem();
+        
         items[selected] = item;
         if(ChangeItemEvent != null) ChangeItemEvent(selected, item);
 
@@ -389,14 +380,14 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     public void RemoveItem()
     {
-        items[selected] = null;
-        if(ChangeItemEvent != null) ChangeItemEvent(selected, null);
-
-        SelectItem();
+        RemoveItem(selected);
     }
 
     public void RemoveItem(int index)
     {
+        // Unreference pickup
+        //pickups.Remove(items[index]);
+        
         items[index] = null;
         if(ChangeItemEvent != null) ChangeItemEvent(index, null);
 
@@ -417,24 +408,28 @@ public class WeaponManager : MonoBehaviour, Inventory
         if(item.ammo < 1)
             RemoveItem(selected);
         else
+        {
             if(ChangeItemEvent != null) ChangeItemEvent(selected, item, item.ammo);
-
+            
+            // Unreference pickup
+            //pickups.Remove(item);
+        }
     }
 
     public void DropItem()
     {
         // Create pickup object
         // If cached we reactivate it
-        if(pickups[selected].Count > 0)
-        {
-            Pickup p = pickups[selected].Pop();
-            p.gameObject.SetActive(true);
-            p.gameObject.transform.position = dropOrigin.position;
-            p.gameObject.transform.rotation = Quaternion.identity;
-        }
-        // If not cached we instantiate from the item object reference and prepare it
-        else
-        {
+        // if(pickups.ContainsKey(items[selected]))
+        // {
+        //     Pickup p = pickups[items[selected]];
+        //     p.gameObject.SetActive(true);
+        //     p.gameObject.transform.position = dropOrigin.position;
+        //     p.gameObject.transform.rotation = Quaternion.identity;
+        // }
+        // // If not cached we instantiate from the item object reference and prepare it
+        // else
+        // {
             GameObject go = Instantiate(items[selected].pickup);
             go.transform.position = dropOrigin.position;
             go.transform.rotation = Quaternion.identity;
@@ -442,7 +437,7 @@ public class WeaponManager : MonoBehaviour, Inventory
             // Set the unique values like random colors
             Pickup p = go.GetComponent<Pickup>();
             (p)?.SetItem(items[selected]);
-        }
+        // }
 
         // Remove selected item
         if(items[selected].stackable)
