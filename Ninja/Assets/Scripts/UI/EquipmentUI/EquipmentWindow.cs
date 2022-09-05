@@ -22,6 +22,10 @@ public class EquipmentWindow : UIWindow
     [SerializeField] private TextMeshProUGUI arms2;
     [SerializeField] private TextMeshProUGUI feet2;
 
+    [SerializeField] private TextMeshProUGUI blunt;
+    [SerializeField] private TextMeshProUGUI slash;
+    [SerializeField] private TextMeshProUGUI pierce;
+
     private void Update() 
     {
         if(Input.GetKeyDown(KeyCode.I))
@@ -51,6 +55,8 @@ public class EquipmentWindow : UIWindow
         arms2.text = equipmentManager.GetEquipmentName(EquipmentType.Arms, EquipmentLayer.OVER);
         legs2.text = equipmentManager.GetEquipmentName(EquipmentType.Legs, EquipmentLayer.OVER);
         feet2.text = equipmentManager.GetEquipmentName(EquipmentType.Feet, EquipmentLayer.OVER);
+
+        UpdateStats();
     }
 
     private void UnEquip(EquipmentType type, EquipmentLayer layer)
@@ -123,5 +129,14 @@ public class EquipmentWindow : UIWindow
     public void UnEquipFeet2()
     {
         UnEquip(EquipmentType.Feet, EquipmentLayer.OVER);
+    }
+
+    private void UpdateStats()
+    {
+        EquipmentManager.Defense def = equipmentManager.GetDefense();
+        Debug.Log(def);
+        blunt.text = "" + def.bluntDefense;
+        slash.text = "" + def.slashDefense;
+        pierce.text = "" + def.pierceDefense;
     }
 }
