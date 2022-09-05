@@ -397,6 +397,7 @@ public class EquipmentManager : MonoBehaviour
     {
         Defense defense = new Defense();
 
+        // Layer 1
         if(head)
         {
             defense.bluntDefense += head.bluntDefense;
@@ -430,6 +431,42 @@ public class EquipmentManager : MonoBehaviour
             defense.bluntDefense += feet.bluntDefense;
             defense.slashDefense += feet.slashDefense;
             defense.pierceDefense += feet.pierceDefense;
+        }
+
+        // Layer 2
+        if(head2)
+        {
+            defense.bluntDefense += head2.bluntDefense;
+            defense.slashDefense += head2.slashDefense;
+            defense.pierceDefense += head2.pierceDefense;
+        }
+
+        if(torso2)
+        {
+            defense.bluntDefense += torso2.bluntDefense;
+            defense.slashDefense += torso2.slashDefense;
+            defense.pierceDefense += torso2.pierceDefense;
+        }
+
+        if(legs2)
+        {
+            defense.bluntDefense += legs2.bluntDefense;
+            defense.slashDefense += legs2.slashDefense;
+            defense.pierceDefense += legs2.pierceDefense;
+        }
+
+        if(arms2)
+        {
+            defense.bluntDefense += arms2.bluntDefense;
+            defense.slashDefense += arms2.slashDefense;
+            defense.pierceDefense += arms2.pierceDefense;
+        }
+
+        if(feet2)
+        {
+            defense.bluntDefense += feet2.bluntDefense;
+            defense.slashDefense += feet2.slashDefense;
+            defense.pierceDefense += feet2.pierceDefense;
         }
 
         return defense;
