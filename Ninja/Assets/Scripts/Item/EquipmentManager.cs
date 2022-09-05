@@ -273,7 +273,7 @@ public class EquipmentManager : MonoBehaviour
                         if(head)
                         {
                             vHead[head.visualIndex].SetActive(true);
-                            UpdateMaterial(vHead[head.visualIndex], head.color1, head.color2, head.pattern, head.patternColor);
+                            UpdateMaterial(vHead[head.visualIndex], head.palette, head.pattern);
                             lastVHead = head.visualIndex;
                         }
                         break;
@@ -282,7 +282,7 @@ public class EquipmentManager : MonoBehaviour
                         if(head2)
                         {
                             vHead[head2.visualIndex].SetActive(true);
-                            UpdateMaterial(vHead[head2.visualIndex], head2.color1, head2.color2, head2.pattern, head2.patternColor);
+                            UpdateMaterial(vHead[head2.visualIndex], head2.palette, head2.pattern);
                             lastVHead2 = head2.visualIndex;
                         }
                         break;
@@ -296,7 +296,7 @@ public class EquipmentManager : MonoBehaviour
                         if(torso)
                         {
                             vTorso[torso.visualIndex].SetActive(true);
-                            UpdateMaterial(vTorso[torso.visualIndex], torso.color1, torso.color2, torso.pattern, torso.patternColor);
+                            UpdateMaterial(vTorso[torso.visualIndex], torso.palette, torso.pattern);
                             lastVTorso = torso.visualIndex;
                         }
                         break;
@@ -305,7 +305,7 @@ public class EquipmentManager : MonoBehaviour
                         if(torso2)
                         {
                             vTorso[torso2.visualIndex].SetActive(true);
-                            UpdateMaterial(vTorso[torso2.visualIndex], torso2.color1, torso2.color2, torso2.pattern, torso2.patternColor);
+                            UpdateMaterial(vTorso[torso2.visualIndex], torso2.palette, torso2.pattern);
                             lastVTorso2 = torso2.visualIndex;
                         }
                         break;
@@ -319,7 +319,7 @@ public class EquipmentManager : MonoBehaviour
                         if(legs)
                         {
                             vLegs[legs.visualIndex].SetActive(true);
-                            UpdateMaterial(vLegs[legs.visualIndex], legs.color1, legs.color2, legs.pattern, legs.patternColor);
+                            UpdateMaterial(vLegs[legs.visualIndex], legs.palette, legs.pattern);
                             lastVLegs = legs.visualIndex;
                         }
                         break;
@@ -328,7 +328,7 @@ public class EquipmentManager : MonoBehaviour
                         if(legs2)
                         {
                             vLegs[legs2.visualIndex].SetActive(true);
-                            UpdateMaterial(vLegs[legs2.visualIndex], legs2.color1, legs2.color2, legs2.pattern, legs2.patternColor);
+                            UpdateMaterial(vLegs[legs2.visualIndex], legs2.palette, legs2.pattern);
                             lastVLegs2 = legs2.visualIndex;
                         }
                         break;
@@ -342,7 +342,7 @@ public class EquipmentManager : MonoBehaviour
                         if(arms)
                         {
                             vArms[arms.visualIndex].SetActive(true);
-                            UpdateMaterial(vArms[arms.visualIndex], arms.color1, arms.color2, arms.pattern, arms.patternColor);
+                            UpdateMaterial(vArms[arms.visualIndex], arms.palette, arms.pattern);
                             lastVArms = arms.visualIndex;
                         }
                         break;
@@ -351,7 +351,7 @@ public class EquipmentManager : MonoBehaviour
                         if(arms2)
                         {
                             vArms[arms2.visualIndex].SetActive(true);
-                            UpdateMaterial(vArms[arms2.visualIndex], arms2.color1, arms2.color2, arms2.pattern, arms2.patternColor);
+                            UpdateMaterial(vArms[arms2.visualIndex], arms2.palette, arms2.pattern);
                             lastVArms2 = arms2.visualIndex;
                         }
                         break;
@@ -365,7 +365,7 @@ public class EquipmentManager : MonoBehaviour
                         if(feet)
                         {
                             vFeet[feet.visualIndex].SetActive(true);
-                            UpdateMaterial(vFeet[feet.visualIndex], feet.color1, feet.color2, feet.pattern, feet.patternColor);
+                            UpdateMaterial(vFeet[feet.visualIndex], feet.palette, feet.pattern);
                             lastVFeet = feet.visualIndex;
                         }
                         break;
@@ -374,7 +374,7 @@ public class EquipmentManager : MonoBehaviour
                         if(feet2)
                         {
                             vFeet[feet2.visualIndex].SetActive(true);
-                            UpdateMaterial(vFeet[feet2.visualIndex], feet2.color1, feet2.color2, feet2.pattern, feet2.patternColor);
+                            UpdateMaterial(vFeet[feet2.visualIndex], feet2.palette, feet2.pattern);
                             lastVFeet2 = feet2.visualIndex;
                         }
                         break;
@@ -383,13 +383,14 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
-    private void UpdateMaterial(GameObject gameObject, int color1, int color2, int pattern, int patternColor)
+    private void UpdateMaterial(GameObject gameObject, int palette, int pattern)
     {
         SkinnedMeshRenderer sm = gameObject.GetComponent<SkinnedMeshRenderer>();
-        sm.material.SetColor("_Base_Color_1", RandomEquipmentManager.instance.GetColor(color1));
-        sm.material.SetColor("_Base_Color_2", RandomEquipmentManager.instance.GetColor(color2));
-        sm.material.SetTexture("_Pattern", RandomEquipmentManager.instance.GetPattern(pattern));
-        sm.material.SetColor("_Pattern_Color", RandomEquipmentManager.instance.GetColor(patternColor));
+        RandomEquipmentManager.Palette p = RandomEquipmentManager.instance.GetPalette(palette);
+
+        sm.material.SetColor("_Main_Color", p.primary);
+        sm.material.SetColor("_Secondary_Color", p.secondary);
+        sm.material.SetTexture("_Secondary_Pattern", RandomEquipmentManager.instance.GetPattern(pattern));
     }
 
     public Defense GetDefense()

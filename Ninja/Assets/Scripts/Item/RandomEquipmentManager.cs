@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class RandomEquipmentManager : MonoBehaviour
 {
+    [System.Serializable]
+    public struct Palette 
+    {
+        public Color primary;
+        public Color secondary;
+    }
+
     [SerializeField] private Texture[] patterns;
-    [SerializeField] private Color[] colors;
+    [SerializeField] private Palette[] palettes;
 
     public static RandomEquipmentManager instance;
 
@@ -20,11 +27,11 @@ public class RandomEquipmentManager : MonoBehaviour
         }
     }
 
-    public Color GetColor(int index)
+    public Palette GetPalette(int index)
     {
-        if(index > colors.Length)
-            return Color.black;
-        return colors[index];
+        if(index > palettes.Length)
+            return new Palette();
+        return palettes[index];
     }
 
     public Texture GetPattern(int index)
@@ -34,9 +41,9 @@ public class RandomEquipmentManager : MonoBehaviour
         return patterns[index];
     }
 
-    public int GetRandomColor()
+    public int GetRandomPalette()
     {
-        return Random.Range(0, colors.Length);
+        return Random.Range(0, palettes.Length);
     }
 
     public int GetRandomPattern()

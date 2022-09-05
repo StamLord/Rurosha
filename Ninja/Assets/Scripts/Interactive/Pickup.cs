@@ -40,10 +40,10 @@ public class Pickup : PhysicalObject
             Equipment e = (Equipment)item;
             if(meshRenderer)
             {
-                meshRenderer.material.SetColor("_Base_Color_1", RandomEquipmentManager.instance.GetColor(e.color1));
-                meshRenderer.material.SetColor("_Base_Color_2", RandomEquipmentManager.instance.GetColor(e.color2));
-                meshRenderer.material.SetTexture("_Pattern", RandomEquipmentManager.instance.GetPattern(e.pattern));
-                meshRenderer.material.SetColor("_Pattern_Color", RandomEquipmentManager.instance.GetColor(e.patternColor));
+                RandomEquipmentManager.Palette p = RandomEquipmentManager.instance.GetPalette(e.palette);
+                meshRenderer.material.SetColor("_Main_Color", p.primary);
+                meshRenderer.material.SetColor("_Secondary_Color", p.secondary);
+                meshRenderer.material.SetTexture("_Secondary_Pattern", RandomEquipmentManager.instance.GetPattern(e.pattern));
             }
         }
     }

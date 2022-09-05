@@ -14,18 +14,14 @@ public class Equipment : Item
     public int slashDefense;
     public int pierceDefense;
 
-    public int color1;
-    public int color2;
+    public int palette;
     public int pattern;
-    public int patternColor;
 
     public override void Randomize()
     {
         base.Randomize();
-        color1 = RandomEquipmentManager.instance.GetRandomColor();
-        color2 = RandomEquipmentManager.instance.GetRandomColor();
+        palette = RandomEquipmentManager.instance.GetRandomPalette();
         pattern = RandomEquipmentManager.instance.GetRandomPattern();
-        patternColor = RandomEquipmentManager.instance.GetRandomColor();
     }
 }
 
