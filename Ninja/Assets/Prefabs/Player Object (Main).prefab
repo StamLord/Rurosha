@@ -12344,8 +12344,8 @@ MonoBehaviour:
   agent: {fileID: 59200987}
   animator: {fileID: 1760545695}
   hitbox:
-  - {fileID: 999815037}
-  - {fileID: 516217015}
+  - {fileID: 234476105}
+  - {fileID: 964034211}
   kickForce: 5
   enemyKickForce: 10
   kickUpwardsModifier: 1
@@ -21305,6 +21305,70 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2875064877138861426}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6829880751598253324 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8732149955472058494, guid: 1aae12b7739f21f4fbb342409c5bd255,
+    type: 3}
+  m_PrefabInstance: {fileID: 2875064877138861426}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &234476105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6829880751598253324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shape: 0
+  size: {x: 0.01, y: 0.03, z: 0.01}
+  offset: {x: 0, y: 0.015, z: 0}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 65
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
+  isActive: 0
+  lastActiveState: 0
+  collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+--- !u!1 &7015683453307284422 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5096665942992565940, guid: 1aae12b7739f21f4fbb342409c5bd255,
+    type: 3}
+  m_PrefabInstance: {fileID: 2875064877138861426}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &964034211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015683453307284422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shape: 0
+  size: {x: 0.01, y: 0.03, z: 0.01}
+  offset: {x: 0, y: 0.015, z: 0}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 65
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
+  isActive: 0
+  lastActiveState: 0
+  collided: []
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &7185096527662453190 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4300691917715878732, guid: 1aae12b7739f21f4fbb342409c5bd255,
@@ -22088,7 +22152,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2415
+      value: 2421
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22098,7 +22162,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2418
+      value: 2424
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
