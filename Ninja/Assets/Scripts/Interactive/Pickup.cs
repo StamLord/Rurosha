@@ -19,6 +19,8 @@ public class Pickup : PhysicalObject
 
     private void Awake() 
     {
+        InitializeOutline();
+        
         if(randomize)
         {
             item = Instantiate(item); // Create instance so we change the copy and not the default item
