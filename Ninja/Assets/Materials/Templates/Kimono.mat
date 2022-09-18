@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2339273731013592389
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 5
 --- !u!21 &2100000
 Material:
   serializedVersion: 6
@@ -21,11 +8,11 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Kimono
-  m_Shader: {fileID: -6465566751694194690, guid: 6bffafefe8d725046bffe6ecba6e329c,
+  m_Shader: {fileID: -6465566751694194690, guid: d2eee86d24aa2f84cbbd0f6bed182cc6,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 2
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -33,12 +20,20 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Cloth_Texture:
+    - _Fabric_Pattern:
+        m_Texture: {fileID: 2800000, guid: cb953e4cc769cbf49b83a8227032e474, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Main_Pattern:
+        m_Texture: {fileID: 2800000, guid: fc142754e1075bd4483869d158fe9a3e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Print_Pattern:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Pattern:
-        m_Texture: {fileID: 2800000, guid: cb953e4cc769cbf49b83a8227032e474, type: 3}
+    - _Secondary_Pattern:
+        m_Texture: {fileID: 2800000, guid: c0a1b9d0ce88d224790af5212554edde, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -55,18 +50,30 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Cloth_Texture_Opacity: 1
+    - _Fabric_Strength: -0.2
     - _Float: 1
-    - _Pattern_Tile: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scroll_Speed: 0.1
+    - _Scroll_Speed: 0
     m_Colors:
-    - _Base_Color: {r: 0.2795924, g: 0.40208164, b: 0.5754717, a: 0}
-    - _Base_Color_1: {r: 0, g: 0, b: 0, a: 0}
-    - _Base_Color_2: {r: 0.3773585, g: 0.12354621, b: 0.115699545, a: 0}
-    - _Pattern_Color: {r: 1, g: 1, b: 1, a: 0}
-    - _Scroll: {r: 0, g: 0, b: 0, a: 0}
-    - _Tiling: {r: 30, g: 30, b: 0, a: 0}
-    - _Vector2: {r: 0, g: -0.11, b: 0, a: 0}
+    - _Base_Color_1: {r: 0.1802858, g: 0.1700783, b: 0.3962264, a: 0}
+    - _Base_Color_2: {r: 0.2812389, g: 0.3521039, b: 0.754717, a: 0}
+    - _Main_Color: {r: 0.10946956, g: 0.16635923, b: 0.5660378, a: 1}
+    - _Print_Color: {r: 0.1615344, g: 0.3071853, b: 0.6226415, a: 1}
+    - _Scroll: {r: 1, g: 1, b: 0, a: 0}
+    - _Secondary_Color: {r: 0.41037738, g: 0.61503863, b: 1, a: 1}
+    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &6463085398289838278
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
