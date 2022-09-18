@@ -658,7 +658,7 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
-  m_Emitting: 1
+  m_Emitting: 0
 --- !u!1 &1178155838
 GameObject:
   m_ObjectHideFlags: 0
@@ -19557,6 +19557,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: katana_blade
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0b82cf8be3e15834c930e9d104c9da77,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b82cf8be3e15834c930e9d104c9da77, type: 3}
 --- !u!1001 &1551188740537858101
@@ -21069,7 +21074,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 2df13ede3d9221744b7b2e0bd8f60aae, type: 2}
+      objectReference: {fileID: 2100000, guid: 9852616222329504c990e200ee332a57, type: 2}
     - target: {fileID: -8172372313408055329, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
       propertyPath: m_Layer
@@ -21175,6 +21180,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: -3482553426405425857, guid: 1aae12b7739f21f4fbb342409c5bd255,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -3478544741776627206, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
       propertyPath: m_Layer
@@ -21213,12 +21223,22 @@ PrefabInstance:
     - target: {fileID: -2168005014392095525, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.19954252
+      value: -0.19628692
+      objectReference: {fileID: 0}
+    - target: {fileID: -2168005014392095525, guid: 1aae12b7739f21f4fbb342409c5bd255,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.66576976
       objectReference: {fileID: 0}
     - target: {fileID: -2168005014392095525, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.11360582
+      value: 0.1117523
+      objectReference: {fileID: 0}
+    - target: {fileID: -2168005014392095525, guid: 1aae12b7739f21f4fbb342409c5bd255,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7111494
       objectReference: {fileID: 0}
     - target: {fileID: -2104513981470308606, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
@@ -21258,13 +21278,13 @@ PrefabInstance:
     - target: {fileID: -1433986620876941656, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1222309556429203747, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 2df13ede3d9221744b7b2e0bd8f60aae, type: 2}
+      objectReference: {fileID: 2100000, guid: 9852616222329504c990e200ee332a57, type: 2}
     - target: {fileID: -1196930438909889544, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
       propertyPath: m_Layer
@@ -22450,7 +22470,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2445
+      value: 2454
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22460,7 +22480,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2448
+      value: 2460
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}

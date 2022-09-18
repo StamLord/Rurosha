@@ -11,10 +11,10 @@ public class AnimationManager : MonoBehaviour
     [SerializeField] private new Rigidbody rigidbody;
     [SerializeField] private float runSpeed = 10;
 
-    private void OnValidate() 
-    {
-        animator = GetComponent<Animator>();
-    }
+    // private void OnValidate() 
+    // {
+    //     animator = GetComponent<Animator>();
+    // }
 
     private void Start()
     {
