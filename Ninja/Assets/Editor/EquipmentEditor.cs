@@ -42,6 +42,11 @@ public class EquipmentEditor : Editor
         equipment.itemName = EditorGUILayout.DelayedTextField("Name", equipment.itemName);
         equipment.visualIndex = EditorGUILayout.IntSlider("Visual", equipment.visualIndex, 0, 100);
 
+        serializedObject.Update();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("palettes"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("patterns"));
+        serializedObject.ApplyModifiedProperties();
+
         EditorGUILayout.Space(10);
 
         equipment.bluntDefense = EditorGUILayout.IntSlider("Blunt", equipment.bluntDefense, 1, 10);
