@@ -273,7 +273,7 @@ public class EquipmentManager : MonoBehaviour
                         if(head)
                         {
                             vHead[head.visualIndex].SetActive(true);
-                            UpdateMaterial(vHead[head.visualIndex], head.palette, head.pattern);
+                            UpdateMaterial(vHead[head.visualIndex], head);
                             lastVHead = head.visualIndex;
                         }
                         break;
@@ -282,7 +282,7 @@ public class EquipmentManager : MonoBehaviour
                         if(head2)
                         {
                             vHead[head2.visualIndex].SetActive(true);
-                            UpdateMaterial(vHead[head2.visualIndex], head2.palette, head2.pattern);
+                            UpdateMaterial(vHead[head2.visualIndex], head2);
                             lastVHead2 = head2.visualIndex;
                         }
                         break;
@@ -296,7 +296,7 @@ public class EquipmentManager : MonoBehaviour
                         if(torso)
                         {
                             vTorso[torso.visualIndex].SetActive(true);
-                            UpdateMaterial(vTorso[torso.visualIndex], torso.palette, torso.pattern);
+                            UpdateMaterial(vTorso[torso.visualIndex], torso);
                             lastVTorso = torso.visualIndex;
                         }
                         break;
@@ -305,7 +305,7 @@ public class EquipmentManager : MonoBehaviour
                         if(torso2)
                         {
                             vTorso[torso2.visualIndex].SetActive(true);
-                            UpdateMaterial(vTorso[torso2.visualIndex], torso2.palette, torso2.pattern);
+                            UpdateMaterial(vTorso[torso2.visualIndex], torso2);
                             lastVTorso2 = torso2.visualIndex;
                         }
                         break;
@@ -319,7 +319,7 @@ public class EquipmentManager : MonoBehaviour
                         if(legs)
                         {
                             vLegs[legs.visualIndex].SetActive(true);
-                            UpdateMaterial(vLegs[legs.visualIndex], legs.palette, legs.pattern);
+                            UpdateMaterial(vLegs[legs.visualIndex], legs);
                             lastVLegs = legs.visualIndex;
                         }
                         break;
@@ -328,7 +328,7 @@ public class EquipmentManager : MonoBehaviour
                         if(legs2)
                         {
                             vLegs[legs2.visualIndex].SetActive(true);
-                            UpdateMaterial(vLegs[legs2.visualIndex], legs2.palette, legs2.pattern);
+                            UpdateMaterial(vLegs[legs2.visualIndex], legs2);
                             lastVLegs2 = legs2.visualIndex;
                         }
                         break;
@@ -342,7 +342,7 @@ public class EquipmentManager : MonoBehaviour
                         if(arms)
                         {
                             vArms[arms.visualIndex].SetActive(true);
-                            UpdateMaterial(vArms[arms.visualIndex], arms.palette, arms.pattern);
+                            UpdateMaterial(vArms[arms.visualIndex], arms);
                             lastVArms = arms.visualIndex;
                         }
                         break;
@@ -351,7 +351,7 @@ public class EquipmentManager : MonoBehaviour
                         if(arms2)
                         {
                             vArms[arms2.visualIndex].SetActive(true);
-                            UpdateMaterial(vArms[arms2.visualIndex], arms2.palette, arms2.pattern);
+                            UpdateMaterial(vArms[arms2.visualIndex], arms2);
                             lastVArms2 = arms2.visualIndex;
                         }
                         break;
@@ -365,7 +365,7 @@ public class EquipmentManager : MonoBehaviour
                         if(feet)
                         {
                             vFeet[feet.visualIndex].SetActive(true);
-                            UpdateMaterial(vFeet[feet.visualIndex], feet.palette, feet.pattern);
+                            UpdateMaterial(vFeet[feet.visualIndex], feet);
                             lastVFeet = feet.visualIndex;
                         }
                         break;
@@ -374,7 +374,7 @@ public class EquipmentManager : MonoBehaviour
                         if(feet2)
                         {
                             vFeet[feet2.visualIndex].SetActive(true);
-                            UpdateMaterial(vFeet[feet2.visualIndex], feet2.palette, feet2.pattern);
+                            UpdateMaterial(vFeet[feet2.visualIndex], feet2);
                             lastVFeet2 = feet2.visualIndex;
                         }
                         break;
@@ -383,14 +383,14 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
-    private void UpdateMaterial(GameObject gameObject, int palette, int pattern)
+    private void UpdateMaterial(GameObject gameObject, Equipment equipment)
     {
         SkinnedMeshRenderer sm = gameObject.GetComponent<SkinnedMeshRenderer>();
-        RandomEquipmentManager.Palette p = RandomEquipmentManager.instance.GetPalette(palette);
+        Equipment.Palette p = equipment.GetPalette();
 
         sm.material.SetColor("_Main_Color", p.primary);
         sm.material.SetColor("_Secondary_Color", p.secondary);
-        sm.material.SetTexture("_Secondary_Pattern", RandomEquipmentManager.instance.GetPattern(pattern));
+        sm.material.SetTexture("_Secondary_Pattern", equipment.GetPattern());
     }
 
     public Defense GetDefense()
