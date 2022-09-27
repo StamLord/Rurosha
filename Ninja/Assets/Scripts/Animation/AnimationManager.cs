@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class AnimationManager : MonoBehaviour
 {
     [SerializeField] private CharacterStateMachine stateMachine;
@@ -45,6 +44,9 @@ public class AnimationManager : MonoBehaviour
                 break;
             case "CrouchState":
                 animator.CrossFade("crouch", .1f);
+                break;
+            case "DashState":
+                animator.CrossFade("dash", .01f);
                 break;
         }
     }
