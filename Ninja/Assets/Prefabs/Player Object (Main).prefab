@@ -6055,6 +6055,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1760545694}
   - component: {fileID: 1760545696}
+  - component: {fileID: 3847162244252424286}
   m_Layer: 9
   m_Name: Visual
   m_TagString: Untagged
@@ -6091,10 +6092,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMachine: {fileID: 59200984}
-  animator: {fileID: 8542446599430791395}
+  animator: {fileID: 3847162244252424286}
   inputState: {fileID: 59200974}
   rigidbody: {fileID: 59200983}
   runSpeed: 7
+  ikLookTarget: {fileID: 0}
+  ikLeftTarget: {fileID: 0}
+  ikRightTarget: {fileID: 0}
+--- !u!95 &3847162244252424286
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760545693}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1768911167
 GameObject:
   m_ObjectHideFlags: 0
@@ -12531,6 +12555,9 @@ MonoBehaviour:
   inputState: {fileID: 59200974}
   rigidbody: {fileID: 0}
   runSpeed: 10
+  ikLookTarget: {fileID: 0}
+  ikLeftTarget: {fileID: 0}
+  ikRightTarget: {fileID: 0}
 --- !u!114 &59200987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20771,12 +20798,6 @@ GameObject:
 --- !u!1 &7909126403635741168 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3880813380758446974, guid: 1aae12b7739f21f4fbb342409c5bd255,
-    type: 3}
-  m_PrefabInstance: {fileID: 2875064877138861426}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &8542446599430791395 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 1aae12b7739f21f4fbb342409c5bd255,
     type: 3}
   m_PrefabInstance: {fileID: 2875064877138861426}
   m_PrefabAsset: {fileID: 0}

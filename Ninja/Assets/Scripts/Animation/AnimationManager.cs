@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class AnimationManager : MonoBehaviour
 {
     [SerializeField] private CharacterStateMachine stateMachine;
@@ -10,10 +11,14 @@ public class AnimationManager : MonoBehaviour
     [SerializeField] private new Rigidbody rigidbody;
     [SerializeField] private float runSpeed = 10;
 
-    // private void OnValidate() 
-    // {
-    //     animator = GetComponent<Animator>();
-    // }
+    [SerializeField] private Transform ikLookTarget;
+    [SerializeField] private Transform ikLeftTarget;
+    [SerializeField] private Transform ikRightTarget;
+
+    private void OnValidate() 
+    {
+        animator = GetComponent<Animator>();    
+    }
 
     private void Start()
     {
@@ -48,6 +53,33 @@ public class AnimationManager : MonoBehaviour
             case "DashState":
                 animator.CrossFade("dash", .01f);
                 break;
+        }
+    }
+
+    private void OnAnimatorIK(int layerIndex) 
+    {
+        //if(animator == null) return;
+
+        Debug.Log("Test: " + layerIndex);
+        if(ikRightTarget)
+        {
+            Debug.Log("Test2");
+            animator.SetIKPositionWeight(AvatarIKGoal.RightHand,1);
+            animator.SetIKRotationWeight(AvatarIKGoal.RightHand,1);  
+            animator.SetIKPosition(AvatarIKGoal.RightHand, ikRightTarget.position);
+        }
+
+        if(ikLeftTarget)
+        {
+            animator.SetIKPositionWeight(AvatarIKGoal.LeftHand,1);
+            animator.SetIKRotationWeight(AvatarIKGoal.LeftHand,1);  
+            animator.SetIKPosition(AvatarIKGoal.LeftHand, ikLeftTarget.position);
+        }
+
+        if(ikLookTarget)
+        {
+            animator.SetLookAtWeight(1, 0, 1, 0);
+            animator.SetLookAtPosition(ikLookTarget.position);
         }
     }
 }
