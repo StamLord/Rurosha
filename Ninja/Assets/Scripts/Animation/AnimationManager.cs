@@ -60,10 +60,8 @@ public class AnimationManager : MonoBehaviour
     {
         //if(animator == null) return;
 
-        Debug.Log("Test: " + layerIndex);
         if(ikRightTarget)
         {
-            Debug.Log("Test2");
             animator.SetIKPositionWeight(AvatarIKGoal.RightHand,1);
             animator.SetIKRotationWeight(AvatarIKGoal.RightHand,1);  
             animator.SetIKPosition(AvatarIKGoal.RightHand, ikRightTarget.position);
