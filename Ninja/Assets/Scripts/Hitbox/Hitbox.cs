@@ -26,7 +26,21 @@ public class Hitbox : MonoBehaviour
 
     [SerializeField] private Vector3 lastPosition;
     [SerializeField] private Vector3 velocity;
-    public Vector3 Velocity {get {return velocity;}}
+    
+    [SerializeField] private bool overrideVelocity;
+    [SerializeField] private Transform oVelocityReference;
+    [SerializeField] private Vector3 oVelocity;
+    public Vector3 Velocity 
+    {get {
+        if(overrideVelocity)
+        {
+            if(oVelocityReference)
+                return oVelocityReference.TransformVector(oVelocity);
+            else
+                return transform.TransformDirection(oVelocity);
+        }
+        return velocity;
+    }}
 
     private Transform ignoreTransform;
 
@@ -144,6 +158,12 @@ public class Hitbox : MonoBehaviour
         Color red = Color.red;
         red.a = (isActive) ? .75f : .25f;
         Gizmos.color = red;
+
+        // Draw Velocity
+        // Needs to be drawn before gizmos matrix is localized
+        Gizmos.DrawRay(offset, Velocity);
+
+        // Draw hitbox
         Gizmos.matrix = this.transform.localToWorldMatrix;
 
         switch(shape)
@@ -155,5 +175,6 @@ public class Hitbox : MonoBehaviour
                 Gizmos.DrawSphere(offset, size.x);
                 break;
         }
+        
     }
 }
