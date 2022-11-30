@@ -79,6 +79,9 @@ public class WeaponManager : MonoBehaviour, Inventory
         if(_bow)_bow.GetComponent<WeaponObject>().SetWeaponManager(this);
         if(_grappling_hook)_grappling_hook.GetComponent<WeaponObject>().SetWeaponManager(this);
 
+        if(_item)_item.GetComponent<WeaponObject>().SetWeaponManager(this);
+        if(_itemBowl)_itemBowl.GetComponent<WeaponObject>().SetWeaponManager(this);
+
         if(_equipment)_equipment.GetComponent<WeaponObject>().SetWeaponManager(this);
         
         SelectItem();
