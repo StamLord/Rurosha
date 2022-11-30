@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class HeldItem : WeaponObject
 {
-    [SerializeField] private MeshFilter meshFilter;
-    [SerializeField] private MeshRenderer meshRenderer;
-
-    [SerializeField] private Item item;
     [SerializeField] private Consumable consumable;
     private float durabilityLossPerSecond;
     private float fractionPerSecond;
