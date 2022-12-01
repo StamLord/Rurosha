@@ -9,6 +9,9 @@ public class Bo : WeaponObject, IHitboxResponder
     [SerializeField] private int hardDamage = 10;
     [SerializeField] private float chanceToBleed = .25f;
 
+    [Header("Guard")]
+    [SerializeField] private Collider guard;
+
     [Header("Experience")]
     [SerializeField] private float strengthExpGain = .01f;
     [SerializeField] private float dexterityExpGain = .01f;
@@ -61,6 +64,7 @@ public class Bo : WeaponObject, IHitboxResponder
     private void Guard(bool isGuarding)
     {
         animator.SetBool("GUARD", isGuarding);
+        guard.enabled = isGuarding;
     }
 
     private void LeftAttack()
