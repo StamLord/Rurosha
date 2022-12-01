@@ -29,7 +29,10 @@ public class Bo : WeaponObject, IHitboxResponder
     private void Start()
     {
         foreach(Hitbox h in hitboxes)
+        {
             h.SetResponder(this);
+            h.SetIgnoreTransform(transform.root);
+        }
     }
 
     private void Update()
