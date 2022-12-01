@@ -4,48 +4,49 @@ using UnityEngine;
 
 public class PhysicalMaterial : MonoBehaviour
 {
-    [SerializeField] private MaterialType mType;
-    [SerializeField] private GameObject rockBluntPrefab;
-    [SerializeField] private GameObject rockSharpPrefab;
+    [SerializeField] private GameObject bluntPrefab;
+    [SerializeField] private GameObject slashPrefab;
+    [SerializeField] private GameObject piercePrefab;
 
-    [SerializeField] private GameObject woodBluntPrefab;
-    [SerializeField] private GameObject woodSharpPrefab;
+    [SerializeField] private GameObject bigBluntPrefab;
+    [SerializeField] private GameObject bigSlashPrefab;
+    [SerializeField] private GameObject bigPiercePrefab;
 
-    [SerializeField] private GameObject smallBloodPrefab;
-    [SerializeField] private GameObject bigBloodPrefab;
-
-    [SerializeField] private GameObject smallSparkPrefab;
-    [SerializeField] private GameObject bigSparkPrefab;
+    [SerializeField] private int bigDamageThreshold = 10;
     
     public void CollideEffect(Vector3 position, int damage)
     {
-        CollideEffect(position, damage, mType);
+        CollideEffect(position, damage, DamageType.Blunt);
     }
 
-    public void CollideEffect(Vector3 position, int damage, MaterialType materialType = MaterialType.Stone)
+    public void CollideEffect(Vector3 position, int damage, DamageType damageType = DamageType.Blunt)
     {
         Quaternion rotation = Quaternion.Euler(0, Random.Range(0f,1f) * 360, 0);
         
-        switch(materialType)
+        switch(damageType)
         {
-            case MaterialType.Stone:
-                Debug.Log("Dust");
+            case DamageType.Blunt:
+                PlayBigOrSmallVfx(bluntPrefab, bigBluntPrefab, damage, position, rotation);
                 break;
-            case MaterialType.Wood:
-                Debug.Log("Splinter");
+            case DamageType.Slash:
+                PlayBigOrSmallVfx(slashPrefab, bigSlashPrefab, damage, position, rotation);
                 break;
-            case MaterialType.Flesh:
-                if(damage > 10 && bigBloodPrefab)
-                    Instantiate(bigBloodPrefab, position, rotation);
-                else if(smallBloodPrefab)
-                    Instantiate(smallBloodPrefab, position, rotation);
-                break;
-            case MaterialType.Metal:
-                if(damage > 10 && bigSparkPrefab)
-                    Instantiate(bigSparkPrefab, position, rotation);
-                else if(smallSparkPrefab)
-                    Instantiate(smallSparkPrefab, position, rotation);
+            case DamageType.Pierce:
+                PlayBigOrSmallVfx(piercePrefab, bigPiercePrefab, damage, position, rotation);
                 break;
         }
+    }
+
+    private void PlayBigOrSmallVfx(GameObject smallVfx, GameObject bigVfx, int damage, Vector3 position, Quaternion rotation)
+    {
+        if(damage > bigDamageThreshold && bigVfx)
+            PlayVfx(bigVfx, position, rotation);
+        else if(smallVfx)
+            PlayVfx(smallVfx, position, rotation);
+    }
+
+    private void PlayVfx(GameObject vfx, Vector3 position, Quaternion rotation)
+    {
+        Instantiate(vfx, position, rotation); // Change to pool
     }
 }

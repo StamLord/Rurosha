@@ -38,19 +38,13 @@ public class Hurtbox : MonoBehaviour
         {
             // Hit Effects
             if(physicalMaterial)
-                physicalMaterial.CollideEffect(transform.position, hardDamage);
+                physicalMaterial.CollideEffect(transform.position, hardDamage, damageType);
         
             // Change hurtbox's material color if hit for testing
             if(_debug && _material)
                 StartCoroutine(ColorChange(_colorFadeStartDuration, _colorFadeEndDuration));
         }
-        else
-        {
-            // Deflect Effects
-            if(physicalMaterial)
-                physicalMaterial.CollideEffect(transform.position, hardDamage, MaterialType.Metal);
-        }
-
+        
         return hit;
     }
 
