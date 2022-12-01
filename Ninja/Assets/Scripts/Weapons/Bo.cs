@@ -12,6 +12,10 @@ public class Bo : WeaponObject, IHitboxResponder
     [Header("Guard")]
     [SerializeField] private Collider guard;
 
+    [Header("Valid States to attack")]
+    [SerializeField] private string[] validLeftAttackStates;
+    [SerializeField] private string[] validRightAttackStates;
+
     [Header("Experience")]
     [SerializeField] private float strengthExpGain = .01f;
     [SerializeField] private float dexterityExpGain = .01f;
@@ -69,12 +73,38 @@ public class Bo : WeaponObject, IHitboxResponder
 
     private void LeftAttack()
     {
-        animator.SetTrigger("LMB");
+        if(ValidateLeftAttack())
+            animator.SetTrigger("LMB");
     }
 
     private void RightAttack()
     {
-        animator.SetTrigger("RMB");
+        if(ValidateRightAttack())
+            animator.SetTrigger("RMB");
+    }
+
+    private bool ValidateLeftAttack()
+    {
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        for (int i = 0; i < validLeftAttackStates.Length; i++)
+        {
+            if(state.IsName(validLeftAttackStates[i]))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool ValidateRightAttack()
+    {
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        for (int i = 0; i < validRightAttackStates.Length; i++)
+        {
+            if(state.IsName(validRightAttackStates[i]))
+                return true;
+        }
+
+        return false;
     }
 
     // Called by Hitbox on collision
