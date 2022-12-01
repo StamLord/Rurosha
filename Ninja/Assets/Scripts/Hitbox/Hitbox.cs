@@ -14,16 +14,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private LayerMask guardMask;
     [SerializeField] private bool isActive;
 
-    public Vector3 Position { get { return transform.position + offset;}}
-    
-    [Header("Debug Info")]
-    [SerializeField] private bool lastActiveState;
-    [SerializeField] private IHitboxResponder _responder;
-
-    [SerializeField] private List<Collider> collided = new List<Collider>();
-
-    private bool activeForOneFrame = false;
-
+    [Header("Velocity")]
     [SerializeField] private Vector3 lastPosition;
     [SerializeField] private Vector3 velocity;
     
@@ -41,8 +32,17 @@ public class Hitbox : MonoBehaviour
         }
         return velocity;
     }}
+    
+    [Header("Debug Info")]
+    [SerializeField] private bool lastActiveState;
+    [SerializeField] private IHitboxResponder _responder;
 
+    [SerializeField] private List<Collider> collided = new List<Collider>();
+
+    private bool activeForOneFrame = false;
     private Transform ignoreTransform;
+
+    public Vector3 Position { get { return transform.position + offset;}}
 
     public void StartColliding(bool activeForOneFrame = false)
     {
