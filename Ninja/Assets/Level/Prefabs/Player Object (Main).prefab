@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 589420141}
   - component: {fileID: 589420142}
   m_Layer: 9
-  m_Name: Legs (No Friction)
+  m_Name: Legs (Stand)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -355,7 +355,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 589420140}
-  m_Material: {fileID: 13400000, guid: 2e34a1d4bdf627f468f40849b0331d69, type: 2}
+  m_Material: {fileID: 13400000, guid: 9d9287376a5d02842ab7eb9c9f175c9f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5919,7 +5919,7 @@ GameObject:
   - component: {fileID: 1412914319}
   - component: {fileID: 1412914320}
   m_Layer: 9
-  m_Name: Legs (Friction)
+  m_Name: Legs (Crouch)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5947,7 +5947,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412914318}
-  m_Material: {fileID: 13400000, guid: 2e34a1d4bdf627f468f40849b0331d69, type: 2}
+  m_Material: {fileID: 13400000, guid: 9d9287376a5d02842ab7eb9c9f175c9f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
@@ -22343,7 +22343,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2583
+      value: 2592
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22353,7 +22353,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2592
+      value: 2595
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
