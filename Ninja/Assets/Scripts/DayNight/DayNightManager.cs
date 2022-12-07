@@ -6,7 +6,7 @@ public class DayNightManager : MonoBehaviour
     [Header("Time Display")]
     [SerializeField] private float time;
     [SerializeField] private DayTime dayTime;
-    [SerializeField] private Zodiac zodiacHour;
+    [ReadOnly][SerializeField] private Zodiac zodiacHour;
 
     [Header("Time Settings")]
     [SerializeField] private float dayInRealHours;
@@ -30,9 +30,9 @@ public class DayNightManager : MonoBehaviour
     [System.Serializable]
     public struct DayTime
     {
-        public int hours;
-        public int minutes;
-        public int seconds;
+        [ReadOnly] public int hours;
+        [ReadOnly] public int minutes;
+        [ReadOnly] public int seconds;
 
         public DayTime(int hours, int minutes, int seconds)
         {
@@ -66,7 +66,17 @@ public class DayNightManager : MonoBehaviour
 
     #endregion
 
-    private void Start() 
+    // Update in editor
+    private void OnValidate() 
+    {
+        CalculateValues();
+        UpdateSun();
+        UpdateAmbient();
+        dayTime = GetDayTime();
+        zodiacHour = GetZodiacHour();
+    }
+
+    private void CalculateValues()
     {
         timeMultiplier = 24 / dayInRealHours;
         dayInRealSeconds = dayInRealHours * 60 * 60 * timeMultiplier;
@@ -75,6 +85,11 @@ public class DayNightManager : MonoBehaviour
 
         zodiacNumber =  Enum.GetNames(typeof(Zodiac)).Length;
         zodiacDayPercentage = dayInRealSeconds / zodiacNumber;
+    }
+
+    private void Start() 
+    {
+        CalculateValues();
 
         DebugCommandDatabase.AddCommand(new DebugCommand(
             "settime", 
