@@ -8,6 +8,7 @@ public class WeaponSlotUI : MonoBehaviour
 {
     [SerializeField] private Image _image;
     [SerializeField] private Image _itemIcon;
+    [SerializeField] private Image _outline;
     [SerializeField] private TextMeshProUGUI _itemName;
     [SerializeField] private TextMeshProUGUI _stackNumber;
 
@@ -15,10 +16,14 @@ public class WeaponSlotUI : MonoBehaviour
     [SerializeField] private Vector3 _stackUpdateAnimationSize = new Vector3(2f, 2f, 2f);
     private bool isAnimatingStack;
 
+    [SerializeField] private Color _activeColor;
+    [SerializeField] private Color _activeOutlineColor;
+
     private Color _itemTextColor;
     private Color _stackTextColor;
     private Color _inactiveColor;
-    [SerializeField] private Color _activeColor;
+    private Color _inactiveOutline;
+    
 
     [SerializeField] private bool _active;
 
@@ -27,6 +32,7 @@ public class WeaponSlotUI : MonoBehaviour
         _itemTextColor = _itemName.color;
         _stackTextColor = _stackNumber.color;
         _inactiveColor = _image.color;
+        _inactiveOutline = _outline.color;
     }
 
     public void SetActive(bool active)
@@ -47,6 +53,10 @@ public class WeaponSlotUI : MonoBehaviour
         Color color = (_active)? _activeColor : _inactiveColor;
         color.a *= precentage;
         _image.color = color;
+        
+        color = (_active) ? _activeOutlineColor : _inactiveOutline;
+        color.a *= precentage;
+        _outline.color = color;
 
         _itemName.color = _itemTextColor * precentage;
         _stackNumber.color = _stackTextColor * precentage;
