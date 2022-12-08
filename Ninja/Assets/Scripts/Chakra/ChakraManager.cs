@@ -9,7 +9,6 @@ public class ChakraManager : MonoBehaviour
     [SerializeField] private Chakra[] advancedChakras;
     [SerializeField] private ChakraType focused;
     [SerializeField] Dictionary<ChakraType, Chakra> dict = new Dictionary<ChakraType, Chakra>();
-    [SerializeField] private DayNightManager timeManager;
 
     [Header("Charging Rate")]
     [SerializeField] private float baseChargeRate = 1f; 
@@ -37,7 +36,7 @@ public class ChakraManager : MonoBehaviour
 
     private void Start() 
     {
-        lastTimeUpdate = timeManager.GetTime();
+        lastTimeUpdate = DayNightManager.instance.GetTime();
 
         foreach(Chakra c in baseChakras)    
             dict[c.Type] = c;
@@ -65,7 +64,7 @@ public class ChakraManager : MonoBehaviour
     private void Update() 
     {
         // Get amount of time passed since last update
-        float time = timeManager.GetTime();
+        float time = DayNightManager.instance.GetTime();
         float delta = time - lastTimeUpdate;
 
         // Convert to hours
@@ -82,7 +81,7 @@ public class ChakraManager : MonoBehaviour
     {
         float mult = 1;
 
-        Zodiac z = timeManager.GetZodiacHour();
+        Zodiac z = DayNightManager.instance.GetZodiacHour();
         if(zodiacElements.ContainsKey(z))
         {
             if(chakra.Type == zodiacElements[z])
