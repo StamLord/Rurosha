@@ -25,6 +25,9 @@ public class UIWindow : MonoBehaviour
         isOpen = true;
         if(animator)
             animator.Play("show");
+        else
+            gameObject.SetActive(true);
+        
         UIManager.Instance.AddWindow(this, disableMovement, disableMouse, disableInteraction);
     }
 
@@ -33,6 +36,9 @@ public class UIWindow : MonoBehaviour
         isOpen = false;
         if(animator)
             animator.Play("hide");
+        else
+            gameObject.SetActive(false);
+        
         UIManager.Instance.RemoveWindow(this, disableMovement, disableMouse, disableInteraction);
     }
 }
