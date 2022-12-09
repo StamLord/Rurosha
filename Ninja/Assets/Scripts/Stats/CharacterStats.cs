@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour, IHurtboxResponder
-{
+{   
+    [Header("Name")]
+    [SerializeField] public string charName;
+
     [Header("Faction")]
     [SerializeField] private Faction faction;
     public string Faction {get{return faction.FactionName;}}
