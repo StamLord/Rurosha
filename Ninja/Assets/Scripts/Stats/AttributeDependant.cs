@@ -28,7 +28,9 @@ public class AttributeDependant<T>
     {
         if(attribute == null)
             return default(T);
-        return values[attribute.Level - 1];
+        if(attribute.Modified > values.Length - 1)
+            return values[values.Length - 1];
+        return values[attribute.Modified - 1];
     }
 
     public T GetValue(CharacterStats stats)
@@ -41,7 +43,9 @@ public class AttributeDependant<T>
 
     public T GetValue(Attribute attribute)
     {   
-        return values[attribute.Level - 1];
+        if(attribute.Modified > values.Length - 1)
+            return values[values.Length - 1];
+        return values[attribute.Modified - 1];
     }
 
     public T GetValueAt(int index)

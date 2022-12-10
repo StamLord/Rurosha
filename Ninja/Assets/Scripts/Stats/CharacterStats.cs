@@ -161,24 +161,60 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         if(boons.Contains(boonName) == false)
             boons.Add(boonName);
+
+        // Add modifiers
+        Trait t = TraitManager.instance.GetBoon(boonName);
+        AddModifiers(t.modifiers);
     }
 
     public void RemoveBoon(string boonName)
     {
         if(boons.Contains(boonName))
             boons.Remove(boonName);
+
+        // Remove modifiers
+        Trait t = TraitManager.instance.GetBoon(boonName);
+        RemoveModifiers(t.modifiers);
     }
 
     public void AddFlaw(string flawName)
     {
         if(flaws.Contains(flawName) == false)
             flaws.Add(flawName);
+        
+        // Add modifiers
+        Trait t = TraitManager.instance.GetFlaw(flawName);
+        AddModifiers(t.modifiers);
     }
 
     public void RemoveFlaw(string flawName)
     {
         if(flaws.Contains(flawName))
             flaws.Remove(flawName);
+
+        // Add modifiers
+        Trait t = TraitManager.instance.GetFlaw(flawName);
+        RemoveModifiers(t.modifiers);
+    }
+
+    private void AddModifiers(List<Modifier> modifiers)
+    {
+        for (int i = 0; i < modifiers.Count; i++)
+        {
+            Attribute a = FindAttribute(modifiers[i].Attribute);
+            if(a != null)
+                a.AddModifier(modifiers[i]);
+        }
+    }
+
+    private void RemoveModifiers(List<Modifier> modifiers)
+    {
+        for (int i = 0; i < modifiers.Count; i++)
+        {
+            Attribute a = FindAttribute(modifiers[i].Attribute);
+            if(a != null)
+                a.RemoveModifier(modifiers[i]);
+        }
     }
 
     #endregion
@@ -331,6 +367,15 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         Attribute attr = FindAttribute(attributeName);
         if (attr != null) 
             return attr.Level;
+
+        return -1;
+    }
+
+    public int GetAttributeLevelModified(string attributeName)
+    {
+        Attribute attr = FindAttribute(attributeName);
+        if (attr != null) 
+            return attr.Modified;
 
         return -1;
     }

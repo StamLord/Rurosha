@@ -151,10 +151,10 @@ public class CharacterCreation : UIWindow
 
     private void UpdateStats()
     {
-        strength.text = "" + stats.GetAttributeLevel("strength");
-        agility.text = "" + stats.GetAttributeLevel("agility");
-        dexterity.text = "" + stats.GetAttributeLevel("dexterity");
-        wisdom.text = "" + stats.GetAttributeLevel("wisdom");
+        strength.text = "" + stats.GetAttributeLevelModified("strength");
+        agility.text = "" + stats.GetAttributeLevelModified("agility");
+        dexterity.text = "" + stats.GetAttributeLevelModified("dexterity");
+        wisdom.text = "" + stats.GetAttributeLevelModified("wisdom");
     }
 
     private void UpdatePoints()
