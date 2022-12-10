@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CharacterCreation : UIWindow
@@ -13,12 +14,20 @@ public class CharacterCreation : UIWindow
     [SerializeField] private TextMeshProUGUI dexterity;
     [SerializeField] private TextMeshProUGUI wisdom;
 
+    [SerializeField] private TextMeshProUGUI boonPoints;
+    [SerializeField] private List<TraitElement> boonElements;
+    [SerializeField] private List<TraitElement> flawElements;
+
     [SerializeField] private UIWindow attrPointsValidationWindow;
+    [SerializeField] private UIWindow positiveBPValidationWindow;
+    [SerializeField] private UIWindow negativeBPValidationWindow;
     [SerializeField] private UIWindow nextWindow;
 
     [Header("Settings")]
     [SerializeField] private int attrPoints = 10;
     [SerializeField] private int attrInitial = 4;
+
+    [SerializeField] private int bpPoints = 1;
 
     [SerializeField] private bool openOnStart = false;
 
@@ -37,6 +46,7 @@ public class CharacterCreation : UIWindow
             }));
 
         SetInitialAttributes();
+        InitializeTraits();
         UpdatePoints();
         UpdateStats();
 
@@ -76,6 +86,69 @@ public class CharacterCreation : UIWindow
         UpdatePoints();
     }
 
+    private void InitializeTraits()
+    {
+        List<string> boons = TraitManager.instance.GetBoonList();
+        List<string> flaws = TraitManager.instance.GetFlawList();
+
+        int i = 0;
+        // Initialize boon elements
+        for (; i < boons.Count && i < boonElements.Count; i++)
+            boonElements[i].SetUp(this, boons[i]);
+
+        // Deactivate leftover boon elements
+        for (; i< boonElements.Count; i++)
+            boonElements[i].gameObject.SetActive(false);
+
+        i = 0;
+        // Initialize flaw elements
+        for (; i < flaws.Count && i < flawElements.Count; i++)
+            flawElements[i].SetUp(this, flaws[i]);
+
+        // Deactivate leftover flaw elements
+        for (; i< flawElements.Count; i++)
+            flawElements[i].gameObject.SetActive(false);
+
+    }
+
+    public bool ToggleBoon(string boon, bool state)
+    {
+        if(state)
+        {
+            if(bpPoints < 1) return false;
+
+            stats.AddBoon(boon);
+            bpPoints--;
+        }
+        else
+        {
+            stats.RemoveBoon(boon);
+            bpPoints++;
+        }
+
+        UpdatePoints();
+        UpdateStats();
+        return true;
+    }
+    
+    public bool ToggleFlaw(string flaw, bool state)
+    {
+        if(state)
+        {
+            stats.AddFlaw(flaw);
+            bpPoints++;
+        }
+        else
+        {
+            stats.RemoveFlaw(flaw);
+            bpPoints--;
+        }
+
+        UpdatePoints();
+        UpdateStats();
+        return true;
+    }
+
     private void UpdateStats()
     {
         strength.text = "" + stats.GetAttributeLevel("strength");
@@ -86,14 +159,27 @@ public class CharacterCreation : UIWindow
 
     private void UpdatePoints()
     {
-        attributePoints.text = "" + attrPoints;        
+        attributePoints.text = "" + attrPoints;     
+        boonPoints.text = "" + bpPoints;
     }
 
     private bool ValidateCreation()
     {
-        if(attrPoints > 0)
+        if(attrPoints > 0) // Unused attribute points
         {
             attrPointsValidationWindow.Open();
+            return false;
+        } 
+
+        if(bpPoints > 0) // Unused boon points
+        {
+            positiveBPValidationWindow.Open();
+            return false;
+        } 
+
+        if(bpPoints < 0) // Too many boons vs flaws
+        {
+            negativeBPValidationWindow.Open();
             return false;
         } 
 

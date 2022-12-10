@@ -152,6 +152,37 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #region Guard
 
+    #region Traits
+
+    [SerializeField] private List<string> boons = new List<string>();
+    [SerializeField] private List<string> flaws = new List<string>();
+
+    public void AddBoon(string boonName)
+    {
+        if(boons.Contains(boonName) == false)
+            boons.Add(boonName);
+    }
+
+    public void RemoveBoon(string boonName)
+    {
+        if(boons.Contains(boonName))
+            boons.Remove(boonName);
+    }
+
+    public void AddFlaw(string flawName)
+    {
+        if(flaws.Contains(flawName) == false)
+            flaws.Add(flawName);
+    }
+
+    public void RemoveFlaw(string flawName)
+    {
+        if(flaws.Contains(flawName))
+            flaws.Remove(flawName);
+    }
+
+    #endregion
+
     [SerializeField] private bool guardOn;    
     [SerializeField] private Direction9 guardDirection;
 
