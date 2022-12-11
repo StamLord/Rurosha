@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class TraitElement : MonoBehaviour
+public class TraitElement : MonoBehaviour, IPointerEnterHandler
 {
     public enum TraitType {BOON, FLAW};
 
@@ -14,11 +15,13 @@ public class TraitElement : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textName;
 
     private CharacterCreation context;
+    private string description;
 
-    public void SetUp(CharacterCreation context, string name)
+    public void SetUp(CharacterCreation context, string name, string description)
     {
         this.context = context;
         textName.text = name;
+        this.description = description;
     }
 
     public void Toggle()
@@ -41,6 +44,11 @@ public class TraitElement : MonoBehaviour
     private void UpdateToggleVisual()
     {
         toggleIcon.enabled = toggled;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        context.UpdateToolTip(description);
     }
 
 }

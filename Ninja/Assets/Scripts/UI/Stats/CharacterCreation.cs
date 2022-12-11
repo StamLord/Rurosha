@@ -23,6 +23,8 @@ public class CharacterCreation : UIWindow
     [SerializeField] private UIWindow negativeBPValidationWindow;
     [SerializeField] private UIWindow nextWindow;
 
+     [SerializeField] private UIToolTip toolTip;
+
     [Header("Settings")]
     [SerializeField] private int attrPoints = 10;
     [SerializeField] private int attrInitial = 4;
@@ -94,7 +96,7 @@ public class CharacterCreation : UIWindow
         int i = 0;
         // Initialize boon elements
         for (; i < boons.Count && i < boonElements.Count; i++)
-            boonElements[i].SetUp(this, boons[i]);
+            boonElements[i].SetUp(this, boons[i], TraitManager.instance.GetBoon(boons[i]).Description);
 
         // Deactivate leftover boon elements
         for (; i< boonElements.Count; i++)
@@ -103,7 +105,7 @@ public class CharacterCreation : UIWindow
         i = 0;
         // Initialize flaw elements
         for (; i < flaws.Count && i < flawElements.Count; i++)
-            flawElements[i].SetUp(this, flaws[i]);
+            flawElements[i].SetUp(this, flaws[i], TraitManager.instance.GetFlaw(flaws[i]).Description);
 
         // Deactivate leftover flaw elements
         for (; i< flawElements.Count; i++)
@@ -192,6 +194,11 @@ public class CharacterCreation : UIWindow
 
         if(nextWindow) nextWindow.Open();
         Close();
+    }
+
+    public void UpdateToolTip(string text)
+    {
+        toolTip.UpdateText(text);
     }
 
 }

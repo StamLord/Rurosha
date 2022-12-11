@@ -41,6 +41,9 @@ public class TraitManager : MonoBehaviour
 
     public Trait GetBoon(string name)
     {
+        if(initialized == false)
+            InitializeDictionaries();
+        
         if(boonDict.ContainsKey(name))
             return boonDict[name];
         else
@@ -49,6 +52,9 @@ public class TraitManager : MonoBehaviour
 
     public Trait GetFlaw(string name)
     {
+        if(initialized == false)
+            InitializeDictionaries();
+        
         if(flawDict.ContainsKey(name))
             return flawDict[name];
         else

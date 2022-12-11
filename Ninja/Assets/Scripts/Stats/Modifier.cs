@@ -8,8 +8,14 @@ public struct Modifier
     [SerializeField] private string attribute;
     [SerializeField] private ModfierType modfierType;
     [SerializeField] private float value;
+    [SerializeField] private bool isTimeSensitive;
+    [SerializeField] private int startHour;
+    [SerializeField] private int endHour;
 
-    public string Attribute {get {return attribute;}}
+    public string Attribute { get {return attribute; }}
+    public bool IsTimeSensitive { get {return isTimeSensitive; }}
+    public int StartHour { get {return startHour; }}
+    public int EndHour { get {return endHour; }}
 
     public float Process(float initial)
     {

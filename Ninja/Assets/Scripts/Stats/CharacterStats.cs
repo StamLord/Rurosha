@@ -152,6 +152,50 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #region Guard
 
+    #region Modifiers
+
+    private Dictionary<Modifier, Attribute> modifiers = new Dictionary<Modifier, Attribute>();
+
+    private void AddModifier(Modifier modifier)
+    {
+        if(modifiers.ContainsKey(modifier)) return;
+
+        Attribute attr = FindAttribute(modifier.Attribute);
+        if(attr == null) return;
+
+        // Add modifier to attribute
+        attr.AddModifier(modifier);
+
+        // Add to dictionary
+        modifiers.Add(modifier, attr);
+    }
+
+    private void RemoveModifier(Modifier modifier)
+    {
+        if(modifiers.ContainsKey(modifier) == false) return;
+        
+        // Remove modifier from attribute
+        modifiers[modifier].RemoveModifier(modifier);
+
+        // Remove from dicitionary
+        modifiers.Remove(modifier);
+    }
+
+    private void AddModifiers(List<Modifier> modifiers)
+    {
+        for (int i = 0; i < modifiers.Count; i++)
+            AddModifier(modifiers[i]);
+    }
+
+    private void RemoveModifiers(List<Modifier> modifiers)
+    {
+        for (int i = 0; i < modifiers.Count; i++)
+            RemoveModifier(modifiers[i]);
+    }
+
+
+    #endregion
+
     #region Traits
 
     [SerializeField] private List<string> boons = new List<string>();
@@ -197,26 +241,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         RemoveModifiers(t.modifiers);
     }
 
-    private void AddModifiers(List<Modifier> modifiers)
-    {
-        for (int i = 0; i < modifiers.Count; i++)
-        {
-            Attribute a = FindAttribute(modifiers[i].Attribute);
-            if(a != null)
-                a.AddModifier(modifiers[i]);
-        }
-    }
-
-    private void RemoveModifiers(List<Modifier> modifiers)
-    {
-        for (int i = 0; i < modifiers.Count; i++)
-        {
-            Attribute a = FindAttribute(modifiers[i].Attribute);
-            if(a != null)
-                a.RemoveModifier(modifiers[i]);
-        }
-    }
-
+    
     #endregion
 
     [SerializeField] private bool guardOn;    

@@ -13780,33 +13780,48 @@ MonoBehaviour:
   - Endurance
   - Agility
   - Dexterity
-  - Mind
+  - Wisdom
   attributes:
-  - _name: Strength
+  - modifiers: []
+    roundType: 0
+    _name: Strength
     _level: 1
     _minLevel: 1
     _maxLevel: 10
     _experience: 0
-  - _name: Endurance
+    _modified: 1
+  - modifiers: []
+    roundType: 0
+    _name: Endurance
     _level: 1
     _minLevel: 1
     _maxLevel: 10
     _experience: 0
-  - _name: Agility
+    _modified: 1
+  - modifiers: []
+    roundType: 0
+    _name: Agility
     _level: 1
     _minLevel: 1
     _maxLevel: 10
     _experience: 0
-  - _name: Dexterity
+    _modified: 1
+  - modifiers: []
+    roundType: 0
+    _name: Dexterity
     _level: 1
     _minLevel: 1
     _maxLevel: 10
     _experience: 0
-  - _name: Mind
+    _modified: 1
+  - modifiers: []
+    roundType: 0
+    _name: Wisdom
     _level: 1
     _minLevel: 1
     _maxLevel: 10
     _experience: 0
+    _modified: 1
   _isAlive: 1
   aliveVisual: {fileID: 0}
   deadVisual: {fileID: 0}
@@ -22345,7 +22360,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2592
+      value: 2628
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22355,7 +22370,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2595
+      value: 2631
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
