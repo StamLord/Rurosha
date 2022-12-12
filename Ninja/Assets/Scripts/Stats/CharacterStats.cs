@@ -277,7 +277,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         PotentialHealth = MaxHealth;
         Stamina = MaxStamina;
 
-        //InitializeAttributes();
+        InitializeAttributes();
 
         if(gameObject.name == "Player Object (Main)")
         {
@@ -355,11 +355,11 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         }
     }
 
-    public void OnValidate()
-    {
-        if(oldAttributeLength != attributeNames.Length)
-            InitializeAttributes();
-    }
+    // public void OnValidate()
+    // {
+    //     if(oldAttributeLength != attributeNames.Length)
+    //         InitializeAttributes();
+    // }
 
     void InitializeAttributes()
     {

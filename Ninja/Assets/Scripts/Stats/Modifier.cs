@@ -17,10 +17,27 @@ public struct Modifier
     public int StartHour { get {return startHour; }}
     public int EndHour { get {return endHour; }}
 
-    public float Process(float initial)
+    public float Process(float initial, DayNightManager.DayTime dayTime)
     {
+        // Time check
+        if(isTimeSensitive)
+        {
+            bool active = false;
+
+            // For example: Between 06:00 to 18:00 
+            if(startHour < endHour)
+                active = dayTime.hours >= StartHour && dayTime.hours < EndHour;
+            // For example: Between 23:00 to 1:00 
+            else if (endHour < startHour) 
+                active = (dayTime.hours >= startHour || dayTime.hours < endHour);
+            Debug.Log("Is active - " + active);
+            if(active == false)
+                return initial;
+        }
+
         float newValue = initial;
 
+        // Modification
         switch(modfierType)
         {
             case ModfierType.FLAT:

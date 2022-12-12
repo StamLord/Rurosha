@@ -19,6 +19,8 @@ public class Attribute : Modifieable
     public float Experience {get {return _experience;}}
     public int Modified {get {return _modified;}}
 
+    private int timeSensitiveModifiers = 0;
+
     public Attribute(string name, int minLevel = 1, int maxLevel = 10)
     {
         _name = name;
@@ -26,6 +28,8 @@ public class Attribute : Modifieable
         _level = minLevel;
         _maxLevel = maxLevel;
         _modified = _level;
+
+        DayNightManager.instance.OnHourPassed += TimeBasedCalculateModified;
     }
 
     public virtual bool IncreaseLevel()
@@ -66,21 +70,22 @@ public class Attribute : Modifieable
         if(modifiers.Count < 1) return Level;
 
         // Apply all modifiers
-        float modified = Level;
+        float modValue = Level;
+        DayNightManager.DayTime dayTime = DayNightManager.instance.GetDayTime();
 
         for (int i = 0; i < modifiers.Count; i++)
-            modified = modifiers[i].Process(modified);
-
+            modValue = modifiers[i].Process(modValue, dayTime);
+        
         // Round to whole number
         switch(roundType)
         {
             case RoundType.DOWN:
-                return Mathf.FloorToInt(modified);
+                return Mathf.FloorToInt(modValue);
             case RoundType.UP:
-                return Mathf.CeilToInt(modified);
+                return Mathf.CeilToInt(modValue);
         }
 
-        return Mathf.RoundToInt(modified);
+        return Mathf.RoundToInt(modValue);
     }
 
     public override bool AddModifier(Modifier modifier)
@@ -89,6 +94,10 @@ public class Attribute : Modifieable
 
         modifiers.Add(modifier);
         _modified = CalculateModified();
+
+        if(modifier.IsTimeSensitive)
+            timeSensitiveModifiers++;
+        
         return true;
     }
 
@@ -98,6 +107,16 @@ public class Attribute : Modifieable
 
         modifiers.Remove(modifier);
         _modified = CalculateModified();
+
+        if(modifier.IsTimeSensitive)
+            timeSensitiveModifiers--;
+        
         return true;
+    }
+
+    public void TimeBasedCalculateModified(DayNightManager.DayTime time)
+    {
+        if(timeSensitiveModifiers > 0)
+            _modified = CalculateModified();
     }
 }

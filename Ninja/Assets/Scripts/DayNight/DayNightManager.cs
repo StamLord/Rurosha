@@ -234,12 +234,28 @@ public class DayNightManager : MonoBehaviour
     }
 
     private void SetDayTime(int hours, int minutes, int seconds)
-    {
+    {   
+        // Set time
         float totalTime = hours * 60 * 60;
         totalTime += minutes * 60 ;
         totalTime += seconds;
 
         time = totalTime;
+
+        // Update DayTime
+        int mm = dayTime.minutes; // Store old value for comparison
+        int hh = dayTime.hours; // Store old value for comparison
+        dayTime = GetDayTime();
+
+        // Call minute event
+        if(dayTime.minutes != mm)
+            if(OnMinutePassed != null)
+                OnMinutePassed(dayTime);
+
+        // Call hour event
+        if(dayTime.hours != hh)
+            if(OnHourPassed != null)
+                OnHourPassed(dayTime);
     }
 
     public Zodiac GetZodiacHour()
