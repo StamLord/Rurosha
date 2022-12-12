@@ -55,6 +55,8 @@ public class GroundedState : PlayerState
         
         SetSoundType(StealthAgent.SoundType.WALK);
 
+        SetStepSoundAgent(true);
+
         if(debugView) Debug.Log("State: Entered [Ground State]");
     }
 
@@ -162,6 +164,11 @@ public class GroundedState : PlayerState
 	    // We apply gravity manually for more tuning control
         if(gravityOn)
 	        rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
+    }
+
+    protected override void OnExitState()
+    {
+        SetStepSoundAgent(false);
     }
 
     #region Checks

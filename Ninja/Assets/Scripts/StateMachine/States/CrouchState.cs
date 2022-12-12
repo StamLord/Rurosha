@@ -54,6 +54,7 @@ public class CrouchState : PlayerState
         SetVisibility(crouchVisibility);
         SetDetection(crouchDetection);
         SetSoundType(StealthAgent.SoundType.CROUCH);
+        SetStepSoundAgent(true);
 
         if(OnCrouchStart != null) OnCrouchStart();
     }
@@ -66,6 +67,7 @@ public class CrouchState : PlayerState
 
         SetVisibility(1f);
         SetDetection(1f);
+        SetStepSoundAgent(false);
 
         if(OnCrouchEnd != null) OnCrouchEnd();
     }

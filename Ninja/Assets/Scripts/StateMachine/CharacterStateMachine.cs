@@ -10,6 +10,14 @@ public class CharacterStateMachine : StateMachine
     public InputState inputState;
     public ColliderManager colliderManager;
     public Kick kick;
+    
+    [Header("Sound Agent")]
+    [SerializeField] private StepSoundAgent stepSoundAgent;
+
+    public void SetStepSoundAgent(bool active)
+    {
+        stepSoundAgent.SetActive(active);
+    }
 
     [Header("Stealth Agent")]
     [SerializeField] private StealthAgent stealthAgent;

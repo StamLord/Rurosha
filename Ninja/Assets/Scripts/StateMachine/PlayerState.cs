@@ -31,6 +31,11 @@ public class PlayerState : State
         CharacterStateMachine.SetSoundType(type);
     }
 
+    public void SetStepSoundAgent(bool active)
+    {
+        CharacterStateMachine.SetStepSoundAgent(active);
+    }
+
     public bool IsGrounded {get {return CharacterStateMachine.IsGrounded;}}
     public float GroundSlope {get {return CharacterStateMachine.GroundSlope;}}
     public Vector3 GroundNormal {get {return CharacterStateMachine.GroundNormal;}}
