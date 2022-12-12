@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c5ab56950750db419a67661f4c2a4c3, type: 3}
-  m_Name: Poet's Night
+  m_Name: Educated
   m_EditorClassIdentifier: 
-  traitName: Poet's Night
-  description: The night is your domain and the moonlight nourishes your soul. You
-    have +2 WIS during nighttime.
+  traitName: Educated
+  description: "Education is key to opening one\u2019s mind. You have +1 WIS."
   modifiers:
   - attribute: wisdom
     modfierType: 0
-    value: 2
-    isTimeSensitive: 1
-    startHour: 6
-    endHour: 18
+    value: 1
+    isTimeSensitive: 0
+    startHour: 0
+    endHour: 0
