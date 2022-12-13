@@ -51,20 +51,18 @@ public class StatOverviewUI : UIWindow
 
         stamina.text =  Mathf.RoundToInt(characterStats.Stamina) + "/" + (characterStats.MaxStamina);
 
-        strength.text =  "" + characterStats.GetAttributeLevel("strength");
-        endurance.text =  "" + characterStats.GetAttributeLevel("endurance");
-        agility.text =  "" + characterStats.GetAttributeLevel("agiliTy");
-        dexterity.text =  "" + characterStats.GetAttributeLevel("dexterity");
-        mind.text =  "" + characterStats.GetAttributeLevel("mind");
+        strength.text =  "" + characterStats.GetAttributeLevel(AttributeType.STRENGTH);
+        agility.text =  "" + characterStats.GetAttributeLevel(AttributeType.AGILITY);
+        dexterity.text =  "" + characterStats.GetAttributeLevel(AttributeType.DEXTERITY);
+        mind.text =  "" + characterStats.GetAttributeLevel(AttributeType.WISDOM);
 
-        strengthExp.fillAmount = characterStats.GetAttributeExp("strength");
-        enduranceExp.fillAmount = characterStats.GetAttributeExp("endurance");
-        agilityExp.fillAmount = characterStats.GetAttributeExp("agiliTy");
-        dexterityExp.fillAmount = characterStats.GetAttributeExp("dexterity");
-        mindExp.fillAmount = characterStats.GetAttributeExp("mind");
+        strengthExp.fillAmount = characterStats.GetAttributeExp(AttributeType.STRENGTH);
+        agilityExp.fillAmount = characterStats.GetAttributeExp(AttributeType.AGILITY);
+        dexterityExp.fillAmount = characterStats.GetAttributeExp(AttributeType.DEXTERITY);
+        mindExp.fillAmount = characterStats.GetAttributeExp(AttributeType.WISDOM);
     }
 
-    public void IncreaseAttributeLevel(string attribute)
+    public void IncreaseAttributeLevel(AttributeType attribute)
     {
         characterStats.IncreaseAttribute(attribute);
     }

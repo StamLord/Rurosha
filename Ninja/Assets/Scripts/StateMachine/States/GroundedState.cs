@@ -81,7 +81,7 @@ public class GroundedState : PlayerState
             {
                 if(characterStats.DepleteStamina(staminaDepleteRate * Time.deltaTime))
                 {
-                    characterStats.IncreaseAttributeExp("agility", agilityExpGain * Time.deltaTime);
+                    characterStats.IncreaseAttributeExp(AttributeType.AGILITY, agilityExpGain * Time.deltaTime);
                     characterStats.DepletePotentailStamina(potentialStaminaDepleteRate * Time.deltaTime);
 
                     // Set relevant speed

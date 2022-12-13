@@ -123,8 +123,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8390862597129521716}
         m_TargetAssemblyTypeName: CharacterCreation, Scripts.UI.Stats
-        m_MethodName: AddPoint
-        m_Mode: 5
+        m_MethodName: AddAgility
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2168,8 +2168,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8390862597129521716}
         m_TargetAssemblyTypeName: CharacterCreation, Scripts.UI.Stats
-        m_MethodName: AddPoint
-        m_Mode: 5
+        m_MethodName: AddDexterity
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6390,8 +6390,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8390862597129521716}
         m_TargetAssemblyTypeName: CharacterCreation, Scripts.UI.Stats
-        m_MethodName: AddPoint
-        m_Mode: 5
+        m_MethodName: AddWisdom
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9199,8 +9199,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8390862597129521716}
         m_TargetAssemblyTypeName: CharacterCreation, Scripts.UI.Stats
-        m_MethodName: RemovePoint
-        m_Mode: 5
+        m_MethodName: AddWisdom
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9923,8 +9923,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8390862597129521716}
         m_TargetAssemblyTypeName: CharacterCreation, Scripts.UI.Stats
-        m_MethodName: RemovePoint
-        m_Mode: 5
+        m_MethodName: RemoveDexterity
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14385,8 +14385,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8390862597129521716}
         m_TargetAssemblyTypeName: CharacterCreation, Scripts.UI.Stats
-        m_MethodName: RemovePoint
-        m_Mode: 5
+        m_MethodName: RemoveAgility
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -18487,8 +18487,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8390862597129521716}
         m_TargetAssemblyTypeName: CharacterCreation, Scripts.UI.Stats
-        m_MethodName: AddPoint
-        m_Mode: 5
+        m_MethodName: AddStrength
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -19160,8 +19160,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8390862597129521716}
         m_TargetAssemblyTypeName: CharacterCreation, Scripts.UI.Stats
-        m_MethodName: RemovePoint
-        m_Mode: 5
+        m_MethodName: RemoveStrength
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

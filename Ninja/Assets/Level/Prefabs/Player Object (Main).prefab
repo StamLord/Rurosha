@@ -12207,7 +12207,7 @@ MonoBehaviour:
   gravityOn: 1
   gravity: 20
   JumpHeight:
-    attributeName: Agility
+    attributeType: 1
     values:
     - 1
     - 1.5
@@ -12308,7 +12308,7 @@ MonoBehaviour:
   isActive: 0
   characterStateMachine: {fileID: 0}
   runDistance:
-    attributeName: Agility
+    attributeType: 1
     values:
     - 6
     - 7
@@ -12385,7 +12385,7 @@ MonoBehaviour:
   isActive: 0
   characterStateMachine: {fileID: 0}
   dashDistance:
-    attributeName: Agility
+    attributeType: 1
     values:
     - 5
     - 5.5
@@ -12469,7 +12469,7 @@ MonoBehaviour:
   gravity: 20
   walkSpeed: 3
   _runSpeed:
-    attributeName: Agility
+    attributeType: 0
     values:
     - 7
     - 8
@@ -12482,7 +12482,7 @@ MonoBehaviour:
     - 18
     - 20
   JumpHeight:
-    attributeName: Agility
+    attributeType: 0
     values:
     - 1
     - 1.5
@@ -12556,7 +12556,7 @@ MonoBehaviour:
   characterStateMachine: {fileID: 0}
   walkSpeed: 5
   _runSpeed:
-    attributeName: Agility
+    attributeType: 1
     values:
     - 7
     - 8
@@ -13776,54 +13776,52 @@ MonoBehaviour:
   - {fileID: 4628237269551806553}
   - {fileID: 6105009641262560080}
   - {fileID: 6885044862622217546}
-  attributeNames:
-  - Strength
-  - Agility
-  - Dexterity
-  - Wisdom
-  attributes:
-  - modifiers: []
+  strength:
+    modifiers: []
     roundType: 0
-    _name: Strength
-    _level: 1
-    _minLevel: 1
-    _maxLevel: 10
+    _level: 0
+    _minLevel: 0
+    _maxLevel: 0
     _experience: 0
-    _modified: 1
-  - modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+  agility:
+    modifiers: []
     roundType: 0
-    _name: Agility
-    _level: 1
-    _minLevel: 1
-    _maxLevel: 10
+    _level: 0
+    _minLevel: 0
+    _maxLevel: 0
     _experience: 0
-    _modified: 1
-  - modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+  dexterity:
+    modifiers: []
     roundType: 0
-    _name: Dexterity
-    _level: 1
-    _minLevel: 1
-    _maxLevel: 10
+    _level: 0
+    _minLevel: 0
+    _maxLevel: 0
     _experience: 0
-    _modified: 1
-  - modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+  wisdom:
+    modifiers: []
     roundType: 0
-    _name: Wisdom
-    _level: 1
-    _minLevel: 1
-    _maxLevel: 10
+    _level: 0
+    _minLevel: 0
+    _maxLevel: 0
     _experience: 0
-    _modified: 1
+    _modified: 0
+    _modifiedDirty: 0
   _isAlive: 1
   aliveVisual: {fileID: 0}
   deadVisual: {fileID: 0}
   _maxHealth:
-    attributeName: Strength
+    attributeType: 0
     values: 46000000500000005a00000064000000730000008200000096000000aa000000c8000000e6000000
   _health: 100
   _potentialHealth: 100
   HealthRecovery:
-    attributeName: Strength
+    attributeType: 0
     values:
     - 2
     - 4
@@ -13838,7 +13836,7 @@ MonoBehaviour:
   _healthRecoveryStart: 5
   _healthLastDeplete: 0
   PotentialHealthRecovery:
-    attributeName: Strength
+    attributeType: 0
     values:
     - 1
     - 2
@@ -13855,10 +13853,10 @@ MonoBehaviour:
   _stamina: 100
   _potentialStamina: 100
   _maxStamina:
-    attributeName: Agility
+    attributeType: 1
     values: 46000000500000005a00000064000000730000008200000096000000aa000000c8000000e6000000
   StaminaRecovery:
-    attributeName: Agility
+    attributeType: 1
     values:
     - 10
     - 15
@@ -13873,7 +13871,7 @@ MonoBehaviour:
   _staminaRecoveryStart: 1.5
   _staminaLastDeplete: 0
   PotentialStaminaRecovery:
-    attributeName: Agility
+    attributeType: 1
     values:
     - 1
     - 1.5
@@ -21661,6 +21659,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 6944390856666288591}
     m_Modifications:
     - target: {fileID: 520614883, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
+      propertyPath: hitMask.m_Bits
+      value: 4161
+      objectReference: {fileID: 0}
+    - target: {fileID: 520614883, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: guardMask.m_Bits
       value: 32768
       objectReference: {fileID: 0}
@@ -21677,6 +21679,10 @@ PrefabInstance:
       value: 1108
       objectReference: {fileID: 0}
     - target: {fileID: 735657387, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
+      propertyPath: hitMask.m_Bits
+      value: 4161
+      objectReference: {fileID: 0}
+    - target: {fileID: 735657387, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: guardMask.m_Bits
       value: 32768
       objectReference: {fileID: 0}
@@ -21690,39 +21696,39 @@ PrefabInstance:
       objectReference: {fileID: 1323493131}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].x
-      value: 925.4496
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].y
-      value: 57.65825
+      value: 2.65
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: 939.2651
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 925.4496
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 56.40825
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: 939.2651
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].x
-      value: 925.4496
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].y
-      value: 55.15825
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].z
-      value: 939.2651
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 1490965675, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: camera
@@ -21730,7 +21736,7 @@ PrefabInstance:
       objectReference: {fileID: 6944390856666288591}
     - target: {fileID: 1615115205, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_VersionIndex
-      value: 1066
+      value: 1072
       objectReference: {fileID: 0}
     - target: {fileID: 2083901248, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_IsActive
@@ -22156,6 +22162,11 @@ PrefabInstance:
       objectReference: {fileID: 6944390856915565334}
     - target: {fileID: 5174405575449335521, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
+      propertyPath: hitMask.m_Bits
+      value: 4161
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174405575449335521, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
       propertyPath: guardMask.m_Bits
       value: 32768
       objectReference: {fileID: 0}
@@ -22309,6 +22320,51 @@ PrefabInstance:
       propertyPath: guard
       value: 
       objectReference: {fileID: 444366759}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validLeftAttackStates.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validRightAttackStates.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validLeftAttackStates.Array.data[0]
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validLeftAttackStates.Array.data[1]
+      value: thrust_1_chain
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validLeftAttackStates.Array.data[2]
+      value: thrust_2_chain
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validLeftAttackStates.Array.data[3]
+      value: thrust_3_chain
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validLeftAttackStates.Array.data[4]
+      value: sweep_1_chain
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validRightAttackStates.Array.data[0]
+      value: idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validRightAttackStates.Array.data[1]
+      value: sweep_1_chain
+      objectReference: {fileID: 0}
     - target: {fileID: 8061237257040925871, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
@@ -22352,7 +22408,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2634
+      value: 2661
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22362,7 +22418,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2637
+      value: 2661
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}

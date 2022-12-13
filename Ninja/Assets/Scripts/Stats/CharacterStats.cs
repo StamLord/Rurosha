@@ -15,9 +15,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private Hurtbox[] hurtboxes;
     
     [Header("Attributes")]
-    [SerializeField] private string[] attributeNames = {"Strength", "Endurance", "Agility", "Dexterity", "Mind"};
-    private int oldAttributeLength = 0;
-    [SerializeField] private Attribute[] attributes;
+    [SerializeField] private Attribute strength;
+    [SerializeField] private Attribute agility;
+    [SerializeField] private Attribute dexterity;
+    [SerializeField] private Attribute wisdom;
     
     [SerializeField] private const int minAttributeLevel = 1;
     [SerializeField] private const int maxAttributeLevel = 10;
@@ -268,6 +269,11 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     [SerializeField] private ChakraManager chakraManager;
 
+    private void Awake() 
+    {
+        InitializeAttributes();
+    }
+
     void Start()
     {
         foreach(Hurtbox h in hurtboxes)
@@ -277,18 +283,20 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         PotentialHealth = MaxHealth;
         Stamina = MaxStamina;
 
-        InitializeAttributes();
-
         if(gameObject.name == "Player Object (Main)")
         {
             DebugCommandDatabase.AddCommand(new DebugCommand(
-                "setattribute", 
+                "setattr", 
                 "Sets attribute to desired value", 
                 "setattribute <attribute> <level>", 
                 (string[] parameters) => {
-                    bool success = SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
-                    if(success)
-                        return "Set " + parameters[0] + ": " + parameters[1];
+                    AttributeType attrType;
+                    if(Enum.TryParse(parameters[0], true, out attrType))
+                    {
+                        bool success = SetAttributeLevel(attrType, Int32.Parse(parameters[1]));
+                        if(success)
+                            return "Set " + parameters[0] + ": " + parameters[1];
+                    }
                     return "Unknown attribute: " + (parameters[0]);
                 }));
 
@@ -297,7 +305,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
                 "Sets attribute to desired value", 
                 "set <attribute> <level>", 
                 (string[] parameters) => {
-                    bool success;
+                    bool success = false;
 
                     switch(parameters[0])
                     {
@@ -319,26 +327,20 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
                         break;
                     default:
                         // Parse short attribute names
-                        string par = parameters[0];
-                        if(par == "str") par = "strength";
-                        if(par == "agi") par = "agility";
-                        if(par == "dex") par = "dexterity";
-                        if(par == "min" || par == "mnd") par = "mind";
-                        success = SetAttributeLevel(par, Int32.Parse(parameters[1]));
+                        if(parameters[0] == "str") success = SetAttributeLevel(AttributeType.STRENGTH, Int32.Parse(parameters[1]));
+                        else if(parameters[0] == "agi") success = SetAttributeLevel(AttributeType.AGILITY, Int32.Parse(parameters[1]));
+                        else if(parameters[0] == "dex") success = SetAttributeLevel(AttributeType.DEXTERITY, Int32.Parse(parameters[1]));
+                        else if(parameters[0] == "wis") success = SetAttributeLevel(AttributeType.WISDOM, Int32.Parse(parameters[1]));
+                        else
+                        {
+                            AttributeType attrType;
+                            if(Enum.TryParse(parameters[0], true, out attrType))
+                                success = SetAttributeLevel(attrType, Int32.Parse(parameters[1]));
+
+                        }
                         break;
                     }
                     
-                    if(success)
-                        return "Set " + parameters[0] + ": " + parameters[1];
-                    return "Unknown attribute: " + (parameters[0]);
-                }));
-
-            DebugCommandDatabase.AddCommand(new DebugCommand(
-                "setattr", 
-                "Sets attribute to desired value", 
-                "setattr <attribute> <level>", 
-                (string[] parameters) => {
-                    bool success = SetAttributeLevel(parameters[0], Int32.Parse(parameters[1]));
                     if(success)
                         return "Set " + parameters[0] + ": " + parameters[1];
                     return "Unknown attribute: " + (parameters[0]);
@@ -355,86 +357,79 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         }
     }
 
-    // public void OnValidate()
-    // {
-    //     if(oldAttributeLength != attributeNames.Length)
-    //         InitializeAttributes();
-    // }
-
-    void InitializeAttributes()
+    private void InitializeAttributes()
     {
-        attributes = new Attribute[attributeNames.Length];
-
-        for (int i = 0; i < attributeNames.Length; i++)
-            attributes[i] = new Attribute(attributeNames[i], minAttributeLevel, maxAttributeLevel);
-
-        oldAttributeLength = attributeNames.Length;
+        strength.Initialize(1, 10);
+        agility.Initialize(1, 10);
+        dexterity.Initialize(1, 10);
+        wisdom.Initialize(1, 10);
     }
 
-    public Attribute FindAttribute(string attributeName)
+    public Attribute FindAttribute(AttributeType attributeType)
     {
-        if(attributeName.Length == 0)
+        switch(attributeType)
         {
-            Debug.LogWarning("Attribute name to search cannot be empty!", gameObject);
-            return null;
+            case AttributeType.STRENGTH:
+                return strength;
+            case AttributeType.AGILITY:
+                return agility;
+            case AttributeType.DEXTERITY:
+                return dexterity;
+            case AttributeType.WISDOM:
+                return wisdom;
         }
-
-        attributeName = char.ToUpper(attributeName[0]) + attributeName.Substring(1).ToLower();
-        for (int i = 0; i < attributes.Length; i++)
-            if(attributes[i].Name == attributeName)
-                return attributes[i];
 
         return null;
     }
     
-    public int GetAttributeLevel(string attributeName)
+    public int GetAttributeLevel(AttributeType attributeType)
     {
-        Attribute attr = FindAttribute(attributeName);
+        Attribute attr = FindAttribute(attributeType);
         if (attr != null) 
             return attr.Level;
 
         return -1;
     }
 
-    public int GetAttributeLevelModified(string attributeName)
+    public int GetAttributeLevelModified(AttributeType attributeType)
     {
-        Attribute attr = FindAttribute(attributeName);
+        Attribute attr = FindAttribute(attributeType);
         if (attr != null) 
             return attr.Modified;
 
         return -1;
     }
 
-    public float GetAttributeExp(string attributeName)
+    public float GetAttributeExp(AttributeType attributeType)
     {
-        Attribute attr = FindAttribute(attributeName);
+        Attribute attr = FindAttribute(attributeType);
         if (attr != null) 
             return attr.Experience;
 
         return -1f;
     }
 
-    public bool IncreaseAttribute(string statName)
+    public bool IncreaseAttribute(AttributeType attributeType)
     {
-        Attribute s = FindAttribute(statName);
+        Attribute s = FindAttribute(attributeType);
         if (s != null) 
             return s.IncreaseLevel();
             
         return false;
     }
 
-    public bool IncreaseAttributeExp(string statName, float amount)
+    public bool IncreaseAttributeExp(AttributeType attributeType, float amount)
     {
-        Attribute s = FindAttribute(statName);
+        Attribute s = FindAttribute(attributeType);
         if (s != null) 
             return s.GainExperience(amount);
             
         return false;
     }
 
-    public bool SetAttributeLevel(string statName, int level)
+    public bool SetAttributeLevel(AttributeType attributeType, int level)
     {
-        Attribute s = FindAttribute(statName);
+        Attribute s = FindAttribute(attributeType);
         if (s != null) 
         {   
             // s.Level = Mathf.Clamp(level, minAttributeLevel, maxAttributeLevel);
@@ -655,9 +650,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             case WeightClass.LIGHT:
                 return true;
             case WeightClass.MEDIUM:
-                return GetAttributeLevel("strength") >= 5;
+                return GetAttributeLevel(AttributeType.STRENGTH) >= 5;
             case WeightClass.HEAVY:
-                return GetAttributeLevel("strength") >= 8;
+                return GetAttributeLevel(AttributeType.STRENGTH) >= 8;
         }
 
         return false;

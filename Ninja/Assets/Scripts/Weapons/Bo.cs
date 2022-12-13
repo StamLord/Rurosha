@@ -119,7 +119,7 @@ public class Bo : WeaponObject, IHitboxResponder
         if(isHit)
         {   
             // Gain Exp
-            charStats.IncreaseAttributeExp("strength", strengthExpGain);
+            charStats.IncreaseAttributeExp(AttributeType.STRENGTH, strengthExpGain);
         }
 
         // Physics

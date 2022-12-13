@@ -7,7 +7,7 @@ public class SkillTree : Attribute
     private int _points;
     private List<Skill> _skills = new List<Skill>();
 
-    public SkillTree(string name, List<Skill> skills, int minLevel = 1) : base(name, minLevel, TotalLevels(skills))
+    public SkillTree(string name, List<Skill> skills, int minLevel = 1) : base(minLevel, TotalLevels(skills))
     {
         _skills = skills;
     }

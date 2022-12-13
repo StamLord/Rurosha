@@ -92,7 +92,7 @@ public class Kanabo : WeaponObject, IHitboxResponder
 
     public void CollisionWith(Collider collider, Hitbox hitbox)
     {   
-        charStats.IncreaseAttributeExp("strength", strengthExpGain);
+        charStats.IncreaseAttributeExp(AttributeType.STRENGTH, strengthExpGain);
         
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         hurtbox?.Hit(agent, 30, 10);
@@ -192,7 +192,7 @@ public class Kanabo : WeaponObject, IHitboxResponder
                 if(charStats.DepleteStamina(leftAttackStaminaCost))
                 {
                     animator.SetTrigger("Attack");
-                    charStats.IncreaseAttributeExp("strength", strengthExpGain);
+                    charStats.IncreaseAttributeExp(AttributeType.STRENGTH, strengthExpGain);
                 }
             }
         }
@@ -206,7 +206,7 @@ public class Kanabo : WeaponObject, IHitboxResponder
                 if(charStats.DepleteStamina(highAttackStaminaCost))
                 {
                     animator.SetTrigger("RAttack");
-                    charStats.IncreaseAttributeExp("strength", strengthExpGain);
+                    charStats.IncreaseAttributeExp(AttributeType.STRENGTH, strengthExpGain);
                 }
             }
             else if(state.IsName("Fire1") && nextAttack)
@@ -214,7 +214,7 @@ public class Kanabo : WeaponObject, IHitboxResponder
                 if(charStats.DepleteStamina(stabAttackStaminaCost))
                 {
                     animator.SetTrigger("RAttack");
-                    charStats.IncreaseAttributeExp("strength", strengthExpGain);
+                    charStats.IncreaseAttributeExp(AttributeType.STRENGTH, strengthExpGain);
                 }
             }
         }

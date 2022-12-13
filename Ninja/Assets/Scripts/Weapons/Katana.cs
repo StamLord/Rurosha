@@ -166,7 +166,7 @@ public class Katana : WeaponObject, IHitboxResponder
     public void CollisionWith(Collider collider, Hitbox hitbox)
     {   
         //Gain Exp
-        charStats.IncreaseAttributeExp("strength", strengthExpGain);
+        charStats.IncreaseAttributeExp(AttributeType.STRENGTH, strengthExpGain);
         
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
@@ -336,7 +336,7 @@ public class Katana : WeaponObject, IHitboxResponder
                 if(charStats.DepleteStamina(crouchAttackStaminaCost))
                 {
                     animator.SetTrigger("CrouchAttack");
-                    charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+                    charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
                 }
             }
             else if(state.IsName("Idle") || state.IsName("HighIdle") || state.IsName("Attack1_chain") || state.IsName("Attack2_chain"))
@@ -344,7 +344,7 @@ public class Katana : WeaponObject, IHitboxResponder
                 if(charStats.DepleteStamina(leftAttackStaminaCost))
                 {
                     animator.SetTrigger("LMB");
-                    charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+                    charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
                 }
             }
         }
@@ -372,7 +372,7 @@ public class Katana : WeaponObject, IHitboxResponder
             chargeTime = 0;
             chargeEndPlayed = false;
 
-            charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+            charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
         }
 
         // VFX

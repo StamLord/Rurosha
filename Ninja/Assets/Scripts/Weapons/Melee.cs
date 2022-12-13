@@ -85,7 +85,7 @@ public class Melee : WeaponObject, IHitboxResponder
                     AddCombo("left");
                     if(VerifyCombo() == false)
                         animator.SetTrigger("LMB");
-                    charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+                    charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
                 }
             }
         }
@@ -103,7 +103,7 @@ public class Melee : WeaponObject, IHitboxResponder
                     AddCombo("right");
                     if(VerifyCombo() == false)
                         animator.SetTrigger("RMB");
-                    charStats.IncreaseAttributeExp("dexterity", dexterityExpGain);
+                    charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
                 }
             }
         }
@@ -165,7 +165,7 @@ public class Melee : WeaponObject, IHitboxResponder
         if(collider.transform.root == transform.root) return;
 
         //Gain Exp
-        charStats.IncreaseAttributeExp("strength", strengthExpGain);
+        charStats.IncreaseAttributeExp(AttributeType.STRENGTH, strengthExpGain);
         
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();

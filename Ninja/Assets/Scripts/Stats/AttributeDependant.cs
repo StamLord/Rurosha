@@ -6,11 +6,11 @@ using UnityEngine;
 public class AttributeDependant<T>
 {
     private Attribute attribute;
-    [SerializeField] private string attributeName;
+    [SerializeField] private AttributeType attributeType;
     [SerializeField] private T[] values;
 
     public Attribute Attribute {get {return attribute;}}
-    public string AttributeName {get {return attributeName;}}
+    public AttributeType AttributeType {get {return attributeType;}}
 
     public AttributeDependant(Attribute attribute, T[] values)
     {
@@ -18,25 +18,26 @@ public class AttributeDependant<T>
         this.values = values;
     }
 
-    public AttributeDependant(string attributeName, T[] values)
+    public AttributeDependant(AttributeType attributeType, T[] values)
     {
-        this.attributeName = attributeName;
+        this.attributeType = attributeType;
         this.values = values;
     }
 
     private T GetValue()
     {
-        if(attribute == null)
-            return default(T);
+        if(attribute == null || attribute.Modified <= 0)
+            return values[0];
         if(attribute.Modified > values.Length - 1)
             return values[values.Length - 1];
+        
         return values[attribute.Modified - 1];
     }
 
     public T GetValue(CharacterStats stats)
     {   
         if(attribute == null)
-            attribute = stats.FindAttribute(attributeName);
+            attribute = stats.FindAttribute(attributeType);
         
         return GetValue();
     }

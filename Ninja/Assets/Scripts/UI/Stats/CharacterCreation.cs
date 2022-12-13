@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class CharacterCreation : UIWindow
@@ -57,17 +55,57 @@ public class CharacterCreation : UIWindow
 
     private void SetInitialAttributes()
     {
-        stats.SetAttributeLevel("strength", attrInitial);
-        stats.SetAttributeLevel("agility", attrInitial);
-        stats.SetAttributeLevel("dexterity", attrInitial);
-        stats.SetAttributeLevel("wisdom", attrInitial);
+        stats.SetAttributeLevel(AttributeType.STRENGTH, attrInitial);
+        stats.SetAttributeLevel(AttributeType.AGILITY, attrInitial);
+        stats.SetAttributeLevel(AttributeType.DEXTERITY, attrInitial);
+        stats.SetAttributeLevel(AttributeType.WISDOM, attrInitial);
     }
 
-    public void AddPoint(string attributeName)
+    public void AddStrength()
+    {
+        AddPoint(AttributeType.STRENGTH);
+    }
+
+    public void RemoveStrength()
+    {
+        RemovePoint(AttributeType.STRENGTH);
+    }
+
+    public void AddAgility()
+    {
+        AddPoint(AttributeType.AGILITY);
+    }
+
+    public void RemoveAgility()
+    {
+        RemovePoint(AttributeType.AGILITY);
+    }
+
+    public void AddDexterity()
+    {
+        AddPoint(AttributeType.DEXTERITY);
+    }
+
+    public void RemoveDexterity()
+    {
+        RemovePoint(AttributeType.DEXTERITY);
+    }
+
+    public void AddWisdom()
+    {
+        AddPoint(AttributeType.WISDOM);
+    }
+
+    public void RemoveWisdom()
+    {
+        RemovePoint(AttributeType.WISDOM);
+    }
+
+    private void AddPoint(AttributeType attributeType)
     {
         if(attrPoints < 1) return;
 
-        if(stats.IncreaseAttribute(attributeName))
+        if(stats.IncreaseAttribute(attributeType))
         {
             attrPoints--;
             UpdateStats();
@@ -75,13 +113,13 @@ public class CharacterCreation : UIWindow
         }
     }
 
-    public void RemovePoint(string attributeName)
+    private void RemovePoint(AttributeType attributeType)
     {
-        int value = stats.GetAttributeLevel(attributeName);
+        int value = stats.GetAttributeLevel(attributeType);
         if(value < 2)
             return;
 
-        stats.SetAttributeLevel(attributeName, value -1);
+        stats.SetAttributeLevel(attributeType, value -1);
 
         attrPoints++;
         UpdateStats();
@@ -153,10 +191,10 @@ public class CharacterCreation : UIWindow
 
     private void UpdateStats()
     {
-        strength.text = "" + stats.GetAttributeLevelModified("strength");
-        agility.text = "" + stats.GetAttributeLevelModified("agility");
-        dexterity.text = "" + stats.GetAttributeLevelModified("dexterity");
-        wisdom.text = "" + stats.GetAttributeLevelModified("wisdom");
+        strength.text = "" + stats.GetAttributeLevelModified(AttributeType.STRENGTH);
+        agility.text = "" + stats.GetAttributeLevelModified(AttributeType.AGILITY);
+        dexterity.text = "" + stats.GetAttributeLevelModified(AttributeType.DEXTERITY);
+        wisdom.text = "" + stats.GetAttributeLevelModified(AttributeType.WISDOM);
     }
 
     private void UpdatePoints()

@@ -231,7 +231,7 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
         if(isHit)
         {   
             // Gain Exp
-            charStats.IncreaseAttributeExp("strength", strengthExpGain);
+            charStats.IncreaseAttributeExp(AttributeType.STRENGTH, strengthExpGain);
 
             // Add to combo only if this hit is registered by local hitbox and not by projectile aka Special Attack
             if(hitbox == this.hitbox)

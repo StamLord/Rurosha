@@ -32,8 +32,8 @@ public class Shuriken : WeaponObject
     [SerializeField] private int numPoints = 50;
     [SerializeField] private float timeBetweenPoints = .1f;
 
-    [SerializeField] AttributeDependant<float> maxAngle = new AttributeDependant<float>("Dexterity", new float[]{35, 30, 25, 20, 16, 12, 8, 5, 3, 1});
-    [SerializeField] AttributeDependant<float> shootRate = new AttributeDependant<float>("Agility", new float[]{2f, 1.75f, 1.5f, 1.25f, 1f, .8f, .6f, .5f, .4f, .35f});
+    [SerializeField] AttributeDependant<float> maxAngle = new AttributeDependant<float>(AttributeType.DEXTERITY, new float[]{35, 30, 25, 20, 16, 12, 8, 5, 3, 1});
+    [SerializeField] AttributeDependant<float> shootRate = new AttributeDependant<float>(AttributeType.AGILITY, new float[]{2f, 1.75f, 1.5f, 1.25f, 1f, .8f, .6f, .5f, .4f, .35f});
     //[SerializeField] private float[] maxAnglePerDexterity = {35, 30, 25, 20, 16, 12, 8, 5, 3, 1};
     //[SerializeField] private float[] shootRatePerAgility = {2f, 1.75f, 1.5f, 1.25f, 1f, .8f, .6f, .5f, .4f, .35f};
 
@@ -141,8 +141,8 @@ public class Shuriken : WeaponObject
         UseAnimation();
 
         distance = Mathf.Max(0.1f, distance / dexterityExpMaxDistance);
-        manager.Stats.IncreaseAttributeExp("Dexterity", dexterityExpGain * distance);
-        manager.Stats.IncreaseAttributeExp("Agility", agilityExpGain);
+        manager.Stats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain * distance);
+        manager.Stats.IncreaseAttributeExp(AttributeType.AGILITY, agilityExpGain);
     }
 
     private void ThrowMultiple(Vector3 firstPos, Vector3 offset)

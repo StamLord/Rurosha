@@ -5,29 +5,48 @@ using UnityEngine;
 [System.Serializable]
 public class Attribute : Modifieable
 {
-    [SerializeField] private string _name;
     [SerializeField] private int _level;
     [SerializeField] private int _minLevel;
     [SerializeField] private int _maxLevel;
     [SerializeField] private float _experience;
     [SerializeField] private int _modified;
+    [SerializeField] private bool _modifiedDirty = true;
 
-    public string Name {get {return _name;}}
     public int Level {get {return _level;}}
     public int MinLevel {get {return _minLevel;}}
     public int MaxLevel {get {return _maxLevel;}}
     public float Experience {get {return _experience;}}
-    public int Modified {get {return _modified;}}
+    public int Modified {
+        get 
+        {
+            if(_modifiedDirty)
+            {
+                _modified = CalculateModified();
+                _modifiedDirty = false;
+            }
+            
+            return _modified;
+        }}
 
-    private int timeSensitiveModifiers = 0;
+    private int _timeSensitiveModifiers = 0;
 
-    public Attribute(string name, int minLevel = 1, int maxLevel = 10)
+    public Attribute(int minLevel = 1, int maxLevel = 10)
     {
-        _name = name;
         _minLevel = minLevel;
         _level = minLevel;
         _maxLevel = maxLevel;
         _modified = _level;
+
+        DayNightManager.instance.OnHourPassed += TimeBasedCalculateModified;
+    }
+
+    public void Initialize(int minLevel = 1, int maxLevel = 10)
+    {
+        _minLevel = minLevel;
+        _maxLevel = maxLevel;
+        _level = Mathf.Clamp(_level, _minLevel, _maxLevel);
+        _modified = CalculateModified();
+        _modifiedDirty = false;
 
         DayNightManager.instance.OnHourPassed += TimeBasedCalculateModified;
     }
@@ -37,7 +56,7 @@ public class Attribute : Modifieable
         if(_level != _maxLevel)
         {
             _level++;
-            _modified = CalculateModified();
+            _modifiedDirty = true;
             return true;
         }
 
@@ -62,7 +81,7 @@ public class Attribute : Modifieable
     public virtual void SetLevel(int level)
     {
         _level = Mathf.Clamp(level, _minLevel, _maxLevel);
-        _modified = CalculateModified();
+        _modifiedDirty = true;
     }
 
     public override int CalculateModified()
@@ -93,10 +112,10 @@ public class Attribute : Modifieable
         if(modifiers.Contains(modifier)) return false;
 
         modifiers.Add(modifier);
-        _modified = CalculateModified();
+        _modifiedDirty = true;
 
         if(modifier.IsTimeSensitive)
-            timeSensitiveModifiers++;
+            _timeSensitiveModifiers++;
         
         return true;
     }
@@ -106,17 +125,17 @@ public class Attribute : Modifieable
         if(modifiers.Contains(modifier) == false) return false;
 
         modifiers.Remove(modifier);
-        _modified = CalculateModified();
+        _modifiedDirty = true;
 
         if(modifier.IsTimeSensitive)
-            timeSensitiveModifiers--;
+            _timeSensitiveModifiers--;
         
         return true;
     }
 
     public void TimeBasedCalculateModified(DayNightManager.DayTime time)
     {
-        if(timeSensitiveModifiers > 0)
-            _modified = CalculateModified();
+        if(_timeSensitiveModifiers > 0)
+            _modifiedDirty = true;
     }
 }
