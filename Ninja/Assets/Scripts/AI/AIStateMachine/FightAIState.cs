@@ -38,7 +38,7 @@ public class FightAIState : AIState
             if(targetManager)
             {
                 targetManager.AddFighter(this);
-                Stats.DeathEvent += OnDeath;
+                Stats.OnDeath += OnDeath;
             }
             else
             {
@@ -126,7 +126,7 @@ public class FightAIState : AIState
     protected override void OnExitState()
     {
         AIStateMachine.AwarenessAgent.OnLoseAgent -= LoseAgent;
-        Stats.DeathEvent -= OnDeath;
+        Stats.OnDeath -= OnDeath;
         
         if(targetManager)
             targetManager.RemoveFighter(this);

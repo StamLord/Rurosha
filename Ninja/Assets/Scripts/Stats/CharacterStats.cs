@@ -77,7 +77,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     public event potentialHealthUpdateDelegate PotentialHealthUpdateEvent;
 
     public delegate void deathDelegate();
-    public event deathDelegate DeathEvent;
+    public event deathDelegate OnDeath;
 
     [Tooltip("Health recovery per second")]
 
@@ -645,8 +645,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             deadVisual.transform.rotation = aliveVisual.transform.rotation;
         }
 
-        if(DeathEvent != null)
-            DeathEvent();
+        if(OnDeath != null)
+            OnDeath();
     }
 
     public bool CanPickup(WeightClass weightClass)

@@ -102,6 +102,8 @@ public class AwarenessAgent : MonoBehaviour
         
         float detect = detectRate;
         float undetect = undetectRate;
+
+        // Different values if on high alert
         if(alert)
         {
             detect = alertDetectRate;
@@ -235,6 +237,15 @@ public class AwarenessAgent : MonoBehaviour
         lastSoundDetected = soundOrigin;
         if(OnHearSound != null)
             OnHearSound(soundOrigin);
+    }
+
+    // Removes all visible and almost visible agents like in case of death
+    public void RemoveAllAwareness()
+    {
+        foreach(StealthAgent s in visibleAgents)
+            s.RemoveAwareness(this);
+        foreach(AlmostVisible av in almostVisibleAgents)
+            av.stealthAgent.RemoveAwareness(this);
     }
 
     private void DebugLight()
