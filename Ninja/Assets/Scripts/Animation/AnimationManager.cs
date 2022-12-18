@@ -24,7 +24,7 @@ public class AnimationManager : MonoBehaviour
 
     private void Start()
     {
-        if(stateMachine) stateMachine.OnStateChange += StateUpdate;
+        if(stateMachine) stateMachine.OnStateEnter += StateUpdate;
         if(characterStats) characterStats.OnHit += AnimateHit;
         if(weaponManager) weaponManager.ChangeWeaponEvent += WeaponUpdate;
     }
@@ -68,7 +68,9 @@ public class AnimationManager : MonoBehaviour
 
     private void AnimateHit(int softDamage, int hardDamage)
     {
-        animator.Play("Hit");
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        if(state.IsName("Idle") || state.IsName("Attack1"))
+            animator.SetTrigger("Hit");
     }
 
     private void OnAnimatorIK(int layerIndex) 
