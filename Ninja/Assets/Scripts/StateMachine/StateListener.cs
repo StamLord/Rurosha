@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 
 public class StateListener : MonoBehaviour
 {
@@ -20,25 +21,39 @@ public class StateListener : MonoBehaviour
     }
 
     private void EnterState(string stateName)
-    {Debug.Log("Enter:" + stateName);
+    {
         if(stateName == _stateName)
             ExecuteEnter();
     }
 
     private void ExitState(string stateName)
-    {Debug.Log("Exit:" + stateName);
+    {
         if(stateName == _stateName)
             ExecuteExit();
     }
 
     private void ExecuteEnter()
     {
-        _enterAction.Invoke();
+        try
+        {
+            _enterAction.Invoke();
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Exception while running ExecuteEnter from StateListener: " + e);
+        }
     }
 
     private void ExecuteExit()
     {
-        _exitAction.Invoke();
+        try
+        {
+            _exitAction.Invoke();
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Exception while running ExecuteExit from StateListener: " + e);
+        }
     }
 }
 

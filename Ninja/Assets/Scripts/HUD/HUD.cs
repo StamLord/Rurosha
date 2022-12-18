@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,6 +39,26 @@ public class HUD : MonoBehaviour
     private bool isAnimLowHealth;
     private bool lowHealthDisplayed;
     private ChakraType chakraType;
+    private bool isVisible;
+
+    public void SetVisible(bool visible)
+    {
+        isVisible = visible;
+        if(isVisible)
+        {
+            if(healthBar) healthBar.gameObject.SetActive(true);
+            if(potentialHealthBar) potentialHealthBar.gameObject.SetActive(true);
+            if(staminaBar) staminaBar.gameObject.SetActive(true);
+            if(potentialStaminaBar) potentialStaminaBar.gameObject.SetActive(true);
+        }
+        else
+        {
+            if(healthBar) healthBar.gameObject.SetActive(false);
+            if(potentialHealthBar) potentialHealthBar.gameObject.SetActive(false);
+            if(staminaBar) staminaBar.gameObject.SetActive(false);
+            if(potentialStaminaBar) potentialStaminaBar.gameObject.SetActive(false);
+        }
+    }
 
     private void Start()
     {

@@ -472,7 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b0c014d86391164684c081e4bc76075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicalMaterial: {fileID: 0}
+  physicalMaterial: {fileID: 2075098107621203109}
   rigidbody: {fileID: 0}
   _debug: 1
   _meshRenderer: {fileID: 4289425569817373587}
@@ -492,13 +492,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c877dbdaff6c95645802a91dbca6d756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bluntPrefab: {fileID: 0}
-  slashPrefab: {fileID: 0}
+  bluntPrefab: {fileID: 8995062118932431934, guid: 742279eca12004e41bc34223e7cdd238,
+    type: 3}
+  slashPrefab: {fileID: 1681287656198363351, guid: 4700249964d415a47b12074815e5cd9f,
+    type: 3}
   piercePrefab: {fileID: 0}
-  bigBluntPrefab: {fileID: 0}
-  bigSlashPrefab: {fileID: 0}
+  bigBluntPrefab: {fileID: 3256604848163707749, guid: af90ddef03fb4834bae9fcaf5cae7ca9,
+    type: 3}
+  bigSlashPrefab: {fileID: 1681287656198363351, guid: 61746c9b1c0a6b64daf8440a1d65ee98,
+    type: 3}
   bigPiercePrefab: {fileID: 0}
-  bigDamageThreshold: 10
+  bigDamageThreshold: 5
 --- !u!1 &1794365645461784588
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,7 +973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b0c014d86391164684c081e4bc76075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicalMaterial: {fileID: 0}
+  physicalMaterial: {fileID: 2656507849268937075}
   rigidbody: {fileID: 0}
   _debug: 1
   _meshRenderer: {fileID: 8496856056330259091}
@@ -989,13 +993,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c877dbdaff6c95645802a91dbca6d756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bluntPrefab: {fileID: 0}
-  slashPrefab: {fileID: 0}
+  bluntPrefab: {fileID: 8995062118932431934, guid: 742279eca12004e41bc34223e7cdd238,
+    type: 3}
+  slashPrefab: {fileID: 1681287656198363351, guid: 4700249964d415a47b12074815e5cd9f,
+    type: 3}
   piercePrefab: {fileID: 0}
-  bigBluntPrefab: {fileID: 0}
-  bigSlashPrefab: {fileID: 0}
+  bigBluntPrefab: {fileID: 3256604848163707749, guid: af90ddef03fb4834bae9fcaf5cae7ca9,
+    type: 3}
+  bigSlashPrefab: {fileID: 1681287656198363351, guid: 61746c9b1c0a6b64daf8440a1d65ee98,
+    type: 3}
   bigPiercePrefab: {fileID: 0}
-  bigDamageThreshold: 10
+  bigDamageThreshold: 5
 --- !u!1 &4469600994861103286
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,6 +1961,7 @@ GameObject:
   - component: {fileID: 7566098629452177725}
   - component: {fileID: 4410426048301243333}
   - component: {fileID: 442162967}
+  - component: {fileID: 1866400220}
   m_Layer: 11
   m_Name: Alive
   m_TagString: Untagged
@@ -2440,6 +2449,50 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: AwarenessAgent, Scripts.Stealth
         m_MethodName: RemoveAllAgents
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1866400220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8997393895949410982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa6d0024f4c1b144841437e7c392732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 3500558232261900858}
+  _stateName: FightAIState
+  _enterAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2710603310911763376}
+        m_TargetAssemblyTypeName: HUD, Scripts.HUD
+        m_MethodName: SetVisible
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  _exitAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2710603310911763376}
+        m_TargetAssemblyTypeName: HUD, Scripts.HUD
+        m_MethodName: SetVisible
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4894,39 +4947,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].x
-      value: 0.5
+      value: 929.57855
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].y
-      value: 2.65
+      value: 57.658264
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: 1
+      value: 930.3059
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 0.5
+      value: 929.57855
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 1.4
+      value: 56.408264
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: 1
+      value: 930.3059
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].x
-      value: 0.5
+      value: 929.57855
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].y
-      value: 0.14999998
+      value: 55.158264
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].z
-      value: 1
+      value: 930.3059
       objectReference: {fileID: 0}
     - target: {fileID: 1285622795, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Layer
