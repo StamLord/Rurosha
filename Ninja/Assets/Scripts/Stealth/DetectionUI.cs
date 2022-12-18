@@ -23,8 +23,31 @@ public class DetectionUI : MonoBehaviour
     [SerializeField] private Image eyeOpen;
     [SerializeField] private Image eyeClosed;
 
+    [SerializeField] private bool isVisible;
+
+    public void SetVisible(bool visible)
+    {
+        isVisible = visible;
+        if(isVisible == false)
+        {
+            // Turn off all images
+            for (int i = 0; i < images.Count; i++)
+                images[i].color = new Color(images[i].color.r, images[i].color.g, images[i].color.b, 0f);
+
+            Color openColorHidden= eyeOpen.color;
+            openColorHidden.a = 0f;
+            eyeOpen.color = openColorHidden;
+
+            Color closedColorHidden= eyeClosed.color;
+            closedColorHidden.a = 0f;
+            eyeClosed.color = closedColorHidden;            
+        }
+    }
+
     private void Update()
     {
+        if(isVisible == false) return;
+
         UpdateEye();
         UpdateRadar();    
     }

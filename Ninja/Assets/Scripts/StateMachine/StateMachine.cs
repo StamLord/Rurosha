@@ -11,8 +11,11 @@ public class StateMachine : MonoBehaviour
     [SerializeField] private bool _debugLogs;
     public string CurrentState { get{return _currentState.GetType().Name;}}
 
-    public delegate void stateChange(string stateName);
-    public event stateChange OnStateChange;
+    public delegate void stateEnter(string stateName);
+    public event stateEnter OnStateEnter;
+
+    public delegate void stateExit(string stateName);
+    public event stateExit OnStateExit;
 
     void Start()
     {
@@ -33,7 +36,13 @@ public class StateMachine : MonoBehaviour
         }
 
         if(_currentState)
+        {
+            // Event for exiting state
+            if(OnStateExit != null)
+                OnStateExit(CurrentState);
+            
             _currentState.ExitState();
+        }
 
         _currentState = _states[stateIndex];
         _currentState.EnterState(this);
@@ -41,7 +50,8 @@ public class StateMachine : MonoBehaviour
         if(_debugLogs)
             Debug.Log("Entering state: " + stateIndex);
 
-        if(OnStateChange != null)
-            OnStateChange(CurrentState);
+        // Event for new state
+        if(OnStateEnter != null)
+            OnStateEnter(CurrentState);
     }
 }

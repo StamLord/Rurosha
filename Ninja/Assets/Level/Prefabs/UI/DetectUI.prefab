@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1987473482851946824}
   - component: {fileID: 1987473482851946827}
+  - component: {fileID: 4112798334069683562}
   - component: {fileID: 1987473482851946826}
   m_Layer: 5
   m_Name: DetectUI
@@ -170,6 +171,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1987473482851946825}
   m_CullTransparentMesh: 1
+--- !u!114 &4112798334069683562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987473482851946825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa6d0024f4c1b144841437e7c392732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  _stateName: CrouchState
+  _enterAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1987473482851946826}
+        m_TargetAssemblyTypeName: DetectionUI, Scripts.Stealth
+        m_MethodName: SetVisible
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  _exitAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1987473482851946826}
+        m_TargetAssemblyTypeName: DetectionUI, Scripts.Stealth
+        m_MethodName: SetVisible
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1987473482851946826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +237,7 @@ MonoBehaviour:
   displayEye: 0
   eyeOpen: {fileID: 1987473483256256272}
   eyeClosed: {fileID: 1987473482305288337}
+  isVisible: 0
 --- !u!1 &1987473483256256278
 GameObject:
   m_ObjectHideFlags: 0
