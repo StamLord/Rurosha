@@ -264,7 +264,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
-    public delegate void HitDelegate(StealthAgent agent);
+    public delegate void HitByDelegate(StealthAgent agent);
+    public event HitByDelegate OnHitBy;
+
+    public delegate void HitDelegate(int softDamage, int hardDamage);
     public event HitDelegate OnHit;
 
     [SerializeField] private ChakraManager chakraManager;
@@ -600,9 +603,12 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, DamageType damageType, Direction9 direction)
     {
-        // Send hit event - Can be listened to by AI
+        // Send hit events - Can be listened to by AI, AnimationManager, etc.
+        if(OnHitBy != null)
+            OnHitBy(agent);
+        
         if(OnHit != null)
-            OnHit(agent);
+            OnHit(softDamage, hardDamage);
         
         // Check if guarding in right direction
         if(guardOn)

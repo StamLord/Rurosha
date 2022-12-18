@@ -13,14 +13,14 @@ public class IdleAIState : AIState
     [SerializeField] private ScheduleAgent scheduleAgent;
     [SerializeField] private TownManager townManager;
 
-    private float waitStart;
-    private bool waiting;
-    private Vector3 target;
+    [SerializeField]private float waitStart;
+    [SerializeField]private bool waiting;
+    [SerializeField]private Vector3 target;
 
     protected override void OnEnterState()
     {
         target = GenerateNextPosition(transform.position, minRoamRadius, maxRoamRadius);
-        AIStateMachine.CharacterStats.OnHit += Hit;
+        AIStateMachine.CharacterStats.OnHitBy += Hit;
         AIStateMachine.AwarenessAgent.OnSeeAgent += SeeTarget;
         AIStateMachine.AwarenessAgent.OnHearSound += HearSound;
         waiting = true;
@@ -36,7 +36,8 @@ public class IdleAIState : AIState
 
         if(waiting == false)
         {
-            if(TooFar(target, distanceThreshold) == false)
+            // Check distance to last position of navmesh path
+            if(TooFar(GetLastPosition(), distanceThreshold) == false)
             {
                 waiting = true;
                 waitStart = Time.time;
@@ -45,12 +46,17 @@ public class IdleAIState : AIState
         else if(Time.time - waitStart >= idleDuration)
         {
             Task t = scheduleAgent.GetCurrentTask();
-            Vector3 coords;
-            float radius;
-            bool locationExists = townManager.GetLocation(t.location, out coords, out radius);
+            if(townManager)
+            {
+                Vector3 coords;
+                float radius;
+                bool locationExists = townManager.GetLocation(t.location, out coords, out radius);
 
-            if(locationExists)
-                target = GenerateNextPosition(coords, radius, radius);
+                if(locationExists)
+                    target = GenerateNextPosition(coords, radius, radius);
+                else
+                    target = GenerateNextPosition(transform.position, minRoamRadius, maxRoamRadius);
+            }
             else
                 target = GenerateNextPosition(transform.position, minRoamRadius, maxRoamRadius);
 
@@ -61,7 +67,7 @@ public class IdleAIState : AIState
 
     protected override void OnExitState()
     {
-        AIStateMachine.CharacterStats.OnHit -= Hit;
+        AIStateMachine.CharacterStats.OnHitBy -= Hit;
         AIStateMachine.AwarenessAgent.OnSeeAgent -= SeeTarget;
         AIStateMachine.AwarenessAgent.OnHearSound -= HearSound;
     }

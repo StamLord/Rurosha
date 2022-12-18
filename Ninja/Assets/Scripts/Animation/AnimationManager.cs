@@ -6,6 +6,8 @@ using UnityEngine;
 public class AnimationManager : MonoBehaviour
 {
     [SerializeField] private CharacterStateMachine stateMachine;
+    [SerializeField] private CharacterStats characterStats;
+    [SerializeField] private WeaponManager weaponManager;
     [SerializeField] private Animator animator;
     [SerializeField] private InputState inputState;
     [SerializeField] private new Rigidbody rigidbody;
@@ -22,7 +24,9 @@ public class AnimationManager : MonoBehaviour
 
     private void Start()
     {
-        stateMachine.OnStateChange += StateUpdate;
+        if(stateMachine) stateMachine.OnStateChange += StateUpdate;
+        if(characterStats) characterStats.OnHit += AnimateHit;
+        if(weaponManager) weaponManager.ChangeWeaponEvent += WeaponUpdate;
     }
     
     private void LateUpdate()
@@ -56,10 +60,19 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
+    private void WeaponUpdate(WeaponType weaponType)
+    {
+        animator.SetInteger("Weapon", (int)weaponType);
+        animator.SetTrigger("ChangeWeapon");
+    }
+
+    private void AnimateHit(int softDamage, int hardDamage)
+    {
+        animator.Play("Hit");
+    }
+
     private void OnAnimatorIK(int layerIndex) 
     {
-        //if(animator == null) return;
-
         if(ikRightTarget)
         {
             animator.SetIKPositionWeight(AvatarIKGoal.RightHand,1);

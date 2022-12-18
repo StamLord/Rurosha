@@ -25,6 +25,11 @@ public class AIState : State
         aiStateMachine.ClearPath();
     }
 
+    protected Vector3 GetLastPosition()
+    {
+        return aiStateMachine.GetLastPosition();
+    }
+
     protected void LookTowards(Vector3 target, float speedMult = 1f)
     {
         Vector3 direction = target - transform.position;

@@ -34,6 +34,11 @@ public class AIStateMachine : StateMachine
         return aiInput.GetPathPosition();
     }
 
+    public Vector3 GetLastPosition()
+    {
+        return aiInput.GetLastPosition();
+    }
+
     public void PressButton(string button)
     {
         aiInput.PressButton(button);

@@ -9,6 +9,8 @@ public class DashState : PlayerState
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private bool gravityOn = true;
     [SerializeField] private float gravity = 20.0f;
+    [SerializeField] private Material material;
+    [SerializeField] private float screenFXMult = 0.02f;
 
     [Space(20f)]
 
@@ -46,6 +48,10 @@ public class DashState : PlayerState
         rigidbody.velocity = dashDirection * dashSpeed;
         distance = dashDistance.GetValue(characterStats);
         startTime = Time.time;
+
+        // Set screen effect
+        if(material)
+            material.SetFloat("_strength", screenFXMult);
     }
 
     public override void OnStateUpdate()
@@ -69,4 +75,12 @@ public class DashState : PlayerState
 
         }
     }
+
+    protected override void OnExitState()
+    {
+        // Set screen effect
+        if(material)
+            material.SetFloat("_strength", 0f);
+    }
+
 }

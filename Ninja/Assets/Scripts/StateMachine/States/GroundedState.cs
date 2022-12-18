@@ -25,8 +25,6 @@ public class GroundedState : PlayerState
     [SerializeField] private Vector3 inputVector;
     [SerializeField] private Vector3 targetDirection;
 	[SerializeField] private float maxVelocityChange = 10.0f;
-    [Header("[IMPORTANT! Player needs this enabled]")]
-    [SerializeField] private bool transformDirection;
     
     [Space(20f)]
 
@@ -69,8 +67,8 @@ public class GroundedState : PlayerState
         // Input
         inputVector = inputState.AxisInput;
         inputVector.Normalize();
-        // Don't know why but the AxisInput from BTBrains doesn't need to be transformed
-        targetDirection = (transformDirection) ? transform.TransformDirection(inputVector) : inputVector;
+        
+        targetDirection = transform.TransformDirection(inputVector);
         Vector3 targetVelocity = targetDirection;
 
         // Ground Control

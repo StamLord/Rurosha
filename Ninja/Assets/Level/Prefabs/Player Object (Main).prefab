@@ -6182,7 +6182,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1760545694}
-  - component: {fileID: 3847162244252424286}
   m_Layer: 9
   m_Name: Visual
   m_TagString: Untagged
@@ -6206,26 +6205,6 @@ Transform:
   m_Father: {fileID: 8820855694394563268}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3847162244252424286
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1760545693}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1768911167
 GameObject:
   m_ObjectHideFlags: 0
@@ -11870,7 +11849,6 @@ GameObject:
   - component: {fileID: 59200982}
   - component: {fileID: 59200984}
   - component: {fileID: 59200985}
-  - component: {fileID: 59200986}
   - component: {fileID: 59200987}
   - component: {fileID: 59200988}
   - component: {fileID: 45846291057074261}
@@ -12400,7 +12378,7 @@ MonoBehaviour:
   dashSpeed: 20
   gravityOn: 1
   gravity: 20
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: 30fff9cde628fd24292c946e88ab3a26, type: 2}
   screenFXMult: 0.04
   debugView: 0
   rigidbody: {fileID: 0}
@@ -12580,7 +12558,6 @@ MonoBehaviour:
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}
   maxVelocityChange: 10
-  transformDirection: 1
   climbCheck: {fileID: 1085942235367669121}
   climbMask:
     serializedVersion: 2
@@ -12647,26 +12624,6 @@ MonoBehaviour:
   softDamage: 5
   hardDamage: 10
   damageType: 0
---- !u!114 &59200986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966905278435006557}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bc3bec2c9ace2a4e9d5425c94aa5d7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateMachine: {fileID: 0}
-  animator: {fileID: 45846291057074261}
-  inputState: {fileID: 59200974}
-  rigidbody: {fileID: 0}
-  runSpeed: 10
-  ikLookTarget: {fileID: 0}
-  ikLeftTarget: {fileID: 0}
-  ikRightTarget: {fileID: 0}
 --- !u!114 &59200987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20290,17 +20247,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -87.07108
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -13.985214
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -11.794403
       objectReference: {fileID: 0}
     - target: {fileID: -8672125227095273370, guid: 1aae12b7739f21f4fbb342409c5bd255,
         type: 3}
@@ -21357,6 +21314,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMachine: {fileID: 59200984}
+  characterStats: {fileID: 0}
+  weaponManager: {fileID: 0}
   animator: {fileID: 8542446599430791395}
   inputState: {fileID: 59200974}
   rigidbody: {fileID: 59200983}
@@ -22410,7 +22369,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2661
+      value: 2691
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22420,7 +22379,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2661
+      value: 2691
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}

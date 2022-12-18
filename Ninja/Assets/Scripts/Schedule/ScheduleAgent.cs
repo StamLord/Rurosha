@@ -5,11 +5,10 @@ using UnityEngine;
 public class ScheduleAgent : MonoBehaviour
 {
     [SerializeField] private Schedule schedule;
-    [SerializeField] private DayNightManager dayNightManager;
 
     public Task GetCurrentTask()
     {
-        float time = dayNightManager.GetTime();
+        float time = DayNightManager.instance.GetTime();
         Task lastTask = new Task();
 
         foreach(Task t in schedule.Tasks)

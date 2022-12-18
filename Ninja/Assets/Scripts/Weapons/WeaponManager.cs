@@ -59,6 +59,9 @@ public class WeaponManager : MonoBehaviour, Inventory
     public delegate void ChangeItemDeleget(int index, Item item, int stack = 0);
     public event ChangeItemDeleget ChangeItemEvent;
 
+    public delegate void ChangeWeaponDelegate(WeaponType weaponType);
+    public event ChangeWeaponDelegate ChangeWeaponEvent;
+
     public static Dictionary<string, Item> itemDatabase = new Dictionary<string, Item>();
 
     //[Header("Pickup Pools")]
@@ -191,8 +194,9 @@ public class WeaponManager : MonoBehaviour, Inventory
         
         // Weapon
         if(items[selected] is Weapon)
-        {
-            switch(((Weapon)items[selected]).WeaponType)
+        {   
+            Weapon w = (Weapon)items[selected];
+            switch(w.WeaponType)
             {   
                 case WeaponType.MELEE:
                     ActivateObject(_melee);
@@ -228,6 +232,8 @@ public class WeaponManager : MonoBehaviour, Inventory
                     ActivateObject(_grappling_hook);
                     break;
             }
+            if(ChangeWeaponEvent != null)
+                ChangeWeaponEvent(w.WeaponType);
         }
         // Equipment
         else if (items[selected] is Equipment)
