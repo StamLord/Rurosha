@@ -8,7 +8,7 @@ public class AIInput : MonoBehaviour
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private NavMeshAgent navMeshAgent;
 
-    private NavMeshPath path = new NavMeshPath();
+    private NavMeshPath path; //= new NavMeshPath();
     [SerializeField] private float pointDistance = .2f;
     [SerializeField] private int pathPoint;
     [SerializeField] private int pathPoints;
@@ -23,6 +23,11 @@ public class AIInput : MonoBehaviour
 
     private RaycastHit sweepHit;
     private bool jumpStarted;
+
+    public Vector3 GetLastPosition()
+    {
+        return path.corners[path.corners.Length - 1];
+    }
 
     public bool CalculatePath(Vector3 target)
     {
@@ -41,17 +46,22 @@ public class AIInput : MonoBehaviour
         // If close enough to target, dont calculate
         if(Vector3.Distance(transform.position, target) < pointDistance)
             return false;
-
+       
         if(path == null)
             path = new NavMeshPath();
-        pathPoints = path.corners.Length;
-        pathPoint = 0;
-        pathStarted = true;
-        lastTarget = target;
 
         navMeshAgent.enabled = true;
         bool success = navMeshAgent.CalculatePath(target, path);
         navMeshAgent.enabled = false;
+
+        if(success)
+        {
+            pathStarted = true;
+            pathPoints = path.corners.Length;
+            pathPoint = 0;
+            lastTarget = target;
+        }
+
         return success;
     }
 
@@ -83,6 +93,11 @@ public class AIInput : MonoBehaviour
     {
         if(pathStarted && pathPoint < path.corners.Length)
         {
+            // Advance to next point if close enough and end path if last point
+            // Needs to be checked before everything else, since the first point on a path is origin and we are already close enough to it.
+            if(Vector3.Distance(transform.position, GetPathPosition()) < pointDistance)
+                pathStarted = AdvancePathPosition();
+
             // Prepare flat direction
             Vector3 dir = GetPathPosition() - transform.position;
             dir.y = 0;
@@ -102,7 +117,7 @@ public class AIInput : MonoBehaviour
             }
 
             // Perform input
-            inputState.AxisInput = dir;
+            inputState.AxisInput = transform.InverseTransformDirection(dir);
             
             // Jump if encounter obstacle
             if(jumpOverObstacles)
@@ -113,10 +128,6 @@ public class AIInput : MonoBehaviour
                     if(jumpStarted == false)
                         StartCoroutine("Jump", 1f);
             }
-
-            // Advance to next point if close enough and end path if last point
-            if(Vector3.Distance(transform.position, GetPathPosition()) < pointDistance)
-                pathStarted = AdvancePathPosition();
         }
         else
             inputState.AxisInput = Vector3.zero;
