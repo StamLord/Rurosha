@@ -7,18 +7,17 @@ public class WeatherManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform follow;
     [SerializeField] private ParticleSystem[] weathers;
-    [SerializeField] private DayNightManager dayNightManager;
 
     [Header("Settings")]
     [SerializeField] private float weatherCycle = 3600;
     [SerializeField] private int weatherOnStart = 0;
+    [SerializeField] private float yOffset;
 
     [Header("Real Time Data")]
     [SerializeField] private Vector3 wind;
     [SerializeField] private ParticleSystem active;
     [SerializeField] private float lastChange;
     
-    private float yOffset;
 
     private void OnValidate() 
     {
@@ -28,7 +27,6 @@ public class WeatherManager : MonoBehaviour
     private void Start() 
     {
         SetWeather(weatherOnStart);
-        yOffset = transform.position.y - follow.position.y;
 
         DebugCommandDatabase.AddCommand(new DebugCommand(
             "setweather",
@@ -61,7 +59,7 @@ public class WeatherManager : MonoBehaviour
     private void Update() 
     {
         // Switch weather every cycle
-        if(dayNightManager.GetTime() - lastChange > weatherCycle)    
+        if(DayNightManager.instance.GetTime() - lastChange > weatherCycle)    
             SetWeather(Random.Range(0, weathers.Length));
 
         // Move weather with player
@@ -82,7 +80,7 @@ public class WeatherManager : MonoBehaviour
         weathers[index].Play();
         active = weathers[index];
 
-        lastChange = dayNightManager.GetTime();
+        lastChange = DayNightManager.instance.GetTime();
         return true;
     }
 
@@ -91,7 +89,7 @@ public class WeatherManager : MonoBehaviour
         if(active)
             active.Stop();
         
-        lastChange = dayNightManager.GetTime();
+        lastChange = DayNightManager.instance.GetTime();
     }
 
     public void SetWind(Vector3 wind)
