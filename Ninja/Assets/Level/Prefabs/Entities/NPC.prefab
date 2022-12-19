@@ -78,7 +78,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7885185109393971514
 RectTransform:
   m_ObjectHideFlags: 0
@@ -551,7 +551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7211548651474481347
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1812,6 +1812,7 @@ GameObject:
   - component: {fileID: 803427058069237071}
   - component: {fileID: 5771423028869558038}
   - component: {fileID: 2710603310911763376}
+  - component: {fileID: 2347964028976692310}
   m_Layer: 11
   m_Name: Worldspace HUD
   m_TagString: Untagged
@@ -1936,6 +1937,50 @@ MonoBehaviour:
   hideLowHealthDuration: 1
   lowHealthPulseRate: 1
   lowHealthPulseMinAlpha: 0.7
+--- !u!114 &2347964028976692310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8875786481631611958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa6d0024f4c1b144841437e7c392732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 3500558232261900858}
+  _stateName: FightAIState
+  _enterAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2710603310911763376}
+        m_TargetAssemblyTypeName: HUD, Scripts.HUD
+        m_MethodName: SetVisible
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  _exitAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2710603310911763376}
+        m_TargetAssemblyTypeName: HUD, Scripts.HUD
+        m_MethodName: SetVisible
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8997393895949410982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,7 +2006,6 @@ GameObject:
   - component: {fileID: 7566098629452177725}
   - component: {fileID: 4410426048301243333}
   - component: {fileID: 442162967}
-  - component: {fileID: 1866400220}
   m_Layer: 11
   m_Name: Alive
   m_TagString: Untagged
@@ -2447,52 +2491,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4293227107428241640}
         m_TargetAssemblyTypeName: AwarenessAgent, Scripts.Stealth
-        m_MethodName: RemoveAllAgents
+        m_MethodName: RemoveAllAwareness
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1866400220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8997393895949410982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa6d0024f4c1b144841437e7c392732, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 3500558232261900858}
-  _stateName: FightAIState
-  _enterAction:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2710603310911763376}
-        m_TargetAssemblyTypeName: HUD, Scripts.HUD
-        m_MethodName: SetVisible
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  _exitAction:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2710603310911763376}
-        m_TargetAssemblyTypeName: HUD, Scripts.HUD
-        m_MethodName: SetVisible
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
