@@ -494,14 +494,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bluntPrefab: {fileID: 8995062118932431934, guid: 742279eca12004e41bc34223e7cdd238,
     type: 3}
-  slashPrefab: {fileID: 1681287656198363351, guid: 4700249964d415a47b12074815e5cd9f,
+  slashPrefab: {fileID: 3176776961945035617, guid: 2e91dced53e5a3147932fd755a7ae9c2,
     type: 3}
-  piercePrefab: {fileID: 0}
+  piercePrefab: {fileID: 1681287656198363351, guid: 4700249964d415a47b12074815e5cd9f,
+    type: 3}
   bigBluntPrefab: {fileID: 3256604848163707749, guid: af90ddef03fb4834bae9fcaf5cae7ca9,
     type: 3}
-  bigSlashPrefab: {fileID: 1681287656198363351, guid: 61746c9b1c0a6b64daf8440a1d65ee98,
+  bigSlashPrefab: {fileID: 3176776961945035617, guid: 465b5f69f0be6c44aac9beda8ca8dcef,
     type: 3}
-  bigPiercePrefab: {fileID: 0}
+  bigPiercePrefab: {fileID: 1681287656198363351, guid: 4700249964d415a47b12074815e5cd9f,
+    type: 3}
   bigDamageThreshold: 5
 --- !u!1 &1794365645461784588
 GameObject:
@@ -995,14 +997,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bluntPrefab: {fileID: 8995062118932431934, guid: 742279eca12004e41bc34223e7cdd238,
     type: 3}
-  slashPrefab: {fileID: 1681287656198363351, guid: 4700249964d415a47b12074815e5cd9f,
+  slashPrefab: {fileID: 3176776961945035617, guid: 2e91dced53e5a3147932fd755a7ae9c2,
     type: 3}
-  piercePrefab: {fileID: 0}
+  piercePrefab: {fileID: 1681287656198363351, guid: 4700249964d415a47b12074815e5cd9f,
+    type: 3}
   bigBluntPrefab: {fileID: 3256604848163707749, guid: af90ddef03fb4834bae9fcaf5cae7ca9,
     type: 3}
-  bigSlashPrefab: {fileID: 1681287656198363351, guid: 61746c9b1c0a6b64daf8440a1d65ee98,
+  bigSlashPrefab: {fileID: 3176776961945035617, guid: 465b5f69f0be6c44aac9beda8ca8dcef,
     type: 3}
-  bigPiercePrefab: {fileID: 0}
+  bigPiercePrefab: {fileID: 1681287656198363351, guid: 4700249964d415a47b12074815e5cd9f,
+    type: 3}
   bigDamageThreshold: 5
 --- !u!1 &4469600994861103286
 GameObject:
@@ -2291,7 +2295,16 @@ MonoBehaviour:
   rollWindow: 0.1
   glideOn: 0
   glideGravityMultiplier: 0.2
+  liftForce: 5
   isGliding: 0
+  glideTransform: {fileID: 0}
+  maxTurnSpeed: 0
+  forwardCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   airJumps: 0
   maxAirJumps: 1
   debugView: 0
@@ -4947,39 +4960,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].x
-      value: 929.57855
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].y
-      value: 57.658264
+      value: 2.65
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: 930.3059
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 929.57855
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 56.408264
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: 930.3059
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].x
-      value: 929.57855
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].y
-      value: 55.158264
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].z
-      value: 930.3059
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1285622795, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Layer
@@ -5688,9 +5701,43 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 8637103853846262711}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7377369967753941517}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39545c1c2040b7a4781c2f475c31ff9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7377369967753941517 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1278044654527455674, guid: e0128e86a9a29e74b80317cb98468768,
+    type: 3}
+  m_PrefabInstance: {fileID: 8637103853846262711}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &990477435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7377369967753941517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b9b24137e9179438bb184f955bb5ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterStats: {fileID: 8309317035926444679}
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7377369967753941515}
+        m_TargetAssemblyTypeName: WeaponManager, Scripts.Weapons
+        m_MethodName: DropItemNPC
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
