@@ -369,7 +369,7 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     private void PoolPickup(Item item, Pickup pickup)
     {
-        // Pool the pickup so we can drop later
+        // TODO: Pool the pickup so we can drop later
         //pickups[item] = pickup;
         //pickup.gameObject.SetActive(false);
 
@@ -394,7 +394,7 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     public void RemoveItem(int index)
     {
-        // Unreference pickup
+        // TODO: Unreference pickup
         //pickups.Remove(items[index]);
         
         items[index] = null;
@@ -427,7 +427,7 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     public void DropItem()
     {
-        // Create pickup object
+        // TODO: Create pickup object
         // If cached we reactivate it
         // if(pickups.ContainsKey(items[selected]))
         // {
@@ -447,6 +447,26 @@ public class WeaponManager : MonoBehaviour, Inventory
             Pickup p = go.GetComponent<Pickup>();
             (p)?.SetItem(items[selected]);
         // }
+
+        // Remove selected item
+        if(items[selected].stackable)
+            DepleteItem();
+        else
+            RemoveItem();
+    }
+    
+    /// <summary>
+    /// Drops the item at the same position and rotation as the visual gameobject for that item
+    /// </summary>
+    public void DropItemNPC()
+    {
+        GameObject go = Instantiate(items[selected].pickup);
+        go.transform.position = _lastActive.transform.position;
+        go.transform.rotation = _lastActive.transform.rotation;
+
+        // Set the unique values like random colors
+        Pickup p = go.GetComponent<Pickup>();
+        (p)?.SetItem(items[selected]);
 
         // Remove selected item
         if(items[selected].stackable)
