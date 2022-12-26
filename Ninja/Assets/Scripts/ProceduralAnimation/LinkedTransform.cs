@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class LinkedTransform : MonoBehaviour
 {
-    public Transform parent;
-    public Vector3 offset;
-    public Quaternion initialRotation;
-    public float posSpeed = 10f;
-    public float rotSpeed = 10f;
+    [SerializeField] private Transform parent;
+    [SerializeField] private float posSpeed = 10f;
+    [SerializeField] private float rotSpeed = 10f;
+
+    private Vector3 offset;
+    private Quaternion initialRotation;
 
     void Start()
     {
