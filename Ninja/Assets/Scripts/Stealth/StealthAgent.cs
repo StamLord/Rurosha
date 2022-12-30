@@ -7,7 +7,16 @@ public class StealthAgent : MonoBehaviour
     [Header("Eye Level")]
     [SerializeField] private Transform eyeLevel;
     [SerializeField] private Vector3 eyeLevelOffset = new Vector3(0, -.1f, 0);
-    public Vector3 EyeLevelPosition{get{return eyeLevel.position + eyeLevelOffset;}}
+
+    // The eyeLevel reference is mostly important for the player object.
+    // That way the enemies can see the player if the player is exposed at their eye level for clarity.
+    // If eyeLevel is null, we treat is as our position (assumed to be the ground level) + (0,1,0)
+    public Vector3 EyeLevelPosition{
+        get
+        {
+            if (eyeLevel == null) return transform.position + Vector3.up;
+            return eyeLevel.position + eyeLevelOffset;
+        }}
 
     [Header("Vision")]
     [SerializeField] private float visibilityModifier = 1f;
