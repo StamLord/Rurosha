@@ -62,4 +62,14 @@ public class CharacterStateMachine : StateMachine
     [SerializeField] protected LedgeSensor ledgeSensor;
     public bool LedgeDetected { get {return ledgeSensor.LedgeDetected;}}
     public Vector3 LedgePoint { get {return ledgeSensor.LedgePoint;}}
+
+    private void OnGUI() 
+    {
+        Camera cam = Camera.main;
+        Vector3 viewportPos = cam.WorldToViewportPoint(transform.position);
+        if(viewportPos.x <= 0 || viewportPos.x >= 1 || viewportPos.y <= 0 || viewportPos.y >= 1 || viewportPos.z < 0) return;
+
+        Vector3 screenPos = cam.WorldToScreenPoint(transform.position);
+        GUI.Box(new Rect(screenPos.x, screenPos.y, 100, 50), CurrentState);
+    }
 }

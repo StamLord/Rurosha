@@ -29,7 +29,7 @@ public class AIState : State
     {
         return aiStateMachine.GetLastPosition();
     }
-
+    // TODO: Move look rotation handling into AIInput.cs for consistency
     protected void LookTowards(Vector3 target, float speedMult = 1f)
     {
         Vector3 direction = target - transform.position;
@@ -58,6 +58,16 @@ public class AIState : State
     protected void StopHoldButton(string button)
     {
         AIStateMachine.StopHoldButton(button);
+    }
+
+    protected void StartOverrideMovement(Vector3 input)
+    {
+        AIStateMachine.StartOverrideMovement(input);
+    }
+
+    protected void StopOverrideMovement()
+    {
+        AIStateMachine.StopOverrideMovement();
     }
 
     protected Vector3 GenerateNextPosition(Vector3 origin, float minRoamRadius, float maxRoamRadius)

@@ -24,6 +24,9 @@ public class AIInput : MonoBehaviour
     private RaycastHit sweepHit;
     private bool jumpStarted;
 
+    private bool isOverrideMovement;
+    private Vector3 overrideVector;
+
     public Vector3 GetLastPosition()
     {
         return path.corners[path.corners.Length - 1];
@@ -91,6 +94,12 @@ public class AIInput : MonoBehaviour
 
     private void Update() 
     {
+        if(isOverrideMovement)
+        {
+            inputState.AxisInput = overrideVector;
+            return;
+        }
+
         if(pathStarted && pathPoint < path.corners.Length)
         {
             // Advance to next point if close enough and end path if last point
@@ -211,6 +220,9 @@ public class AIInput : MonoBehaviour
             case "defense":
                 b = inputState.Defend;
                 break;
+            case "run":
+                b = inputState.Run;
+                break;
         }
 
         return b;
@@ -242,6 +254,18 @@ public class AIInput : MonoBehaviour
         b.Set(VButtonState.UNPRESSED);
     }
 
+    public void StartOverrideMovement(Vector3 input)
+    {
+        isOverrideMovement = true;
+        overrideVector = input;
+    }
+
+    public void StopOverrideMovement()
+    {
+        isOverrideMovement = false;
+        overrideVector = Vector3.zero;
+    }
+
     private void OnDrawGizmos() 
     {
         if(avoidObstacles)
@@ -252,7 +276,7 @@ public class AIInput : MonoBehaviour
         
         for (var i = 0; i < path.corners.Length; i++)
         {
-            Gizmos.color = (i < pathPoint)? Color.gray : Color.red;
+            Gizmos.color = (i < pathPoint)? Color.gray : Color.yellow;
             Gizmos.DrawSphere(path.corners[i], .2f);
             if(i > 0)
                 Gizmos.DrawLine(path.corners[i-1], path.corners[i]);

@@ -4,23 +4,23 @@ using System.Collections;
 public class FightAIState : AIState
 {
     [Header("Movement")]
-    [SerializeField] private float circleRange = 5f;
-    [SerializeField] private float attackRange = 2f;
-    [SerializeField] private float pathRecalculateDistance = 3f;
-    [SerializeField] private float faceEnemyDistance = 5f;
+    [SerializeField] protected float circleRange = 5f;
+    [SerializeField] protected float attackRange = 2f;
+    [SerializeField] protected float pathRecalculateDistance = 3f;
+    [SerializeField] protected float faceEnemyDistance = 5f;
 
     [Header("Attack")]
-    [SerializeField] private bool defensive;
-    [SerializeField] private float defenseRange = 5f;
-    [Range(1,5)] [SerializeField] private int aggressive;
-    [SerializeField] private float dontAttackInterval = 2f;
-    [SerializeField] private bool attackCombo;
-    [SerializeField] private int attackMaxCombo = 3;
-    [SerializeField] private float attackInterval = 3f;
+    [SerializeField] protected bool defensive;
+    [SerializeField] protected float defenseRange = 5f;
+    [Range(1,5)] [SerializeField] protected int aggressive;
+    [SerializeField] protected float dontAttackInterval = 2f;
+    [SerializeField] protected bool attackCombo;
+    [SerializeField] protected int attackMaxCombo = 3;
+    [SerializeField] protected float attackInterval = 3f;
 
-    private StealthAgent enemy;
-    private Vector3 lastPathTarget;
-    private Coroutine attackCoroutine;
+    protected StealthAgent enemy;
+    protected Vector3 lastPathTarget;
+    protected Coroutine attackCoroutine;
     public bool canAttack = false;
     public bool canAdvance = false;
     public bool defending;
@@ -53,7 +53,7 @@ public class FightAIState : AIState
         AIStateMachine.AwarenessAgent.OnLoseAgent += LoseAgent;
 
         // Draw weapon
-        PressButton("2");
+        DrawWeapon();
         
         if(debug)
             AIStateMachine.SetDebugColor(Color.red);
@@ -69,7 +69,7 @@ public class FightAIState : AIState
 
         // Move to player when distance between AI and player too big and when player moved enough from his last position we calculated path
         
-        Vector3 dir = (transform.position - enemy.transform.position).normalized; // Vector from us to enemy
+        Vector3 dir = (transform.position - enemy.transform.position).normalized; // Vector to us from enemy
         Vector3 circleTarget = enemy.transform.position + dir * circleRange; // Get point at needed distance from enemy
         Vector3 attackTarget = enemy.transform.position + dir * attackRange; // Get point at needed distance from enemy
         Vector3 target = (canAdvance)? attackTarget : circleTarget; // Relevant target for us
@@ -84,20 +84,8 @@ public class FightAIState : AIState
             MoveTo(target);
         }
         
-        if (inRange &&   // Attack if in range and 
-            canAttack)      // Not already attacking
-        {
-            // Aggressive chance roll
-            int agg = Random.Range(0, aggressive); // Returns 0 .. 4, at aggressive = 1 we never attack, at aggressive = 5 we attack 4/5
-            if(agg == 0)
-                attackCoroutine = StartCoroutine("DontAttack", dontAttackInterval);
-            else
-            {            
-                StopDefend();
-                attackCoroutine = StartCoroutine("Attack", attackInterval);
-                return;
-            }
-        }
+        if (inRange && canAttack) // Close enough and not already attacking
+            Attack();
         
         if(defensive)
         {
@@ -109,14 +97,34 @@ public class FightAIState : AIState
         }
     }
 
-    private void StartDefend()
+    protected virtual void Attack()
+    {
+        // Aggressive chance roll
+        int agg = Random.Range(0, aggressive); // Returns 0 .. 4, at aggressive = 1 we never attack, at aggressive = 5 we attack 4/5
+        Debug.Log(agg);
+        if(agg == 0)
+            attackCoroutine = StartCoroutine("DontAttack", dontAttackInterval);
+        else
+        {            
+            StopDefend();
+            attackCoroutine = StartCoroutine("AttackCoroutine", attackInterval);
+            return;
+        }
+    }
+    
+    protected virtual void DrawWeapon()
+    {
+        PressButton("2");
+    }
+
+    protected void StartDefend()
     {
         if(defending == true) return;
         HoldButton("defense");
         defending = true;
     }
 
-    private void StopDefend()
+    protected void StopDefend()
     {
         if(defending == false) return;
         StopHoldButton("defense");
@@ -132,7 +140,7 @@ public class FightAIState : AIState
             targetManager.RemoveFighter(this);
     }
 
-    private void LoseAgent(StealthAgent agent)
+    protected virtual void LoseAgent(StealthAgent agent)
     {
         // Ignore any agent except our enemy
         if(agent != enemy) return;
@@ -147,7 +155,7 @@ public class FightAIState : AIState
         AIStateMachine.SwitchState(2);
     }
 
-    private IEnumerator Attack(float waitAfterAttack)
+    private IEnumerator AttackCoroutine(float waitAfterAttack)
     {
         canAttack = false;
         int attacks = (attackCombo)? attackMaxCombo : 1;
