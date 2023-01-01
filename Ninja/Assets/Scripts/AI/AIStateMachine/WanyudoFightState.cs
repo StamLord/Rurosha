@@ -19,12 +19,18 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
     [SerializeField] private float maxChargeTime = 2f;
     [SerializeField] private float chargeCooldown = 1f;
     [SerializeField] private ParticleSystem fireTrail;
+    [SerializeField] private ParticleSystem guardVfx;
+    [SerializeField] private int chargeSoftDamage;
+    [SerializeField] private int chargeHardDamage;
+
+    [Header ("Flamethrower attack")]
+    [SerializeField] private float flamethrowerDuration = 3f;
+    [SerializeField] private int flameSoftDamage;
+    [SerializeField] private int flameHardDamage;
 
     [Header ("Hitbox")]
     [SerializeField] private Hitbox[] hitbox;
-    [SerializeField] private int softDamage;
-    [SerializeField] private int hardDamage;
-    
+        
     [Header ("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private Vector2 pitchVariation = new Vector2(.5f, 1f);
@@ -33,12 +39,13 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
     private bool canMove = true;
     private bool canRotate = true;
     private bool canLoseEnemy = true;
+    private bool midFlamethrower;
 
     private float lastAttack;
     private bool delayedLoseAgent;
     private int dashCounter;
     
-    private Dictionary<Hurtbox, int> hitsRegistered;
+    private Dictionary<Hurtbox, int> hitsRegistered = new Dictionary<Hurtbox, int>();
 
     private void Start() 
     {
@@ -99,6 +106,10 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         // Can attack (based on TargetManager) and not already attacking
         if (canAttack && midAttack == false && Time.time - lastAttack > attackCooldown)
             Attack();
+
+        // Turn off guard vfx if it's playing
+        if (midAttack == false && guardVfx.isPlaying)
+            guardVfx.Stop();
     }
 
     protected override void Attack()
@@ -119,8 +130,10 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
             // Roll random number to select attack
             float rand = Random.Range(0f,1f);
             
-            if(rand <= 80 && Time.time - lastAttack > chargeCooldown)
+            if(rand <= .8f && Time.time - lastAttack > chargeCooldown)
                 StartCoroutine("Dash");
+            else
+                StartCoroutine("Flamethrower");
         }
     }
 
@@ -239,6 +252,28 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
             dashCounter++;
     }
 
+    private IEnumerator Flamethrower()
+    {   
+        midAttack = true;
+        midFlamethrower = true;
+        canMove = false;
+
+        float timeStarted = Time.time;
+
+        // Start flamethrower
+        animator.Play("pre_flamethrower");
+
+        while (Time.time - timeStarted < flamethrowerDuration)
+            yield return null;
+
+        // Stop flamethrower
+        animator.Play("end_flamethrower");
+
+        midAttack = false;
+        midFlamethrower = false;
+        canMove = true;
+    }
+
     protected override void LoseAgent(StealthAgent agent)
     {
         // Ignore any agent except our enemy
@@ -271,8 +306,12 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         if(hurtbox)
-        {
-            hurtbox.Hit(AIStateMachine.StealthAgent, softDamage, hardDamage, DamageType.Blunt);
+        {   
+            if(midFlamethrower)
+                hurtbox.Hit(AIStateMachine.StealthAgent, flameSoftDamage, flameHardDamage, DamageType.Blunt);
+            else
+                hurtbox.Hit(AIStateMachine.StealthAgent, chargeSoftDamage, chargeHardDamage, DamageType.Blunt);
+            
             if(hitsRegistered.ContainsKey(hurtbox))
             {
                 if(hitsRegistered[hurtbox] == 3)
@@ -291,14 +330,17 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
             }
             else 
                 hitsRegistered[hurtbox] = 1;
-
         }
 
+        // Turn off guard vfx if it's playing
+        if (guardVfx.isPlaying)
+            guardVfx.Stop();
     }
      
     public void GuardedBy(Collider collider, Hitbox hitbox)
     {
-
+        if(guardVfx.isPlaying == false)
+            guardVfx.Play();
     }
 
     public void UpdateColliderState(bool newState)
