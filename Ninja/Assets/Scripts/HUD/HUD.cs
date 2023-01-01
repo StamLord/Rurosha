@@ -36,8 +36,8 @@ public class HUD : MonoBehaviour
     [SerializeField] private float lowHealthPulseMinAlpha = .7f;
 
     private Coroutine animLowHealth;
-    private bool isAnimLowHealth;
-    private bool lowHealthDisplayed;
+    private bool isAnimatingLowHealth;
+    private bool isLowHealthDisplayed;
     private ChakraType chakraType;
     private bool isVisible;
 
@@ -92,7 +92,7 @@ public class HUD : MonoBehaviour
     private void Update() 
     {
         // Pulsate low health overlay
-        if(lowHealthDisplayed && isAnimLowHealth == false)
+        if(isLowHealthDisplayed && isAnimatingLowHealth == false)
         {
             float t = (Mathf.Sin(Time.time * lowHealthPulseRate) + 1) / 2;
             Color color = lowHealth.color;
@@ -108,20 +108,20 @@ public class HUD : MonoBehaviour
         healthBar.fillAmount = health;
         
         // Show low health overlay
-        if(health < lowHealthThreshold && lowHealthDisplayed == false)
+        if(health < lowHealthThreshold && isLowHealthDisplayed == false)
         {
-            if(isAnimLowHealth)
+            if(isAnimatingLowHealth && animLowHealth != null)
                 StopCoroutine(animLowHealth);
             animLowHealth = StartCoroutine("DisplayLowHealth", true);
-            lowHealthDisplayed = true;
+            isLowHealthDisplayed = true;
         }
         // Hide low health overlay
-        else if(health > lowHealthThreshold && lowHealthDisplayed == true)
+        else if(health > lowHealthThreshold && isLowHealthDisplayed == true)
         {
-            if(isAnimLowHealth)
+            if(isAnimatingLowHealth && animLowHealth != null)
                 StopCoroutine(animLowHealth);
             animLowHealth = StartCoroutine("DisplayLowHealth", false);
-            lowHealthDisplayed = false;
+            isLowHealthDisplayed = false;
         }
     }
 
@@ -142,7 +142,7 @@ public class HUD : MonoBehaviour
 
     private IEnumerator DisplayLowHealth(bool show)
     {
-        isAnimLowHealth = true;
+        isAnimatingLowHealth = true;
 
         float startTime = Time.time;
         float duration = (show)? showLowHealthDuration : hideLowHealthDuration;
@@ -159,7 +159,7 @@ public class HUD : MonoBehaviour
             yield return null;
         }
 
-        isAnimLowHealth = false;
+        isAnimatingLowHealth = false;
     }
 
     private void SpellChange(Spell spell)
