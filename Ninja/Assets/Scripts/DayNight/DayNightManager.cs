@@ -20,6 +20,10 @@ public class DayNightManager : MonoBehaviour
     [Header("Ambient Color")]
     [SerializeField] private Gradient ambientLight;
 
+    [Header("Fog Settings")]
+    [SerializeField] private Gradient fogColor;
+    [SerializeField] private AnimationCurve fogDensity;
+
     private float timeMultiplier;
     private float dayInRealSeconds;
     private float sunRiseRealSeconds;
@@ -72,6 +76,7 @@ public class DayNightManager : MonoBehaviour
         CalculateValues();
         UpdateSun();
         UpdateAmbient();
+        UpdateFog();
         dayTime = GetDayTime();
         zodiacHour = GetZodiacHour();
     }
@@ -147,6 +152,7 @@ public class DayNightManager : MonoBehaviour
         ProgressTime();
         UpdateSun();
         UpdateAmbient();
+        UpdateFog();
 
         // Only in editor, update values that can be observed in the inspector
         if(Application.platform == RuntimePlatform.WindowsEditor)
@@ -212,6 +218,21 @@ public class DayNightManager : MonoBehaviour
         // Get percentege between sunrise and sunset
         float p = (time - sunRiseRealSeconds) / (sunSetRealSeconds - sunRiseRealSeconds);
         RenderSettings.ambientLight = ambientLight.Evaluate(p);
+    }
+
+    private void UpdateFog()
+    {
+        if(time < sunRiseRealSeconds || time > sunSetRealSeconds)
+        {
+            RenderSettings.fogColor = fogColor.Evaluate(1);
+            RenderSettings.fogDensity = fogDensity.Evaluate(1);
+            return;
+        }
+
+        // Get percentege between sunrise and sunset
+        float p = (time - sunRiseRealSeconds) / (sunSetRealSeconds - sunRiseRealSeconds);
+        RenderSettings.fogColor = fogColor.Evaluate(p);
+        RenderSettings.fogDensity = fogDensity.Evaluate(p);
     }
 
     private float GetDayPercent()
