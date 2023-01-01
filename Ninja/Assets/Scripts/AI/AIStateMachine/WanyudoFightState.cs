@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WanyudoFightState : FightAIState
+public class WanyudoFightState : FightAIState, IHitboxResponder
 {
     [SerializeField] private Animator animator;
     
@@ -19,6 +19,11 @@ public class WanyudoFightState : FightAIState
     [SerializeField] private float maxChargeTime = 2f;
     [SerializeField] private float chargeCooldown = 1f;
     [SerializeField] private ParticleSystem fireTrail;
+
+    [Header ("Hitbox")]
+    [SerializeField] private Hitbox[] hitbox;
+    [SerializeField] private int softDamage;
+    [SerializeField] private int hardDamage;
     
     [Header ("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -32,6 +37,17 @@ public class WanyudoFightState : FightAIState
     private float lastAttack;
     private bool delayedLoseAgent;
     private int dashCounter;
+    
+    private Dictionary<Hurtbox, int> hitsRegistered;
+
+    private void Start() 
+    {
+        foreach(Hitbox h in hitbox)
+        {
+            h.SetResponder(this);
+            h.SetIgnoreTransform(transform.root);
+        }
+    }
 
     protected override void DrawWeapon()
     {
@@ -248,5 +264,45 @@ public class WanyudoFightState : FightAIState
 
         // Switch to SearchAIState
         AIStateMachine.SwitchState(2);
+    }
+
+    public void CollisionWith(Collider collider, Hitbox hitbox)
+    {
+        //Hurtbox
+        Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
+        if(hurtbox)
+        {
+            hurtbox.Hit(AIStateMachine.StealthAgent, softDamage, hardDamage, DamageType.Blunt);
+            if(hitsRegistered.ContainsKey(hurtbox))
+            {
+                if(hitsRegistered[hurtbox] == 3)
+                {
+                    Rigidbody rigid = collider.GetComponent<Rigidbody>();
+                    if(rigid) 
+                    {
+                        Vector3 dir = collider.transform.position - transform.position;
+                        dir.Normalize();
+                        rigid.AddForce(dir * 10f, ForceMode.VelocityChange);
+                    }
+                    hitsRegistered[hurtbox] = 0;
+                }
+                else
+                    hitsRegistered[hurtbox]++;
+            }
+            else 
+                hitsRegistered[hurtbox] = 1;
+
+        }
+
+    }
+     
+    public void GuardedBy(Collider collider, Hitbox hitbox)
+    {
+
+    }
+
+    public void UpdateColliderState(bool newState)
+    {
+
     }
 }

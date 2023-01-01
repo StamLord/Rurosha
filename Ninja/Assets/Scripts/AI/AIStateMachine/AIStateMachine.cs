@@ -10,6 +10,9 @@ public class AIStateMachine : StateMachine
     
     [SerializeField] private AwarenessAgent awarenessAgent;
     public AwarenessAgent AwarenessAgent {get{return awarenessAgent;}}
+
+    [SerializeField] private StealthAgent stealthAgent;
+    public StealthAgent StealthAgent {get{return stealthAgent;}}
     
     [SerializeField] private AIInput aiInput;
     
