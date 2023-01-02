@@ -9,7 +9,16 @@ public class IdleAIState : AIState
     [SerializeField] private float maxRoamRadius = 10f;
     [SerializeField] private float idleDuration = 5f;
     [SerializeField] private float distanceThreshold = 1f;
-    [SerializeField] private float investigateSounds;
+    
+    [Tooltip("Fight enemy on sight")]
+    [SerializeField] private bool aggressive;
+    
+    [Tooltip("Fight back if attacked")]
+    [SerializeField] private bool retaliate;
+    
+    [Tooltip("Run away from enemies")]
+    [SerializeField] private bool cowardly;
+
     [SerializeField] private ScheduleAgent scheduleAgent;
     [SerializeField] private TownManager townManager;
 
@@ -45,9 +54,9 @@ public class IdleAIState : AIState
         }
         else if(Time.time - waitStart >= idleDuration)
         {
-            Task t = scheduleAgent.GetCurrentTask();
-            if(townManager)
+            if(townManager && scheduleAgent)
             {
+                Task t = scheduleAgent.GetCurrentTask();
                 Vector3 coords;
                 float radius;
                 bool locationExists = townManager.GetLocation(t.location, out coords, out radius);
@@ -80,6 +89,13 @@ public class IdleAIState : AIState
         
         AIStateMachine.enemy = agent;
 
+        // If we don't retailiate we flee
+        if(retaliate == false)
+        {
+            AIStateMachine.SwitchState(3);
+            return;
+        }
+
         // If enemy is visible we switch to Fight
         foreach(StealthAgent a in AIStateMachine.AwarenessAgent.VisibleAgents)
         {
@@ -100,11 +116,18 @@ public class IdleAIState : AIState
         if(IsEnemy(agent) == false)
             return;
         
-        // Brave enough?
-        
-        // Switch to FightAIState
-        AIStateMachine.enemy = agent;
-        AIStateMachine.SwitchState(1);
+        // If cowardly, run way from enemy
+        if(cowardly)
+        {
+            AIStateMachine.enemy = agent;
+            AIStateMachine.SwitchState(3);
+        }
+        // If agrressive, fight
+        else if(aggressive)
+        {
+            AIStateMachine.enemy = agent;
+            AIStateMachine.SwitchState(1);
+        }
     }
 
     private void HearSound(Vector3 origin)

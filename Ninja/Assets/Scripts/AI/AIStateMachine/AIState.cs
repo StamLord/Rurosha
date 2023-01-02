@@ -15,6 +15,11 @@ public class AIState : State
     [SerializeField] protected float turnSpeed = 1f;
     [SerializeField] protected bool debug;
 
+    /// <summary>
+    /// Finds a path on NavMesh to target
+    /// </summary>
+    /// <param name="target">Position in world space to find a path to.</param>
+    /// <returns>Returns true if found path</returns>
     protected bool MoveTo(Vector3 target)
     {
         return aiStateMachine.CalculatePath(target);
@@ -33,6 +38,7 @@ public class AIState : State
     protected void LookTowards(Vector3 target, float speedMult = 1f)
     {
         Vector3 direction = target - transform.position;
+
         direction.y = 0;
         direction.Normalize();
 

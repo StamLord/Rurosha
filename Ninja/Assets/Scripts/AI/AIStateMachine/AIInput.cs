@@ -29,6 +29,9 @@ public class AIInput : MonoBehaviour
 
     public Vector3 GetLastPosition()
     {
+        if(path == null || path.corners.Length == 0)
+            return transform.position;
+        
         return path.corners[path.corners.Length - 1];
     }
 

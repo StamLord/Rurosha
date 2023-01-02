@@ -2038,6 +2038,7 @@ GameObject:
   - component: {fileID: 4108854064479762184}
   - component: {fileID: 1180507626903282354}
   - component: {fileID: 652328847398222783}
+  - component: {fileID: 1429114385148799954}
   - component: {fileID: 7566098629452177725}
   - component: {fileID: 4410426048301243333}
   - component: {fileID: 442162967}
@@ -2385,6 +2386,7 @@ MonoBehaviour:
   - {fileID: 4108854064479762184}
   - {fileID: 1180507626903282354}
   - {fileID: 652328847398222783}
+  - {fileID: 1429114385148799954}
   _debugLogs: 0
   characterStats: {fileID: 8309317035926444679}
   awarenessAgent: {fileID: 4293227107428241640}
@@ -2415,7 +2417,9 @@ MonoBehaviour:
   maxRoamRadius: 20
   idleDuration: 5
   distanceThreshold: 0.2
-  investigateSounds: 0
+  aggressive: 0
+  retaliate: 1
+  cowardly: 0
   scheduleAgent: {fileID: 7566098629452177725}
   townManager: {fileID: 0}
   waitStart: 0
@@ -2473,6 +2477,26 @@ MonoBehaviour:
   idleDuration: 3
   distanceThreshold: 1
   maxSearchTime: 40
+--- !u!114 &1429114385148799954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8997393895949410982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2008fc4d52568204fa8a66dc514516ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  aiStateMachine: {fileID: 0}
+  turnSpeed: 10
+  debug: 0
+  pathRecalculateDistance: 3
+  fleeDistance: 20
+  secondsBeforeIdle: 10
 --- !u!114 &7566098629452177725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3916,7 +3940,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ed83b88ad46f39a42a9fb242038fe54d,
         type: 3}
       propertyPath: m_Name
-      value: katana_1
+      value: katana
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed83b88ad46f39a42a9fb242038fe54d,
         type: 3}
