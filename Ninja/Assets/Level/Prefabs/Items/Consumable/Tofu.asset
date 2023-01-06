@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c06a67b7c08df743ab815a1848c8e81, type: 3}
+  m_Name: Tofu
+  m_EditorClassIdentifier: 
+  model: {fileID: 8870465935319661989, guid: d193b75b9276a3045ba9dbebc06c7871, type: 3}
+  material: {fileID: 2100000, guid: 9891b4c13795d1d4f90c05aed303e257, type: 2}
+  itemName: Tofu
+  stackable: 0
+  _ammo: 1
+  durability: 100
+  cost: 10
+  pickup: {fileID: 999428405291157475, guid: c488f600552e17040b9ea7f04c77b799, type: 3}
+  healthRestore: 25
+  potentialHealthRestore: 50
+  staminaRestore: 0
+  potentialStaminaRestore: 0
+  consumeDuration: 3
+  incremental: 0
+  leftoverItem: {fileID: 0}
