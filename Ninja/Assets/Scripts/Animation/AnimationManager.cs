@@ -31,6 +31,8 @@ public class AnimationManager : MonoBehaviour
     
     private void LateUpdate()
     {
+        if(inputState == null || rigidbody == null) return;
+
         Vector3 velocity = rigidbody.velocity.magnitude * inputState.AxisInput;
         animator.SetFloat("x", velocity.x);
         animator.SetFloat("z", velocity.z / runSpeed);
