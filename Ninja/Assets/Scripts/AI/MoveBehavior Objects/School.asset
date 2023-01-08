@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 729f6dce36ac9a445a87a764e29d8682, type: 3}
-  m_Name: Follow Composite
+  m_Name: School
   m_EditorClassIdentifier: 
   behaviors:
-  - {fileID: 11400000, guid: f8182cd8194d04c42810e4b332f51f2c, type: 2}
+  - {fileID: 11400000, guid: b61208bcb9b1f59458008501224110b5, type: 2}
   - {fileID: 11400000, guid: 60c42263102a3d1469657ac2c05159ab, type: 2}
+  - {fileID: 11400000, guid: 3aa395743ec821f47a924083b2b37df4, type: 2}
   weights:
   - 1
-  - 4
+  - 0
+  - 1
