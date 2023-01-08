@@ -22,6 +22,29 @@ public class AIStateMachine : StateMachine
 
     [SerializeField] private MeshRenderer meshRenderer;
 
+    private bool isDebug;
+
+    private void Start()
+    {
+        DebugCommandDatabase.AddCommand(new DebugCommand(
+                "debugaistate", 
+                "Sets debug of AIStateMachine to true or false", 
+                "debugaistate <1/0>", 
+                (string[] parameters) => {
+                    switch(parameters[0])
+                    {
+                        case "0":
+                            isDebug = false;
+                            return "AIStateMachine debug set to False";
+                        case "1":
+                            isDebug = true;
+                            return "AIStateMachine debug set to True";
+                    }
+                    return "Parameter should be 1 or 0";
+                }));
+        SwitchState(0);
+    }
+
     public bool CalculatePath(Vector3 target)
     {
         return aiInput.CalculatePath(target);
@@ -75,6 +98,8 @@ public class AIStateMachine : StateMachine
 
     private void OnGUI() 
     {
+        if(isDebug == false) return;
+        
         Camera cam = Camera.main;
         Vector3 viewportPos = cam.WorldToViewportPoint(transform.position);
         if(viewportPos.x <= 0 || viewportPos.x >= 1 || viewportPos.y <= 0 || viewportPos.y >= 1 || viewportPos.z < 0) return;

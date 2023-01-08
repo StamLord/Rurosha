@@ -14,6 +14,29 @@ public class CharacterStateMachine : StateMachine
     [Header("Sound Agent")]
     [SerializeField] private StepSoundAgent stepSoundAgent;
 
+    private bool isDebug;
+
+    private void Start()
+    {
+        DebugCommandDatabase.AddCommand(new DebugCommand(
+                "debugcharstate", 
+                "Sets debug of CharacterStateMachine to true or false", 
+                "debugcharstate <1/0>", 
+                (string[] parameters) => {
+                    switch(parameters[0])
+                    {
+                        case "0":
+                            isDebug = false;
+                            return "CharacterStateMachine debug set to False";
+                        case "1":
+                            isDebug = true;
+                            return "CharacterStateMachine debug set to True";
+                    }
+                    return "Parameter should be 1 or 0";
+                }));
+        SwitchState(0);
+    }
+
     public void SetStepSoundAgent(bool active)
     {
         stepSoundAgent.SetActive(active);
@@ -65,6 +88,8 @@ public class CharacterStateMachine : StateMachine
 
     private void OnGUI() 
     {
+        if(isDebug == false) return;
+        
         Camera cam = Camera.main;
         Vector3 viewportPos = cam.WorldToViewportPoint(transform.position);
         if(viewportPos.x <= 0 || viewportPos.x >= 1 || viewportPos.y <= 0 || viewportPos.y >= 1 || viewportPos.z < 0) return;
