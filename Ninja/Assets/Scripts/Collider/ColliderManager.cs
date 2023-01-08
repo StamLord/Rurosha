@@ -5,7 +5,7 @@ using System.Linq;
 
 public class ColliderManager : MonoBehaviour
 {
-    public enum BodyCollider {STAND, CROUCH, CLIMB}
+    public enum BodyCollider {STAND, CROUCH, CLIMB, AIR}
 
     [SerializeField] private Collider[] body;
     [SerializeField] private Collider[] legs;

@@ -66,7 +66,9 @@ public class SimpleJumpState : PlayerState
     {
         base.OnEnterState();
         if(debugView) Debug.Log("State: Entered [Simple Jump State]");
-
+        
+        colliderManager.SetLegs(ColliderManager.BodyCollider.AIR);
+        
         // Jump
         if(IsGrounded)
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, CalculateJumpVerticalSpeed(), rigidbody.velocity.z);

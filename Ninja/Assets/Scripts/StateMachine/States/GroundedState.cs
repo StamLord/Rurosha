@@ -51,6 +51,8 @@ public class GroundedState : PlayerState
     {
         base.OnEnterState();
         
+        colliderManager.SetBody(ColliderManager.BodyCollider.STAND);
+        colliderManager.SetLegs(ColliderManager.BodyCollider.STAND);
         SetSoundType(StealthAgent.SoundType.WALK);
 
         SetStepSoundAgent(true);
