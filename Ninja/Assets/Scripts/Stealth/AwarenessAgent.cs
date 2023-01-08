@@ -57,7 +57,7 @@ public class AwarenessAgent : MonoBehaviour
     private void Update()
     {
         VisionUpdate();
-        //DebugLight();
+        DebugLight();
     }
 
     public void SetAlert(bool state)
@@ -277,21 +277,24 @@ public class AwarenessAgent : MonoBehaviour
     {
         if(debugView == false) return;
         
-        // Vision Cone Representation
         Color coneColor = Color.red;
         Color radiusColor = Color.red;
+        Color hearRadiusColor = Color.blue;
         radiusColor.a = .5f;
         
+        // Vision Sphere
         Gizmos.color = radiusColor;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
+        Gizmos.DrawWireSphere(eyeLevel.position, lookRadius);
 
+        // Vision cone
         Gizmos.color = coneColor;
         Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(horizontalVisionAngle, transform.up) * eyeLevel.forward * lookRadius);
         Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(-horizontalVisionAngle, transform.up) * eyeLevel.forward * lookRadius);
         Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(verticalVisionAngle, transform.right) * eyeLevel.forward * lookRadius);
         Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + Quaternion.AngleAxis(-verticalVisionAngle, transform.right) * eyeLevel.forward * lookRadius);
 
-        Gizmos.color = Color.blue;
+        // View Direction
+        Gizmos.color = Color.red;
         Gizmos.DrawLine(eyeLevel.position, eyeLevel.position + eyeLevel.forward);
 
         // Visible Agents Representation
@@ -299,8 +302,12 @@ public class AwarenessAgent : MonoBehaviour
         foreach(StealthAgent s in visibleAgents)
             Gizmos.DrawCube(s.transform.position, new Vector3(1f, 1f, 1f));
 
+        // Hear Sphere
+        Gizmos.color = hearRadiusColor;
+        Gizmos.DrawWireSphere(eyeLevel.position, hearingRadius);
+
         // Last Sound Representation
-        Gizmos.color = Color.white;   
+        Gizmos.color = hearRadiusColor;   
         Gizmos.DrawCube(lastSoundDetected, new Vector3(1f, 1f, 1f));
 
     }
