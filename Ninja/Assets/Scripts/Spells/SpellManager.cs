@@ -7,6 +7,7 @@ public class SpellManager : MonoBehaviour
     [SerializeField] private List<Spell> learned = new List<Spell>();
     [SerializeField] private Spell[] prepared;
     [SerializeField] private CharacterStats characterStats;
+    [SerializeField] private Transform aliveTransform;
     [SerializeField] private StealthAgent stealthAgent;
     public StealthAgent Agent { get { return stealthAgent;}}
     [SerializeField] private new Camera camera;
@@ -74,7 +75,7 @@ public class SpellManager : MonoBehaviour
         
         if(success == false)
             return false;
-
+        
         // If already instantiated just activate
         if(spellObjects.ContainsKey(spell.spellName))
         {
@@ -84,10 +85,10 @@ public class SpellManager : MonoBehaviour
             switch(parentType)
             {
                 case Spell.ParentType.TRANSFORM:
-                    spellObj.transform.SetParent(characterStats.transform);
+                    spellObj.transform.SetParent(aliveTransform.transform);
                     spellObj.transform.localPosition = spellObj.offset;
                     if(inheritRotation)
-                        spellObj.transform.rotation = characterStats.transform.rotation;
+                        spellObj.transform.rotation = aliveTransform.transform.rotation;
                     break;
                 case Spell.ParentType.CAMERA:
                     spellObj.transform.SetParent(camera.transform);
@@ -103,17 +104,17 @@ public class SpellManager : MonoBehaviour
         // Instantiate and keep reference for future activation
         else
         {
-            GameObject obj = Instantiate(spellObject, characterStats.transform.position, Quaternion.identity);
+            GameObject obj = Instantiate(spellObject, aliveTransform.transform.position, Quaternion.identity);
             SpellObject spellObj = obj.GetComponent<SpellObject>();
 
             // Parent, position and rotate
             switch(parentType)
             {
                 case Spell.ParentType.TRANSFORM:
-                    obj.transform.SetParent(characterStats.transform);
+                    obj.transform.SetParent(aliveTransform.transform);
                     obj.transform.localPosition = spellObj.offset;
                     if(inheritRotation)
-                        obj.transform.rotation = characterStats.transform.rotation;
+                        obj.transform.rotation = aliveTransform.transform.rotation;
                     break;
                 case Spell.ParentType.CAMERA:
                     obj.transform.SetParent(camera.transform);
