@@ -6,7 +6,7 @@ using UnityEngine;
 public class PrefabGrid : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
-    [SerializeField] private float radius;
+    [SerializeField] private float diameter;
     [SerializeField] private int resolution;
     [SerializeField] private float randomPosition;
     [SerializeField] private float randomRotation;
@@ -22,7 +22,7 @@ public class PrefabGrid : MonoBehaviour
     {
         if(clearObjects)
         {
-            ClearObjects();
+            ClearObjects(instanced);
             clearObjects = false;
         }
 
@@ -39,23 +39,9 @@ public class PrefabGrid : MonoBehaviour
         StartCoroutine("UpdateObjectsCoroutine");
     }
 
-    private void ClearObjects()
+    private void ClearObjects(List<GameObject> toDelete)
     {
-        foreach (var i in instanced)
-        {
-            if(Application.isEditor)
-            {
-                if(i)
-                {
-                    i.SetActive(false);
-                    DestroyImmediate(i);
-                }
-            }
-            else
-                Destroy(i);
-        }
-
-        instanced.Clear();
+        StartCoroutine("ClearObjectsCoroutine", toDelete);
     }
 
     IEnumerator UpdateObjectsCoroutine()
@@ -64,7 +50,7 @@ public class PrefabGrid : MonoBehaviour
         Random.InitState(randomSeed);
 
         // Calculate positions
-        float increment = radius / (resolution + 1);
+        float increment = diameter / (resolution + 1);
         Vector3 gridOrigin = new Vector3(transform.position.x - increment * resolution * .5f, transform.position.y, transform.position.z - increment * resolution * .5f);
 
         // Instantiate if needed
@@ -73,6 +59,18 @@ public class PrefabGrid : MonoBehaviour
         {
             for (int i = 0; i < diff; i++)
                 instanced.Add(Instantiate(prefab, transform.position, Quaternion.identity, transform));
+        }
+        // Delete if needed
+        else if (diff < 0)
+        {
+            List<GameObject> toDelete = new List<GameObject>();
+            for (int i = diff; i < 0; i++)
+            {
+                toDelete.Add(instanced[0]);
+                instanced.RemoveAt(0);
+
+                ClearObjects(toDelete);
+            }
         }
         
         // Loop through objects and update positions
@@ -92,12 +90,14 @@ public class PrefabGrid : MonoBehaviour
                     position.y = hit.point.y;
 
                 // Check if too far from center
-                float distance = Vector3.Distance(position, transform.position);
-                float yScale = heightFalloff.Evaluate(distance / radius);
-                Vector3 scale = new Vector3(yScale, yScale, yScale);
+                Vector3 flatCenter = transform.position;
+                flatCenter.y = position.y; // We want a flat distance not taking y axis into account
+                float distance = Vector3.Distance(position, flatCenter);
+                float yScale = heightFalloff.Evaluate(distance / diameter);
+                Vector3 scale = new Vector3(1, yScale, 1);
 
                 // Deactivate objects that are too far
-                if(distance> radius / 2)
+                if(distance> diameter / 2)
                    instanced[index].SetActive(false);
                 else
                 {
@@ -112,19 +112,40 @@ public class PrefabGrid : MonoBehaviour
         }
     }
 
+    IEnumerator ClearObjectsCoroutine(List<GameObject> toDelete)
+    {
+        yield return null;
+
+        foreach (var i in toDelete)
+        {
+            if(i == null)
+                continue;
+                
+            if(Application.isEditor)
+            {
+                i.SetActive(false);
+                DestroyImmediate(i);
+            }
+            else
+                Destroy(i);
+        }
+
+        toDelete.Clear();
+    }
+
     private void OnDrawGizmos() 
     {
         if(isDebug == false) 
             return;
         
         // Draw sphere
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, diameter * .5f);
 
         // Init seed
         Random.InitState(randomSeed);
 
         // Draw positions
-        float increment = radius / (resolution + 1);
+        float increment = diameter / (resolution + 1);
         Vector3 gridOrigin = new Vector3(transform.position.x - increment * resolution * .5f, transform.position.y, transform.position.z - increment * resolution * .5f);
         Gizmos.DrawCube(gridOrigin, Vector3.one);
 
@@ -140,7 +161,7 @@ public class PrefabGrid : MonoBehaviour
                     position.y = hit.point.y;
 
                 // Check if too far from center
-                if(Vector3.Distance(position, transform.position) > radius / 2)
+                if(Vector3.Distance(position, transform.position) > diameter / 2)
                    continue;
 
                 Gizmos.DrawSphere(position, .1f);
