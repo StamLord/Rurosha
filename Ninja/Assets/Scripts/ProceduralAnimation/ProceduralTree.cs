@@ -2,88 +2,116 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class ProceduralTree : MonoBehaviour
 {
-    [Header("Branch")]
-    [SerializeField] private GameObject branchPrefab;
-
-    [Header("Emission")]
+    [Header("Random Seed")]
     [SerializeField] private int seed;
-    [SerializeField] private int number;
-    [SerializeField] private float minHeight;
-    [SerializeField] private float maxHeight;
 
-    [Header("Rotation")]
-    [SerializeField] private float rotationXValue;
-    [SerializeField] private float rotationXRandom;
+    [Header("Bark")]
+    [SerializeField] private GameObject bark;
+    [SerializeField] private Vector2 heightVariability = new Vector2(10,15);
+    private float height;
 
-    [SerializeField] private float rotationYValue;
-    [SerializeField] private float rotationYRandom;
+    [Header("Branch")]
+    [SerializeField] private GameObject branch;
+    [SerializeField] private Vector2 branchSpread = new Vector2(.2f, .8f);
+    [SerializeField] private float branchVerticalSpace = 2f;
+    [SerializeField] private AnimationCurve branchAmount;
+    [SerializeField] private AnimationCurve branchLength;
+    [SerializeField] private float levelRotationoffset = 45;
+    [SerializeField] private float branchLengthRandom = .25f;
+    [SerializeField] private Vector2 xRotation = new Vector2(0,0);
 
-    [SerializeField] private float rotationZValue;
-    [SerializeField] private float rotationZRandom;
+    [SerializeField] private bool update;
 
-    [Header("Scale")]
-    [SerializeField] private float scaleValue;
-    [SerializeField] private float scaleRandom;
-    [SerializeField] private AnimationCurve scaleFalloff;
-
-    [SerializeField] private List<GameObject> instanced = new List<GameObject>();
-
+    [SerializeField] private List<GameObject> instantiatedBranches = new List<GameObject>();
+    
     private void OnValidate() 
     {
-        UpdateTree();    
+        StartCoroutine("GenerateTree");
+    }
+    
+    private IEnumerator GenerateTree()
+    {
+        Random.InitState(seed);
+
+        yield return StartCoroutine("ClearBranchesCoroutine");
+        UpdateBark();
+        UpdateBranches();
     }
 
-    void UpdateTree()
+    private void UpdateBark()
     {
-        if(branchPrefab == null)    
-            return;
+        Vector3 scale = bark.transform.localScale;
+        height = Random.Range(heightVariability.x, heightVariability.y);
+        scale.y = height;
 
-        Random.InitState(seed);
-        
-        //ClearTree();
+        bark.transform.localScale = scale;
+    }
 
-        int delta = Mathf.Max(0, number - instanced.Count);
-        for (int i = 0; i < delta; i++)
+    private void UpdateBranches()
+    {
+        // Start / End height of branches
+        float startHeight = height * branchSpread.x;
+        float endHeight = height * branchSpread.y;
+        float validHeight = endHeight - startHeight;
+
+        // Amount of levels of branches
+        int levels = Mathf.FloorToInt(validHeight / branchVerticalSpace);
+
+        for (int i = 0; i < levels; i++)
         {
-            GameObject b = Instantiate(branchPrefab, transform);
-            instanced.Add(b);
-        }
+            float curHeight = startHeight + i * branchVerticalSpace;
+            
+            // Get amount of branches on this level
+            int branches = Mathf.FloorToInt(branchAmount.Evaluate((curHeight - startHeight) / validHeight));
 
-        
-        for (int i = 0; i < instanced.Count; i++)
-        {
-            if(i > number)
-                instanced[i].SetActive(false);
-            else
+            // Rotation of level
+            float rotationOffest = levelRotationoffset * i;
+
+            for (int j = 0; j < branches; j++)
             {
-                instanced[i].SetActive(true);
-                float randHeight = Random.Range(minHeight, maxHeight);
-                Vector3 randPos = new Vector3(0, transform.localScale.y * randHeight, 0);
-                
-                Vector3 randScale = Vector3.one * (scaleValue + scaleRandom * Random.Range(.2f, 2f));
-                float heightPercentage = (randHeight - minHeight) / (maxHeight - minHeight);
-                randScale *= scaleFalloff.Evaluate(heightPercentage);
+                // Calculate position
+                Vector3 position = transform.position;
+                position.y += curHeight;
 
-                Quaternion randRot = Quaternion.Euler(
-                    new Vector3(
-                        rotationXValue + rotationXRandom * Random.Range(0, 360),
-                        rotationYValue + rotationYRandom * Random.Range(0, 360),
-                        rotationZValue + rotationZRandom * Random.Range(0, 360)));
-        
-                instanced[i].transform.localPosition = randPos;
-                instanced[i].transform.localScale = randScale;
-                instanced[i].transform.localRotation = randRot;
+                // Calculate rotation
+                float xRot = Random.Range(xRotation.x, xRotation.y);
+                Quaternion rotation = Quaternion.Euler(xRot, rotationOffest + 360 / branches * j, 0);
+
+                GameObject b = Instantiate(branch, position, rotation, transform);
+
+                // Scale length
+                Vector3 scale = b.transform.localScale;
+                scale.z = branchLength.Evaluate((curHeight - startHeight) / validHeight);
+                scale.z *= Random.Range(1, 1 + branchLengthRandom);
+
+                b.transform.localScale = scale;
+
+                instantiatedBranches.Add(b);
             }
         }
     }
 
-    private void ClearTree()
+    private void ClearBranches()
     {
-        foreach (GameObject branch in instanced)
-            Destroy(branch);
-
-        instanced.Clear();
+        StartCoroutine("ClearBranchesCoroutine");
     }
+
+    private IEnumerator ClearBranchesCoroutine()
+    {
+        yield return null;
+        foreach(GameObject b in instantiatedBranches)
+        {
+            if(Application.isEditor)
+                DestroyImmediate(b);
+            else
+                Destroy(b);
+        }
+
+        instantiatedBranches.Clear();
+    }
+
+
 }
