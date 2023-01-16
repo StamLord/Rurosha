@@ -76,6 +76,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     public delegate void potentialHealthUpdateDelegate(float potentialHealth);
     public event potentialHealthUpdateDelegate PotentialHealthUpdateEvent;
 
+    public delegate void healthRestoreDelegate(float health, float potentialHealth);
+    public event healthRestoreDelegate OnHealthRestore;
+
     public delegate void deathDelegate();
     public event deathDelegate OnDeath;
 
@@ -137,6 +140,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     public delegate void potentialStaminaUpdateDelegate(float potentialStamina);
     public event potentialStaminaUpdateDelegate PotentialStaminaUpdateEvent;
 
+    public delegate void staminaRestoreDelegate(float stamina, float potentialStamina);
+    public event staminaRestoreDelegate OnStaminaRestore;
+
     [Tooltip("Stamina recovery per second")]
 
     [SerializeField] private AttributeDependant<float> StaminaRecovery;
@@ -157,10 +163,20 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     private Dictionary<Modifier, Attribute> modifiers = new Dictionary<Modifier, Attribute>();
 
-    private void AddModifier(Modifier modifier)
-    {
-        if(modifiers.ContainsKey(modifier)) return;
+    // Modifier : Timestamp pairs
+    private Dictionary<Modifier, float> tempModifiers = new Dictionary<Modifier, float>();
 
+    public void AddModifier(Modifier modifier)
+    {
+        if(modifiers.ContainsKey(modifier))
+        {
+            // Reset timestamp
+            if(modifier.IsTemporary)
+                tempModifiers[modifier] = Time.time;
+            return;
+        }
+
+        // Get attribute
         Attribute attr = FindAttribute(modifier.Attribute);
         if(attr == null) return;
 
@@ -169,32 +185,55 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
         // Add to dictionary
         modifiers.Add(modifier, attr);
+
+        // Add to temporary dictionary with timestamp
+        if(modifier.IsTemporary)
+            tempModifiers[modifier] = Time.time;
     }
 
-    private void RemoveModifier(Modifier modifier)
+    public void RemoveModifier(Modifier modifier)
     {
-        if(modifiers.ContainsKey(modifier) == false) return;
-        
-        // Remove modifier from attribute
-        modifiers[modifier].RemoveModifier(modifier);
+        if(modifiers.ContainsKey(modifier))
+        {
+            // Remove modifier from attribute
+            modifiers[modifier].RemoveModifier(modifier);
 
-        // Remove from dicitionary
-        modifiers.Remove(modifier);
+            // Remove from dicitionary
+            modifiers.Remove(modifier);
+        }
+
+        if(tempModifiers.ContainsKey(modifier))
+            tempModifiers.Remove(modifier);
     }
 
-    private void AddModifiers(List<Modifier> modifiers)
+    public void AddModifiers(List<Modifier> modifiers)
     {
         for (int i = 0; i < modifiers.Count; i++)
             AddModifier(modifiers[i]);
     }
 
-    private void RemoveModifiers(List<Modifier> modifiers)
+    public void RemoveModifiers(List<Modifier> modifiers)
     {
         for (int i = 0; i < modifiers.Count; i++)
             RemoveModifier(modifiers[i]);
     }
 
+    private void CheckOverdueModifiers()
+    {
+        // Make a list of overdue modifiers
+        List<Modifier> toRemove = new List<Modifier>();
+        
+        foreach(var mod in tempModifiers)
+        {
+            Modifier modifier = mod.Key;
+            if(Time.time - tempModifiers[modifier] >= modifier.Duration)
+                toRemove.Add(modifier);
+        }
 
+        // Remove modifiers
+        RemoveModifiers(toRemove);
+    }
+    
     #endregion
 
     #region Traits
@@ -443,12 +482,13 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         return false;
     }
 
-    void Update()
+    private void Update()
     {
         RegenUpdate();
+        CheckOverdueModifiers();
     }
 
-    void RegenUpdate()
+    private void RegenUpdate()
     {
         if(_isAlive == false) return;
         
@@ -514,6 +554,19 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             
         PotentialHealth -= amount;
         _potentialHealthLastDeplete = Time.time;
+    }
+
+    /// <summary>
+    /// Called by items, spells and outside effects to restore health immediately.
+    /// Calls OnHealthRestore event.
+    /// </summary>
+    public void RestoreHealth(float health, float potentialHealth)
+    {
+        AddHealth(health);
+        AddPotentialHealth(potentialHealth);
+
+        if(OnHealthRestore != null)
+            OnHealthRestore(health, potentialHealth);
     }
 
     #endregion
@@ -597,6 +650,19 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
         SubPotentialStamina(amount);
         return true;
+    }
+
+    /// <summary>
+    /// Called by items, spells and outside effects to restore stamina immediately
+    /// Calls OnStaminaRestore event.
+    /// </summary>
+    public void RestoreStamina(float stamina, float potentialStamina)
+    {
+        AddStamina(stamina);
+        AddPotentialStamina(potentialStamina);
+
+        if(OnStaminaRestore != null)
+            OnStaminaRestore(stamina, potentialStamina);
     }
 
     #endregion
