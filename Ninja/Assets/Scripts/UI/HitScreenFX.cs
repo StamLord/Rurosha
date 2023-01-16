@@ -7,9 +7,14 @@ public class HitScreenFX : MonoBehaviour
     [SerializeField] private float duration;
     [SerializeField] private Image image;
     
+    private Coroutine coroutine;
+
     public void Play()
     {
-        StartCoroutine("PlayCoroutine");
+        if(coroutine != null)
+            StopCoroutine(coroutine);
+        
+        coroutine = StartCoroutine("PlayCoroutine");
     }
 
     private IEnumerator PlayCoroutine()
