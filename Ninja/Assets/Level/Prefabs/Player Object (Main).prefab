@@ -12213,6 +12213,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   characterStats: {fileID: 6944390856915565334}
+  aliveTransform: {fileID: 8820855694394563268}
   stealthAgent: {fileID: 0}
   camera: {fileID: 6944390856666288588}
   activeSpell: {fileID: 0}
@@ -12321,7 +12322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputState: {fileID: 59200974}
   useRawInput: 1
-  doubleTapWindow: 0.25
+  doubleTapWindow: 0.2
   movementDisabled: 0
   interactionDisabled: 0
   mouseDisabled: 0
@@ -12430,7 +12431,19 @@ MonoBehaviour:
   finalPositionOffset: {x: 0, y: 0, z: 0}
   miniFallDamageVelocity: -10
   FallDamage: 5
-  minimumFallDamageDistance: 5
+  fallDamageHeight:
+    attributeType: 1
+    values:
+    - 2
+    - 2.5
+    - 3
+    - 3.5
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
   minRollHeight: 3
   rollWindow: 0.2
   glideOn: 0
