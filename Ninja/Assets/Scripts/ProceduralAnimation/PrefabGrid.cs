@@ -86,7 +86,7 @@ public class PrefabGrid : MonoBehaviour
 
                 // Height
                 RaycastHit hit;
-                if(Physics.Raycast(position + Vector3.up * 5, Vector3.down, out hit, 20f))
+                if(Physics.Raycast(position + Vector3.up * diameter * .5f, Vector3.down, out hit, diameter))
                     position.y = hit.point.y;
 
                 // Check if too far from center
@@ -157,7 +157,7 @@ public class PrefabGrid : MonoBehaviour
                 Vector3 position = gridOrigin + new Vector3(i * increment + random.x, 0, j * increment + random.y);
 
                 RaycastHit hit;
-                if(Physics.Raycast(position + Vector3.up * 5, Vector3.down, out hit, 10f))
+                if(Physics.Raycast(position + Vector3.up * diameter * .5f, Vector3.down, out hit, diameter))
                     position.y = hit.point.y;
 
                 // Check if too far from center
