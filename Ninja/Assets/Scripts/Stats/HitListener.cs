@@ -7,7 +7,7 @@ public class HitListener : MonoBehaviour
     [SerializeField] private CharacterStats characterStats;
     [SerializeField] private UnityEvent action;
 
-    void Start()
+    private void Start()
     {
         if(characterStats) characterStats.OnHit += Execute;
     }
