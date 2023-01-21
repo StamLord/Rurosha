@@ -43,6 +43,7 @@ public class IdleAIState : AIState
         // Turn towards next position along path
         LookTowards(AIStateMachine.GetNextPosition());
 
+        // Start waiting if close to last position on path
         if(waiting == false)
         {
             // Check distance to last position of navmesh path
@@ -52,20 +53,23 @@ public class IdleAIState : AIState
                 waitStart = Time.time;
             }
         }
+        // Find next position
         else if(Time.time - waitStart >= idleDuration)
         {
+            // Get next random position from ScheudleAgent
             if(townManager && scheduleAgent)
             {
                 Task t = scheduleAgent.GetCurrentTask();
                 Vector3 coords;
                 float radius;
                 bool locationExists = townManager.GetLocation(t.location, out coords, out radius);
-
+                
                 if(locationExists)
                     target = GenerateNextPosition(coords, radius, radius);
                 else
                     target = GenerateNextPosition(transform.position, minRoamRadius, maxRoamRadius);
             }
+            // If no ScheudleAgent, roam as per default values
             else
                 target = GenerateNextPosition(transform.position, minRoamRadius, maxRoamRadius);
 
