@@ -8,7 +8,8 @@ public class GroundedState : PlayerState
 {
     [Header("Control Settings")]
     [SerializeField] private float walkSpeed = 10.0f;
-    [SerializeField] private AttributeDependant<float> _runSpeed;
+    [SerializeField] private AttributeDependant<float> runSpeed;
+    [SerializeField] private float startRunBoost = 2f;
     [SerializeField] private float slopeSlideSpeed = 10.0f;
     [SerializeField] private float minSlideAngle = 30f;
     [SerializeField] private bool gravityOn = true;
@@ -79,6 +80,12 @@ public class GroundedState : PlayerState
             // Running
             if(inputVector != Vector3.zero && inputState.Run.State == VButtonState.PRESSED)
             {
+                if(inputState.Run.State == VButtonState.PRESS_START)
+                    characterStats.DepleteStamina(5f);
+                
+                float pressTime = Mathf.Clamp01(inputState.Run.PressTime);
+                float mult = Mathf.Lerp(startRunBoost, 1, pressTime);
+
                 if(characterStats.DepleteStamina(staminaDepleteRate * Time.deltaTime))
                 {
                     characterStats.IncreaseAttributeExp(AttributeType.AGILITY, agilityExpGain * Time.deltaTime);
@@ -86,7 +93,8 @@ public class GroundedState : PlayerState
 
                     // Set relevant speed
                     //targetVelocity *= runSpeedPerAgilityLevel[characterStats.GetAttributeLevel("agility") - 1];
-                    targetVelocity *= _runSpeed.GetValue(characterStats);
+
+                    targetVelocity *= runSpeed.GetValue(characterStats) * mult;
 
                     // Slide down slopes
                     if(GroundSlope > minSlideAngle) 
