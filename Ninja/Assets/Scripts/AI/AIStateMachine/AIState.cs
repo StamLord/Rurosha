@@ -78,6 +78,9 @@ public class AIState : State
 
     protected Vector3 GenerateNextPosition(Vector3 origin, float minRoamRadius, float maxRoamRadius)
     {
+        if(minRoamRadius == 0 && maxRoamRadius == 0)
+            return origin;
+        
         float distance = Random.Range(minRoamRadius, maxRoamRadius);
         Vector2 onCircle = Random.insideUnitCircle * distance;
         return new Vector3(onCircle.x, 0, onCircle.y) + origin;
