@@ -192,7 +192,7 @@ public class AwarenessAgent : MonoBehaviour
 
         // Check line of sight
         RaycastHit hit;
-        Debug.DrawRay(eyeLevel.position, direction, Color.yellow);
+        
         bool blocked = Physics.Raycast(eyeLevel.position, direction, out hit, direction.magnitude, blockVisionMask);
         return (blocked == false);
     }
