@@ -45,9 +45,13 @@ public class AIInput : MonoBehaviour
         else
             return false;
         
+        // TODO: Check if this section is needed. 
+        // It optimizes unmoving targets but 
+        // breaks when entity was moved from it's destination and needs to move again to target
+        //
         // If target close enough to last target, dont calculate   
-        if(Vector3.Distance(lastTarget, target) < pointDistance)
-            return false;
+        // if(Vector3.Distance(lastTarget, target) < pointDistance)
+        //     return false;
 
         // If close enough to target, dont calculate
         if(Vector3.Distance(transform.position, target) < pointDistance)
