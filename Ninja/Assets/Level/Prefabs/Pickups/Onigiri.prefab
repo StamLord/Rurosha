@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 191635950589325400}
   m_RootOrder: 1
@@ -74,6 +75,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -82.235016, y: 0.92853993, z: 12.301164}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 369975340181478425}
   - {fileID: 191635950159606095}
@@ -140,9 +142,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 0}
-  interactionText: Use
+  interactionText: Pick Up
   weightClass: 0
-  _item: {fileID: 11400000, guid: 0a9a0d770744ebc44b796e3495b3c5f0, type: 2}
+  rigidbody: {fileID: 0}
+  item: {fileID: 11400000, guid: 0a9a0d770744ebc44b796e3495b3c5f0, type: 2}
+  randomize: 0
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
 --- !u!1001 &191635951403318258
 PrefabInstance:
   m_ObjectHideFlags: 0
