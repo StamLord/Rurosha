@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerControls : MonoBehaviour
 {
-    [SerializeField] private InputState _inputState;
+    [SerializeField] private InputState inputState;
     [SerializeField] private bool useRawInput = true;
     [SerializeField] private float doubleTapWindow = .35f;
 
@@ -33,72 +33,75 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private bool interactionDisabled;
     [SerializeField] private bool mouseDisabled;
 
-    void Update()
+    private void Update()
     {
         if(movementDisabled == false)
         {   
-            _inputState.AxisInput = (useRawInput)? new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")) : new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) ;
+            Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             Vector3 rawInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+                        
+            inputState.AxisInput = (useRawInput)? rawInput : input;
+
             DoubleInputCheck(rawInput);
 
             // Jump
-            UpdateVirtualButton("Jump", _inputState.Jump);
+            UpdateVirtualButton("Jump", inputState.Jump);
 
             //Run
-            UpdateVirtualButton("Run", _inputState.Run);
+            UpdateVirtualButton("Run", inputState.Run);
 
             // Crouch
-            UpdateVirtualButton("Crouch", _inputState.Crouch);
+            UpdateVirtualButton("Crouch", inputState.Crouch);
 
             // Defend
-            UpdateVirtualButton("Defend", _inputState.Defend);
+            UpdateVirtualButton("Defend", inputState.Defend);
 
             // Kick
-            UpdateVirtualButton("Kick", _inputState.Kick);
+            UpdateVirtualButton("Kick", inputState.Kick);
 
             // Spell
-            UpdateVirtualButton("Spell", _inputState.Spell);
+            UpdateVirtualButton("Spell", inputState.Spell);
 
             // Sit
-            UpdateVirtualButton("Sit", _inputState.Sit);
+            UpdateVirtualButton("Sit", inputState.Sit);
 
             // Draw
-            UpdateVirtualButton("Draw", _inputState.Draw);
+            UpdateVirtualButton("Draw", inputState.Draw);
 
             // Draw
-            UpdateVirtualButton("Drop", _inputState.Drop);
+            UpdateVirtualButton("Drop", inputState.Drop);
         }
 
         if(interactionDisabled == false)
         {
             // Use
-            UpdateVirtualButton("Use", _inputState.Use);
+            UpdateVirtualButton("Use", inputState.Use);
         
             
 
             // Alpha numerics
-            UpdateVirtualButton("Alpha1", _inputState.Num1);
-            UpdateVirtualButton("Alpha2", _inputState.Num2);
-            UpdateVirtualButton("Alpha3", _inputState.Num3);
-            UpdateVirtualButton("Alpha4", _inputState.Num4);
-            UpdateVirtualButton("Alpha5", _inputState.Num5);
-            UpdateVirtualButton("Alpha6", _inputState.Num6);
-            UpdateVirtualButton("Alpha7", _inputState.Num7);
-            UpdateVirtualButton("Alpha8", _inputState.Num8);
-            UpdateVirtualButton("Alpha9", _inputState.Num9);
-            UpdateVirtualButton("Alpha0", _inputState.Num0);
+            UpdateVirtualButton("Alpha1", inputState.Num1);
+            UpdateVirtualButton("Alpha2", inputState.Num2);
+            UpdateVirtualButton("Alpha3", inputState.Num3);
+            UpdateVirtualButton("Alpha4", inputState.Num4);
+            UpdateVirtualButton("Alpha5", inputState.Num5);
+            UpdateVirtualButton("Alpha6", inputState.Num6);
+            UpdateVirtualButton("Alpha7", inputState.Num7);
+            UpdateVirtualButton("Alpha8", inputState.Num8);
+            UpdateVirtualButton("Alpha9", inputState.Num9);
+            UpdateVirtualButton("Alpha0", inputState.Num0);
         }
 
         if(mouseDisabled == false)
         {
             // Mouse Button 1
-            UpdateVirtualButton("Fire1", _inputState.MouseButton1);
+            UpdateVirtualButton("Fire1", inputState.MouseButton1);
 
             // Mouse Button 2
-            UpdateVirtualButton("Fire2", _inputState.MouseButton2);
+            UpdateVirtualButton("Fire2", inputState.MouseButton2);
 
             // Mouse Scroll
-            _inputState.ScrollInput = Input.GetAxis("Mouse ScrollWheel");
+            inputState.ScrollInput = Input.GetAxis("Mouse ScrollWheel");
         }
     }
 
@@ -135,7 +138,7 @@ public class PlayerControls : MonoBehaviour
                 if(doubleForwardReady)
                 {
                     doubleForwardReady = false;
-                    _inputState.DoubleForward = true;
+                    inputState.DoubleForward = true;
                 }
                 else
                     doubleForwardReady = true;
@@ -153,7 +156,7 @@ public class PlayerControls : MonoBehaviour
                 if(doubleBackReady)
                 {
                     doubleBackReady = false;
-                    _inputState.DoubleBack = true;
+                    inputState.DoubleBack = true;
                 }
                 else
                     doubleBackReady = true;
@@ -171,7 +174,7 @@ public class PlayerControls : MonoBehaviour
                 if(doubleLeftReady)
                 {
                     doubleLeftReady = false;
-                    _inputState.DoubleLeft = true;
+                    inputState.DoubleLeft = true;
                 }
                 else
                     doubleLeftReady = true;
@@ -189,7 +192,7 @@ public class PlayerControls : MonoBehaviour
                 if(doubleRightReady)
                 {
                     doubleRightReady = false;
-                    _inputState.DoubleRight = true;
+                    inputState.DoubleRight = true;
                 }
                 else
                     doubleRightReady = true;
@@ -225,7 +228,7 @@ public class PlayerControls : MonoBehaviour
     public void DisableInteraction()
     {
         interactionDisabled = true;
-        _inputState.Use.Set(VButtonState.UNPRESSED);
+        inputState.Use.Set(VButtonState.UNPRESSED);
     }
 
     public void EnableInteraction()
