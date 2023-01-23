@@ -47,6 +47,6 @@ public class PhysicalMaterial : MonoBehaviour
 
     private void PlayVfx(GameObject vfx, Vector3 position, Quaternion rotation)
     {
-        Instantiate(vfx, position, rotation); // Change to pool
+        Instantiate(vfx, position, rotation, transform); // Change to pool
     }
 }
