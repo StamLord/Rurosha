@@ -1,16 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
 public class AnimationManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private CharacterStateMachine stateMachine;
     [SerializeField] private CharacterStats characterStats;
     [SerializeField] private WeaponManager weaponManager;
     [SerializeField] private Animator animator;
     [SerializeField] private InputState inputState;
+
+    [Header("Multiple by speed of NavMeshAgent/Rigidbody")]
+    [SerializeField] private bool useNavMeshAgent;
+    [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private new Rigidbody rigidbody;
+    
+    [Header("Running Speed")]
     [SerializeField] private float runSpeed = 10;
 
     [SerializeField] private Transform ikLookTarget;
@@ -33,7 +39,9 @@ public class AnimationManager : MonoBehaviour
     {
         if(inputState == null || rigidbody == null) return;
 
-        Vector3 velocity = rigidbody.velocity.magnitude * inputState.AxisInput;
+        Vector3 velocity = inputState.AxisInput;
+        velocity *= (useNavMeshAgent)? navMeshAgent.velocity.magnitude : rigidbody.velocity.magnitude;
+
         animator.SetFloat("x", velocity.x);
         animator.SetFloat("z", velocity.z / runSpeed);
         animator.SetFloat("y", rigidbody.velocity.y);

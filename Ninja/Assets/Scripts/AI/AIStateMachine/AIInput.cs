@@ -109,14 +109,22 @@ public class AIInput : MonoBehaviour
 
     private void Update() 
     {
-        // Let NavMeshAgent take care of movement
-        if(useNavMeshAgentMovement) return;
-
+        // Overriding default movement
         if(isOverrideMovement)
         {
+            if(useNavMeshAgentMovement) 
+                navMeshAgent.velocity = overrideVector;
+            
             inputState.AxisInput = overrideVector;
             return;
         }
+
+        // Let NavMeshAgent take care of movement
+        if(useNavMeshAgentMovement)
+        {
+            inputState.AxisInput = transform.InverseTransformDirection(navMeshAgent.velocity.normalized);
+            return;
+        } 
 
         if(pathStarted && pathPoint < path.corners.Length)
         {
