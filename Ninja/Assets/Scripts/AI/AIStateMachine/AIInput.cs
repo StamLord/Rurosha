@@ -7,6 +7,7 @@ public class AIInput : MonoBehaviour
     [SerializeField] private InputState inputState;
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private NavMeshAgent navMeshAgent;
+    [SerializeField] private bool useNavMeshAgentMovement;
 
     private NavMeshPath path; //= new NavMeshPath();
     [SerializeField] private float pointDistance = .2f;
@@ -56,7 +57,14 @@ public class AIInput : MonoBehaviour
         // If close enough to target, dont calculate
         if(Vector3.Distance(transform.position, target) < pointDistance)
             return false;
-       
+
+        // Let NavMeshAgent take care of movement
+        if(useNavMeshAgentMovement)
+        {
+            navMeshAgent.SetDestination(target);
+            return true;
+        }
+
         if(path == null)
             path = new NavMeshPath();
 
@@ -101,6 +109,9 @@ public class AIInput : MonoBehaviour
 
     private void Update() 
     {
+        // Let NavMeshAgent take care of movement
+        if(useNavMeshAgentMovement) return;
+
         if(isOverrideMovement)
         {
             inputState.AxisInput = overrideVector;
