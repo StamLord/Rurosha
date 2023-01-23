@@ -53,7 +53,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 83df9cd4205cfd24db913f4c3b4da066, type: 2}
+  - {fileID: 2100000, guid: d73eee7097a745541b2285d890a9cb07, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -187,10 +187,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   isActive: 1
-  lastActiveState: 0
-  collided: []
   lastPosition: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  overrideVelocity: 0
+  oVelocityReference: {fileID: 0}
+  oVelocity: {x: 0, y: 0, z: 0}
+  lastActiveState: 0
+  collided: []
 --- !u!1 &5051931946096594648
 GameObject:
   m_ObjectHideFlags: 0
