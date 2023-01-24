@@ -5,6 +5,7 @@ using UnityEngine;
 public class TownManager : MonoBehaviour
 {
     [SerializeField] private Town town;
+    [SerializeField] private bool debug;
 
     public bool GetLocation(string name, out Vector3 coords, out float radius)
     {
@@ -31,6 +32,8 @@ public class TownManager : MonoBehaviour
 
     private void OnDrawGizmos() 
     {
+        if(debug == false) return;
+        
         foreach(Location l in town.locations)
         {
             Gizmos.color = Color.green;
