@@ -16,7 +16,7 @@ public class StealthZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        StealthAgent sa = other.transform.root.GetComponent<StealthAgent>();
+        StealthAgent sa = other.transform.root.GetComponentInChildren<StealthAgent>();
         if(sa && effected.Contains(sa) == false)
         {
             effected.Add(sa);
@@ -27,7 +27,7 @@ public class StealthZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other) 
     {
-        StealthAgent sa = other.transform.root.GetComponent<StealthAgent>();
+        StealthAgent sa = other.transform.root.GetComponentInChildren<StealthAgent>();
         if(sa)
         {
             effected.Remove(sa);

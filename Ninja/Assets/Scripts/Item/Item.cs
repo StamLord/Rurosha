@@ -20,6 +20,9 @@ public class Item : ScriptableObject
     [Header("Pickup")]
     public GameObject pickup;
 
+    [Header("Projectile")]
+    public GameObject projectile;
+
     public virtual void Randomize()
     {
 

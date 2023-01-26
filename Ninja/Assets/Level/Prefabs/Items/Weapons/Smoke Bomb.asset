@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34888de10901f9049b53cb9ee6108984, type: 3}
   m_Name: Smoke Bomb
   m_EditorClassIdentifier: 
-  model: {fileID: 4711208715938537054, guid: 4fca8cb859966ca45a91f0f90a8819d4, type: 3}
-  material: {fileID: 0}
+  model: {fileID: -231934308268961958, guid: 4fca8cb859966ca45a91f0f90a8819d4, type: 3}
+  material: {fileID: 2100000, guid: 9862bd55dcd5fdd4d95ad5a922f48161, type: 2}
   itemName: Smoke Bomb
   stackable: 1
   _ammo: 1
   durability: 0
   cost: 1
   pickup: {fileID: 5373187035755985752, guid: 39a84fab8d09ede4e8d5d3afd219d802, type: 3}
+  projectile: {fileID: 5373187035755985752, guid: 39a84fab8d09ede4e8d5d3afd219d802,
+    type: 3}
   WeaponType: 7
   damage: 0

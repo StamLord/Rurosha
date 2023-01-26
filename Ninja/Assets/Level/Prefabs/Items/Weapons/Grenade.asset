@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34888de10901f9049b53cb9ee6108984, type: 3}
-  m_Name: Horokubiya
+  m_Name: Grenade
   m_EditorClassIdentifier: 
-  model: {fileID: 4711208715938537054, guid: 4fca8cb859966ca45a91f0f90a8819d4, type: 3}
-  material: {fileID: 0}
+  model: {fileID: -231934308268961958, guid: 4fca8cb859966ca45a91f0f90a8819d4, type: 3}
+  material: {fileID: 2100000, guid: 102beae0c5b49a64280e15eb710a9d98, type: 2}
   itemName: Horokubiya
   stackable: 1
   _ammo: 1
   durability: 0
   cost: 1
   pickup: {fileID: 773845066800303054, guid: c462666e7a624774aa94b38bce9b959d, type: 3}
+  projectile: {fileID: 5373187035755985752, guid: d05acc45e11e1a44abedb3d181995c1d,
+    type: 3}
   WeaponType: 7
   damage: 0

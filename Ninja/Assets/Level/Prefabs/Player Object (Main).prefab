@@ -11924,26 +11924,26 @@ GameObject:
   - component: {fileID: 59200983}
   - component: {fileID: 59200965}
   - component: {fileID: 59200966}
+  - component: {fileID: 59200988}
+  - component: {fileID: 59200987}
   - component: {fileID: 59200967}
   - component: {fileID: 59200968}
   - component: {fileID: 59200969}
+  - component: {fileID: 59200973}
+  - component: {fileID: 59200974}
+  - component: {fileID: 59200984}
+  - component: {fileID: 59200982}
+  - component: {fileID: 59200981}
+  - component: {fileID: 59200980}
+  - component: {fileID: 59200977}
+  - component: {fileID: 59200976}
+  - component: {fileID: 59200978}
+  - component: {fileID: 59200979}
+  - component: {fileID: 59200975}
   - component: {fileID: 59200970}
   - component: {fileID: 59200971}
   - component: {fileID: 59200972}
-  - component: {fileID: 59200973}
-  - component: {fileID: 59200974}
-  - component: {fileID: 59200975}
-  - component: {fileID: 59200976}
-  - component: {fileID: 59200977}
-  - component: {fileID: 59200978}
-  - component: {fileID: 59200979}
-  - component: {fileID: 59200980}
-  - component: {fileID: 59200981}
-  - component: {fileID: 59200982}
-  - component: {fileID: 59200984}
   - component: {fileID: 59200985}
-  - component: {fileID: 59200987}
-  - component: {fileID: 59200988}
   - component: {fileID: 45846291057074261}
   - component: {fileID: 1659587216}
   m_Layer: 9
@@ -12103,6 +12103,71 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &59200988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e7fdeca72f6f848a9ac7b4564cc0d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 6944390856666288591}
+  _carryPoint: {fileID: 3757884392799871078}
+  _weaponManager: {fileID: 6944390854823740384}
+  _inputState: {fileID: 59200974}
+  _characterStats: {fileID: 6944390856915565334}
+  _interactionRange: 2
+  _interactionMask:
+    serializedVersion: 2
+    m_Bits: 7168
+  _currentSelection: {fileID: 0}
+  _startPressTime: 0
+  _minTimeToCarry: 1
+  attemptingCarry: 0
+  isCarrying: 0
+  carriedObject: {fileID: 0}
+  carryType: 1
+  throwForce: 10
+  moveForce: 250
+  drag: 10
+  angularDrag: 20
+  isSpring: 0
+  joint: {fileID: 0}
+  springRigid: {fileID: 0}
+  spring: 50
+  damper: 5
+  maxDistance: 0
+  debugView: 1
+--- !u!114 &59200987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c2efa4a875d6cc479798c7939105a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eyeLevel: {fileID: 6944390856666288591}
+  eyeLevelOffset: {x: 0, y: -0.1, z: 0}
+  visibilityModifier: 1
+  detectionModifier: 1
+  walkSound: 7
+  runSound: 12
+  crouchSound: 2
+  soundMask:
+    serializedVersion: 2
+    m_Bits: 2560
+  soundType: 0
+  lastSound: 0
+  soundEvery: 1
+  detectedValue: 0
 --- !u!114 &59200967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12218,96 +12283,6 @@ MonoBehaviour:
   camera: {fileID: 6944390856666288588}
   activeSpell: {fileID: 0}
   activeObject: {fileID: 0}
---- !u!114 &59200970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966905278435006557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 866c409ab20670e45b395c2b9f8f1894, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
-  isActive: 0
-  characterStateMachine: {fileID: 0}
-  gravity: 20
-  speed: 10
-  rigidbody: {fileID: 0}
-  inputVector: {x: 0, y: 0, z: 0}
-  targetDirection: {x: 0, y: 0, z: 0}
-  targetVelocity: {x: 0, y: 0, z: 0}
---- !u!114 &59200971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966905278435006557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bcb40cd3523ad944ae7f5ed2ccc6c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
-  isActive: 0
-  characterStateMachine: {fileID: 0}
-  rollDistance: 3
-  rollSpeed: 10
-  gravityOn: 1
-  gravity: 20
-  debugView: 0
-  rigidbody: {fileID: 0}
---- !u!114 &59200972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966905278435006557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a8c1fe37f474cd4da7efac44a4c3024, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
-  isActive: 0
-  characterStateMachine: {fileID: 0}
-  timeStamp: 0
-  gravityOn: 1
-  gravity: 20
-  JumpHeight:
-    attributeType: 1
-    values:
-    - 1
-    - 1.5
-    - 2
-    - 2.5
-    - 3
-    - 3.5
-    - 4
-    - 5
-    - 6
-    - 8
-  airControl: 3
-  potentialStaminaDepleteRate: 2
-  staminaDepleteRate: 20
-  agilityExpGain: 0.01
-  jumpVelocity: 10
-  jumpMaxHeight: 2
-  jumpMinHeight: 1
-  inputVector: {x: 0, y: 0, z: 0}
-  targetDirection: {x: 0, y: 0, z: 0}
-  targetVelocity: {x: 0, y: 0, z: 0}
-  maxVelocityChange: 10
-  transformDirection: 1
-  wallJumpOn: 1
-  wallJumpForce: 10
-  wallJumpMinimumSlope: -0.1
-  debugView: 0
-  rigidbody: {fileID: 0}
 --- !u!114 &59200973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12320,7 +12295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7e356408cc3c674ebb65c3c9e6638a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputState: {fileID: 59200974}
+  inputState: {fileID: 59200974}
   useRawInput: 1
   doubleTapWindow: 0.2
   movementDisabled: 0
@@ -12346,7 +12321,7 @@ MonoBehaviour:
   DoubleRight: 0
   Rotation: 0
   debug: 0
---- !u!114 &59200975
+--- !u!114 &59200984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12355,16 +12330,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 3966905278435006557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01c2266cc9a85144da0908667cbc1bfe, type: 3}
+  m_Script: {fileID: 11500000, guid: bde0ea5edde0ab54a98e984285616d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
-  isActive: 0
-  characterStateMachine: {fileID: 0}
-  standCollider: {fileID: 1702522207}
-  sitCollider: {fileID: 1450019840}
-  debugView: 0
---- !u!114 &59200976
+  _currentState: {fileID: 0}
+  _states:
+  - {fileID: 59200982}
+  - {fileID: 59200981}
+  - {fileID: 59200972}
+  - {fileID: 59200979}
+  - {fileID: 59200978}
+  - {fileID: 59200977}
+  - {fileID: 59200976}
+  - {fileID: 59200975}
+  - {fileID: 59200970}
+  - {fileID: 59200971}
+  _debugLogs: 0
+  characterStats: {fileID: 6944390856915565334}
+  inputState: {fileID: 59200974}
+  colliderManager: {fileID: 2527385649069118756}
+  kick: {fileID: 59200985}
+  stepSoundAgent: {fileID: 59200967}
+  stealthAgent: {fileID: 59200987}
+  groundSensor: {fileID: 1031901065}
+  ceilSensor: {fileID: 478293799}
+  wallSensor: {fileID: 2109989484}
+  ledgeSensor: {fileID: 2139967521}
+--- !u!114 &59200982
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12373,31 +12365,137 @@ MonoBehaviour:
   m_GameObject: {fileID: 3966905278435006557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a59dc94e3ff17124f867e645b191336f, type: 3}
+  m_Script: {fileID: 11500000, guid: e9d62ecc7a7617c4281f5b35ec1ecbb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 0}
   isActive: 0
   characterStateMachine: {fileID: 0}
-  runDistance:
+  walkSpeed: 5
+  runSpeed:
     attributeType: 1
     values:
-    - 6
     - 7
     - 8
     - 9
     - 10
     - 11
     - 12
-    - 13
     - 14
-    - 15
-  runSpeed: 6
-  jumpOffForce: 5
-  jumpOffHeight: 1
+    - 16
+    - 18
+    - 20
+  startRunBoost: 2
+  slopeSlideSpeed: 10
+  minSlideAngle: 30
+  gravityOn: 1
+  staminaDepleteRate: 20
+  potentialStaminaDepleteRate: 2
+  agilityExpGain: 0.01
+  gravity: 120
+  inputVector: {x: 0, y: 0, z: 0}
+  targetDirection: {x: 0, y: 0, z: 0}
+  maxVelocityChange: 10
+  climbCheck: {fileID: 1085942235367669121}
+  climbMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  isClimbing: 0
+  climbingStartDistannce: 0.75
   debugView: 0
   rigidbody: {fileID: 0}
-  wallOnLeft: 0
+--- !u!114 &59200981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c0db35e72b0a6d4dbfb7ae35ddf12e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  characterStateMachine: {fileID: 0}
+  walkSpeed: 2
+  airControl: 5
+  gravityOn: 1
+  gravity: 20
+  maxVelocityChange: 10
+  crouchVisibility: 0.7
+  crouchDetection: 0.5
+  inputVector: {x: 0, y: 0, z: 0}
+  targetDirection: {x: 0, y: 0, z: 0}
+  debugView: 0
+  rigidbody: {fileID: 0}
+--- !u!114 &59200980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d716471a935e7464497df50c7650b529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  characterStateMachine: {fileID: 0}
+  _timeStamp: 0
+  _jumpDirection: {x: 0, y: 0, z: 0}
+  _fromGround: 0
+  gravityOn: 1
+  gravity: 20
+  walkSpeed: 3
+  _runSpeed:
+    attributeType: 1
+    values:
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 14
+    - 16
+    - 18
+    - 20
+  JumpHeight:
+    attributeType: 1
+    values:
+    - 1
+    - 1.5
+    - 2
+    - 2.5
+    - 3
+    - 3.5
+    - 4
+    - 5
+    - 6
+    - 8
+  chargeJump: 1
+  characterStats: {fileID: 6944390856915565334}
+  inputState: {fileID: 0}
+  potentialStaminaDepleteRate: 20
+  staminaDepleteRate: 20
+  agilityExpGain: 0.01
+  inputVector: {x: 0, y: 0, z: 0}
+  targetDirection: {x: 0, y: 0, z: 0}
+  targetVelocity: {x: 0, y: 0, z: 0}
+  maxVelocityChange: 10
+  transformDirection: 1
+  pressTime: 0
+  maxPressTime: 1
+  wallJumpOn: 1
+  wallJumpForce: 10
+  wallJumpMinimumSlope: -0.1
+  debugView: 0
+  rigidbody: {fileID: 0}
+  collider: {fileID: 0}
 --- !u!114 &59200977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12489,6 +12587,40 @@ MonoBehaviour:
   maxAirJumps: 1
   debugView: 0
   rigidbody: {fileID: 0}
+--- !u!114 &59200976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a59dc94e3ff17124f867e645b191336f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  characterStateMachine: {fileID: 0}
+  runDistance:
+    attributeType: 1
+    values:
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+  runSpeed: 6
+  jumpOffForce: 5
+  jumpOffHeight: 1
+  debugView: 0
+  rigidbody: {fileID: 0}
+  wallOnLeft: 0
 --- !u!114 &59200978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12542,6 +12674,8 @@ MonoBehaviour:
   climbSpeed: 2
   climbSpeedHorizontal: 4
   maxVelocityChange: 10
+  staticCost: 2
+  dynamicCost: 5
   inputState: {fileID: 0}
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}
@@ -12569,7 +12703,7 @@ MonoBehaviour:
   ledgeColor: {r: 1, g: 0, b: 0, a: 1}
   climbCheckColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   rigidbody: {fileID: 0}
---- !u!114 &59200980
+--- !u!114 &59200975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12578,33 +12712,77 @@ MonoBehaviour:
   m_GameObject: {fileID: 3966905278435006557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d716471a935e7464497df50c7650b529, type: 3}
+  m_Script: {fileID: 11500000, guid: 01c2266cc9a85144da0908667cbc1bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 0}
   isActive: 0
   characterStateMachine: {fileID: 0}
-  _timeStamp: 0
-  _jumpDirection: {x: 0, y: 0, z: 0}
-  _fromGround: 0
+  standCollider: {fileID: 1702522207}
+  sitCollider: {fileID: 1450019840}
+  debugView: 0
+--- !u!114 &59200970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 866c409ab20670e45b395c2b9f8f1894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  characterStateMachine: {fileID: 0}
+  gravity: 20
+  speed: 10
+  rigidbody: {fileID: 0}
+  inputVector: {x: 0, y: 0, z: 0}
+  targetDirection: {x: 0, y: 0, z: 0}
+  targetVelocity: {x: 0, y: 0, z: 0}
+--- !u!114 &59200971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcb40cd3523ad944ae7f5ed2ccc6c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  characterStateMachine: {fileID: 0}
+  rollDistance: 3
+  rollSpeed: 10
   gravityOn: 1
   gravity: 20
-  walkSpeed: 3
-  _runSpeed:
-    attributeType: 0
-    values:
-    - 7
-    - 8
-    - 9
-    - 10
-    - 11
-    - 12
-    - 14
-    - 16
-    - 18
-    - 20
+  debugView: 0
+  rigidbody: {fileID: 0}
+--- !u!114 &59200972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8c1fe37f474cd4da7efac44a4c3024, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  characterStateMachine: {fileID: 0}
+  timeStamp: 0
+  gravityOn: 1
+  gravity: 20
   JumpHeight:
-    attributeType: 0
+    attributeType: 1
     values:
     - 1
     - 1.5
@@ -12616,133 +12794,23 @@ MonoBehaviour:
     - 5
     - 6
     - 8
-  chargeJump: 1
-  characterStats: {fileID: 0}
-  inputState: {fileID: 0}
-  potentialStaminaDepleteRate: 20
+  airControl: 3
+  potentialStaminaDepleteRate: 2
   staminaDepleteRate: 20
   agilityExpGain: 0.01
+  jumpVelocity: 10
+  jumpMaxHeight: 2
+  jumpMinHeight: 1
   inputVector: {x: 0, y: 0, z: 0}
   targetDirection: {x: 0, y: 0, z: 0}
   targetVelocity: {x: 0, y: 0, z: 0}
   maxVelocityChange: 10
   transformDirection: 1
-  pressTime: 0
-  maxPressTime: 1
   wallJumpOn: 1
   wallJumpForce: 10
   wallJumpMinimumSlope: -0.1
   debugView: 0
   rigidbody: {fileID: 0}
-  collider: {fileID: 0}
---- !u!114 &59200981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966905278435006557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c0db35e72b0a6d4dbfb7ae35ddf12e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
-  isActive: 0
-  characterStateMachine: {fileID: 0}
-  walkSpeed: 2
-  airControl: 5
-  gravityOn: 1
-  gravity: 20
-  maxVelocityChange: 10
-  crouchVisibility: 0.7
-  crouchDetection: 0.5
-  inputVector: {x: 0, y: 0, z: 0}
-  targetDirection: {x: 0, y: 0, z: 0}
-  debugView: 0
-  rigidbody: {fileID: 0}
---- !u!114 &59200982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966905278435006557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9d62ecc7a7617c4281f5b35ec1ecbb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
-  isActive: 0
-  characterStateMachine: {fileID: 0}
-  walkSpeed: 5
-  _runSpeed:
-    attributeType: 1
-    values:
-    - 7
-    - 8
-    - 9
-    - 10
-    - 11
-    - 12
-    - 14
-    - 16
-    - 18
-    - 20
-  slopeSlideSpeed: 10
-  minSlideAngle: 30
-  gravityOn: 1
-  staminaDepleteRate: 20
-  potentialStaminaDepleteRate: 2
-  agilityExpGain: 0.01
-  gravity: 120
-  inputVector: {x: 0, y: 0, z: 0}
-  targetDirection: {x: 0, y: 0, z: 0}
-  maxVelocityChange: 10
-  climbCheck: {fileID: 1085942235367669121}
-  climbMask:
-    serializedVersion: 2
-    m_Bits: 8192
-  isClimbing: 0
-  climbingStartDistannce: 0.75
-  debugView: 0
-  rigidbody: {fileID: 0}
---- !u!114 &59200984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966905278435006557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bde0ea5edde0ab54a98e984285616d6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentState: {fileID: 0}
-  _states:
-  - {fileID: 59200982}
-  - {fileID: 59200981}
-  - {fileID: 59200972}
-  - {fileID: 59200979}
-  - {fileID: 59200978}
-  - {fileID: 59200977}
-  - {fileID: 59200976}
-  - {fileID: 59200975}
-  - {fileID: 59200970}
-  - {fileID: 59200971}
-  _debugLogs: 0
-  characterStats: {fileID: 6944390856915565334}
-  inputState: {fileID: 59200974}
-  colliderManager: {fileID: 2527385649069118756}
-  kick: {fileID: 59200985}
-  stepSoundAgent: {fileID: 59200967}
-  stealthAgent: {fileID: 59200987}
-  groundSensor: {fileID: 1031901065}
-  ceilSensor: {fileID: 478293799}
-  wallSensor: {fileID: 2109989484}
-  ledgeSensor: {fileID: 2139967521}
 --- !u!114 &59200985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12766,71 +12834,6 @@ MonoBehaviour:
   softDamage: 5
   hardDamage: 10
   damageType: 0
---- !u!114 &59200987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966905278435006557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c2efa4a875d6cc479798c7939105a6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eyeLevel: {fileID: 6944390856666288591}
-  eyeLevelOffset: {x: 0, y: -0.1, z: 0}
-  visibilityModifier: 1
-  detectionModifier: 1
-  walkSound: 7
-  runSound: 12
-  crouchSound: 2
-  soundMask:
-    serializedVersion: 2
-    m_Bits: 2560
-  soundType: 0
-  lastSound: 0
-  soundEvery: 1
-  detectedValue: 0
---- !u!114 &59200988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3966905278435006557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84e7fdeca72f6f848a9ac7b4564cc0d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _camera: {fileID: 6944390856666288591}
-  _carryPoint: {fileID: 3757884392799871078}
-  _weaponManager: {fileID: 6944390854823740384}
-  _inputState: {fileID: 59200974}
-  _characterStats: {fileID: 6944390856915565334}
-  _interactionRange: 2
-  _interactionMask:
-    serializedVersion: 2
-    m_Bits: 7168
-  _currentSelection: {fileID: 0}
-  _startPressTime: 0
-  _minTimeToCarry: 1
-  attemptingCarry: 0
-  isCarrying: 0
-  carriedObject: {fileID: 0}
-  carryType: 1
-  throwForce: 10
-  moveForce: 250
-  drag: 10
-  angularDrag: 20
-  isSpring: 0
-  joint: {fileID: 0}
-  springRigid: {fileID: 0}
-  spring: 50
-  damper: 5
-  maxDistance: 0
-  debugView: 1
 --- !u!95 &45846291057074261
 Animator:
   serializedVersion: 4
@@ -21402,6 +21405,8 @@ MonoBehaviour:
   weaponManager: {fileID: 0}
   animator: {fileID: 8542446599430791395}
   inputState: {fileID: 59200974}
+  useNavMeshAgent: 0
+  navMeshAgent: {fileID: 0}
   rigidbody: {fileID: 59200983}
   runSpeed: 7
   ikLookTarget: {fileID: 2118518809}
@@ -21745,11 +21750,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].y
-      value: 2.65
+      value: 2.9
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: 45.8
+      value: -39.2
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].x
@@ -21757,11 +21762,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 1.4
+      value: 1.65
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: 45.8
+      value: -39.2
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].x
@@ -21769,11 +21774,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].y
-      value: 0.14999998
+      value: 0.39999998
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].z
-      value: 45.8
+      value: -39.2
       objectReference: {fileID: 0}
     - target: {fileID: 1490965675, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: camera
@@ -21841,8 +21846,7 @@ PrefabInstance:
         type: 3}
       propertyPath: items.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 8c2ea5b5e93a677459d719b857ba2b53,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1278044654527455677, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_RootOrder
@@ -22246,6 +22250,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3515781672559642617, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ab66ea66405b0264aadc744112a0b4be, type: 2}
     - target: {fileID: 5174405575449335521, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: hitMask.m_Bits
@@ -22266,6 +22275,11 @@ PrefabInstance:
       propertyPath: oVelocityReference
       value: 
       objectReference: {fileID: 1323493131}
+    - target: {fileID: 5236987593671915916, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 102beae0c5b49a64280e15eb710a9d98, type: 2}
     - target: {fileID: 5797145477176175113, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.size
@@ -22383,6 +22397,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5967310844724133291, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
+      propertyPath: combos.Array.data[0].softDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967310844724133291, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: combos.Array.data[1].softDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967310844724133291, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: combos.Array.data[2].softDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967310844724133291, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
       propertyPath: combos.Array.data[2].animationState
       value: fist_barrage
       objectReference: {fileID: 0}
@@ -22408,13 +22437,8 @@ PrefabInstance:
       objectReference: {fileID: 444366759}
     - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
-      propertyPath: validLeftAttackStates.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
-        type: 3}
       propertyPath: validRightAttackStates.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22451,6 +22475,16 @@ PrefabInstance:
       propertyPath: validRightAttackStates.Array.data[1]
       value: sweep_1_chain
       objectReference: {fileID: 0}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validRightAttackStates.Array.data[2]
+      value: guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763812926436930487, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validRightAttackStates.Array.data[3]
+      value: guard_spin
+      objectReference: {fileID: 0}
     - target: {fileID: 8061237257040925871, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
@@ -22471,6 +22505,16 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 6944390856666288591}
+    - target: {fileID: 8206658475898245645, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: meshFilter
+      value: 
+      objectReference: {fileID: 9012755380965099386}
+    - target: {fileID: 8206658475898245645, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: meshRenderer
+      value: 
+      objectReference: {fileID: 4129356789667765206}
     - target: {fileID: 8206658476292956832, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_Mesh
@@ -22494,7 +22538,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2796
+      value: 2679
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22504,7 +22548,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2799
+      value: 2688
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22585,6 +22629,12 @@ ParticleSystem:
     type: 3}
   m_PrefabInstance: {fileID: 8206658475264025178}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &4129356789667765206 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5236987593671915916, guid: e0128e86a9a29e74b80317cb98468768,
+    type: 3}
+  m_PrefabInstance: {fileID: 8206658475264025178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!33 &4877165421937412421 stripped
 MeshFilter:
   m_CorrespondingSourceObject: {fileID: 3624487834538896159, guid: e0128e86a9a29e74b80317cb98468768,
@@ -22661,6 +22711,12 @@ MonoBehaviour:
 --- !u!4 &8206658477078768923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2083901249, guid: e0128e86a9a29e74b80317cb98468768,
+    type: 3}
+  m_PrefabInstance: {fileID: 8206658475264025178}
+  m_PrefabAsset: {fileID: 0}
+--- !u!33 &9012755380965099386 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: 932338733739795744, guid: e0128e86a9a29e74b80317cb98468768,
     type: 3}
   m_PrefabInstance: {fileID: 8206658475264025178}
   m_PrefabAsset: {fileID: 0}

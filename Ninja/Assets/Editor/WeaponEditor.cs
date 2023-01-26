@@ -53,6 +53,10 @@ public class WeaponEditor : Editor
 
         weapon.pickup = (GameObject)EditorGUILayout.ObjectField("Pickup", weapon.pickup, typeof(GameObject), true);
 
+        EditorGUILayout.Space(10);
+
+        weapon.projectile = (GameObject)EditorGUILayout.ObjectField("Projectile", weapon.projectile, typeof(GameObject), true);
+
     }
 
     public void WindowUpdate(int id)

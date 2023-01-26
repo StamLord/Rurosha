@@ -25,7 +25,7 @@ public class Bomb : WeaponObject
     private bool isAimingSingle;
     private bool isAimingMultiple;
 
-    void Update()
+    private void Update()
     {
         switch (inputState.MouseButton1.State)
         {
@@ -138,5 +138,11 @@ public class Bomb : WeaponObject
         }
 
         lineRenderer[index].SetPositions(points.ToArray());
+    }
+
+    public override void SetItem(Item item)
+    {
+        base.SetItem(item);
+        projectile = item.projectile;
     }
 }
