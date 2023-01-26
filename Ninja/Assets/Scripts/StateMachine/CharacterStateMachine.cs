@@ -14,7 +14,7 @@ public class CharacterStateMachine : StateMachine
     [Header("Sound Agent")]
     [SerializeField] private StepSoundAgent stepSoundAgent;
 
-    private bool isDebug;
+    private static bool isDebug;
 
     private void Start()
     {

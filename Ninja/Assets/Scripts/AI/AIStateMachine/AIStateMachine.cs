@@ -22,7 +22,7 @@ public class AIStateMachine : StateMachine
 
     [SerializeField] private MeshRenderer meshRenderer;
 
-    private bool isDebug;
+    private static bool isDebug;
 
     private void Start()
     {
