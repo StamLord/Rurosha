@@ -1998,11 +1998,7 @@ GameObject:
   - component: {fileID: 6091492067934997479}
   - component: {fileID: 7936478245080124284}
   - component: {fileID: 4293227107428241640}
-  - component: {fileID: 611279606627323848}
   - component: {fileID: 6676553478032390319}
-  - component: {fileID: 8914376060935545213}
-  - component: {fileID: 7573767927205409217}
-  - component: {fileID: 3053753213885256870}
   - component: {fileID: 7715210714452133598}
   - component: {fileID: 3500558232261900858}
   - component: {fileID: 4108854064479762184}
@@ -2130,37 +2126,6 @@ MonoBehaviour:
   debugLightBaseColor: {r: 1, g: 1, b: 1, a: 1}
   debugLightAlmostColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   debugLightDetectedColor: {r: 1, g: 0, b: 0, a: 1}
---- !u!114 &611279606627323848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8997393895949410982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bde0ea5edde0ab54a98e984285616d6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentState: {fileID: 0}
-  _states:
-  - {fileID: 8914376060935545213}
-  - {fileID: 8914376060935545213}
-  - {fileID: 7573767927205409217}
-  - {fileID: 3053753213885256870}
-  - {fileID: 3053753213885256870}
-  - {fileID: 3053753213885256870}
-  _debugLogs: 0
-  characterStats: {fileID: 8309317035926444679}
-  inputState: {fileID: 7936478245080124284}
-  colliderManager: {fileID: 0}
-  kick: {fileID: 0}
-  stepSoundAgent: {fileID: 0}
-  stealthAgent: {fileID: 0}
-  groundSensor: {fileID: 2936772676371078054}
-  ceilSensor: {fileID: 7750834731693652966}
-  wallSensor: {fileID: 44466039623609027}
-  ledgeSensor: {fileID: 7078715805052704615}
 --- !u!54 &6676553478032390319
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2177,146 +2142,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8914376060935545213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8997393895949410982}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9d62ecc7a7617c4281f5b35ec1ecbb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
-  isActive: 0
-  characterStateMachine: {fileID: 0}
-  walkSpeed: 3
-  runSpeed:
-    attributeType: 0
-    values: []
-  startRunBoost: 2
-  slopeSlideSpeed: 10
-  minSlideAngle: 30
-  gravityOn: 1
-  staminaDepleteRate: 20
-  potentialStaminaDepleteRate: 2
-  agilityExpGain: 0.01
-  gravity: 120
-  inputVector: {x: 0, y: 0, z: 0}
-  targetDirection: {x: 0, y: 0, z: 0}
-  maxVelocityChange: 10
-  climbCheck: {fileID: 0}
-  climbMask:
-    serializedVersion: 2
-    m_Bits: 8192
-  isClimbing: 0
-  climbingStartDistannce: 0.5
-  debugView: 0
-  rigidbody: {fileID: 0}
---- !u!114 &7573767927205409217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8997393895949410982}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a8c1fe37f474cd4da7efac44a4c3024, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
-  isActive: 0
-  characterStateMachine: {fileID: 0}
-  timeStamp: 0
-  gravityOn: 1
-  gravity: 20
-  JumpHeight:
-    attributeType: 0
-    values:
-    - 1
-    - 1.5
-    - 2
-    - 2.5
-    - 3
-    - 3.5
-    - 4
-    - 5
-    - 6
-    - 8
-  airControl: 5
-  potentialStaminaDepleteRate: 2
-  staminaDepleteRate: 20
-  agilityExpGain: 0.01
-  jumpVelocity: 10
-  jumpMaxHeight: 2
-  jumpMinHeight: 1
-  inputVector: {x: 0, y: 0, z: 0}
-  targetDirection: {x: 0, y: 0, z: 0}
-  targetVelocity: {x: 0, y: 0, z: 0}
-  maxVelocityChange: 10
-  transformDirection: 0
-  wallJumpOn: 1
-  wallJumpForce: 10
-  wallJumpMinimumSlope: -0.1
-  debugView: 0
-  rigidbody: {fileID: 0}
---- !u!114 &3053753213885256870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8997393895949410982}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c95a0d93e511f4f96909b299d21d37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
-  isActive: 0
-  characterStateMachine: {fileID: 0}
-  gravityOn: 1
-  gravity: 20
-  airControl: 3
-  maxVelocityChange: 10
-  originalSpeed: {x: 0, y: 0, z: 0}
-  inputVector: {x: 0, y: 0, z: 0}
-  targetDirection: {x: 0, y: 0, z: 0}
-  targetVelocity: {x: 0, y: 0, z: 0}
-  climbCheck: {fileID: 0}
-  climbMask:
-    serializedVersion: 2
-    m_Bits: 8192
-  isClimbing: 0
-  climbingStartDistannce: 0.75
-  vaultDuration: 0.4
-  finalPositionOffset: {x: 0, y: 0, z: 0}
-  miniFallDamageVelocity: -10
-  FallDamage: 5
-  fallDamageHeight:
-    attributeType: 0
-    values: []
-  minRollHeight: 2
-  rollWindow: 0.1
-  glideOn: 0
-  glideGravityMultiplier: 0.2
-  liftForce: 5
-  isGliding: 0
-  glideTransform: {fileID: 0}
-  maxTurnSpeed: 0
-  forwardCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  airJumps: 0
-  maxAirJumps: 1
-  debugView: 0
-  rigidbody: {fileID: 0}
 --- !u!114 &7715210714452133598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2357,13 +2182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421cb12077bd8274ca63e8d3dd6014f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentState: {fileID: 0}
-  _states:
-  - {fileID: 4108854064479762184}
-  - {fileID: 1180507626903282354}
-  - {fileID: 652328847398222783}
-  - {fileID: 1429114385148799954}
-  _debugLogs: 0
+  currentState: {fileID: 0}
+  states: []
+  defaultState: {fileID: 0}
+  debugLogs: 0
   characterStats: {fileID: 8309317035926444679}
   awarenessAgent: {fileID: 4293227107428241640}
   stealthAgent: {fileID: 4410426048301243333}
@@ -4869,7 +4691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc3bec2c9ace2a4e9d5425c94aa5d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateMachine: {fileID: 611279606627323848}
+  stateMachine: {fileID: 0}
   characterStats: {fileID: 8309317035926444679}
   weaponManager: {fileID: 7377369967753941515}
   animator: {fileID: 794946873}
