@@ -19784,12 +19784,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c921310e35f6b4faca19c462848900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shape: 0
   size: {x: 6, y: 6, z: 6}
   offset: {x: 0, y: 0, z: 0}
   hitMask:
     serializedVersion: 2
     m_Bits: 2147483647
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
   isActive: 0
+  lastPosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  overrideVelocity: 0
+  oVelocityReference: {fileID: 0}
+  oVelocity: {x: 0, y: 0, z: 0}
   lastActiveState: 0
   collided: []
 --- !u!1 &8042354498376563094
@@ -24681,6 +24690,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4527955274735743726, guid: 4fca8cb859966ca45a91f0f90a8819d4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ab66ea66405b0264aadc744112a0b4be, type: 2}
     - target: {fileID: 919132149155446097, guid: 4fca8cb859966ca45a91f0f90a8819d4,
         type: 3}
       propertyPath: m_Name
@@ -24692,6 +24706,11 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2069834475805988663, guid: 4fca8cb859966ca45a91f0f90a8819d4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 102beae0c5b49a64280e15eb710a9d98, type: 2}
+    - target: {fileID: 4129356788942975847, guid: 4fca8cb859966ca45a91f0f90a8819d4,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
