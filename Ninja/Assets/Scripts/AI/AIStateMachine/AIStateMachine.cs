@@ -20,9 +20,24 @@ public class AIStateMachine : StateMachine
     public Vector3 enemyLastSeen;
     public Vector3 enemyLastDir;
 
-    [SerializeField] private MeshRenderer meshRenderer;
-
     private static bool isDebug;
+    
+    public enum StateName
+    {
+        IDLE,
+        SEARCH,
+        FIGHT,
+        FLEE
+    };
+
+    [Space(20)]
+
+    [Header("States")]
+
+    [SerializeField] private AIState idle;
+    [SerializeField] private AIState search;
+    [SerializeField] private AIState fight;
+    [SerializeField] private AIState flee;
 
     private void Start()
     {
@@ -43,6 +58,25 @@ public class AIStateMachine : StateMachine
                     return "Parameter should be 1 or 0";
                 }));
         SwitchState(0);
+    }
+
+    public void SwitchState(StateName state)
+    {
+        switch(state)
+        {
+            case StateName.IDLE:
+                SwitchState(idle);
+                break;
+            case StateName.SEARCH:
+                SwitchState(search);
+                break;
+            case StateName.FIGHT:
+                SwitchState(fight);
+                break;
+            case StateName.FLEE:
+                SwitchState(flee);
+                break;
+        }
     }
 
     public bool CalculatePath(Vector3 target)
@@ -88,12 +122,6 @@ public class AIStateMachine : StateMachine
     public void StopOverrideMovement()
     {
         aiInput.StopOverrideMovement();
-    }
-
-    public void SetDebugColor(Color color)
-    {
-        if(meshRenderer)
-            meshRenderer.material.color = color;
     }
 
     private void OnGUI() 

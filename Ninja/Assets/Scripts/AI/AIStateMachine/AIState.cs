@@ -15,6 +15,11 @@ public class AIState : State
     [SerializeField] protected float turnSpeed = 1f;
     [SerializeField] protected bool debug;
 
+    public void SwitchState(AIStateMachine.StateName state)
+    {
+        AIStateMachine.SwitchState(state);
+    }
+
     /// <summary>
     /// Finds a path on NavMesh to target
     /// </summary>

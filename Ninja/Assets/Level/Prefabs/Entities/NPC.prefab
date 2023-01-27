@@ -2193,7 +2193,10 @@ MonoBehaviour:
   enemy: {fileID: 0}
   enemyLastSeen: {x: 0, y: 0, z: 0}
   enemyLastDir: {x: 0, y: 0, z: 0}
-  meshRenderer: {fileID: 4289425569817373587}
+  idle: {fileID: 4108854064479762184}
+  search: {fileID: 652328847398222783}
+  fight: {fileID: 1180507626903282354}
+  flee: {fileID: 1429114385148799954}
 --- !u!114 &4108854064479762184
 MonoBehaviour:
   m_ObjectHideFlags: 0

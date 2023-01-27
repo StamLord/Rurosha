@@ -23,9 +23,6 @@ public class FleeAIState : AIState
         AIStateMachine.AwarenessAgent.OnSeeAgent += SeeAgent;
         
         AIStateMachine.HoldButton("run");
-        
-        if(debug)
-            AIStateMachine.SetDebugColor(Color.yellow);
     }
 
     public override void OnStateUpdate()
@@ -82,7 +79,7 @@ public class FleeAIState : AIState
             yield return null;
 
         // Enough time passed, return to idle state
-        AIStateMachine.SwitchState(0);
+        SwitchState(AIStateMachine.StateName.IDLE);
     }
 
     private void OnDrawGizmos() 

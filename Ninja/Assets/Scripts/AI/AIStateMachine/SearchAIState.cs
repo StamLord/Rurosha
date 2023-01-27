@@ -37,9 +37,6 @@ public class SearchAIState : AIState
         target = lastSeen + lastDir;
         MoveTo(target);
         searchStart = Time.time;
-
-        if(debug)
-            AIStateMachine.SetDebugColor(Color.yellow);
     }
 
     public override void OnStateUpdate()
@@ -48,7 +45,7 @@ public class SearchAIState : AIState
         if(Time.time - searchStart >= maxSearchTime)
         {
             // Switch to IdleAIState
-            AIStateMachine.SwitchState(0);
+            SwitchState(AIStateMachine.StateName.IDLE);
             return;
         }
 
@@ -83,7 +80,7 @@ public class SearchAIState : AIState
     {
         // If this is our enemy we were looking for, switch to FightAIState
         if(agent == AIStateMachine.enemy)
-            AIStateMachine.SwitchState(1);
+            SwitchState(AIStateMachine.StateName.FIGHT);
     }
 
     private void HearSound(Vector3 origin)

@@ -54,9 +54,6 @@ public class FightAIState : AIState
 
         // Draw weapon
         DrawWeapon();
-        
-        if(debug)
-            AIStateMachine.SetDebugColor(Color.red);
     }
 
     public override void OnStateUpdate()
@@ -152,7 +149,7 @@ public class FightAIState : AIState
         AIStateMachine.enemyLastDir.y = 0; // Flatten direction to discard jumping / falling vectors
 
         // Switch to SearchAIState
-        AIStateMachine.SwitchState(2);
+        SwitchState(AIStateMachine.StateName.SEARCH);
     }
 
     private IEnumerator AttackCoroutine(float waitAfterAttack)

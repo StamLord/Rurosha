@@ -33,9 +33,6 @@ public class IdleAIState : AIState
         AIStateMachine.AwarenessAgent.OnSeeAgent += SeeTarget;
         AIStateMachine.AwarenessAgent.OnHearSound += HearSound;
         waiting = true;
-
-        if(debug)
-            AIStateMachine.SetDebugColor(Color.white);
     }
 
     public override void OnStateUpdate()
@@ -96,7 +93,7 @@ public class IdleAIState : AIState
         // If we don't retailiate we flee
         if(retaliate == false)
         {
-            AIStateMachine.SwitchState(3);
+            SwitchState(AIStateMachine.StateName.FLEE);
             return;
         }
 
@@ -105,13 +102,13 @@ public class IdleAIState : AIState
         {
             if(agent == a)
             {
-                AIStateMachine.SwitchState(1);
+                SwitchState(AIStateMachine.StateName.FIGHT);
                 return;
             }
         }
 
         // Otherwise, switch to SearchAIState
-        AIStateMachine.SwitchState(2);
+        SwitchState(AIStateMachine.StateName.SEARCH);
     }
 
     private void SeeTarget(StealthAgent agent)
@@ -124,13 +121,13 @@ public class IdleAIState : AIState
         if(cowardly)
         {
             AIStateMachine.enemy = agent;
-            AIStateMachine.SwitchState(3);
+            SwitchState(AIStateMachine.StateName.FLEE);
         }
         // If agrressive, fight
         else if(aggressive)
         {
             AIStateMachine.enemy = agent;
-            AIStateMachine.SwitchState(1);
+            SwitchState(AIStateMachine.StateName.FIGHT);
         }
     }
 
