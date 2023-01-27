@@ -11,6 +11,12 @@ public class ClimbState : PlayerState
 
     [Space(20f)]
 
+    [Header("Stamina Cost")]
+    [SerializeField] private float staticCost = 2f;
+    [SerializeField] private float dynamicCost = 5f;
+
+    [Space(20f)]
+
     [Header("Input Data")]
     [SerializeField] private InputState inputState;
     [SerializeField] private Vector3 inputVector;
@@ -78,18 +84,19 @@ public class ClimbState : PlayerState
         
         GetInput();
 
-        #region Old Physics Movement
-        // targetVelocity *= climbSpeed;
+        // Stamina deplete
+        float staminaCost = staticCost;
 
-        // Vector3 velocity = rigidbody.velocity;
-        // Vector3 velocityChange = (targetVelocity - velocity);
+        if(inputVector.magnitude > 0)
+            staminaCost = dynamicCost;
 
-        // velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-        // velocityChange.y = Mathf.Clamp(velocityChange.y, -maxVelocityChange, maxVelocityChange);
-        // velocityChange.z = 0;
+        if(characterStats.DepleteStamina(staminaCost * Time.deltaTime, true) == false)
+        {
+            // Fall if not enough Stamina
+            _stateMachine.SwitchState(2);
+            return;
+        }
 
-        //rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
-        #endregion
 
         ClimbCheck();
         GetWallAxis();
@@ -122,14 +129,6 @@ public class ClimbState : PlayerState
                 StartCoroutine(co);
             }
         }
-        
-        // if(climbingOn)
-        // {
-        //     // Rotate Player
-        //     Vector3 facingVector = climbingOn.position - transform.position;
-        //     facingVector.y = 0;
-        //     transform.forward = facingVector;
-        // }
 
         #region Transitions
             
