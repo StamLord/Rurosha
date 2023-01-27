@@ -88,6 +88,8 @@ public class AIState : State
 
     private float GetRelationship(StealthAgent agent)
     {
+        if(agent == null) return 0;
+        
         string targetFaction = agent.transform.root.GetComponent<CharacterStats>().Faction;
         return AIStateMachine.CharacterStats.GetRelationship(targetFaction);
     }
