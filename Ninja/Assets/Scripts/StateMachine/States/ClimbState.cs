@@ -93,7 +93,7 @@ public class ClimbState : PlayerState
         if(characterStats.DepleteStamina(staminaCost * Time.deltaTime, true) == false)
         {
             // Fall if not enough Stamina
-            _stateMachine.SwitchState(2);
+            SwitchState(CharacterStateMachine.StateName.AIR);
             return;
         }
 
@@ -133,23 +133,23 @@ public class ClimbState : PlayerState
         #region Transitions
             
         if(ClimbDownCheck())
-            _stateMachine.SwitchState(0);
+            SwitchState(CharacterStateMachine.StateName.WALK);
         
         // Climb Down
         if(moveVector.y < 0)
         {
             RaycastHit floor;
             if(Physics.Raycast(transform.position, -wallVertical, out floor, 1f))
-                _stateMachine.SwitchState(1);
+                SwitchState(CharacterStateMachine.StateName.WALK);
         }
 
         // Jump off
         if(inputState.Jump.State == VButtonState.PRESS_START)
-            _stateMachine.SwitchState(2);
+            SwitchState(CharacterStateMachine.StateName.JUMP);
 
         // Fall if no longer climbing
         if(isClimbing == false)
-            _stateMachine.SwitchState(2);
+            SwitchState(CharacterStateMachine.StateName.AIR);
 
         #endregion
     }
@@ -213,7 +213,7 @@ public class ClimbState : PlayerState
         inTransition = false;
 
         // Switch to Grounded State
-        _stateMachine.SwitchState(1);        
+        SwitchState(CharacterStateMachine.StateName.WALK);        
     }
 
     private void DetectLedge()

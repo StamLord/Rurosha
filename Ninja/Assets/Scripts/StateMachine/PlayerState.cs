@@ -16,6 +16,11 @@ public class PlayerState : State
     public ColliderManager colliderManager { get {return CharacterStateMachine.colliderManager; }}
     public Kick kick { get { return CharacterStateMachine.kick; }}
     
+    public void SwitchState(CharacterStateMachine.StateName stateName)
+    {
+        CharacterStateMachine.SwitchState(stateName);
+    }
+
     public void SetVisibility(float visibility)
     {
         CharacterStateMachine.SetVisibility(visibility);

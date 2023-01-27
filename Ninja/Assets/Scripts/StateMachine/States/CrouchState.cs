@@ -98,14 +98,14 @@ public class CrouchState : PlayerState
         // Air
         else 
         {
-            _stateMachine.SwitchState(5);
+            SwitchState(CharacterStateMachine.StateName.AIR);
             return;
         }
 
         // Stand up
         if (inputState.Crouch.State == VButtonState.UNPRESSED && isUnder == false)
         {
-            _stateMachine.SwitchState(0);
+            SwitchState(CharacterStateMachine.StateName.WALK);
             return;
         }
 

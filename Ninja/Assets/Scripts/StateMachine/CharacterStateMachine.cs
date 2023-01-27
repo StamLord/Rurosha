@@ -11,11 +11,78 @@ public class CharacterStateMachine : StateMachine
     public ColliderManager colliderManager;
     public Kick kick;
     
+    [Space(20f)]
+
+    [Header("States")]
+    [SerializeField] private State walk;
+    [SerializeField] private State run;
+    [SerializeField] private State jump;
+    [SerializeField] private State air;
+    [SerializeField] private State climb;
+    [SerializeField] private State dash;
+    [SerializeField] private State wallRun;
+    [SerializeField] private State crouch;
+    [SerializeField] private State roll;
+    [SerializeField] private State sit;
+
+    [Space(20f)]
+
     [Header("Sound Agent")]
     [SerializeField] private StepSoundAgent stepSoundAgent;
 
     private static bool isDebug;
 
+    public enum StateName
+    {
+        WALK,
+        RUN,
+        JUMP,
+        AIR,
+        CLIMB,
+        DASH,
+        WALL_RUN,
+        CROUCH,
+        ROLL,
+        SIT
+    };
+
+    public void SwitchState(StateName state)
+    {
+        switch(state)
+        {
+            case StateName.WALK:
+                SwitchState(walk);
+                break;
+            case StateName.RUN:
+                SwitchState(run);
+                break;
+            case StateName.JUMP:
+                SwitchState(jump);
+                break;
+            case StateName.AIR:
+                SwitchState(air);
+                break;
+            case StateName.CLIMB:
+                SwitchState(climb);
+                break;
+            case StateName.DASH:
+                SwitchState(dash);
+                break;
+            case StateName.WALL_RUN:
+                SwitchState(wallRun);
+                break;
+            case StateName.CROUCH:
+                SwitchState(crouch);
+                break;
+            case StateName.ROLL:
+                SwitchState(roll);
+                break;
+            case StateName.SIT:
+                SwitchState(sit);
+                break;
+        }
+    }
+    
     private void Start()
     {
         DebugCommandDatabase.AddCommand(new DebugCommand(
@@ -34,7 +101,8 @@ public class CharacterStateMachine : StateMachine
                     }
                     return "Parameter should be 1 or 0";
                 }));
-        SwitchState(0);
+        
+        SwitchState(defaultState);
     }
 
     public void SetStepSoundAgent(bool active)

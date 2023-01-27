@@ -130,9 +130,9 @@ public class SimpleJumpState : PlayerState
         if (rigidbody.velocity.y <= 0) 
         {
             if (IsGrounded)
-                _stateMachine.SwitchState(0);
+                SwitchState(CharacterStateMachine.StateName.WALK);
             else
-                _stateMachine.SwitchState(5);
+                SwitchState(CharacterStateMachine.StateName.AIR);
             return;
         }
         
@@ -140,7 +140,7 @@ public class SimpleJumpState : PlayerState
         if (inputState.Jump.State == VButtonState.UNPRESSED && rigidbody.velocity.y > 0 && completion > minCompletion)
         {
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
-            _stateMachine.SwitchState(5);
+            SwitchState(CharacterStateMachine.StateName.AIR);
             return;
         }
 

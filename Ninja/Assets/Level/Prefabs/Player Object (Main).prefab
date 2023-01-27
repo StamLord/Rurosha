@@ -11933,6 +11933,7 @@ GameObject:
   - component: {fileID: 59200974}
   - component: {fileID: 59200984}
   - component: {fileID: 59200982}
+  - component: {fileID: 8075875620774778840}
   - component: {fileID: 59200981}
   - component: {fileID: 59200980}
   - component: {fileID: 59200977}
@@ -12333,23 +12334,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde0ea5edde0ab54a98e984285616d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentState: {fileID: 0}
-  _states:
-  - {fileID: 59200982}
-  - {fileID: 59200981}
-  - {fileID: 59200972}
-  - {fileID: 59200979}
-  - {fileID: 59200978}
-  - {fileID: 59200977}
-  - {fileID: 59200976}
-  - {fileID: 59200975}
-  - {fileID: 59200970}
-  - {fileID: 59200971}
-  _debugLogs: 0
+  currentState: {fileID: 0}
+  states: []
+  defaultState: {fileID: 59200982}
+  debugLogs: 0
   characterStats: {fileID: 6944390856915565334}
   inputState: {fileID: 59200974}
   colliderManager: {fileID: 2527385649069118756}
   kick: {fileID: 59200985}
+  walk: {fileID: 59200982}
+  run: {fileID: 8075875620774778840}
+  jump: {fileID: 59200972}
+  air: {fileID: 59200977}
+  climb: {fileID: 59200979}
+  dash: {fileID: 59200978}
+  wallRun: {fileID: 59200976}
+  crouch: {fileID: 59200981}
+  roll: {fileID: 59200971}
+  sit: {fileID: 59200975}
   stepSoundAgent: {fileID: 59200967}
   stealthAgent: {fileID: 59200987}
   groundSensor: {fileID: 1031901065}
@@ -12400,6 +12402,53 @@ MonoBehaviour:
   climbMask:
     serializedVersion: 2
     m_Bits: 8192
+  isClimbing: 0
+  climbingStartDistannce: 0.75
+  debugView: 0
+  rigidbody: {fileID: 0}
+--- !u!114 &8075875620774778840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac0000397d0a23246b2f742854743069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  characterStateMachine: {fileID: 0}
+  runSpeed:
+    attributeType: 1
+    values:
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 14
+    - 16
+    - 18
+    - 20
+  startRunBoost: 2
+  slopeSlideSpeed: 10
+  minSlideAngle: 30
+  gravityOn: 1
+  staminaDepleteRate: 20
+  potentialStaminaDepleteRate: 2
+  agilityExpGain: 0.01
+  gravity: 20
+  inputVector: {x: 0, y: 0, z: 0}
+  targetDirection: {x: 0, y: 0, z: 0}
+  maxVelocityChange: 10
+  climbCheck: {fileID: 0}
+  climbMask:
+    serializedVersion: 2
+    m_Bits: 0
   isClimbing: 0
   climbingStartDistannce: 0.75
   debugView: 0
@@ -21750,11 +21799,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].y
-      value: 2.9
+      value: 2.65
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: -39.2
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].x
@@ -21762,11 +21811,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 1.65
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: -39.2
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].x
@@ -21774,11 +21823,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].y
-      value: 0.39999998
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].z
-      value: -39.2
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 1490965675, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: camera
@@ -22538,7 +22587,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2679
+      value: 2697
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22548,7 +22597,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2688
+      value: 2706
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}

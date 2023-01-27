@@ -61,9 +61,9 @@ public class RollState : PlayerState
         {
             rigidbody.velocity = Vector3.zero;
             if(IsGrounded) // CrouchState
-                _stateMachine.SwitchState(1);
+                SwitchState(CharacterStateMachine.StateName.CROUCH);
             else // AirState
-                _stateMachine.SwitchState(5);
+                SwitchState(CharacterStateMachine.StateName.AIR);
 
         }
     }

@@ -175,20 +175,20 @@ public class AirState : PlayerState
                     lastWallRunNormal = wallNormal;
                     // Reset jump button to avoid next state processing it
                     inputState.Jump.Set(VButtonState.UNPRESSED);
-                    _stateMachine.SwitchState(6);
+                    SwitchState(CharacterStateMachine.StateName.WALL_RUN);
                     return;
                 }
                 // Wall jump
                 else if(wallDetected)
                 {
-                    _stateMachine.SwitchState(2);
+                    SwitchState(CharacterStateMachine.StateName.JUMP);
                 }
                 // Perform Air Jump if below maxAirJumps
                 else if(airJumps < maxAirJumps)
                 {
                     if(OnDoubleJumpStart != null) OnDoubleJumpStart();
                     airJumps++;
-                    _stateMachine.SwitchState(2);
+                    SwitchState(CharacterStateMachine.StateName.JUMP);
                 }
             }
         }
@@ -200,7 +200,7 @@ public class AirState : PlayerState
         // Dash
         if(inputState.DoubleForward || inputState.DoubleBack || inputState.DoubleLeft || inputState.DoubleRight)
             if(characterStats.DepleteStamina(20))
-                _stateMachine.SwitchState(4);
+                SwitchState(CharacterStateMachine.StateName.DASH);
 
         // Switch to GroundedState
         if (IsGrounded /*&& rigidbody.velocity.y <= 0*/) 
@@ -212,7 +212,7 @@ public class AirState : PlayerState
             if(RollCheck())
             {
                 // Switch to RollState
-                _stateMachine.SwitchState(9);
+                SwitchState(CharacterStateMachine.StateName.ROLL);
                 if(OnRollStart != null)
                     OnRollStart();
                 return;
@@ -223,12 +223,12 @@ public class AirState : PlayerState
                 DealFallDamageDistance();
 
             // GroundState
-            _stateMachine.SwitchState(0);
+            SwitchState(CharacterStateMachine.StateName.WALK);
         }
 
         // Switch to ClimbState
         if(isClimbing)
-            _stateMachine.SwitchState(3);
+            SwitchState(CharacterStateMachine.StateName.CLIMB);
     }
 
     [System.Obsolete]

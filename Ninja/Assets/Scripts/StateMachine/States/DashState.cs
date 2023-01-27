@@ -69,9 +69,9 @@ public class DashState : PlayerState
         {
             rigidbody.velocity = Vector3.zero;
             if(IsGrounded)
-                _stateMachine.SwitchState(1);
+                SwitchState(CharacterStateMachine.StateName.WALK);
             else
-                _stateMachine.SwitchState(5);
+                SwitchState(CharacterStateMachine.StateName.AIR);
 
         }
     }

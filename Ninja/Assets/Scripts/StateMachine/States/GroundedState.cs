@@ -8,18 +8,11 @@ public class GroundedState : PlayerState
 {
     [Header("Control Settings")]
     [SerializeField] private float walkSpeed = 10.0f;
-    [SerializeField] private AttributeDependant<float> runSpeed;
-    [SerializeField] private float startRunBoost = 2f;
-    [SerializeField] private float slopeSlideSpeed = 10.0f;
-    [SerializeField] private float minSlideAngle = 30f;
     [SerializeField] private bool gravityOn = true;
     
     [Space(20f)]
     
     [Header("Stats")]
-    [SerializeField] private float staminaDepleteRate = 20f;
-    [SerializeField] private float potentialStaminaDepleteRate = 2f;
-    [SerializeField] private float agilityExpGain = .01f;
     [SerializeField] private float gravity = 20.0f;
 
     [Header("Input Data")]
@@ -73,99 +66,65 @@ public class GroundedState : PlayerState
         
         targetDirection = transform.TransformDirection(inputVector);
         Vector3 targetVelocity = targetDirection;
+        
+        targetVelocity *= walkSpeed;
 
-        // Ground Control
-        if (IsGrounded) 
+        // Apply a force that attempts to reach our target velocity
+        Vector3 velocity = rigidbody.velocity;
+        Vector3 velocityChange = (targetVelocity - velocity);
+        velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+        velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+        velocityChange.y = 0;
+        rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
+
+        // Running
+        if(inputState.Run.State == VButtonState.PRESSED)
         {
-            // Running
-            if(inputVector != Vector3.zero && inputState.Run.State == VButtonState.PRESSED)
-            {
-                if(inputState.Run.State == VButtonState.PRESS_START)
-                    characterStats.DepleteStamina(5f);
-                
-                float pressTime = Mathf.Clamp01(inputState.Run.PressTime);
-                float mult = Mathf.Lerp(startRunBoost, 1, pressTime);
-
-                if(characterStats.DepleteStamina(staminaDepleteRate * Time.deltaTime))
-                {
-                    characterStats.IncreaseAttributeExp(AttributeType.AGILITY, agilityExpGain * Time.deltaTime);
-                    characterStats.DepletePotentailStamina(potentialStaminaDepleteRate * Time.deltaTime);
-
-                    // Set relevant speed
-                    //targetVelocity *= runSpeedPerAgilityLevel[characterStats.GetAttributeLevel("agility") - 1];
-
-                    targetVelocity *= runSpeed.GetValue(characterStats) * mult;
-
-                    // Slide down slopes
-                    if(GroundSlope > minSlideAngle) 
-                    {
-                        Vector3 slopeSide = Vector3.Cross(GroundNormal, Vector3.up);
-                        Vector3 slopeDown = Vector3.Cross(GroundNormal, slopeSide);
-
-                        // Make sure we are going down the slope
-                        Vector3 projected = Vector3.ProjectOnPlane(targetVelocity, GroundNormal);
-                        float dotProduct = Vector3.Dot(slopeDown.normalized, projected.normalized);
-                        if(dotProduct > .8f)
-                            targetVelocity += slopeDown * slopeSlideSpeed;
-                    }
-
-                }
-                else
-                    targetVelocity *= walkSpeed;
-            }
-            else // Walking
-                targetVelocity *= walkSpeed;
-
-            // Apply a force that attempts to reach our target velocity
-            Vector3 velocity = rigidbody.velocity;
-            Vector3 velocityChange = (targetVelocity - velocity);
-            velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-            velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-            velocityChange.y = 0;
-            rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
-
-            // Dash
-            if(inputState.DoubleForward || inputState.DoubleBack || inputState.DoubleLeft || inputState.DoubleRight)
-                if(characterStats.DepleteStamina(20))
-                    _stateMachine.SwitchState(4);
+            SwitchState(CharacterStateMachine.StateName.RUN);
+            return;
         }
+
+        // Dash
+        if(inputState.DoubleForward || inputState.DoubleBack || inputState.DoubleLeft || inputState.DoubleRight)
+            if(characterStats.DepleteStamina(20))
+                SwitchState(CharacterStateMachine.StateName.DASH);
 
         // Kick
         if (inputState.Kick.State == VButtonState.PRESS_START) 
             kick.ActivateKick(inputState.AxisInput);
 
-        // Switch to AirSTate
+        // Switch to AirState
         if (IsGrounded == false) 
         {
-            _stateMachine.SwitchState(5);
+            SwitchState(CharacterStateMachine.StateName.AIR);
             return;
         }
 
         // Jump
         if (inputState.Jump.Pressed && IsGrounded) 
         {
-            _stateMachine.SwitchState(2);
+            SwitchState(CharacterStateMachine.StateName.JUMP);
             return;
         }
 
         // Crouch
         if (inputState.Crouch.Pressed) 
         {
-            _stateMachine.SwitchState(1);
+            SwitchState(CharacterStateMachine.StateName.CROUCH);
             return;
         }
         
         // Switch to ClimbState
         if(isClimbing)
         {
-            _stateMachine.SwitchState(3);
+            SwitchState(CharacterStateMachine.StateName.CLIMB);
             return;
         }
 
         // Switch to SitState
         if (inputState.Sit.Pressed && inputState.AxisInput.magnitude == 0) 
         {
-            _stateMachine.SwitchState(7);
+            SwitchState(CharacterStateMachine.StateName.SIT);
             return;
         }
 

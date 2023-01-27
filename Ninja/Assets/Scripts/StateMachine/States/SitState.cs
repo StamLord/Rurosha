@@ -48,7 +48,7 @@ public class SitState : PlayerState
             inputState.Jump.Pressed ||
             inputState.Crouch.Pressed)
         {
-            _stateMachine.SwitchState(0);
+            SwitchState(CharacterStateMachine.StateName.WALK);
         }
     }
 }

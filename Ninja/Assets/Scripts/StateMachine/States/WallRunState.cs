@@ -68,9 +68,9 @@ public class WallRunState : PlayerState
         if(reachedMaxDist|| velocityDropped || stillOnWall == false)
         {
             if(IsGrounded)
-                _stateMachine.SwitchState(1);
+                SwitchState(CharacterStateMachine.StateName.WALK);
             else
-                _stateMachine.SwitchState(5);
+                SwitchState(CharacterStateMachine.StateName.AIR);
 
         }
 
@@ -87,7 +87,7 @@ public class WallRunState : PlayerState
             inputState.Jump.Set(VButtonState.UNPRESSED);
 
             // Switch to air state
-            _stateMachine.SwitchState(5);
+            SwitchState(CharacterStateMachine.StateName.AIR);
         }
     }
 
