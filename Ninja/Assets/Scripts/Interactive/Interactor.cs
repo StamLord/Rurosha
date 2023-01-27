@@ -73,14 +73,9 @@ public class Interactor : MonoBehaviour
 
     private void Start()
     {
-        InitializeCarry();        
-    }
-
-    // Workaround so we can have _weaponManager exposed in the inspector
-    private void OnValidate() 
-    {
+        InitializeCarry();   
         if(_weaponManager != null)
-            _inventory = _weaponManager.GetComponent<Inventory>();    
+            _inventory = _weaponManager.GetComponent<Inventory>();
     }
 
     private void InitializeCarry()
