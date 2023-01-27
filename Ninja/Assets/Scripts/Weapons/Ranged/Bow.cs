@@ -211,7 +211,10 @@ public class Bow : WeaponObject, IHitboxResponder
 
                 // Set this transform's root to be ignored by the projectile
                 if(proj)
+                {
                     proj.SetIgnoreTransform(transform.root);
+                    proj.SetOwner(manager.Agent);
+                }
             }
         }
 

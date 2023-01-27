@@ -114,7 +114,15 @@ public class Shuriken : WeaponObject
     private void ThrowSingle()
     {
         GameObject obj = Instantiate(projectile, transform.position, Quaternion.identity);
-        
+        Projectile proj = obj.GetComponent<Projectile>();
+
+        // Set this transform's root to be ignored by the projectile
+        if(proj)
+        {
+            proj.SetIgnoreTransform(transform.root);
+            proj.SetOwner(manager.Agent);
+        }
+
         RaycastHit hit;
         Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 50f);
         

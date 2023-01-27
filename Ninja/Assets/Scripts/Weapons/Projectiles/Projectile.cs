@@ -77,6 +77,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
     private float startTime;
     private Vector3 startPos;
     private Vector3 startSpeed;
+    private StealthAgent stealthAgent;
 
     public delegate void ProjecitleStopDelegate(RaycastHit hit);
     public event ProjecitleStopDelegate OnProjecitleStop;
@@ -102,6 +103,11 @@ public class Projectile : MonoBehaviour, IHitboxResponder
         ignoreTransform = transform;
         foreach(Hitbox h in hitbox)
             h.SetIgnoreTransform(transform);
+    }
+
+    public void SetOwner(StealthAgent agent)
+    {
+        stealthAgent = agent;
     }
 
     private void Update()
@@ -225,7 +231,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             // Avoid triggering multiple hurtboxes with the same parent GameObject
             if(objectsCollided.Contains(hurtbox.transform.parent.gameObject) == false)
             {
-                hurtbox.Hit(null, softDamage, hardDamage, DamageType.Pierce);
+                hurtbox.Hit(stealthAgent, softDamage, hardDamage, DamageType.Pierce);
                 objectsCollided.Add(hurtbox.transform.root.gameObject);
             }        
         }
