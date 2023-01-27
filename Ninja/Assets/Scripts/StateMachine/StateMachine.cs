@@ -5,11 +5,12 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
     [Header("State Machine")]
-    [SerializeField] private State _currentState;
-    [SerializeField] private State[] _states;
+    [SerializeField] private State currentState;
+    [SerializeField] private State[] states;
+    [SerializeField] protected State defaultState;
     
-    [SerializeField] private bool _debugLogs;
-    public string CurrentState { get{return _currentState.GetType().Name;}}
+    [SerializeField] private bool debugLogs;
+    public string CurrentState { get{return currentState.GetType().Name;}}
 
     public delegate void stateEnter(string stateName);
     public event stateEnter OnStateEnter;
@@ -17,37 +18,67 @@ public class StateMachine : MonoBehaviour
     public delegate void stateExit(string stateName);
     public event stateExit OnStateExit;
 
-    void Start()
+    private void Start()
     {
-        SwitchState(0);
+        SwitchState(defaultState);
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        _currentState.OnStateUpdate();
+        currentState?.OnStateUpdate();
     }
 
+    public void SwitchState(State state)
+    {
+        // Exit State
+        if(currentState)
+        {
+            if(debugLogs)
+                Debug.Log("Exiting state: " + currentState);
+
+            currentState.ExitState();
+            
+            // Event
+            if(OnStateExit != null)
+                OnStateExit(CurrentState);
+        }
+
+        // Enter State
+        if(debugLogs)
+            Debug.Log("Entering state: " + state);
+        
+        currentState = state;
+        currentState.EnterState(this);
+
+        // Event
+        if(OnStateEnter != null)
+            OnStateEnter(CurrentState);
+
+
+    }
+
+    [System.Obsolete]
     public void SwitchState(int stateIndex)
     {
-        if(stateIndex >= _states.Length)
+        if(stateIndex >= states.Length)
         {
-            Debug.LogWarning("Out of bounds state index!" + stateIndex + "/" + _states.Length + "GameObject: " + transform.gameObject.name);
+            Debug.LogWarning("Out of bounds state index!" + stateIndex + "/" + states.Length + "GameObject: " + transform.gameObject.name);
             return;
         }
 
-        if(_currentState)
+        if(currentState)
         {
             // Event for exiting state
             if(OnStateExit != null)
                 OnStateExit(CurrentState);
             
-            _currentState.ExitState();
+            currentState.ExitState();
         }
 
-        _currentState = _states[stateIndex];
-        _currentState.EnterState(this);
+        currentState = states[stateIndex];
+        currentState.EnterState(this);
 
-        if(_debugLogs)
+        if(debugLogs)
             Debug.Log("Entering state: " + stateIndex);
 
         // Event for new state
