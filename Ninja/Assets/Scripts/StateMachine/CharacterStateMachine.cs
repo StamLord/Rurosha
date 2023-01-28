@@ -24,6 +24,8 @@ public class CharacterStateMachine : StateMachine
     [SerializeField] private State crouch;
     [SerializeField] private State roll;
     [SerializeField] private State sit;
+    [SerializeField] private State grapple;
+    [SerializeField] private State slide;
 
     [Space(20f)]
 
@@ -43,7 +45,9 @@ public class CharacterStateMachine : StateMachine
         WALL_RUN,
         CROUCH,
         ROLL,
-        SIT
+        SIT,
+        GRAPPLE,
+        SLIDE
     };
 
     public void SwitchState(StateName state)
@@ -79,6 +83,12 @@ public class CharacterStateMachine : StateMachine
                 break;
             case StateName.SIT:
                 SwitchState(sit);
+                break;
+            case StateName.GRAPPLE:
+                SwitchState(grapple);
+                break;
+            case StateName.SLIDE:
+                SwitchState(slide);
                 break;
         }
     }

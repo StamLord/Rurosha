@@ -11943,6 +11943,7 @@ GameObject:
   - component: {fileID: 59200975}
   - component: {fileID: 59200970}
   - component: {fileID: 59200971}
+  - component: {fileID: 2279680380539516123}
   - component: {fileID: 59200972}
   - component: {fileID: 59200985}
   - component: {fileID: 1659587216}
@@ -12351,6 +12352,8 @@ MonoBehaviour:
   crouch: {fileID: 59200981}
   roll: {fileID: 59200971}
   sit: {fileID: 59200975}
+  grapple: {fileID: 59200970}
+  slide: {fileID: 2279680380539516123}
   stepSoundAgent: {fileID: 59200967}
   stealthAgent: {fileID: 59200987}
   groundSensor: {fileID: 1031901065}
@@ -12788,6 +12791,63 @@ MonoBehaviour:
   characterStateMachine: {fileID: 0}
   rollDistance: 3
   rollSpeed: 10
+  gravityOn: 1
+  gravity: 20
+  debugView: 0
+  rigidbody: {fileID: 0}
+--- !u!114 &2279680380539516123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0176b22051fda234995da3c1c9d2b1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  characterStateMachine: {fileID: 0}
+  slideDistance:
+    attributeType: 1
+    values:
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 16
+    - 18
+    - 20
+    - 22
+    - 24
+  slideSpeed: 10
+  speedOverDistance:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.8208333
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -7.320947
+      outSlope: -7.320947
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 0.05514157
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   gravityOn: 1
   gravity: 20
   debugView: 0
@@ -13618,6 +13678,7 @@ MonoBehaviour:
   crouchState: {fileID: 59200981}
   sitState: {fileID: 59200975}
   wallRunState: {fileID: 59200976}
+  slideState: {fileID: 2279680380539516123}
   inputState: {fileID: 59200974}
   maxRotZ: 1
   rotSpeedZ: 10
@@ -13653,6 +13714,8 @@ MonoBehaviour:
   standHeight: 1.7
   crouchHeight: 1
   crouchHeightTransitionDuration: 0.1
+  slideHeight: 1
+  slideHeightTransitionDuration: 0.1
   maxTilt: 20
   ledgeTiltDuration: 0.5
   isClimbingLedge: 0

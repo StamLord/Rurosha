@@ -154,7 +154,7 @@ public class RunState : PlayerState
         // Crouch
         if (inputState.Crouch.Pressed) 
         {
-            SwitchState(CharacterStateMachine.StateName.CROUCH);
+            SwitchState(CharacterStateMachine.StateName.SLIDE);
             return;
         }
         
