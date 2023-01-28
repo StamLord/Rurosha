@@ -98,7 +98,7 @@ public class FightAIState : AIState
     {
         // Aggressive chance roll
         int agg = Random.Range(0, aggressive); // Returns 0 .. 4, at aggressive = 1 we never attack, at aggressive = 5 we attack 4/5
-        Debug.Log(agg);
+        
         if(agg == 0)
             attackCoroutine = StartCoroutine("DontAttack", dontAttackInterval);
         else

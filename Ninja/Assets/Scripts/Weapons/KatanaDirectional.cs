@@ -269,6 +269,11 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
         // Stun if run out of stamina
     }
 
+    public void PerfectGuardedBy(Collider collider, Hitbox hitbox)
+    {
+
+    }
+
     private IEnumerator SliceCoroutine(Plane plane, GameObject toSlice)
     {
         GameObject[] slices = Slicer.Slice(plane, toSlice);

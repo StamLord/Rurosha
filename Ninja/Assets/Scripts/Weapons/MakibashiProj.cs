@@ -54,4 +54,9 @@ public class MakibashiProj : MonoBehaviour, IHitboxResponder
         // Depelte stamina
         // Stun if run out of stamina
     }
+
+    public void PerfectGuardedBy(Collider collider, Hitbox hitbox)
+    {
+
+    }
 }

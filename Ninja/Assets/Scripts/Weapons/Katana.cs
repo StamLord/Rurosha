@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Katana : WeaponObject, IHitboxResponder
 {
+    [Header("Hitbox")]
     [SerializeField] private Hitbox hitbox;
+
+    [Header("Guard")]
     [SerializeField] private Collider guard;
+    [SerializeField] private float perfectGuardTime = .2f;
     [SerializeField] private ParticleSystem guardVfx;
 
     [SerializeField] private bool nextAttack;
     [SerializeField] private int lastAttack; // 0 left 1 right
 
-    [SerializeField] private int weaponSystem = 0; // 0 left 1 right
-    
     [SerializeField] private float axisInputWindow = .2f;
 
     [SerializeField] private float lastX;
@@ -31,7 +33,7 @@ public class Katana : WeaponObject, IHitboxResponder
     [SerializeField] private float sliceForce = 2f;
     [SerializeField] private float maxSlicesPerCut = 10;
     [SerializeField] private List<GameObject> newSlices = new List<GameObject>();
-
+    
     [Header("Damage")]
     [SerializeField] private int softDamage = 20;
     [SerializeField] private int hardDamage = 10;
@@ -64,20 +66,6 @@ public class Katana : WeaponObject, IHitboxResponder
     [SerializeField] private float stunDuration = 3f;
     [SerializeField] private bool stunned;
 
-    [Header("Stance Settings")]
-    [SerializeField] private float mouseDelta;
-    [SerializeField] private float mouseDeltaMargin = 1f;
-    [SerializeField] private KatanaStance stance = KatanaStance.Medium;
-
-    public delegate void stanceSwitchDeltaDelegate(KatanaStance stance);
-    public event stanceSwitchDeltaDelegate StanceSwitchDeltaEvent;
-
-    public delegate void stanceSwitchStart();
-    public event stanceSwitchStart StanceSwitchStartEvent;
-
-    public delegate void stanceSwitchEnd();
-    public event stanceSwitchEnd StanceSwitchEndEvent;
-
     void Start()
     {
         hitbox?.SetResponder(this);
@@ -88,78 +76,7 @@ public class Katana : WeaponObject, IHitboxResponder
     void Update()
     {
         MovementCheck();
-
-        StanceInput();
-
-        switch(weaponSystem)
-        {
-            case 0:
-                Method1();
-                break;
-            case 1:
-                Method2();
-                break;
-        }
-
-        //Debug.DrawRay(hitbox.transform.position, hitbox.transform.right);
-    }
-
-    private void StanceInput()
-    {
-        if(Input.GetButtonDown("Switch"))
-        {
-            mouseDelta = 0;
-            if(StanceSwitchStartEvent != null)
-                StanceSwitchStartEvent();
-        }
-
-        if(Input.GetButton("Switch"))
-        {
-            mouseDelta += Input.GetAxis("Mouse Y");
-            KatanaStance tempStance;
-
-            if(mouseDelta > mouseDeltaMargin)
-                tempStance = KatanaStance.High;
-            else if(mouseDelta < -mouseDeltaMargin)
-                tempStance = KatanaStance.Low;
-            else
-                tempStance = KatanaStance.Medium;
-
-            if(StanceSwitchStartEvent != null)
-                StanceSwitchDeltaEvent(tempStance);
-        }
-
-        if(Input.GetButtonUp("Switch"))
-        {
-            if(mouseDelta > mouseDeltaMargin)
-                StanceChange(KatanaStance.High);
-            else if(mouseDelta < -mouseDeltaMargin)
-                StanceChange(KatanaStance.Low);
-            else
-                StanceChange(KatanaStance.Medium);
-
-            if(StanceSwitchEndEvent != null)
-                StanceSwitchEndEvent();
-        }
-    }
-
-    private void StanceChange(KatanaStance newStance)
-    {
-        if(stance == newStance)
-            return;
-
-        stance = newStance;
-        switch(stance)
-        {
-            case KatanaStance.Low:
-                break;
-            case KatanaStance.Medium:
-                animator.Play("Idle");
-                break;
-            case KatanaStance.High:
-                animator.Play("HighIdle");
-                break;
-        }
+        Method1();
     }
 
     // Called by Hitbox on collision
@@ -198,6 +115,12 @@ public class Katana : WeaponObject, IHitboxResponder
 
     public void GuardedBy(Collider collider, Hitbox hitbox)
     {
+        // VFX
+        guardVfx?.Play();
+    }
+
+    public void PerfectGuardedBy(Collider collider, Hitbox hitbox)
+    {
         // Depelte stamina
         bool outOfStamina = !charStats.DepleteStamina(staminaCostOnGuardedAttack, true);
 
@@ -205,7 +128,10 @@ public class Katana : WeaponObject, IHitboxResponder
         if(outOfStamina) 
             Stun();
         else // Play guarded animation
-            animator.Play("katana_blocked");
+        {
+            animator.Play("katana_blocked"); // Player
+            animator.SetTrigger("Blocked"); // NPC
+        }
 
         // VFX
         guardVfx?.Play();
@@ -220,10 +146,10 @@ public class Katana : WeaponObject, IHitboxResponder
     {
         stunned = true;
         animator.Play("katana_stun_start");
-        animator.SetBool("STUN", true);
+        animator.SetBool("Stun", true);
         yield return new WaitForSeconds(stunDuration);
         stunned = false;
-        animator.SetBool("STUN", false);
+        animator.SetBool("Stun", false);
     }
 
     private IEnumerator SliceCoroutine(Plane plane, GameObject toSlice)
@@ -317,10 +243,13 @@ public class Katana : WeaponObject, IHitboxResponder
             return;
         
         // Defend
-        bool defend = inputState.Defend.Pressed; //(inputState.MouseButton1.Pressed && inputState.MouseButton2.Pressed);
+        bool defend = inputState.Defend.Pressed;
         animator.SetBool("Defending", defend);
         guard.enabled = defend;
-        //charStats.SetGuard(defend);
+
+        // Perfect vs Regular guard
+        if(guard.enabled)
+            guard.gameObject.layer = (inputState.Defend.PressTime > perfectGuardTime)? LayerMask.NameToLayer("Guard") : LayerMask.NameToLayer("PerfectGuard");
 
         if(defend)
             return;
@@ -399,8 +328,8 @@ public class Katana : WeaponObject, IHitboxResponder
         // VFX End
         else
         {
-            if(chargingVfx.isPlaying) chargingVfx.Stop();
-            if(chargedVfx.isPlaying) chargedVfx.Stop();
+            if(chargingVfx && chargingVfx.isPlaying) chargingVfx.Stop();
+            if(chargedVfx && chargedVfx.isPlaying) chargedVfx.Stop();
         }
     }
 

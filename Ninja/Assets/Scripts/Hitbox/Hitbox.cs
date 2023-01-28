@@ -10,9 +10,12 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private HitboxShape shape;
     [SerializeField] private Vector3 size = new Vector3(1,1,1);
     [SerializeField] private Vector3 offset = Vector3.zero;
+
+    [Header("Layer Masks")]
     [SerializeField] private LayerMask hitMask;
+    [SerializeField] private LayerMask perfectGuardMask;
     [SerializeField] private LayerMask guardMask;
-    [SerializeField] private bool isActive;
+    [SerializeField] public bool isActive;
 
     [Header("Velocity")]
     [SerializeField] private Vector3 lastPosition;
@@ -90,39 +93,30 @@ public class Hitbox : MonoBehaviour
             Vector3 centerOffset = transform.position + transform.TransformVector(offset);
             Vector3 sizeScaled = new Vector3(transform.lossyScale.x * size.x, transform.lossyScale.y * size.y, transform.lossyScale.z * size.z);
 
-            // Check if hitbox hits a guard collider
-            Collider[] guardColliders = new Collider[0];
-            switch(shape)
+            // Check if hitbox hits a perfect guard collider
+            Collider[] perfectGuardColliders = GetColliders(perfectGuardMask);
+
+            // If hitbox guarded by anything we inform responder and don't proceed
+            if(perfectGuardColliders.Length > 0)
             {
-                case HitboxShape.BOX:
-                    guardColliders = Physics.OverlapBox(centerOffset, sizeScaled *.5f, transform.rotation, guardMask);
-                    break;
-                case HitboxShape.SPHERE:
-                    guardColliders = Physics.OverlapSphere(centerOffset, sizeScaled.x, guardMask);
-                    break;
+                _responder.PerfectGuardedBy(perfectGuardColliders[0], this);
+                StopColliding();
+                collided.Clear();
+                return;
             }
+
+            // Check if hitbox hits a guard collider
+            Collider[] guardColliders = GetColliders(guardMask);
 
             // If hitbox guarded by anything we inform responder and don't proceed
             if(guardColliders.Length > 0)
             {
                 _responder.GuardedBy(guardColliders[0], this);
-                StopColliding();
-                collided.Clear();
                 return;
             }
             
-            // Get colliders in range
-            Collider[] colliders = new Collider[0];
-
-            switch(shape)
-            {
-                case HitboxShape.BOX:
-                    colliders = Physics.OverlapBox(centerOffset, sizeScaled *.5f, transform.rotation, hitMask);
-                    break;
-                case HitboxShape.SPHERE:
-                    colliders = Physics.OverlapSphere(centerOffset, sizeScaled.x, hitMask);
-                    break;
-            }
+            // Get hits in range
+            Collider[] colliders = GetColliders(hitMask);
 
             foreach(Collider col in colliders)
             {
@@ -151,6 +145,26 @@ public class Hitbox : MonoBehaviour
         velocity = transform.position + offset - lastPosition;
         // Track position for next frame velocity calculations
         lastPosition = transform.position + offset;
+    }
+
+    private Collider[] GetColliders(LayerMask mask)
+    {
+        Collider[] colliders = new Collider[0];
+
+        Vector3 centerOffset = transform.position + transform.TransformVector(offset);
+        Vector3 sizeScaled = new Vector3(transform.lossyScale.x * size.x, transform.lossyScale.y * size.y, transform.lossyScale.z * size.z);
+
+        switch(shape)
+        {
+            case HitboxShape.BOX:
+                colliders = Physics.OverlapBox(centerOffset, sizeScaled *.5f, transform.rotation, mask);
+                break;
+            case HitboxShape.SPHERE:
+                colliders = Physics.OverlapSphere(centerOffset, sizeScaled.x, mask);
+                break;
+        }
+
+        return colliders;
     }
 
     private void OnDrawGizmos()

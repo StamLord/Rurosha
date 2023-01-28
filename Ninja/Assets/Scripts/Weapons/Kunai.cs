@@ -113,6 +113,11 @@ public class Kunai : WeaponObject, IHitboxResponder
         // Stun if run out of stamina
     }
 
+    public void PerfectGuardedBy(Collider collider, Hitbox hitbox)
+    {
+
+    }
+
     public void UpdateColliderState(bool newState)
     {
 

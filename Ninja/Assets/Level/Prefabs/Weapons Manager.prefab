@@ -470,6 +470,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 65
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1219,6 +1222,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 65
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
@@ -2806,6 +2812,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 65
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
@@ -3516,6 +3525,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 1
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
@@ -3682,6 +3694,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 65
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 262144
   guardMask:
     serializedVersion: 2
     m_Bits: 32768
@@ -3997,6 +4012,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 1
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
@@ -4082,10 +4100,10 @@ MonoBehaviour:
   item: {fileID: 0}
   hitbox: {fileID: 1278044655345775746}
   guard: {fileID: 6976487158393640913}
+  perfectGuardTime: 0
   guardVfx: {fileID: 5797145477176175113}
   nextAttack: 0
   lastAttack: 0
-  weaponSystem: 0
   axisInputWindow: 0.2
   lastX: 0
   lastZ: 0
@@ -4118,9 +4136,6 @@ MonoBehaviour:
   staminaCostOnGuardedAttack: 20
   stunDuration: 3
   stunned: 0
-  mouseDelta: 0
-  mouseDeltaMargin: 5
-  stance: 1
 --- !u!95 &1278044656508673908
 Animator:
   serializedVersion: 4
@@ -12044,6 +12059,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 6721
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
@@ -12331,6 +12349,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 2049
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
@@ -13620,10 +13641,10 @@ MonoBehaviour:
   item: {fileID: 0}
   hitbox: {fileID: 8206658476241470813}
   guard: {fileID: 0}
+  perfectGuardTime: 0
   guardVfx: {fileID: 0}
   nextAttack: 0
   lastAttack: 0
-  weaponSystem: 0
   axisInputWindow: 0.2
   lastX: 0
   lastZ: 0
@@ -13656,9 +13677,6 @@ MonoBehaviour:
   staminaCostOnGuardedAttack: 0
   stunDuration: 3
   stunned: 0
-  mouseDelta: 0
-  mouseDeltaMargin: 1
-  stance: 1
 --- !u!95 &8206658476612405706
 Animator:
   serializedVersion: 4
@@ -13799,6 +13817,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 6721
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0

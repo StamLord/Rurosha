@@ -264,8 +264,13 @@ public class Bow : WeaponObject, IHitboxResponder
         // Stun if run out of stamina
     }
 
+    public void PerfectGuardedBy(Collider collider, Hitbox hitbox)
+    {
+
+    }
+
     public void IgniteArrows()
-    {Debug.Log("ARRR");
+    {
         ignited = true;
         foreach(ArrowVisual av in arrows)
             av.SetFire(true);

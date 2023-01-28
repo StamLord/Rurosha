@@ -110,6 +110,11 @@ public class Kanabo : WeaponObject, IHitboxResponder
         // Stun if run out of stamina
     }
 
+    public void PerfectGuardedBy(Collider collider, Hitbox hitbox)
+    {
+
+    }
+
     public void SetNextAttack(bool state)
     {
         nextAttack = state;

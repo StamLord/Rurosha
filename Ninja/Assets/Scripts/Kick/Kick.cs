@@ -60,6 +60,11 @@ public class Kick : MonoBehaviour, IHitboxResponder
         
     }
 
+    public void PerfectGuardedBy(Collider collider, Hitbox hitbox)
+    {
+        
+    }
+
     public void UpdateColliderState(bool state)
     {
 

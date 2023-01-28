@@ -21483,6 +21483,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 65
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
@@ -21518,6 +21521,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 65
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
@@ -21849,6 +21855,12 @@ PrefabInstance:
       objectReference: {fileID: 6944390856915565334}
     - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
+      propertyPath: items.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8c2ea5b5e93a677459d719b857ba2b53,
+        type: 2}
+    - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
       propertyPath: items.Array.data[1]
       value: 
       objectReference: {fileID: 0}
@@ -22131,6 +22143,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1278044655345775747, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 114.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044655345775747, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
       objectReference: {fileID: 0}
@@ -22142,7 +22159,7 @@ PrefabInstance:
     - target: {fileID: 1278044656508673906, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1278044656508673911, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22187,6 +22204,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1278044656508673911, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
+      propertyPath: perfectGuardTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044656508673911, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
       propertyPath: specialProjSpeed
       value: 20
       objectReference: {fileID: 0}
@@ -22228,7 +22250,7 @@ PrefabInstance:
     - target: {fileID: 3429489139175178209, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3429489139175178209, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22543,7 +22565,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2763
+      value: 2790
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -22553,7 +22575,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2769
+      value: 2796
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}

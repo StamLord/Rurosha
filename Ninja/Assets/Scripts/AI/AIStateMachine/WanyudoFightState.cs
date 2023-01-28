@@ -343,6 +343,11 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
             guardVfx.Play();
     }
 
+    public void PerfectGuardedBy(Collider collider, Hitbox hitbox)
+    {
+        
+    }
+
     public void UpdateColliderState(bool newState)
     {
 
