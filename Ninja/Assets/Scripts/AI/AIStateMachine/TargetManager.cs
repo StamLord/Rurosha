@@ -102,8 +102,8 @@ public class TargetManager : MonoBehaviour
         
         FightAIState f = activeFighters[0];
         if(lastAttacker) lastAttacker.AllowAttack(false);
-        lastAttacker = f;
         f.AllowAttack(true);
+        lastAttacker = f;
     }
 
     public void FinishedAttack(FightAIState fighter)
