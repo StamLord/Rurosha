@@ -254,9 +254,18 @@ public class AIInput : MonoBehaviour
         return b;
     }
 
+    // We have to yield null first in every simulation because Unity 
+    // executes "yield return null" after update.
+    // If we don't do this, the button will be pressed during Update()
+    // and will be detected by other scripts in this frame.
+    // In the next frame, Update() will run before "yield return null" so button
+    // will be detected again. Only then it will be unpressed by the coroutine.
+    // This way by waiting first for "yield return null" we offset it so 
+    // no detection occurs in current frame.
     private IEnumerator SimulateButtonPress(string button)
     {
         VButton b = GetVButton(button);
+        yield return null;
         b.Set(VButtonState.PRESS_START);
         yield return null;
         b.Set(VButtonState.PRESS_END);
@@ -267,6 +276,7 @@ public class AIInput : MonoBehaviour
     private IEnumerator SimulateHoldButton(string button)
     {
         VButton b = GetVButton(button);
+        yield return null;
         b.Set(VButtonState.PRESS_START);
         yield return null;
         b.Set(VButtonState.PRESSED);
@@ -275,6 +285,7 @@ public class AIInput : MonoBehaviour
     private IEnumerator SimulateStopHoldButton(string button)
     {
         VButton b = GetVButton(button);
+        yield return null;
         b.Set(VButtonState.PRESS_END);
         yield return null;
         b.Set(VButtonState.UNPRESSED);
