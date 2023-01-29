@@ -11,6 +11,7 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private CrouchState crouchState;
     [SerializeField] private SitState sitState;
     [SerializeField] private WallRunState wallRunState;
+    [SerializeField] private SlideState slideState;
     
     //[SerializeField] private LookState _lookState = LookState.TURN_BODY;
 
@@ -34,9 +35,10 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float standHeight;
     [SerializeField] private float crouchHeight;
     [SerializeField] float crouchHeightTransitionDuration = .1f;
-
-    private Coroutine heightAnimCoroutine;
-    private bool isAnimatingHeight;
+    
+    [Header("Slide FX")]
+    [SerializeField] private float slideHeight;
+    [SerializeField] float slideHeightTransitionDuration = .1f;
 
     [Header("Climb Ledge FX")]
     [SerializeField] private float maxTilt = 20f;
@@ -50,6 +52,9 @@ public class MouseLook : MonoBehaviour
 
     [SerializeField] private bool disabled;
 
+    private Coroutine heightAnimCoroutine;
+    private bool isAnimatingHeight;
+
     void Start()
     {
         UIManager.OnDisableMouse += Disable;
@@ -57,12 +62,18 @@ public class MouseLook : MonoBehaviour
 
         airState.OnVaultStart += StartClimbLedgeTilt;
         airState.OnRollStart += StartRoll;
+
         crouchState.OnCrouchStart += StartCrouch;
         crouchState.OnCrouchEnd += EndCrouch;
+
         wallRunState.OnRunStart += StartWallRun;
         wallRunState.OnRunEnd += EndWallRun;
+
         sitState.OnSitStart += StartSit;
         sitState.OnSitEnd += EndSit;
+
+        slideState.OnSlideStart += StartSlide;
+        slideState.OnSlideEnd += EndSlide;
     }
     
     void LateUpdate()
@@ -148,6 +159,24 @@ public class MouseLook : MonoBehaviour
         heightAnimCoroutine = StartCoroutine(HeightTransition(standHeight, crouchHeightTransitionDuration));
     }
 
+    #endregion
+
+    #region Slide
+
+    private void StartSlide()
+    {
+        if(isAnimatingHeight) StopCoroutine(heightAnimCoroutine);
+        heightAnimCoroutine = StartCoroutine(HeightTransition(slideHeight, slideHeightTransitionDuration));
+    }
+
+    private void EndSlide()
+    {
+        if(isAnimatingHeight) StopCoroutine(heightAnimCoroutine);
+        heightAnimCoroutine = StartCoroutine(HeightTransition(standHeight, slideHeightTransitionDuration));
+    }
+
+    #endregion
+
     private IEnumerator HeightTransition(float newHeight, float duration)
     {
         isAnimatingHeight = true;
@@ -171,8 +200,6 @@ public class MouseLook : MonoBehaviour
         }
         isAnimatingHeight = false;
     }
-
-    #endregion
 
     #region Wall Run
 
