@@ -81,7 +81,7 @@ public class FightAIState : AIState
             MoveTo(target);
         }
         
-        if (inRange && canAttack) // Close enough and not already attacking
+        if (canAdvance && inRange && canAttack) // Close enough to attack range and not already attacking
             Attack();
         
         if(defensive)
@@ -160,7 +160,6 @@ public class FightAIState : AIState
         for (var i = 0; i < attacks; i++)
         {
             PressButton("MB1");
-            //MoveTo(enemy.transform.position);
             if(i < attacks - 1)
                 yield return new WaitForSeconds(.5f);
         }
