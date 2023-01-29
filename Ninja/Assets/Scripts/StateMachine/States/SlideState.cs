@@ -71,7 +71,7 @@ public class SlideState : PlayerState
         // Stop slide if traveled enough distance, velocity drops below threshold (For example if hit a wall)
         // OR if enough time has passed (Edge case if we get stuck with velocity not dropping)
         if( distanceTraveled > distance || 
-            rigidbody.velocity.magnitude < slideSpeed * .75f ||
+            rigidbody.velocity.magnitude < slideSpeed * .1f ||
             Time.time - startTime >= distance / slideSpeed)
         {
             rigidbody.velocity = Vector3.zero;
