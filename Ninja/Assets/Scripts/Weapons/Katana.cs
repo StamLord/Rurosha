@@ -18,9 +18,7 @@ public class Katana : WeaponObject, IHitboxResponder
     private Rigidbody perfectGuardTarget; // Target of the perfect guard follow up attack
     private bool perfectGuardFollowIsPlaying;
 
-    [SerializeField] private bool nextAttack;
-    [SerializeField] private int lastAttack; // 0 left 1 right
-
+    [Header("Movement")]
     [SerializeField] private float axisInputWindow = .2f;
 
     [SerializeField] private float lastX;
@@ -192,21 +190,6 @@ public class Katana : WeaponObject, IHitboxResponder
         perfectGuardTarget = target;
     }
 
-    public void SetNextAttack(bool state)
-    {
-        nextAttack = state;
-    }
-
-    public void SetNextAttackTrue()
-    {
-        SetNextAttack(true);
-    }
-
-    public void SetNextAttackFalse()
-    {
-        SetNextAttack(false);
-    }
-
     void MovementCheck()
     {
         // Horizontal Axis
@@ -282,7 +265,7 @@ public class Katana : WeaponObject, IHitboxResponder
 
             if(perfectGuardFollowIsPlaying == false && afterPerfectGuard && Time.time - lastPerfectGuard <= perfectGuardFollowupTime)
             {
-                StartCoroutine(PerfectGuardFollowUpAttack(perfectGuardTarget));
+                StartCoroutine(PerfectGuardFollowUpAttackHorizontal(perfectGuardTarget));
             }
             else if(inputState.Crouch.State == VButtonState.PRESSED)
             {
@@ -393,6 +376,31 @@ public class Katana : WeaponObject, IHitboxResponder
         pool.Return(projectile.gameObject);
     }
 
+    IEnumerator PerfectGuardFollowUpAttackHorizontal(Rigidbody target)
+    {
+        perfectGuardFollowIsPlaying = true;
+
+        Vector3 start = manager.Rigidbody.position;
+        // We end up to the right and back of the target
+        Vector3 end = target.position + target.transform.right * 1f - target.transform.forward * .5f;
+
+        float startTime = Time.time;
+        float duration = .2f;
+
+        animator.Play("katana_perfect_followup_horizontal");
+        manager.Rigidbody.isKinematic = true;
+        while(Time.time - startTime <= duration)
+        {
+            float p = (Time.time - startTime) / duration;
+            manager.Rigidbody.MovePosition(Vector3.Lerp(start, end, p));
+            yield return null;
+        }
+        manager.Rigidbody.isKinematic = false;
+
+        afterPerfectGuard = false;
+        perfectGuardFollowIsPlaying = false;
+    }
+
     IEnumerator PerfectGuardFollowUpAttack(Rigidbody target)
     {
         perfectGuardFollowIsPlaying = true;
@@ -417,64 +425,5 @@ public class Katana : WeaponObject, IHitboxResponder
 
         afterPerfectGuard = false;
         perfectGuardFollowIsPlaying = false;
-    }
-
-    public void Method2()
-    {
-        // Defend
-        if(Input.GetKeyDown(KeyCode.F) && nextAttack)
-        {   
-            animator.SetBool("Defending", true);
-            return;
-        }
-        
-        if(Input.GetKey(KeyCode.F) == false)
-            animator.SetBool("Defending", false);
-        
-        // LMB
-        if(inputState.MouseButton1.State == VButtonState.PRESS_START)
-        {
-            AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-
-            if(positiveAxisPressZ && Time.time - axisStartZ < axisInputWindow && state.IsName("Idle") ||
-                positiveAxisPressZ && Time.time - axisStartZ < axisInputWindow && lastAttack == 0 && nextAttack)
-            {
-                if(charStats.DepleteStamina(stabAttackStaminaCost))
-                    animator.SetTrigger("StabAttack");
-            }
-            else if(state.IsName("Idle") || state.IsName("HighIdle") || lastAttack == 1 && nextAttack)
-            {    
-                if(charStats.DepleteStamina(leftAttackStaminaCost))
-                {
-                    animator.SetTrigger("LAttack");
-                    lastAttack = 0;
-                }
-            }
-        }
-        // RMB
-        else if(inputState.MouseButton2.State == VButtonState.PRESS_START)
-        {
-            AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-            
-            if(positiveAxisPressZ && Time.time - axisStartZ < axisInputWindow && state.IsName("Idle") ||
-                positiveAxisPressZ && Time.time - axisStartZ < axisInputWindow && lastAttack == 1 && nextAttack)
-            {
-                if(charStats.DepleteStamina(stabAttackStaminaCost))
-                    animator.SetTrigger("StabAttack");
-            }
-            else if(state.IsName("Idle") || lastAttack == 0 && nextAttack)
-            {   
-                if(charStats.DepleteStamina(rightAttackStaminaCost))
-                {
-                    if(inputState.Crouch.State == VButtonState.PRESSED)
-                        animator.SetTrigger("CrouchAttack");
-                    else
-                    {
-                        animator.SetTrigger("RAttack");
-                        lastAttack = 1;
-                    }
-                }
-            }
-        }
     }
 }
