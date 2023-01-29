@@ -172,7 +172,7 @@ public class GrapplingHook : WeaponObject
         {
             joint.connectedAnchor = grapplePoint;
             joint.massScale = 4.5f;
-            characterStateMachine.SwitchState(8); // Grapple State
+            characterStateMachine.SwitchState(CharacterStateMachine.StateName.GRAPPLE); // Grapple State
         }
     }
 
@@ -192,7 +192,7 @@ public class GrapplingHook : WeaponObject
         Destroy(projInstance.gameObject);
 
         // Switch character to Air State
-        characterStateMachine.SwitchState(5);
+        characterStateMachine.SwitchState(CharacterStateMachine.StateName.AIR);
     }
 
     private void DrawRope()
