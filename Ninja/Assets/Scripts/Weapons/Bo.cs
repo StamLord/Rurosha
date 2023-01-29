@@ -73,38 +73,14 @@ public class Bo : WeaponObject, IHitboxResponder
 
     private void LeftAttack()
     {
-        if(ValidateLeftAttack())
+        if(ValidateState(validLeftAttackStates))
             animator.SetTrigger("LMB");
     }
 
     private void RightAttack()
     {
-        if(ValidateRightAttack())
+        if(ValidateState(validRightAttackStates))
             animator.SetTrigger("RMB");
-    }
-
-    private bool ValidateLeftAttack()
-    {
-        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-        for (int i = 0; i < validLeftAttackStates.Length; i++)
-        {
-            if(state.IsName(validLeftAttackStates[i]))
-                return true;
-        }
-
-        return false;
-    }
-
-    private bool ValidateRightAttack()
-    {
-        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-        for (int i = 0; i < validRightAttackStates.Length; i++)
-        {
-            if(state.IsName(validRightAttackStates[i]))
-                return true;
-        }
-
-        return false;
     }
 
     // Called by Hitbox on collision

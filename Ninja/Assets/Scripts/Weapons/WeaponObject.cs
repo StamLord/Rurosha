@@ -87,4 +87,16 @@ public class WeaponObject : MonoBehaviour
         if(meshFilter) meshFilter.mesh = item.model;
         if(meshRenderer) meshRenderer.material = item.material;
     }
+
+    protected bool ValidateState(string[] states)
+    {
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        for (int i = 0; i < states.Length; i++)
+        {
+            if(state.IsName(states[i]))
+                return true;
+        }
+
+        return false;
+    }
 }
