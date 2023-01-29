@@ -3071,6 +3071,7 @@ MonoBehaviour:
   _stealthAgent: {fileID: 0}
   _camera: {fileID: 0}
   _inputState: {fileID: 0}
+  _rigidbody: {fileID: 0}
   dropOrigin: {fileID: 0}
   items:
   - {fileID: 0}
@@ -4100,8 +4101,9 @@ MonoBehaviour:
   item: {fileID: 0}
   hitbox: {fileID: 1278044655345775746}
   guard: {fileID: 6976487158393640913}
-  perfectGuardTime: 0
   guardVfx: {fileID: 5797145477176175113}
+  perfectGuardTime: 0
+  perfectGuardFollowupTime: 1
   nextAttack: 0
   lastAttack: 0
   axisInputWindow: 0.2
@@ -13641,8 +13643,9 @@ MonoBehaviour:
   item: {fileID: 0}
   hitbox: {fileID: 8206658476241470813}
   guard: {fileID: 0}
-  perfectGuardTime: 0
   guardVfx: {fileID: 0}
+  perfectGuardTime: 0
+  perfectGuardFollowupTime: 1
   nextAttack: 0
   lastAttack: 0
   axisInputWindow: 0.2

@@ -12870,7 +12870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeFighters: []
   pendingFighters: []
-  maxActive: 2
+  maxActive: 1
   timeBeforeNextAttacker: 2
   lastAttacker: {fileID: 0}
 --- !u!1 &3984914144120669231
@@ -21833,6 +21833,11 @@ PrefabInstance:
       propertyPath: _camera
       value: 
       objectReference: {fileID: 6944390856666288588}
+    - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: _rigidbody
+      value: 
+      objectReference: {fileID: 59200983}
     - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: dropOrigin

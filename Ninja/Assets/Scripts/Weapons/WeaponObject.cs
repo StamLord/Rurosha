@@ -60,15 +60,15 @@ public class WeaponObject : MonoBehaviour
         animator.Play("AltUse");
     }
     
-    // private void OnEnable() 
-    // {
-    //     DrawWeapon();
-    // }
+    public virtual void PerfectGuard(Rigidbody target)
+    {
 
-    // private void OnDisable() 
-    // {
-    //     SheathWeapon();    
-    // }
+    }
+
+    public virtual void Guard(Rigidbody target)
+    {
+        
+    }
 
     protected virtual void DrawWeapon()
     {

@@ -3785,8 +3785,9 @@ MonoBehaviour:
   item: {fileID: 0}
   hitbox: {fileID: 1485680306}
   guard: {fileID: 1660805897351947366}
-  perfectGuardTime: 0
   guardVfx: {fileID: 8212867046593668848}
+  perfectGuardTime: 0
+  perfectGuardFollowupTime: 1
   nextAttack: 0
   lastAttack: 0
   axisInputWindow: 0.2
@@ -5062,6 +5063,11 @@ PrefabInstance:
       propertyPath: _sword
       value: 
       objectReference: {fileID: 2232536518217845448}
+    - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: _rigidbody
+      value: 
+      objectReference: {fileID: 6676553478032390319}
     - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: inputState

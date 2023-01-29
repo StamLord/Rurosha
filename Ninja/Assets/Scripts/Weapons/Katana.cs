@@ -9,8 +9,14 @@ public class Katana : WeaponObject, IHitboxResponder
 
     [Header("Guard")]
     [SerializeField] private Collider guard;
-    [SerializeField] private float perfectGuardTime = .2f;
     [SerializeField] private ParticleSystem guardVfx;
+    [SerializeField] private float perfectGuardTime = .2f;
+    [SerializeField] private float perfectGuardFollowupTime = 1f;
+    
+    private bool afterPerfectGuard; // True after perfect guard
+    private float lastPerfectGuard; // Time of last perfect guard
+    private Rigidbody perfectGuardTarget; // Target of the perfect guard follow up attack
+    private bool perfectGuardFollowIsPlaying;
 
     [SerializeField] private bool nextAttack;
     [SerializeField] private int lastAttack; // 0 left 1 right
@@ -29,7 +35,7 @@ public class Katana : WeaponObject, IHitboxResponder
     [SerializeField] private float axisStartX;
     [SerializeField] private float axisStartZ;
 
-    // Slice
+    [Header("Slice")]
     [SerializeField] private float sliceForce = 2f;
     [SerializeField] private float maxSlicesPerCut = 10;
     [SerializeField] private List<GameObject> newSlices = new List<GameObject>();
@@ -132,6 +138,11 @@ public class Katana : WeaponObject, IHitboxResponder
             animator.Play("katana_blocked"); // Player
             animator.SetTrigger("Blocked"); // NPC
         }
+        
+        // Inform the guarding object of the Perfect Guard
+        GuardDelegate guard = collider.GetComponent<GuardDelegate>();
+        if(guard)
+            guard.PerfectGuard(manager.Rigidbody);
 
         // VFX
         guardVfx?.Play();
@@ -171,6 +182,14 @@ public class Katana : WeaponObject, IHitboxResponder
     {
         if(newState == false)
             newSlices.Clear();
+    }
+
+    // Called by GuardDelegate when we performed perfect guard
+    public override void PerfectGuard(Rigidbody target)
+    {
+        afterPerfectGuard = true;
+        lastPerfectGuard = Time.time;
+        perfectGuardTarget = target;
     }
 
     public void SetNextAttack(bool state)
@@ -255,12 +274,17 @@ public class Katana : WeaponObject, IHitboxResponder
             return;
         
         // LMB
+        
         if(inputState.MouseButton1.State == VButtonState.PRESS_START)
         {
             AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
             float currentTime = state.normalizedTime % 1;
 
-            if(inputState.Crouch.State == VButtonState.PRESSED)
+            if(perfectGuardFollowIsPlaying == false && afterPerfectGuard && Time.time - lastPerfectGuard <= perfectGuardFollowupTime)
+            {
+                StartCoroutine(PerfectGuardFollowUpAttack(perfectGuardTarget));
+            }
+            else if(inputState.Crouch.State == VButtonState.PRESSED)
             {
                 if(charStats.DepleteStamina(crouchAttackStaminaCost))
                 {
@@ -270,7 +294,7 @@ public class Katana : WeaponObject, IHitboxResponder
             }
             else if(state.IsName("Idle") || state.IsName("HighIdle") || state.IsName("Attack1_chain") || state.IsName("Attack2_chain"))
             {
-                if(charStats.DepleteStamina(leftAttackStaminaCost))
+                if(charStats.DepleteStamina(leftAttackStaminaCost) && perfectGuardFollowIsPlaying == false)
                 {
                     animator.SetTrigger("LMB");
                     charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
@@ -367,6 +391,32 @@ public class Katana : WeaponObject, IHitboxResponder
         yield return new WaitForSeconds(1f);
         projectile.ForgetCollided(); // Forget all colided objects so far so we can reuse this object
         pool.Return(projectile.gameObject);
+    }
+
+    IEnumerator PerfectGuardFollowUpAttack(Rigidbody target)
+    {
+        perfectGuardFollowIsPlaying = true;
+
+        Vector3 start = manager.Rigidbody.position;
+        Vector3 direction = (target.position - start).normalized;
+        Vector3 end = target.position - direction * .5f;
+
+        float startTime = Time.time;
+        float duration = .2f;
+
+        animator.Play("katana_perfect_followup_anticipation");
+        manager.Rigidbody.isKinematic = true;
+        while(Time.time - startTime <= duration)
+        {
+            float p = (Time.time - startTime) / duration;
+            manager.Rigidbody.MovePosition(Vector3.Lerp(start, end, p));
+            yield return null;
+        }
+        manager.Rigidbody.isKinematic = false;
+        animator.Play("katana_perfect_followup");
+
+        afterPerfectGuard = false;
+        perfectGuardFollowIsPlaying = false;
     }
 
     public void Method2()

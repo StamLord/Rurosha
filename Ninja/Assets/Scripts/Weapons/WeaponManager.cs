@@ -19,6 +19,9 @@ public class WeaponManager : MonoBehaviour, Inventory
     [SerializeField] private InputState _inputState;
     public InputState InputState {get {return _inputState;}}
 
+    [SerializeField] private Rigidbody _rigidbody;
+    public Rigidbody Rigidbody {get {return _rigidbody;}}
+
     [SerializeField] private Transform dropOrigin;
     
     [Header("Items")]
