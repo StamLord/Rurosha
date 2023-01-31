@@ -1,42 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
 
 public class StateListener : MonoBehaviour
 {
-    [SerializeField] private StateMachine _stateMachine;
-    [SerializeField] private string _stateName;
-    [SerializeField] private UnityEvent _enterAction;
-    [SerializeField] private UnityEvent _exitAction;
+    [SerializeField] private StateMachine stateMachine;
+    [SerializeField] private string[] stateNames;
+    [SerializeField] private UnityEvent enterAction;
+    [SerializeField] private UnityEvent exitAction;
 
     private void Start() 
     {
-        if(_stateMachine)
+        if(stateMachine)
         {
-            _stateMachine.OnStateEnter += EnterState;
-            _stateMachine.OnStateExit += ExitState;
+            stateMachine.OnStateEnter += EnterState;
+            stateMachine.OnStateExit += ExitState;
         }
     }
 
     private void EnterState(string stateName)
     {
-        if(stateName == _stateName)
-            ExecuteEnter();
+        foreach(string name in stateNames)
+        {
+            if(name == stateName)
+            {
+                ExecuteEnter();
+                break;
+            }
+        }
     }
 
     private void ExitState(string stateName)
     {
-        if(stateName == _stateName)
-            ExecuteExit();
+        foreach(string name in stateNames)
+        {
+            if(name == stateName)
+            {
+                ExecuteExit();
+                break;
+            }
+        }
     }
 
     private void ExecuteEnter()
     {
         try
         {
-            _enterAction.Invoke();
+            enterAction.Invoke();
         }
         catch (Exception e)
         {
@@ -48,7 +58,7 @@ public class StateListener : MonoBehaviour
     {
         try
         {
-            _exitAction.Invoke();
+            exitAction.Invoke();
         }
         catch (Exception e)
         {

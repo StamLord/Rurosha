@@ -18,6 +18,13 @@ public class WeaponObject : MonoBehaviour
     [SerializeField] protected bool drawn;
     [SerializeField] protected Item item;
 
+    [System.Serializable]
+    public struct Damage
+    {
+        public int softDamage;
+        public int hardDamage;
+    }
+
     void Awake()
     {
         Initialize();

@@ -6,6 +6,10 @@ public class Katana : WeaponObject, IHitboxResponder
 {
     [Header("Hitbox")]
     [SerializeField] private Hitbox hitbox;
+    
+    [Header("Valid States for attack")]
+    [SerializeField] private string[] validLeftAttackStates;
+    [SerializeField] private string[] validRightAttackStates;
 
     [Header("Guard")]
     [SerializeField] private Collider guard;
@@ -18,30 +22,33 @@ public class Katana : WeaponObject, IHitboxResponder
     private Rigidbody perfectGuardTarget; // Target of the perfect guard follow up attack
     private bool perfectGuardFollowIsPlaying;
 
-    [Header("Movement")]
-    [SerializeField] private float axisInputWindow = .2f;
+    //[Header("Movement")]
+    private float axisInputWindow = .2f;
 
-    [SerializeField] private float lastX;
-    [SerializeField] private float lastZ;
+    private float lastX;
+    private float lastZ;
 
-    [SerializeField] private bool positiveAxisPressX;
-    [SerializeField] private bool negativeAxisPressX;
+    private bool positiveAxisPressX;
+    private bool negativeAxisPressX;
 
-    [SerializeField] private bool positiveAxisPressZ;
-    [SerializeField] private bool negativeAxisPressZ;
+    private bool positiveAxisPressZ;
+    private bool negativeAxisPressZ;
 
-    [SerializeField] private float axisStartX;
-    [SerializeField] private float axisStartZ;
+    private float axisStartX;
+    private float axisStartZ;
 
     [Header("Slice")]
     [SerializeField] private float sliceForce = 2f;
     [SerializeField] private float maxSlicesPerCut = 10;
     [SerializeField] private List<GameObject> newSlices = new List<GameObject>();
     
-    [Header("Damage")]
-    [SerializeField] private int softDamage = 20;
-    [SerializeField] private int hardDamage = 10;
-    [SerializeField] private float chanceToBleed = .25f;
+    [Header("Light Attack")]
+    [SerializeField] private Damage lightAttackDamage;
+    [SerializeField] private string[] lightAttackStates;
+
+    [Header("Heavy Attack")]
+    [SerializeField] private Damage heavyAttackDamage;
+    [SerializeField] private string[] heavyAttackStates;
 
     [Header("Charge Settings")]
     [SerializeField] private float minCharge = .2f;
@@ -57,11 +64,6 @@ public class Katana : WeaponObject, IHitboxResponder
     private Pool pool;
 
     [Header("Stats")]
-    [SerializeField] private float leftAttackStaminaCost= 2f;
-    [SerializeField] private float rightAttackStaminaCost= 2f;
-    [SerializeField] private float stabAttackStaminaCost= 2f;
-    [SerializeField] private float crouchAttackStaminaCost= 2f;
-
     [SerializeField] private float strengthExpGain = .01f;
     [SerializeField] private float dexterityExpGain = .01f;
     
@@ -70,17 +72,25 @@ public class Katana : WeaponObject, IHitboxResponder
     [SerializeField] private float stunDuration = 3f;
     [SerializeField] private bool stunned;
 
-    void Start()
+    private bool inAirState;
+
+    public void SetAirState(bool state)
+    {
+        inAirState = state;
+        if(state == false)
+            animator.SetBool("Air Stab", false);
+    }
+
+    private void Start()
     {
         hitbox?.SetResponder(this);
         hitbox.SetIgnoreTransform(transform.root);
         pool = new Pool(projectile, 1);
     }
 
-    void Update()
+    private void Update()
     {
-        MovementCheck();
-        Method1();
+        ProcessInput();
     }
 
     // Called by Hitbox on collision
@@ -92,7 +102,14 @@ public class Katana : WeaponObject, IHitboxResponder
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         if(hurtbox)
-            hurtbox.Hit(agent, softDamage, hardDamage, DamageType.Slash);
+        {
+            // Heavy Attack
+            if(ValidateState(heavyAttackStates))
+                hurtbox.Hit(agent, heavyAttackDamage.softDamage, heavyAttackDamage.hardDamage, DamageType.Slash);
+            // Light Attack
+            else
+                hurtbox.Hit(agent, lightAttackDamage.softDamage, lightAttackDamage.hardDamage, DamageType.Slash);
+        }
 
         //Slice
         Sliceable sliceable = collider.GetComponent<Sliceable>();
@@ -190,7 +207,7 @@ public class Katana : WeaponObject, IHitboxResponder
         perfectGuardTarget = target;
     }
 
-    void MovementCheck()
+    private void MovementCheck()
     {
         // Horizontal Axis
         float currentX = inputState.AxisInput.x;
@@ -239,7 +256,7 @@ public class Katana : WeaponObject, IHitboxResponder
         lastZ = currentZ;
     }
 
-    public void Method1()
+    public void ProcessInput()
     {
         if(stunned)
             return;
@@ -257,42 +274,29 @@ public class Katana : WeaponObject, IHitboxResponder
             return;
         
         // LMB
-        
         if(inputState.MouseButton1.State == VButtonState.PRESS_START)
         {
-            AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-            float currentTime = state.normalizedTime % 1;
-
-            if(perfectGuardFollowIsPlaying == false && afterPerfectGuard && Time.time - lastPerfectGuard <= perfectGuardFollowupTime)
-            {
-                StartCoroutine(PerfectGuardFollowUpAttackHorizontal(perfectGuardTarget));
-            }
-            else if(inputState.Crouch.State == VButtonState.PRESSED)
-            {
-                if(charStats.DepleteStamina(crouchAttackStaminaCost))
-                {
-                    animator.SetTrigger("CrouchAttack");
-                    charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
-                }
-            }
-            else if(state.IsName("Idle") || state.IsName("HighIdle") || state.IsName("Attack1_chain") || state.IsName("Attack2_chain"))
-            {
-                if(charStats.DepleteStamina(leftAttackStaminaCost) && perfectGuardFollowIsPlaying == false)
-                {
-                    animator.SetTrigger("LMB");
-                    charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
-                }
-            }
+            LeftAttack();
         }
         // RMB Pressed
+        else if(inputState.MouseButton2.State == VButtonState.PRESS_START)
+        {
+            if(inAirState)
+                animator.SetBool("Air Stab", true);
+            else
+                animator.SetBool("CHARGE RMB", true);
+        }
         else if(inputState.MouseButton2.Pressed)
         {
-            animator.SetBool("CHARGE RMB", true);
-            chargeTime = inputState.MouseButton2.PressTime;
+            if(inAirState == false)
+                chargeTime = inputState.MouseButton2.PressTime;
         }
         // RMB End Press
         else if(inputState.MouseButton2.State == VButtonState.PRESS_END)
         {
+            if(animator.GetBool("Air Stab"))
+                animator.SetBool("Air Stab", false);
+            
             animator.SetBool("CHARGE RMB", false);
 
             // Create projectile slash
@@ -337,6 +341,29 @@ public class Katana : WeaponObject, IHitboxResponder
         {
             if(chargingVfx && chargingVfx.isPlaying) chargingVfx.Stop();
             if(chargedVfx && chargedVfx.isPlaying) chargedVfx.Stop();
+        }
+    }
+
+    private void LeftAttack()
+    {
+        if(perfectGuardFollowIsPlaying == false 
+            && afterPerfectGuard 
+            && Time.time - lastPerfectGuard <= perfectGuardFollowupTime)
+        {
+            StartCoroutine(PerfectGuardFollowUpAttackHorizontal(perfectGuardTarget));
+        }
+        else if(inputState.Crouch.State == VButtonState.PRESSED)
+        {
+            animator.SetTrigger("CrouchAttack");
+            charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
+        }
+        else if(ValidateState(validLeftAttackStates))
+        {
+            if(perfectGuardFollowIsPlaying == false)
+            {
+                animator.SetTrigger("LMB");
+                charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
+            }
         }
     }
 
