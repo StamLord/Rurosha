@@ -157,8 +157,6 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
-    #region Guard
-
     #region Modifiers
 
     private Dictionary<Modifier, Attribute> modifiers = new Dictionary<Modifier, Attribute>();
@@ -282,17 +280,6 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     }
 
     
-    #endregion
-
-    [SerializeField] private bool guardOn;    
-    [SerializeField] private Direction9 guardDirection;
-
-    public void SetGuard(bool isGuarding, Direction9 direction = Direction9.CENTER)
-    {
-        guardOn = isGuarding;
-        guardDirection = direction;    
-    }
-
     #endregion
 
     #region Sit
@@ -675,21 +662,6 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         
         if(OnHit != null)
             OnHit(softDamage, hardDamage);
-        
-        // Check if guarding in right direction
-        if(guardOn)
-        {
-            if( direction == Direction9.CENTER ||
-                direction == Direction9.UP && guardDirection == Direction9.UP ||
-                direction == Direction9.DOWN && guardDirection == Direction9.DOWN ||
-                direction == Direction9.LEFT && guardDirection == Direction9.RIGHT ||
-                direction == Direction9.RIGHT && guardDirection == Direction9.LEFT ||
-                direction == Direction9.DOWNRIGHT && guardDirection == Direction9.DOWNLEFT ||
-                direction == Direction9.DOWNLEFT && guardDirection == Direction9.DOWNRIGHT ||
-                direction == Direction9.UPLEFT && guardDirection == Direction9.UPRIGHT ||
-                direction == Direction9.UPRIGHT && guardDirection == Direction9.UPLEFT)
-                return false;
-        }
         
         Debug.Log(gameObject.name + " was hit for " + softDamage + " / " + hardDamage + " " + damageType + " damage");
         SubHealth(softDamage);
