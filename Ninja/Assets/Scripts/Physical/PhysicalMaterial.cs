@@ -13,6 +13,8 @@ public class PhysicalMaterial : MonoBehaviour
     [SerializeField] private GameObject bigPiercePrefab;
 
     [SerializeField] private int bigDamageThreshold = 10;
+
+    private Camera cam;
     
     public void CollideEffect(Vector3 position, int damage)
     {
@@ -21,7 +23,11 @@ public class PhysicalMaterial : MonoBehaviour
 
     public void CollideEffect(Vector3 position, int damage, DamageType damageType = DamageType.Blunt)
     {
-        Quaternion rotation = Quaternion.Euler(0, Random.Range(0f,1f) * 360, 0);
+        if(cam == null)
+            cam = Camera.main;
+
+        Vector3 dir = cam.transform.position - position;
+        Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
         
         switch(damageType)
         {
