@@ -10,6 +10,7 @@ public class Katana : WeaponObject, IHitboxResponder
     [Header("Valid States for attack")]
     [SerializeField] private string[] validLeftAttackStates;
     [SerializeField] private string[] validRightAttackStates;
+    [SerializeField] private string[] validSheathStates;
 
     [Header("Guard")]
     [SerializeField] private Collider guard;
@@ -91,6 +92,8 @@ public class Katana : WeaponObject, IHitboxResponder
     private void Update()
     {
         ProcessInput();
+        AutoSheath();
+        ChargeVfx();
     }
 
     // Called by Hitbox on collision
@@ -256,11 +259,40 @@ public class Katana : WeaponObject, IHitboxResponder
         lastZ = currentZ;
     }
 
+    protected override void DrawAnimation()
+    {
+        animator.Play("katana_draw");
+    }
+
+    protected override void SheathAnimation()
+    {
+        animator.Play("katana_sheath");
+    }
+
     public void ProcessInput()
     {
         if(stunned)
             return;
         
+        // Draw on input
+        if(drawn == false)
+        {
+            if(inputState.MouseButton1.State == VButtonState.PRESS_START 
+            || inputState.MouseButton2.State == VButtonState.PRESS_START
+            || inputState.Defend.State == VButtonState.PRESS_START)
+            {
+                DrawWeapon();
+                return;
+            }
+        }
+
+        // Draw / Sheath button
+        if(inputState.Draw.State == VButtonState.PRESS_START)
+        {
+            DrawSheathWeapon();
+            return;
+        }
+
         // Defend
         bool defend = inputState.Defend.Pressed;
         animator.SetBool("Defending", defend);
@@ -271,7 +303,10 @@ public class Katana : WeaponObject, IHitboxResponder
             guard.gameObject.layer = (inputState.Defend.PressTime > perfectGuardTime)? LayerMask.NameToLayer("Guard") : LayerMask.NameToLayer("PerfectGuard");
 
         if(defend)
+        {
+            ResetAutoSheathTimer();
             return;
+        }
         
         // LMB
         if(inputState.MouseButton1.State == VButtonState.PRESS_START)
@@ -285,11 +320,15 @@ public class Katana : WeaponObject, IHitboxResponder
                 animator.SetBool("Air Stab", true);
             else
                 animator.SetBool("CHARGE RMB", true);
+
+            ResetAutoSheathTimer();
         }
         else if(inputState.MouseButton2.Pressed)
         {
             if(inAirState == false)
                 chargeTime = inputState.MouseButton2.PressTime;
+
+            ResetAutoSheathTimer();
         }
         // RMB End Press
         else if(inputState.MouseButton2.State == VButtonState.PRESS_END)
@@ -313,8 +352,13 @@ public class Katana : WeaponObject, IHitboxResponder
             chargeEndPlayed = false;
 
             charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
-        }
 
+            ResetAutoSheathTimer();
+        }
+    }
+
+    private void ChargeVfx()
+    {
         // VFX
         if(chargeTime > .2f)
         {
@@ -344,6 +388,14 @@ public class Katana : WeaponObject, IHitboxResponder
         }
     }
 
+    protected override void DrawSheathWeapon()
+    {
+        if (drawn == false)
+            DrawWeapon();
+        else if(ValidateState(validSheathStates))
+            SheathWeapon();
+    }
+
     private void LeftAttack()
     {
         if(perfectGuardFollowIsPlaying == false 
@@ -365,6 +417,8 @@ public class Katana : WeaponObject, IHitboxResponder
                 charStats.IncreaseAttributeExp(AttributeType.DEXTERITY, dexterityExpGain);
             }
         }
+
+        ResetAutoSheathTimer();
     }
 
     private void SpecialAttack(Direction9 direction)

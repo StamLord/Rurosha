@@ -1454,6 +1454,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   projectile: {fileID: 5373187035755985752, guid: 3ecefd2173f23f04d9cdb7b05661b62f,
@@ -2736,6 +2740,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   softDamage: 20
@@ -3004,6 +3012,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 3852948861532004015}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   equipmentManager: {fileID: 0}
@@ -3172,6 +3184,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   player: {fileID: 0}
@@ -3331,6 +3347,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   player: {fileID: 0}
@@ -4097,11 +4117,16 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   hitbox: {fileID: 1278044655345775746}
   validLeftAttackStates: []
   validRightAttackStates: []
+  validSheathStates: []
   guard: {fileID: 6976487158393640913}
   guardVfx: {fileID: 5797145477176175113}
   perfectGuardTime: 0
@@ -4522,6 +4547,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   hitboxes:
@@ -4655,6 +4684,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   projectile: {fileID: 5248171932173236031, guid: 7c09edecc83f8a3418d4ac96982f3085,
@@ -6451,6 +6484,10 @@ MonoBehaviour:
   animator: {fileID: 271818249473575996}
   meshFilter: {fileID: 2631325593204217798}
   meshRenderer: {fileID: 7877634901844794737}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   consumable: {fileID: 0}
@@ -11627,6 +11664,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   projectile: {fileID: 5373187035755985752, guid: 39a84fab8d09ede4e8d5d3afd219d802,
@@ -12235,6 +12276,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   projectile: {fileID: 5373187035755985752, guid: d05acc45e11e1a44abedb3d181995c1d,
@@ -13631,11 +13676,16 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   hitbox: {fileID: 8206658476241470813}
   validLeftAttackStates: []
   validRightAttackStates: []
+  validSheathStates: []
   guard: {fileID: 0}
   guardVfx: {fileID: 0}
   perfectGuardTime: 0
@@ -13700,6 +13750,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   hitbox: {fileID: 8206658476241470813}
@@ -14146,6 +14200,10 @@ MonoBehaviour:
   animator: {fileID: 8206658476942909079}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 3822525843153018348}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   consumable: {fileID: 0}
@@ -14884,6 +14942,10 @@ MonoBehaviour:
   animator: {fileID: 1278044654590407813}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   projectile: {fileID: 0}
@@ -15471,6 +15533,10 @@ MonoBehaviour:
   animator: {fileID: 8206658476176231648}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
+  visualObject: {fileID: 0}
+  autoDraw: 1
+  autoSheath: 1
+  autoSheathTime: 10
   drawn: 0
   item: {fileID: 0}
   projectile: {fileID: 2728008844794060368, guid: 8fc942549c3019d45a08471b1d2478a2,

@@ -18854,8 +18854,7 @@ MonoBehaviour:
   _potentialStaminaLastDeplete: 0
   boons: []
   flaws: []
-  guardOn: 0
-  guardDirection: 0
+  money: 0
   sitHealthRecoveryMult: 1.5
   sitStaminaRecoveryMult: 2
   chakraManager: {fileID: 59200968}
@@ -27105,6 +27104,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1278044656508673911, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
+      propertyPath: validSheathStates.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044656508673911, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
       propertyPath: heavyAttackStates.Array.data[0]
       value: katana_right_1
       objectReference: {fileID: 0}
@@ -27147,6 +27151,11 @@ PrefabInstance:
         type: 3}
       propertyPath: lightAttackStates.Array.data[3]
       value: crouch_attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278044656508673911, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: validSheathStates.Array.data[0]
+      value: idle
       objectReference: {fileID: 0}
     - target: {fileID: 1278044656508673911, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}

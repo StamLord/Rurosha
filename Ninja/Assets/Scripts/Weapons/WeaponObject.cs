@@ -9,13 +9,20 @@ public class WeaponObject : MonoBehaviour
     [SerializeField] protected Animator animator;
     [SerializeField] private MeshFilter meshFilter;
     [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private GameObject visualObject;
     protected InputState inputState {get {return manager.InputState;}}
     protected CharacterStats charStats {get {return manager.Stats;}}
     protected StealthAgent agent {get {return manager.Agent;}}
     protected new Camera camera {get {return manager.Camera;}}
 
-    [Header("Debug Info")]
+    [Header("Draw Weapon")]
+    [SerializeField] protected bool autoDraw = true;
+    [SerializeField] protected bool autoSheath = true;
+    [SerializeField] protected float autoSheathTime = 10f;
     [SerializeField] protected bool drawn;
+    private float lastUseTime;
+
+    [Header("Debug Info")]
     [SerializeField] protected Item item;
 
     [System.Serializable]
@@ -28,6 +35,12 @@ public class WeaponObject : MonoBehaviour
     void Awake()
     {
         Initialize();
+    }
+
+    private void OnEnable() 
+    {
+        if(autoDraw)
+            DrawWeapon();
     }
 
     public void Initialize()
@@ -77,8 +90,17 @@ public class WeaponObject : MonoBehaviour
         
     }
 
+    protected virtual void DrawSheathWeapon()
+    {
+        if(drawn)
+            SheathWeapon();
+        else
+            DrawWeapon();
+    }
+
     protected virtual void DrawWeapon()
     {
+        ResetAutoSheathTimer();
         drawn = true;
         DrawAnimation();
     }
@@ -105,5 +127,19 @@ public class WeaponObject : MonoBehaviour
         }
 
         return false;
+    }
+
+    protected void ResetAutoSheathTimer()
+    {
+        lastUseTime = Time.time;
+    }
+
+    protected void AutoSheath()
+    {
+        if(autoSheath == false || drawn == false)
+            return;
+
+        if(Time.time - lastUseTime >= autoSheathTime)
+            SheathWeapon();
     }
 }
