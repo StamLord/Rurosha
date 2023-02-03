@@ -292,6 +292,21 @@ public class Interactor : MonoBehaviour
         return _inventory.AddItem(item, pickup);
     }
 
+    public int GetMoney()
+    {
+        return _characterStats.Money;
+    }
+
+    public void AddMoney(int amount)
+    {
+        _characterStats.AddMoney(amount);
+    }
+
+    public bool DepleteMoney(int amount, bool greedy = false)
+    {
+        return _characterStats.DepleteMoney(amount, greedy);
+    }
+
     private void OnDrawGizmos()
     {
         if(!debugView) return;

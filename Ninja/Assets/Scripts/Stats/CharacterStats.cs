@@ -23,6 +23,52 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private const int minAttributeLevel = 1;
     [SerializeField] private const int maxAttributeLevel = 10;
 
+    #region Money
+
+    [Header("Money")]
+    [SerializeField] private int money;
+
+    public int Money {
+        private set { money = Mathf.Max(value, 0); }
+        get { return money; }
+        }
+    
+    public delegate void MoneyUpdateDelegate(int change);
+    public event MoneyUpdateDelegate OnMoneyChange;
+
+    public void AddMoney(int amount)
+    {
+        Money += amount;
+
+        if(OnMoneyChange != null)
+            OnMoneyChange(amount);
+    }
+
+    public bool DepleteMoney(int amount, bool greedy = false)
+    {
+        // If more than enough money, reduce the amount
+        if(amount < Money)
+        {
+            Money -= amount;
+            
+            if(OnMoneyChange != null)
+                OnMoneyChange(amount);
+            
+            return true;
+        }
+        // If not enough money, but greedy, reduce the existing amount
+        else if (greedy)
+        {
+            if(OnMoneyChange != null)
+                OnMoneyChange(Money);
+            Money = 0;
+        }
+        
+        return false;
+    }
+
+    #endregion
+
     #region Health
 
     [Header("Health")]

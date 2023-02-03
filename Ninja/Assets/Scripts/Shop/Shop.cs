@@ -27,13 +27,17 @@ public class Shop : MonoBehaviour
     [SerializeField] private Vector3 maxRotation;
 
     [Header("Pool")]
-    [SerializeField] private PoolData poolData;
-    private Pool pool;
+    [SerializeField] private PoolData coinPoolData;
+    [SerializeField] private PoolData coinStackPoolData;
+
+    private Pool coinPool;
+    private Pool coinStackPool;
 
     private void Start() 
     {
         UpdateAllVisual();
-        pool = poolData.Pool;
+        coinPool = coinPoolData.Pool;
+        coinStackPool = coinStackPoolData.Pool;
     }
 
     private void UpdateAllVisual() 
@@ -96,8 +100,8 @@ public class Shop : MonoBehaviour
 
     public bool CanBuy(Item item, Interactor interactor)
     {
-        // Check if enough money
-        return true;
+        // Acts both as a check if there's enough money and depletes it
+        return interactor.DepleteMoney(item.cost);
     }
 
     public void Buy(Item item)
@@ -125,8 +129,15 @@ public class Shop : MonoBehaviour
     }
 
     private IEnumerator CoinVFX(int amount)
-    {
-        for (var i = 0; i < amount; i++)
+    {   
+        int stacks = Mathf.FloorToInt(amount / 50);
+
+        for (var i = 0; i < stacks; i++)
+            StartCoroutine("CoinStack", coinLifetime);
+
+        int leftOver = amount - stacks * 50;
+
+        for (var i = 0; i < leftOver; i++)
         {
             StartCoroutine("SingleCoin", coinLifetime);
             yield return new WaitForSeconds(coinInterval);
@@ -135,7 +146,7 @@ public class Shop : MonoBehaviour
 
     private IEnumerator SingleCoin(float lifetime)
     {
-        GameObject o = pool.Get();
+        GameObject o = coinPool.Get();
         o.transform.position = coinOrigin.position;
 
         // Randomize rotaiton
@@ -147,7 +158,24 @@ public class Shop : MonoBehaviour
         o.transform.rotation = Quaternion.Euler(rotation);
 
         yield return new WaitForSeconds(lifetime);
-        pool.Return(o);
+        coinPool.Return(o);
+    }
+
+    private IEnumerator CoinStack(float lifetime)
+    {
+        GameObject o = coinStackPool.Get();
+        o.transform.position = coinOrigin.position;
+
+        // Randomize rotaiton only on y axis
+        Vector3 rotation = new Vector3(
+            0,
+            Mathf.Lerp(minRotation.y, maxRotation.y, Random.value),
+            0);
+        
+        o.transform.rotation = Quaternion.Euler(rotation);
+
+        yield return new WaitForSeconds(lifetime);
+        coinStackPool.Return(o);
     }
 
     private void OnDrawGizmos() 
