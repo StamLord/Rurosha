@@ -111,7 +111,7 @@ public class WeaponObject : MonoBehaviour
         SheathAnimation();
     }
 
-    protected void UpdateVisual()
+    protected virtual void UpdateVisual()
     {
         if(meshFilter) meshFilter.mesh = item.model;
         if(meshRenderer) meshRenderer.material = item.material;

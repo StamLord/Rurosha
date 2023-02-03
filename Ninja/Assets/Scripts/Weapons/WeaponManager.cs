@@ -50,6 +50,7 @@ public class WeaponManager : MonoBehaviour, Inventory
     [SerializeField] private GameObject _item;
     [SerializeField] private GameObject _itemBowl;
     [SerializeField] private GameObject _equipment;
+    [SerializeField] private GameObject _scroll;
 
     [SerializeField] private GameObject _lastActive;
 
@@ -89,6 +90,8 @@ public class WeaponManager : MonoBehaviour, Inventory
         if(_itemBowl)_itemBowl.GetComponent<WeaponObject>().SetWeaponManager(this);
 
         if(_equipment)_equipment.GetComponent<WeaponObject>().SetWeaponManager(this);
+        
+        if(_scroll) _scroll.GetComponent<WeaponObject>().SetWeaponManager(this);
         
         SelectItem();
 
@@ -242,6 +245,11 @@ public class WeaponManager : MonoBehaviour, Inventory
         else if (items[selected] is Equipment)
         {
             ActivateObject(_equipment);
+        }
+        //Scroll
+        else if (items[selected] is Scroll)
+        {
+            ActivateObject(_scroll);
         }
         else // Item
         {
