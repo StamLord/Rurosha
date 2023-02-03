@@ -158,7 +158,6 @@ public class KatanaDirectional : WeaponObject, IHitboxResponder
         // Check if defending
         bool defending = inputState.Defend.State == VButtonState.PRESSED;
         animator.SetBool("DEFEND", defending);
-        charStats.SetGuard(defending, direction);
 
         if(defending)
             return;
