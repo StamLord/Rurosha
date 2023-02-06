@@ -95,7 +95,7 @@ public class Kanabo : WeaponObject, IHitboxResponder
         charStats.IncreaseAttributeExp(AttributeType.STRENGTH, strengthExpGain);
         
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
-        hurtbox?.Hit(agent, 30, 10);
+        hurtbox?.Hit(agent, 30, 10, Vector3.up);
     }
 
     public void UpdateColliderState(bool newState)

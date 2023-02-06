@@ -16,19 +16,16 @@ public class PhysicalMaterial : MonoBehaviour
 
     private Camera cam;
     
-    public void CollideEffect(Vector3 position, int damage)
-    {
-        CollideEffect(position, damage, DamageType.Blunt);
-    }
-
-    public void CollideEffect(Vector3 position, int damage, DamageType damageType = DamageType.Blunt)
+    public void CollideEffect(Vector3 position, int damage, Vector3 hitUp, DamageType damageType = DamageType.Blunt)
     {
         if(cam == null)
             cam = Camera.main;
 
-        Vector3 dir = cam.transform.position - position;
-        Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
-        
+        Vector3 dir = (cam.transform.position - position).normalized;
+        Quaternion rotation = Quaternion.LookRotation(dir, hitUp);
+
+        position += dir * .5f;
+
         switch(damageType)
         {
             case DamageType.Blunt:

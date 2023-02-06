@@ -429,6 +429,15 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
                     SubHealth(9999f);
                     return "Killed player";
                 }));
+            
+            DebugCommandDatabase.AddCommand(new DebugCommand(
+                "rosebud", 
+                "Gives 1000 coins to the player.", 
+                "rosebud", 
+                (string[] parameters) => {
+                    AddMoney(1000);
+                    return "Added 1000 coins.";
+                }));
         }
     }
 
@@ -700,7 +709,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
-    public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, DamageType damageType, Direction9 direction)
+    public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, DamageType damageType)
     {
         // Send hit events - Can be listened to by AI, AnimationManager, etc.
         if(OnHitBy != null)

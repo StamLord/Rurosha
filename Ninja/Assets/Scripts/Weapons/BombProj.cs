@@ -89,7 +89,7 @@ public class BombProj : MonoBehaviour, IHitboxResponder
             // Avoid triggering multiple hurtboxes with the same parent GameObject
             if(objectsCollided.Contains(hurtbox.transform.parent.gameObject) == false)
             {
-                hurtbox.Hit(null, softDamage, hardDamage, damageType);
+                hurtbox.Hit(null, softDamage, hardDamage, Vector3.up, damageType);
                 objectsCollided.Add(hurtbox.transform.parent.gameObject);
             } 
         }

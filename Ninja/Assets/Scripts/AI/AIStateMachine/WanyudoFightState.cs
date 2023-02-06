@@ -308,9 +308,9 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         if(hurtbox)
         {   
             if(midFlamethrower)
-                hurtbox.Hit(AIStateMachine.StealthAgent, flameSoftDamage, flameHardDamage, DamageType.Blunt);
+                hurtbox.Hit(AIStateMachine.StealthAgent, flameSoftDamage, flameHardDamage, Vector3.up, DamageType.Blunt);
             else
-                hurtbox.Hit(AIStateMachine.StealthAgent, chargeSoftDamage, chargeHardDamage, DamageType.Blunt);
+                hurtbox.Hit(AIStateMachine.StealthAgent, chargeSoftDamage, chargeHardDamage, Vector3.up, DamageType.Blunt);
             
             if(hitsRegistered.ContainsKey(hurtbox))
             {

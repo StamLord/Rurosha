@@ -254,7 +254,7 @@ public class AirState : PlayerState
         float fallHeight = fallDamageHeight.GetValue(characterStats);
         if(delta < fallHeight) return;
         int damage = Mathf.RoundToInt(FallDamage * (delta - fallHeight));
-        characterStats.GetHit(null, damage * 2, damage, DamageType.Blunt, Direction9.CENTER);
+        characterStats.GetHit(null, damage * 2, damage, Vector3.up, DamageType.Blunt);
     }
 
     private void GetInput()

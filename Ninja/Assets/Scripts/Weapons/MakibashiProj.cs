@@ -39,7 +39,7 @@ public class MakibashiProj : MonoBehaviour, IHitboxResponder
 
         // Register hit if rigidbody moves fast enough
         if(hurtbox && rb.velocity.magnitude > minVelocityHurt)
-            hurtbox.Hit(null, softDamage, hardDamage, damageType);
+            hurtbox.Hit(null, softDamage, hardDamage, Vector3.up, damageType);
     }
 
     public void UpdateColliderState(bool state)

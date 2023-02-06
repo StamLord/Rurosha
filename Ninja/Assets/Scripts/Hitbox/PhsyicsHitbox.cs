@@ -39,7 +39,7 @@ public class PhsyicsHitbox : MonoBehaviour
         {
             HurtboxDelegate hbd = other.collider.GetComponent<HurtboxDelegate>();
             if(hbd)
-                hbd.Hit(null, Mathf.FloorToInt(force * softDamageMult), Mathf.FloorToInt(force * hardDamageMult), damageType);
+                hbd.Hit(null, Mathf.FloorToInt(force * softDamageMult), Mathf.FloorToInt(force * hardDamageMult), Vector3.up, damageType);
         }
     }
 }

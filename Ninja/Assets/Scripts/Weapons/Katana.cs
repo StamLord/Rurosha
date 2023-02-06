@@ -108,10 +108,10 @@ public class Katana : WeaponObject, IHitboxResponder
         {
             // Heavy Attack
             if(ValidateState(heavyAttackStates))
-                hurtbox.Hit(agent, heavyAttackDamage.softDamage, heavyAttackDamage.hardDamage, DamageType.Slash);
+                hurtbox.Hit(agent, heavyAttackDamage.softDamage, heavyAttackDamage.hardDamage, hitbox.transform.right, DamageType.Slash);
             // Light Attack
             else
-                hurtbox.Hit(agent, lightAttackDamage.softDamage, lightAttackDamage.hardDamage, DamageType.Slash);
+                hurtbox.Hit(agent, lightAttackDamage.softDamage, lightAttackDamage.hardDamage, hitbox.transform.right, DamageType.Slash);
         }
 
         //Slice

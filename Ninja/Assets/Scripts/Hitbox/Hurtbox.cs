@@ -26,19 +26,19 @@ public class Hurtbox : MonoBehaviour
     }
 
     // Called by weapon scripts after
-    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, DamageType damageType = DamageType.Blunt, Direction9 direction = Direction9.CENTER)
+    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, DamageType damageType = DamageType.Blunt)
     {
         // Send hit data to all responders and see if atleast 1 returns true
         bool hit = (_responders.Count > 0)? false : true;
         foreach(IHurtboxResponder r in _responders)
-            if(r.GetHit(agent, softDamage, hardDamage, damageType, direction))
+            if(r.GetHit(agent, softDamage, hardDamage, hitUp, damageType))
                 hit = true;
 
         if(hit)
         {
             // Hit Effects
             if(physicalMaterial)
-                physicalMaterial.CollideEffect(transform.position, hardDamage, damageType);
+                physicalMaterial.CollideEffect(transform.position, hardDamage, hitUp, damageType);
         
             // Change hurtbox's material color if hit for testing
             if(_debug && _material)

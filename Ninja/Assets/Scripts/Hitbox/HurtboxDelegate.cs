@@ -6,8 +6,8 @@ public class HurtboxDelegate : MonoBehaviour
 {
     [SerializeField] private Hurtbox hurtbox;
 
-    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, DamageType damageType = DamageType.Blunt, Direction9 direction = Direction9.CENTER)
+    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, DamageType damageType = DamageType.Blunt)
     {
-        return hurtbox.Hit(agent, softDamage, hardDamage, damageType, direction);
+        return hurtbox.Hit(agent, softDamage, hardDamage, hitUp, damageType);
     }
 }
