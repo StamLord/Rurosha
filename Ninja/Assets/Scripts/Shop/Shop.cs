@@ -133,7 +133,7 @@ public class Shop : MonoBehaviour
         int stacks = Mathf.FloorToInt(amount / 50);
 
         for (var i = 0; i < stacks; i++)
-            StartCoroutine("CoinStack", coinLifetime);
+            StartCoroutine(CoinStack(coinLifetime, i));
 
         int leftOver = amount - stacks * 50;
 
@@ -161,18 +161,13 @@ public class Shop : MonoBehaviour
         coinPool.Return(o);
     }
 
-    private IEnumerator CoinStack(float lifetime)
+    private IEnumerator CoinStack(float lifetime, int i = 0)
     {
         GameObject o = coinStackPool.Get();
-        o.transform.position = coinOrigin.position;
+        o.transform.position = coinOrigin.position - transform.right * i * .1f;
 
-        // Randomize rotaiton only on y axis
-        Vector3 rotation = new Vector3(
-            0,
-            Mathf.Lerp(minRotation.y, maxRotation.y, Random.value),
-            0);
-        
-        o.transform.rotation = Quaternion.Euler(rotation);
+        // Forward set to shop's forward
+        o.transform.forward = transform.forward;
 
         yield return new WaitForSeconds(lifetime);
         coinStackPool.Return(o);
