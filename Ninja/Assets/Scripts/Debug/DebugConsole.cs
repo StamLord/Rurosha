@@ -37,14 +37,6 @@ public class DebugConsole : UIWindow
     private void Awake() 
     {
         DebugCommandDatabase.AddCommand(new DebugCommand(
-            "rosebud", 
-            "Gives the player 1000 gold.", 
-            "rosebud", 
-            (string[] paramaters) => {
-                return "Invoking rosebud! You rascal!";
-            }));
-
-        DebugCommandDatabase.AddCommand(new DebugCommand(
             "inputdebug", 
             "Turns Input Debug window On / Off", 
             "inputdebug <1/0>", 
