@@ -183,9 +183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa6d0024f4c1b144841437e7c392732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
-  _stateName: CrouchState
-  _enterAction:
+  stateMachine: {fileID: 0}
+  stateNames:
+  - CrouchState
+  enterAction:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1987473482851946826}
@@ -200,7 +201,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  _exitAction:
+  exitAction:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1987473482851946826}
