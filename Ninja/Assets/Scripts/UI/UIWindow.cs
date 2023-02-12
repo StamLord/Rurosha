@@ -2,11 +2,21 @@ using UnityEngine;
 
 public class UIWindow : MonoBehaviour
 {
+    [Header("Animator")]
     [SerializeField] protected Animator animator;
+
+    [Header("Settings")]
     [SerializeField] private bool closeOnBack;
     [SerializeField] private bool disableMovement;
     [SerializeField] private bool disableMouse;
     [SerializeField] private bool disableInteraction;
+
+    [Header("Associated Key")]
+    [SerializeField] private bool openWithKey;
+    [SerializeField] private KeyCode key;
+
+    [Header("Container")]
+    [SerializeField] private GameObject container;
 
     private bool isOpen;
     public bool IsOpen {get {return isOpen;}}
@@ -14,6 +24,17 @@ public class UIWindow : MonoBehaviour
     public virtual void ProcessInput(Vector3 axis, bool select){}
     public virtual bool Select(int index){return false;}
     
+    private void Update() 
+    {
+        if(openWithKey && Input.GetKeyDown(key))
+        {
+            if(IsOpen)
+                Close();
+            else
+                Open();
+        }
+    }
+
     public virtual void Back() 
     {
         if(closeOnBack)
@@ -25,8 +46,8 @@ public class UIWindow : MonoBehaviour
         isOpen = true;
         if(animator)
             animator.Play("show");
-        else
-            gameObject.SetActive(true);
+        else if(container)
+            container.SetActive(true);
         
         UIManager.Instance.AddWindow(this, disableMovement, disableMouse, disableInteraction);
     }
@@ -36,8 +57,8 @@ public class UIWindow : MonoBehaviour
         isOpen = false;
         if(animator)
             animator.Play("hide");
-        else
-            gameObject.SetActive(false);
+        else if(container)
+            container.SetActive(false);
         
         UIManager.Instance.RemoveWindow(this, disableMovement, disableMouse, disableInteraction);
     }
