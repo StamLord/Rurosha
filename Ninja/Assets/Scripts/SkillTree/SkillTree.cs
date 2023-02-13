@@ -17,6 +17,8 @@ public class SkillTree : MonoBehaviour
     public delegate void TreeUpdateDelegate();
     public event TreeUpdateDelegate OnTreeUpdate;
 
+    private SkillTreeManager manager;
+
     public void Start()
     {
         InitializeSkills();
@@ -33,6 +35,11 @@ public class SkillTree : MonoBehaviour
         }
     }
 
+    public void SetManager(SkillTreeManager manager)
+    {
+        this.manager = manager;
+    }
+
     // <summary>
     /// Gets all branches and fills the cache for easy checking later
     /// </summary>
@@ -45,7 +52,6 @@ public class SkillTree : MonoBehaviour
 
         foreach (Skill s in skills)
         {
-            s.context = this;
             skillCache[s.SkillName] = s;
 
             // Fill childrenCache (reverse of requirement)
@@ -78,10 +84,33 @@ public class SkillTree : MonoBehaviour
         return false;
     }
 
+    private bool CanLearn(Skill skill)
+    {
+        foreach (string required in skill.requirements)
+        {
+            if (IsLearned(required) == false)
+                return false;
+        }
+
+        return true;
+    }
+
     public bool Learn(string skillName)
     {
+        // Checks if skill exists
         if(skillCache.ContainsKey(skillName))
-            isDirty = skillCache[skillName].Learn();
+        {
+            // Meets requirements
+            if(CanLearn(skillCache[skillName]))
+            {
+                // Tries to remove skill points, false if not enough
+                if(manager.RemoveSkillPoint(skillCache[skillName].Cost))
+                {
+                    skillCache[skillName].Learn();
+                    isDirty = true;
+                }
+            }
+        }
         
         return false;        
     }
@@ -94,6 +123,9 @@ public class SkillTree : MonoBehaviour
         if(skillCache.ContainsKey(skillName))
         {
             skillCache[skillName].Unlearn();
+            
+            // Add back skill points
+            manager.AddSkillPoint(skillCache[skillName].Cost);
 
             if(childrenCache.ContainsKey(skillName))
             {
@@ -103,5 +135,16 @@ public class SkillTree : MonoBehaviour
 
             isDirty = true;
         }
+    }
+
+    public void ResetAll()
+    {
+        foreach(Skill s in skills)
+        {
+            s.Unlearn();
+            manager.AddSkillPoint(s.Cost);
+        }
+
+        isDirty = true;
     }
 }

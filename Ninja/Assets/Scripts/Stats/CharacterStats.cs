@@ -14,6 +14,68 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [Header("Hurtboxes")]
     [SerializeField] private Hurtbox[] hurtboxes;
     
+    #region Level
+
+    [Header("Level")]
+
+    [Min(1)]
+    [SerializeField] private int level = 1;
+    public int Level {get{return level;}}
+
+    [SerializeField] private int experience;
+    public int Experience {get{return experience;}}
+
+    [SerializeField] private int[] expNeeded;
+    public int NextLevel {
+        get{
+            // Return last value if we our level is too high.
+            if(level >= expNeeded.Length)
+                return expNeeded[expNeeded.Length - 1];
+            // Return first value if for some reason we are below level 1.
+            else if(level < 1)
+                return expNeeded[0];
+            // Return exp needed for level up
+            else
+                return expNeeded[level - 1];
+            }}
+
+    public bool AddExp(int amount)
+    {
+        experience += amount;
+
+        // Add exp event
+        if(OnAddExp != null)
+            OnAddExp(amount);
+
+        // If we're outside of expNeeded[] range we use it's last value
+        int expGoal = NextLevel;
+        
+        // If beyond needed exp, we level up!
+        if(experience >= expGoal)
+        {
+            experience -= expGoal;
+            level++;
+            if(skillTreeManager)
+                skillTreeManager.AddSkillPoint(skillPointsPerLevel);
+
+            // Level up event
+            if(OnLevelUp != null)
+                OnLevelUp(level);
+            
+            return true;
+        }
+
+        return false;
+    }
+
+    public delegate void AddExpDelegate(int amount);
+    public event AddExpDelegate OnAddExp;
+
+    public delegate void LevelUpDelegate(int level);
+    public event LevelUpDelegate OnLevelUp;
+
+    #endregion
+
     [Header("Attributes")]
     [SerializeField] private Attribute strength;
     [SerializeField] private Attribute agility;
@@ -22,6 +84,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     
     [SerializeField] private const int minAttributeLevel = 1;
     [SerializeField] private const int maxAttributeLevel = 10;
+
+    [Header("Skill Tree Manager")]
+    [SerializeField] private SkillTreeManager skillTreeManager;
+    [SerializeField] private int skillPointsPerLevel = 1;
 
     #region Money
 

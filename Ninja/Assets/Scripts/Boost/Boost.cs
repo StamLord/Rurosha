@@ -9,6 +9,8 @@ public class Boost : MonoBehaviour
 
     [SerializeField] private List<Modifier> modifiers;
 
+    [SerializeField] private int expGain = 10;
+
     [SerializeField] private float healthGain = 0f;
     [SerializeField] private float pHealthGain = 0f;
     [SerializeField] private float staminaGain = 10f;
@@ -44,6 +46,8 @@ public class Boost : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, target.position + target.up, p);
             yield return null;
         }
+
+        stats.AddExp(expGain);
 
         stats.RestoreHealth(healthGain, pHealthGain);
         stats.RestoreStamina(staminaGain, pStaminaGain);

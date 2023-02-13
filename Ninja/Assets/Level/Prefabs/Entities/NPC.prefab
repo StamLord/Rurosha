@@ -345,6 +345,9 @@ MonoBehaviour:
   hurtboxes:
   - {fileID: 2795321124112593695}
   - {fileID: 8147824471466518891}
+  level: 1
+  experience: 0
+  expNeeded: 
   strength:
     modifiers: []
     roundType: 0
@@ -381,6 +384,8 @@ MonoBehaviour:
     _experience: 0
     _modified: 0
     _modifiedDirty: 0
+  skillTreeManager: {fileID: 0}
+  skillPointsPerLevel: 1
   money: 0
   _isAlive: 1
   aliveVisual: {fileID: 8997393895949410982}
