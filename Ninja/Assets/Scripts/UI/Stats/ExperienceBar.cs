@@ -28,6 +28,15 @@ public class ExperienceBar : MonoBehaviour
         stats.OnAddExp += AddExp;
         stats.OnLevelUp += LevelUp;
         UpdateExpBar();
+
+        // Start Hidden
+        hidden = true;
+        Color barColor = expBar.color;
+        Color outlineColor = expBarOutline.color;
+        barColor.a = outlineColor.a = 0f;
+
+        expBar.color = barColor;
+        expBarOutline.color = outlineColor;
     }
 
     private void Update() 
