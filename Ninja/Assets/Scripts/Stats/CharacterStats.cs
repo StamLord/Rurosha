@@ -89,6 +89,11 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private SkillTreeManager skillTreeManager;
     [SerializeField] private int skillPointsPerLevel = 1;
 
+    public bool IsSkillLearned(string skillName)
+    {
+        return skillTreeManager.IsLearned(skillName);
+    }
+
     #region Money
 
     [Header("Money")]
@@ -424,6 +429,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         PotentialHealth = MaxHealth;
         Stamina = MaxStamina;
 
+        // Only add these commands if we are the player
         if(gameObject.name == "Player Object (Main)")
         {
             DebugCommandDatabase.AddCommand(new DebugCommand(
@@ -494,6 +500,20 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
                 (string[] parameters) => {
                     SubHealth(9999f);
                     return "Killed player";
+                }));
+            
+            DebugCommandDatabase.AddCommand(new DebugCommand(
+                "addskillpoint", 
+                "Adds skill points", 
+                "addskillpoint <amount>", 
+                (string[] parameters) => {
+                    
+                    int amount;
+                    if(Int32.TryParse(parameters[0], out amount) == false)
+                        amount = 1;
+                    
+                    skillTreeManager.AddSkillPoint(amount);
+                    return "Added " + amount + " Skill Points";
                 }));
             
             DebugCommandDatabase.AddCommand(new DebugCommand(
