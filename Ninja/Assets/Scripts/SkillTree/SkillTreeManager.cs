@@ -16,11 +16,34 @@ public class SkillTreeManager : MonoBehaviour
 
     private void Start() 
     {
-        mobility.SetManager(this);
-        stealth.SetManager(this);
-        survival.SetManager(this);
-        spirit.SetManager(this);
-        unarmed.SetManager(this);
+        if(mobility) 
+        {
+            mobility.SetManager(this);
+            mobility.OnSkillLearned += SkillLearned;
+        }
+
+        if(stealth) 
+        {
+            stealth.SetManager(this);
+            stealth.OnSkillLearned += SkillLearned;
+        }
+        if(survival)
+        { 
+            survival.SetManager(this);
+            survival.OnSkillLearned += SkillLearned;
+        }
+
+        if(spirit) 
+        {
+            spirit.SetManager(this);
+            spirit.OnSkillLearned += SkillLearned;
+        }
+
+        if(unarmed) 
+        { 
+            unarmed.SetManager(this);
+            unarmed.OnSkillLearned += SkillLearned;
+        }
     }
 
     public void AddSkillPoint(int amount)
@@ -34,5 +57,35 @@ public class SkillTreeManager : MonoBehaviour
 
         skillPoints -= amount;
         return true;
+    }
+
+    public bool IsLearned(string skillName)
+    {
+        if(mobility && mobility.IsLearned(skillName))
+            return true;
+        
+        if(stealth && stealth.IsLearned(skillName))
+            return true;
+        
+        if(survival && survival.IsLearned(skillName))
+            return true;
+        
+        if(spirit && spirit.IsLearned(skillName))
+            return true;
+
+        if(unarmed && unarmed.IsLearned(skillName))
+            return true;
+        
+        return false;
+    }
+
+    public void SkillLearned(string skillName)
+    {
+        switch(skillName)
+        {
+            case "Sense Money":
+                SenseMoneyVFX.Active = true;
+                break;
+        }
     }
 }

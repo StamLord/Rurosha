@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Outline))]
 public class Pickup : PhysicalObject
 {
     [Header ("Item")]

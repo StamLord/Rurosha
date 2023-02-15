@@ -17,6 +17,9 @@ public class SkillTree : MonoBehaviour
     public delegate void TreeUpdateDelegate();
     public event TreeUpdateDelegate OnTreeUpdate;
 
+    public delegate void SkillLearnedDelegate(string skillName);
+    public event SkillLearnedDelegate OnSkillLearned;
+
     private SkillTreeManager manager;
 
     public void Start()
@@ -108,6 +111,10 @@ public class SkillTree : MonoBehaviour
                 {
                     skillCache[skillName].Learn();
                     isDirty = true;
+
+                    // Skill learned event
+                    if(OnSkillLearned != null)
+                        OnSkillLearned(skillName);
                 }
             }
         }
@@ -141,6 +148,8 @@ public class SkillTree : MonoBehaviour
     {
         foreach(Skill s in skills)
         {
+            if(s.Learned == false) continue;
+            
             s.Unlearn();
             manager.AddSkillPoint(s.Cost);
         }
