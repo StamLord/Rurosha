@@ -1,13 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Outline))]
 public class Pickup : PhysicalObject
 {
+    [Header ("Item")]
     [SerializeField] private Item item;
     [SerializeField] private bool randomize;
 
+    [Header ("Money")]
+    [SerializeField] private bool money;
+    [SerializeField] private int moneyAmount;
+
+    [Header ("Visual")]
     [SerializeField] private MeshFilter meshFilter;
     [SerializeField] private MeshRenderer meshRenderer;
 
@@ -53,6 +57,15 @@ public class Pickup : PhysicalObject
     public override void Use(Interactor interactor)
     {
         base.Use(interactor);
+        
+        if(money)
+        {
+            interactor.AddMoney(moneyAmount);
+            if(OnPickup != null)
+                    OnPickup(item);
+            
+            DestroyPickup();
+        }
 
         if(item)
         {
@@ -67,22 +80,27 @@ public class Pickup : PhysicalObject
                 if(OnPickup != null)
                     OnPickup(item);
                 
-                // If we have child pickups,
-                // we unparent them so they are not destroyed
-                Projectile[] childPickups = GetComponentsInChildren<Projectile>();
-                foreach(Projectile proj in childPickups)
-                {
-                    if(proj.transform == transform) continue; // Ignore ourselves
-                    GameObject go = proj.ReplaceWithPickup();
-                    Pickup p = go.GetComponent<Pickup>();
-                    if(p == null) continue;
-                    p.transform.SetParent(transform.parent);
-                    p.SetRigidActive(true);
-                }
-
-                Destroy(transform.gameObject);
+                DestroyPickup();
             }
         }
+    }
+
+    private void DestroyPickup()
+    {
+        // If we have child pickups,
+        // we unparent them so they are not destroyed
+        Projectile[] childPickups = GetComponentsInChildren<Projectile>();
+        foreach(Projectile proj in childPickups)
+        {
+            if(proj.transform == transform) continue; // Ignore ourselves
+            GameObject go = proj.ReplaceWithPickup();
+            Pickup p = go.GetComponent<Pickup>();
+            if(p == null) continue;
+            p.transform.SetParent(transform.parent);
+            p.SetRigidActive(true);
+        }
+
+        Destroy(transform.gameObject);
     }
 
     // Used by Grappling Hook to pick up items
