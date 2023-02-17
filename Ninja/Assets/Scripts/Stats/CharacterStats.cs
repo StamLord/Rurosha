@@ -76,6 +76,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    #region Attributes
+
     [Header("Attributes")]
     [SerializeField] private Attribute strength;
     [SerializeField] private Attribute agility;
@@ -85,6 +87,35 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private const int minAttributeLevel = 1;
     [SerializeField] private const int maxAttributeLevel = 10;
 
+    #endregion
+
+    #region Karma
+    
+    [Header("Karma")]
+    [SerializeField][Range(-100,100)] private int karma;
+    public int Karma {
+        get {return karma;} 
+        private set {
+            karma = Mathf.Clamp(karma + value, -100, 100);
+            
+            // Karma event
+            if(OnKarmaUpdate != null)
+                OnKarmaUpdate(value);
+            }}
+
+    [SerializeField] private int stealKarma = -5;
+    public void CommitSteal()
+    {
+        Karma += stealKarma;
+    }
+
+    public delegate void OnKarmaUpdateDelegate(int amount);
+    public event OnKarmaUpdateDelegate OnKarmaUpdate;
+
+    #endregion
+
+    #region Skills
+
     [Header("Skill Tree Manager")]
     [SerializeField] private SkillTreeManager skillTreeManager;
     [SerializeField] private int skillPointsPerLevel = 1;
@@ -93,6 +124,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         return skillTreeManager.IsLearned(skillName);
     }
+
+    #endregion
 
     #region Money
 
