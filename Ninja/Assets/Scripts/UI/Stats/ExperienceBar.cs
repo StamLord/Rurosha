@@ -9,11 +9,6 @@ public class ExperienceBar : MonoBehaviour
     [SerializeField] private Image expBar;
     [SerializeField] private Image expBarOutline;
 
-    [SerializeField] private TextMeshProUGUI expAddText;
-    [SerializeField] private float expAddFade = 1f;
-    [SerializeField] private float expAddDuration = 1f;
-    private Coroutine addTextCoroutine;
-
     [SerializeField] private float autoHideAfter = 3f;
     [SerializeField] private float autoHideFade = 1f;
     private bool hidden;
@@ -56,54 +51,11 @@ public class ExperienceBar : MonoBehaviour
     private void AddExp(int amount)
     {
         UpdateExpBar();
-        
-        if(addTextCoroutine != null)
-            StopCoroutine(addTextCoroutine);
-        
-        addTextCoroutine = StartCoroutine(AddExpText(amount));
     }
 
     private void LevelUp(int level)
     {
         UpdateExpBar();
-    }
-
-    private IEnumerator AddExpText(int amount)
-    {
-        expAddText.text = "+" + amount;
-
-        float startTime = Time.time;
-        Color textColor = expAddText.color;
-
-        // Fade in
-        while(Time.time - startTime <= expAddFade)
-        {
-            textColor.a = Mathf.Lerp(0, 1, (Time.time - startTime) / expAddFade);
-            expAddText.color = textColor;
-            yield return null;   
-        }
-
-        textColor.a = 1;
-        expAddText.color = textColor;
-
-        // Stay visible
-        startTime = Time.time;
-        while(Time.time - startTime <= expAddDuration)
-        {
-            yield return null;   
-        }
-
-        // Fade out
-        startTime = Time.time;
-        while(Time.time - startTime <= expAddFade)
-        {
-            textColor.a = Mathf.Lerp(1, 0, (Time.time - startTime) / expAddFade);
-            expAddText.color = textColor;
-            yield return null;   
-        }
-        
-        textColor.a = 0;
-        expAddText.color = textColor;
     }
 
     private void ShowBar()
