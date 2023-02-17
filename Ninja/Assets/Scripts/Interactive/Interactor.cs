@@ -137,7 +137,7 @@ public class Interactor : MonoBehaviour
                 StartCarry();
         }
 
-        if(Input.GetButton("Fire1"))
+        if(_inputState.MouseButton1.State == VButtonState.PRESS_START)
         {
             if(isCarrying) 
             {
@@ -187,7 +187,7 @@ public class Interactor : MonoBehaviour
         _currentSelection = usable;
 
         if(SelectionChangeEvent != null)
-            SelectionChangeEvent(_currentSelection.GetText());
+            SelectionChangeEvent(_currentSelection.GetText(this));
     }
 
     private void StartCarry()
@@ -305,6 +305,11 @@ public class Interactor : MonoBehaviour
     public bool DepleteMoney(int amount, bool greedy = false)
     {
         return _characterStats.DepleteMoney(amount, greedy);
+    }
+
+    public void CommitSteal()
+    {
+        _characterStats.CommitSteal();
     }
 
     private void OnDrawGizmos()

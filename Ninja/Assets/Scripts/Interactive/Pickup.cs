@@ -2,6 +2,10 @@
 
 public class Pickup : PhysicalObject
 {
+    [Header ("Owner")]
+    [SerializeField] private CharacterStats owner;
+    [SerializeField] public CharacterStats Owner { get {return owner;}}
+
     [Header ("Item")]
     [SerializeField] private Item item;
     [SerializeField] private bool randomize;
@@ -57,18 +61,23 @@ public class Pickup : PhysicalObject
     {
         base.Use(interactor);
         
+        bool isSteal = IsStealing(interactor);
+
         if(money)
         {
             interactor.AddMoney(moneyAmount);
             if(OnPickup != null)
                     OnPickup(item);
             
+            if(isSteal) interactor.CommitSteal();
+
             DestroyPickup();
         }
 
         if(item)
-        {
-            if(OnAttemptPickup != null)
+        {   
+            // Unless we steal, call OnAttemptPickup to check if possible (enough money etc.)
+            if(isSteal == false && OnAttemptPickup != null)
             {
                 bool success = OnAttemptPickup(item, interactor);
                 if(success == false) return;
@@ -78,6 +87,8 @@ public class Pickup : PhysicalObject
             {
                 if(OnPickup != null)
                     OnPickup(item);
+                
+                if(isSteal) interactor.CommitSteal();
                 
                 DestroyPickup();
             }
@@ -108,5 +119,22 @@ public class Pickup : PhysicalObject
         if(item)
             if(manager.AddItem(item))
                 Destroy(transform.gameObject);
+    }
+
+    public override string GetText(Interactor interactor = null)
+    {
+        if (IsStealing(interactor))
+            return "Steal";
+
+        return interactionText;
+    }
+
+    private bool IsStealing(Interactor interactor)
+    {
+        if(interactor == null) 
+            return false;
+
+        // TODO: Implement check if interactor is ally of owner
+        return owner != null;
     }
 }

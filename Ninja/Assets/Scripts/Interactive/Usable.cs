@@ -27,7 +27,7 @@ public class Usable : MonoBehaviour
         
     }
 
-    public string GetText()
+    public virtual string GetText(Interactor interactor = null)
     {
         return interactionText;
     }
