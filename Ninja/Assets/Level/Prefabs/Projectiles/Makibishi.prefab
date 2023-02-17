@@ -317,7 +317,13 @@ MonoBehaviour:
   outline: {fileID: 0}
   interactionText: Use
   weightClass: 0
+  rigidbody: {fileID: 0}
   item: {fileID: 11400000, guid: 5d9be340166ff2340963e2ca46c190db, type: 2}
+  randomize: 0
+  money: 0
+  moneyAmount: 0
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
 --- !u!114 &1127794624208545211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,8 +340,8 @@ MonoBehaviour:
   hitbox: {fileID: 5373187037787530448}
   maxVelocityActive: 1
   minVelocityHurt: 0.1
-  softDamage: 2
-  hardDamage: 0
+  softDamage: 3
+  hardDamage: 2
   damageType: 2
 --- !u!1 &5373187037126392188
 GameObject:
@@ -419,14 +425,20 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
   isActive: 1
-  lastActiveState: 0
-  collided: []
   lastPosition: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  overrideVelocity: 0
+  oVelocityReference: {fileID: 0}
+  oVelocity: {x: 0, y: 0, z: 0}
+  lastActiveState: 0
+  collided: []
 --- !u!1 &6199722559880066995
 GameObject:
   m_ObjectHideFlags: 0
