@@ -99,13 +99,13 @@ public class Shop : MonoBehaviour
         }
     }
 
+    // Check if there's enough money
     public bool CanBuy(Item item, Interactor interactor)
     {
-        // Acts both as a check if there's enough money and depletes it
-        return interactor.DepleteMoney(item.cost);
+        return interactor.GetMoney() >= item.cost;
     }
 
-    public void Buy(Item item)
+    public void Buy(Item item, Interactor interactor)
     {
         int index = -1;
 
@@ -121,7 +121,8 @@ public class Shop : MonoBehaviour
 
         if(index < 0)
             return;
-
+        
+        interactor.DepleteMoney(item.cost);
         money += item.cost;
         inventory[index] = null;
         sold.Enqueue(item);

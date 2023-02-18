@@ -22,7 +22,7 @@ public class Pickup : PhysicalObject
     public delegate bool attemptPickupDelegate(Item item, Interactor interactor);
     public event attemptPickupDelegate OnAttemptPickup;
 
-    public delegate void pickupDelegate(Item item);
+    public delegate void pickupDelegate(Item item, Interactor interactor);
     public event pickupDelegate OnPickup;
 
     private void Awake() 
@@ -68,7 +68,7 @@ public class Pickup : PhysicalObject
         {
             interactor.AddMoney(moneyAmount);
             if(OnPickup != null)
-                    OnPickup(item);
+                OnPickup(item, interactor);
             
             if(isSteal) interactor.CommitSteal();
 
@@ -87,7 +87,7 @@ public class Pickup : PhysicalObject
             if(interactor.AddItem(item, this))
             {
                 if(OnPickup != null)
-                    OnPickup(item);
+                    OnPickup(item, interactor);
                 
                 if(isSteal) interactor.CommitSteal();
                 
