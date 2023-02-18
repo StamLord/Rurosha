@@ -150,8 +150,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     public bool DepleteMoney(int amount, bool greedy = false)
     {
-        // If more than enough money, reduce the amount
-        if(amount < Money)
+        // If enough money, reduce the amount
+        if(amount <= Money)
         {
             Money -= amount;
             
