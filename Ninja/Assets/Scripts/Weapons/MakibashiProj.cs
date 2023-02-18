@@ -35,11 +35,20 @@ public class MakibashiProj : MonoBehaviour, IHitboxResponder
     {
         // Get Hurtbox
         Hurtbox hurtbox = col.GetComponent<Hurtbox>();
-        Rigidbody rb = col.transform.root.GetComponent<Rigidbody>();
+        Rigidbody rb = col.transform.root.GetComponentInChildren<Rigidbody>();
 
-        // Register hit if rigidbody moves fast enough
-        if(hurtbox && rb.velocity.magnitude > minVelocityHurt)
-            hurtbox.Hit(null, softDamage, hardDamage, Vector3.up, damageType);
+        if(hurtbox)
+        {
+            if(rb)
+            {
+                // Register hit if rigidbody moves fast enough
+                if(rb.velocity.magnitude > minVelocityHurt)
+                    hurtbox.Hit(null, softDamage, hardDamage, Vector3.up, damageType);
+            }
+            // Fallback if no rigidbody found
+            else
+                hurtbox.Hit(null, softDamage, hardDamage, Vector3.up, damageType);
+        }
     }
 
     public void UpdateColliderState(bool state)
