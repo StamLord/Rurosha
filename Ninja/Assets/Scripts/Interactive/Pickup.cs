@@ -9,6 +9,7 @@ public class Pickup : PhysicalObject
     [Header ("Item")]
     [SerializeField] private Item item;
     [SerializeField] private bool randomize;
+    [SerializeField] private UIItemPrice costObject;
 
     [Header ("Money")]
     [SerializeField] private bool money;
@@ -136,5 +137,14 @@ public class Pickup : PhysicalObject
 
         // TODO: Implement check if interactor is ally of owner
         return owner != null;
+    }
+
+    public void SetVisibleCost(bool visible)
+    {
+        if(costObject) 
+        {
+            costObject.gameObject.SetActive(visible);
+            costObject.UpdatePrice(item.cost);
+        }
     }
 }

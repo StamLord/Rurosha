@@ -84,6 +84,7 @@ public class Shop : MonoBehaviour
             if(pickup)
             { 
                 pickup.SetItem(inventory[index]);
+                pickup.SetVisibleCost(true);
                 pickup.OnAttemptPickup += CanBuy;
                 pickup.OnPickup += Buy;
             }
