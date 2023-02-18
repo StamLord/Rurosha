@@ -86,7 +86,7 @@ public class GroundedState : PlayerState
 
         // Dash
         if(inputState.DoubleForward || inputState.DoubleBack || inputState.DoubleLeft || inputState.DoubleRight)
-            if(characterStats.DepleteStamina(20))
+            if(characterStats.IsSkillLearned("Dash") && characterStats.DepleteStamina(20))
                 SwitchState(CharacterStateMachine.StateName.DASH);
 
         // Kick
@@ -115,7 +115,7 @@ public class GroundedState : PlayerState
         }
         
         // Switch to ClimbState
-        if(isClimbing)
+        if(characterStats.IsSkillLearned("Tree Climb") && isClimbing)
         {
             SwitchState(CharacterStateMachine.StateName.CLIMB);
             return;

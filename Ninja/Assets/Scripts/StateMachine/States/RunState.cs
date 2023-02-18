@@ -152,14 +152,14 @@ public class RunState : PlayerState
         }
 
         // Crouch
-        if (inputState.Crouch.Pressed) 
+        if (characterStats.IsSkillLearned("Slide") && inputState.Crouch.Pressed) 
         {
             SwitchState(CharacterStateMachine.StateName.SLIDE);
             return;
         }
         
         // Switch to ClimbState
-        if(isClimbing)
+        if(characterStats.IsSkillLearned("Tree Climb") && isClimbing)
         {
             SwitchState(CharacterStateMachine.StateName.CLIMB);
             return;

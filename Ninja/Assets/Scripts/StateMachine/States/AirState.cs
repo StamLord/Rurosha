@@ -121,7 +121,7 @@ public class AirState : PlayerState
 
             return;
         }
-        else if(ledgeDetected && inputState.AxisInput.z > 0) // We must be moving forward to trigger ledge climbing
+        else if(characterStats.IsSkillLearned("Ledge Climb") && ledgeDetected && inputState.AxisInput.z > 0) // We must be moving forward to trigger ledge climbing
         {
             isVaulting = true;
             rigidbody.velocity = Vector3.zero; // Stop jumping, falling and any other forces
@@ -167,7 +167,8 @@ public class AirState : PlayerState
             {
                 // Start wall run if: Wall detected (in input direction), at correct angle and different than last wall normal.
                 // Also player needs to move forward to activate.
-                if(wallDetected 
+                if( characterStats.IsSkillLearned("Wall Run")
+                    && wallDetected 
                     && wallAngle > 90 && wallAngle < 140
                     && wallNormal != lastWallRunNormal 
                     && inputState.AxisInput.z > 0)
@@ -179,12 +180,12 @@ public class AirState : PlayerState
                     return;
                 }
                 // Wall jump
-                else if(wallDetected)
+                else if(characterStats.IsSkillLearned("Wall Jump") && wallDetected)
                 {
                     SwitchState(CharacterStateMachine.StateName.JUMP);
                 }
                 // Perform Air Jump if below maxAirJumps
-                else if(airJumps < maxAirJumps)
+                else if(characterStats.IsSkillLearned("Double Jump") && airJumps < maxAirJumps)
                 {
                     if(OnDoubleJumpStart != null) OnDoubleJumpStart();
                     airJumps++;
@@ -199,7 +200,7 @@ public class AirState : PlayerState
         
         // Dash
         if(inputState.DoubleForward || inputState.DoubleBack || inputState.DoubleLeft || inputState.DoubleRight)
-            if(characterStats.DepleteStamina(20))
+            if(characterStats.IsSkillLearned("Dash") && characterStats.DepleteStamina(20))
                 SwitchState(CharacterStateMachine.StateName.DASH);
 
         // Switch to GroundedState
@@ -209,7 +210,7 @@ public class AirState : PlayerState
             lastWallRunNormal = Vector3.zero;
             
             // If timed roll (Crouch button) - No fall damage
-            if(RollCheck())
+            if(characterStats.IsSkillLearned("Roll") && RollCheck())
             {
                 // Switch to RollState
                 SwitchState(CharacterStateMachine.StateName.ROLL);
@@ -227,7 +228,7 @@ public class AirState : PlayerState
         }
 
         // Switch to ClimbState
-        if(isClimbing)
+        if(characterStats.IsSkillLearned("Tree Climb") && isClimbing)
             SwitchState(CharacterStateMachine.StateName.CLIMB);
     }
 
@@ -265,7 +266,10 @@ public class AirState : PlayerState
         targetVelocity = targetDirection;
 
         // Gliding
-        if(inputState.Crouch.State == VButtonState.PRESSED && glideOn && isGliding == false)
+        if(characterStats.IsSkillLearned("Glide") 
+            && inputState.Crouch.State == VButtonState.PRESSED 
+            && glideOn 
+            && isGliding == false)
         {
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0f, rigidbody.velocity.z);
             isGliding = true;
