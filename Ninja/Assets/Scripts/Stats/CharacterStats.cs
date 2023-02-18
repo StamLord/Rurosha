@@ -138,14 +138,14 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         }
     
     public delegate void MoneyUpdateDelegate(int change);
-    public event MoneyUpdateDelegate OnMoneyChange;
+    public event MoneyUpdateDelegate OnMoneyUpdate;
 
     public void AddMoney(int amount)
     {
         Money += amount;
 
-        if(OnMoneyChange != null)
-            OnMoneyChange(amount);
+        if(OnMoneyUpdate != null)
+            OnMoneyUpdate(amount);
     }
 
     public bool DepleteMoney(int amount, bool greedy = false)
@@ -155,16 +155,16 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         {
             Money -= amount;
             
-            if(OnMoneyChange != null)
-                OnMoneyChange(amount);
+            if(OnMoneyUpdate != null)
+                OnMoneyUpdate(-amount);
             
             return true;
         }
         // If not enough money, but greedy, reduce the existing amount
         else if (greedy)
         {
-            if(OnMoneyChange != null)
-                OnMoneyChange(Money);
+            if(OnMoneyUpdate != null)
+                OnMoneyUpdate(Money);
             Money = 0;
         }
         
