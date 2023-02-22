@@ -16,11 +16,12 @@ public class SpiderFightState : FightAIState, IHitboxResponder
 
     [Header ("Wait Chance")]
     [SerializeField] private float waitChance = .2f;
+    [SerializeField] private float waitChanceAfterMovingFor = 2f;
     [SerializeField] private float waitTime = 2f;
 
     [Header ("Bite Attack")]
     [SerializeField] private float biteAttackCooldown = 2f;
-    [SerializeField] private float biteAttackRange = 2f;
+    [SerializeField] private float biteAttackRange = 3f;
 
     [Header ("Bite Damage")]
     [SerializeField] private int biteSoftDamage = 20;
@@ -39,10 +40,16 @@ public class SpiderFightState : FightAIState, IHitboxResponder
     [Header ("Hitbox")]
     [SerializeField] private Hitbox[] hitbox;
 
-    [SerializeField] private bool isWaiting;
-    [SerializeField] private bool canAttack;
+    [Header ("Debug")]
+    [SerializeField] private float enemyDistance;
+    [SerializeField] private FightState currentState;
+    [SerializeField] private float stateTime;
     [SerializeField] private bool isJumping;
+    [SerializeField] private bool isGrounded;
+
     private bool lastFrameGrounded;
+    
+    private enum FightState { FOLLOW, WAIT, JUMP_FWD, JUMP_BCK}
 
     private void Start()
     {
@@ -52,7 +59,6 @@ public class SpiderFightState : FightAIState, IHitboxResponder
             h.SetIgnoreTransform(transform.root);
         }
 
-        isWaiting = false;
         canAttack = true;
     }
 
@@ -81,73 +87,113 @@ public class SpiderFightState : FightAIState, IHitboxResponder
 
     public override void OnStateUpdate()
     {
-        bool grounded = IsGrounded();
+        enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);
+        isGrounded = IsGrounded();
 
-        // If mid jump or fall, do nothing
-        
-        // Activate navMeshWhen when we land ( We deactivate it in JumpAtTarget)
-        if(grounded == true && lastFrameGrounded == false)
+        switch(currentState)
         {
-            navMeshAgent.enabled = true;
-            isJumping = false;
-        }
-
-        lastFrameGrounded = grounded;
-
-        if(grounded == false)
-            return;
-        
-        // Distance between us and enemy
-        float distance = Vector3.Distance(transform.position, enemy.transform.position);
-        
-        // If close enough, perform bite attack
-        if(canAttack && distance <= biteAttackRange)
-        {
-            BiteAttack();
-            return;
+            case FightState.FOLLOW:
+                Follow();
+                break;
+            case FightState.WAIT:
+                Wait();
+                break;
+            case FightState.JUMP_FWD:
+                JumpForward();
+                break;
+            case FightState.JUMP_BCK:
+                break;
         }
         
-        // If waiting, only rotate towards enemy
-        if(isWaiting)
-        {
-            LookTowards(enemy.transform.position);
-            return;
-        }
+        
+    }
 
-        // Roll for a chance to wait only when not moving
-        int random = Random.Range(0, 100);
-        if(random <= waitChance)
-        {
-            Wait();
-            return;
-        }
+    private void SwitchState(FightState state)
+    {
+        currentState = state;
+        stateTime = Time.time;
+    }
 
-        // Roll for a chance to jump at target
-        if(isJumping == false)            
-        {
-            // Within jumping distance
-            if( distance >= jumpMinDistance
-                && distance <= jumpMaxDistance)
-            {
-                random = Random.Range(0, 100);
-                if(random <= jumpChance)
-                {
-                    JumpAtTarget();
-                    return;
-                }
-            }
-        }
+    // Follow player and attack when in range
+    private void Follow()
+    {
+        // Rotate to face enemy
+        LookTowards(enemy.transform.position);
 
-        // Follow player normally
         Vector3 target = enemy.transform.position; // Default to enemy position
         Vector3 dir = (transform.position - enemy.transform.position).normalized; // Vector to us from enemy
 
-        if(distance < 2f)
+        if(enemyDistance < 2f)
             target += dir * 2f;
-        else if(distance > attackRange)
+        else if(enemyDistance > attackRange)
             target += dir * attackRange;
         
         MoveTo(target);
+
+        // Attack if in range
+        AttackCheck();
+
+        // If enough time passed, check if we should start waiting
+        if(Time.time - stateTime >= waitChanceAfterMovingFor)
+        {
+            int random = Random.Range(0, 100);
+            if(random <= waitChance)
+                SwitchState(FightState.WAIT);
+        }
+    }
+    
+    // Don't move, look at player and attack if in range
+    private void Wait()
+    {
+        // Rotate to face enemy
+        LookTowards(enemy.transform.position);
+
+        // Attack if in range
+        AttackCheck();
+
+        // If enough time passed, check if we should jump or follow
+        if(Time.time - stateTime >= waitTime)
+        {
+            if(enemyDistance >= jumpMinDistance)
+            {
+                int random = Random.Range(0, 100);
+                if(random <= jumpChance)
+                {
+                    SwitchState(FightState.JUMP_FWD);
+                    return;
+                }
+            }
+            SwitchState(FightState.FOLLOW);
+        }
+    }
+
+    private void JumpForward()
+    {
+        // Check when jump is finished
+        if(isJumping)
+        {
+            // If this is the first frame we are grounded
+            // Or if enough time passed ( Fixes cases where jump was blocked)
+            if(isGrounded && lastFrameGrounded == false || Time.time - stateTime >= 5)
+            {
+                FinishJump();
+                SwitchState(FightState.WAIT);
+            }
+        }
+        // Perform Jump
+        else
+            JumpAtTarget();
+
+        lastFrameGrounded = isGrounded;
+    }
+
+    // If close enough, perform bite attack
+    private void AttackCheck()
+    {
+        if(canAttack == false || enemyDistance > biteAttackRange)
+            return;
+        
+        BiteAttack();
     }
 
     private void BiteAttack()
@@ -168,14 +214,16 @@ public class SpiderFightState : FightAIState, IHitboxResponder
         canAttack = true;
     }
 
+    // Apply forces on rigidbody to reach target
     private void JumpAtTarget()
     {
-        isJumping = true;
+        rigidbody.isKinematic = false;
         navMeshAgent.enabled = false;
+        isJumping = true;
 
         // Calculate target position infront of enemy
         Vector3 dir = (transform.position - enemy.transform.position).normalized; // Vector to us from enemy
-        Vector3 target = enemy.transform.position + dir * attackRange; // We aim for attack range
+        Vector3 target = enemy.transform.position + dir * biteAttackRange; // We aim for attack range
 
         float distance = Vector3.Distance(transform.position, target);
         float horizontalVelocity = distance / jumpTime;
@@ -183,22 +231,14 @@ public class SpiderFightState : FightAIState, IHitboxResponder
 
         // Apply forces to jump at enemy
         Vector3 force = -dir * horizontalVelocity + Vector3.up * verticalVelocity;
-        Debug.Log(force);
         rigidbody.AddForce(force, ForceMode.VelocityChange);
     }
 
-    private void Wait()
+    private void FinishJump()
     {
-        StartCoroutine(Waiting());
-    }
-
-    private IEnumerator Waiting()
-    {
-        isWaiting = true;
-
-        yield return new WaitForSeconds(waitTime);
-
-        isWaiting = false;
+        isJumping = false;
+        navMeshAgent.enabled = true;
+        rigidbody.isKinematic = true;
     }
 
     private bool IsGrounded()
