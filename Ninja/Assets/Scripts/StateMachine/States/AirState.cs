@@ -238,7 +238,11 @@ public class AirState : PlayerState
         float velocity = transform.TransformVector(rigidbody.velocity).y;
         if(velocity > miniFallDamageVelocity) return;
         
-        characterStats.SubHealth(FallDamage * (Mathf.Abs(velocity + miniFallDamageVelocity)));
+        int damage = Mathf.FloorToInt(
+            FallDamage * (Mathf.Abs(velocity + miniFallDamageVelocity))
+            );
+        
+        characterStats.DepleteHealth(damage, 0);
     }
 
     private bool RollCheck()
@@ -255,7 +259,7 @@ public class AirState : PlayerState
         float fallHeight = fallDamageHeight.GetValue(characterStats);
         if(delta < fallHeight) return;
         int damage = Mathf.RoundToInt(FallDamage * (delta - fallHeight));
-        characterStats.GetHit(null, damage * 2, damage, Vector3.up, DamageType.Blunt);
+        characterStats.DepleteHealth(damage * 2, damage);
     }
 
     private void GetInput()

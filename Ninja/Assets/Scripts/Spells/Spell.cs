@@ -33,7 +33,7 @@ public class Spell : ScriptableObject
             return false;
 
         // Apply immediate effects
-        characterStats.AddHealth(healAmount);
+        characterStats.RestoreHealth(healAmount, 0);
 
         return true;
     }

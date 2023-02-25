@@ -10,6 +10,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private HitboxShape shape;
     [SerializeField] private Vector3 size = new Vector3(1,1,1);
     [SerializeField] private Vector3 offset = Vector3.zero;
+    [SerializeField] private bool hitMultipleHurtbox = true;
 
     [Header("Layer Masks")]
     [SerializeField] private LayerMask hitMask;
@@ -124,9 +125,20 @@ public class Hitbox : MonoBehaviour
                 if(col.transform.root == ignoreTransform)
                     continue;
                 
-                // Collide if we didn't already collide with it
+                // Check if we didn't already collide with it to avoid multiple detections
                 if(collided.Contains(col) == false)
                 {
+                    // If we should not hit more than one hurtbox per target, check all collided so far
+                    if(hitMultipleHurtbox == false)
+                    {
+                        foreach(Collider c in collided)
+                        {
+                            if(c.transform.root == col.transform.root )
+                                return;
+                        }
+                    }
+
+                    // Perform collision
                     _responder.CollisionWith(col, this);
                     collided.Add(col);
                 }

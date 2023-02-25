@@ -44,10 +44,8 @@ public class HeldItem : WeaponObject
 
     private void ActivateConsumableEffects(float fraction)
     {
-        charStats.AddHealth(consumable.healthRestore * fraction);
-        charStats.AddPotentialHealth(consumable.potentialHealthRestore * fraction);
-        charStats.AddStamina(consumable.staminaRestore * fraction);
-        charStats.AddPotentialStamina(consumable.potentialStaminaRestore * fraction);
+        charStats.RestoreHealth(consumable.healthRestore * fraction, consumable.potentialHealthRestore * fraction);
+        charStats.RestoreStamina(consumable.staminaRestore * fraction, consumable.potentialStaminaRestore * fraction);
     }
 
     public override void SetItem(Item item)

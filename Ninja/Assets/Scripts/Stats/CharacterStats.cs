@@ -89,6 +89,13 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    #region Status Manager
+
+    [Header("Status Manager")]
+    [SerializeField] private StatusManager statusManager;
+
+    #endregion
+
     #region Karma
     
     [Header("Karma")]
@@ -455,12 +462,19 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     void Start()
     {
+        // Subscribe to status manager updates
+        if(statusManager) 
+            statusManager.OnStatusUpdate += StatusUpdate;
+
+        // Setup hurtboxes
         foreach(Hurtbox h in hurtboxes)
             h.AddResponder(this);
         
+        // Initialize Stats
         Health = MaxHealth;
         PotentialHealth = MaxHealth;
         Stamina = MaxStamina;
+        PotentialStamina = MaxStamina;
 
         // Only add these commands if we are the player
         if(gameObject.name == "Player Object (Main)")
@@ -671,7 +685,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #region Health Change
 
-    public void AddHealth(float amount)
+    private void AddHealth(float amount)
     {
         if(amount < 0)
         {
@@ -682,7 +696,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         Health += amount;
     }
 
-    public void SubHealth(float amount)
+    private void SubHealth(float amount)
     {
         if(amount < 0)
         {
@@ -730,10 +744,23 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             OnHealthRestore(health, potentialHealth);
     }
 
+     /// <summary>
+    /// Called by items, spells and outside effects to deplete health immediately.
+    /// Calls OnHit event.
+    /// </summary>
+    public void DepleteHealth(int health, int potentialHealth)
+    {
+        SubHealth(health);
+        SubPotentialHealth(potentialHealth);
+
+        if(OnHit != null)
+            OnHit(health, potentialHealth);
+    }
+
     #endregion
     #region Stamina Change
 
-    public void AddStamina(float amount)
+    private void AddStamina(float amount)
     {
         if(amount < 0)
         {
@@ -744,7 +771,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         Stamina += amount;
     }
 
-    public void SubStamina(float amount)
+    private void SubStamina(float amount)
     {
         if(amount < 0)
         {
@@ -775,7 +802,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         return true;
     }
 
-    public void AddPotentialStamina(float amount)
+    private void AddPotentialStamina(float amount)
     {
         if(amount < 0)
         {
@@ -786,7 +813,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         PotentialStamina += amount;
     }
 
-    public void SubPotentialStamina(float amount)
+    private void SubPotentialStamina(float amount)
     {
         if(amount < 0)
         {
@@ -828,7 +855,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
-    public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, DamageType damageType)
+    public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, DamageType damageType, Status[] statuses)
     {
         // Send hit events - Can be listened to by AI, AnimationManager, etc.
         if(OnHitBy != null)
@@ -840,7 +867,40 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         Debug.Log(gameObject.name + " was hit for " + softDamage + " / " + hardDamage + " " + damageType + " damage");
         SubHealth(softDamage);
         SubPotentialHealth(hardDamage);
+
+        // Apply statuses
+        if(statuses != null && statuses.Length > 0)
+        {
+            foreach(Status s in statuses)
+                statusManager.AddStatus(s);
+        }
+
         return true;
+    }
+
+    public void StatusUpdate(int softHp, int hardHp, int softSt, int hardSt)
+    {
+        // HP
+        if(softHp < 0)
+            DepleteHealth(softHp * -1, 0);
+        else if (softHp > 0)
+            RestoreHealth(softHp, 0);
+
+        if(hardHp < 0)
+            DepleteHealth(0, hardHp * -1);
+        else if (hardHp > 0)
+            RestoreHealth(0, hardHp);
+        
+        // ST
+        if(softSt < 0)
+            DepleteStamina(softSt * -1);
+        else if (softSt > 0)
+            RestoreStamina(softSt, 0);
+
+        if(hardSt < 0)
+            DepletePotentailStamina(hardSt * -1);
+        else if (hardSt > 0)
+            RestoreStamina(0, hardHp);
     }
 
     public void Die()
