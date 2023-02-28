@@ -17,11 +17,7 @@ public class Pool
         // Create initial pool
         int diff = startAmount - pool.Count;
         for (var i = 0; i < diff; i++)
-        {
-            GameObject o = Create();
-            o.SetActive(false);
-            Return(o);
-        }
+            Return(Create());
     }
 
     public GameObject Create()

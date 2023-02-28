@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Boost : MonoBehaviour
 {
+    [SerializeField] private float unabsorbableTime = 1f;
+
     [SerializeField] private float maxAbsorbTime = 1f;
     [SerializeField] private float immediateAbsorbRadius = .5f;
 
@@ -19,16 +21,26 @@ public class Boost : MonoBehaviour
     [SerializeField] private ParticleSystem[] particleSystems;
     [SerializeField] private GameObject[] gameObjects;
     
+    private float birthTime;
     private bool active = true;
     private bool startedCoroutine;
 
-    private void OnTriggerEnter(Collider other) 
+    private void Start() 
     {
+        birthTime = Time.time;
+    }
+
+    private void OnTriggerStay(Collider other) 
+    {
+        // Time we can't absorb it for when the boost spawns
+        if(Time.time - birthTime < unabsorbableTime) return;
+
+        // Inactive or mid absorbtion
         if(active == false || startedCoroutine) return;
 
         CharacterStats stats = other.transform.root.GetComponent<CharacterStats>();
 
-        if(stats)
+        if(stats && stats.gameObject.name == "Player Object (Main)")
             StartCoroutine(BoostCoroutine(stats, other.transform));
     }
 
@@ -62,10 +74,16 @@ public class Boost : MonoBehaviour
         active = false;
 
         foreach(ParticleSystem p in particleSystems)
-            p.enableEmission = false;
+        {
+            if(p) 
+                p.enableEmission = false;
+        }
 
         foreach(GameObject g in gameObjects)
-            g.SetActive(false);
+        {
+            if(g)
+                g.SetActive(false);
+        }
     }
 
     private void Activate()

@@ -4781,7 +4781,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8a9b2882a2ff3af4bb3e86e668ad31e7, type: 2}
+  - {fileID: 2100000, guid: f328d8cf8440b4149bcd4ec83c64646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4849,7 +4849,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4906982715389727915
 Transform:
   m_ObjectHideFlags: 0
@@ -4993,6 +4993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe48de9aac478094e81553954a8c684e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unabsorbableTime: 1
   maxAbsorbTime: 1
   immediateAbsorbRadius: 1
   modifiers: []
@@ -5005,7 +5006,6 @@ MonoBehaviour:
   - {fileID: 8515391954030950644}
   gameObjects:
   - {fileID: 4906982715389727914}
-  - {fileID: 0}
 --- !u!135 &4906982716298310655
 SphereCollider:
   m_ObjectHideFlags: 0

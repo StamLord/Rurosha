@@ -47,6 +47,7 @@ MonoBehaviour:
   shape: 0
   size: {x: 0.15, y: 0.5, z: 1}
   offset: {x: 0, y: -0.1, z: -0.7}
+  hitMultipleHurtbox: 1
   hitMask:
     serializedVersion: 2
     m_Bits: 65
@@ -345,6 +346,7 @@ MonoBehaviour:
   hurtboxes:
   - {fileID: 2795321124112593695}
   - {fileID: 8147824471466518891}
+  expDrop: 0
   level: 1
   experience: 0
   expNeeded: 
@@ -384,6 +386,7 @@ MonoBehaviour:
     _experience: 0
     _modified: 0
     _modifiedDirty: 0
+  statusManager: {fileID: 0}
   karma: 0
   stealKarma: -5
   skillTreeManager: {fileID: 0}
@@ -529,12 +532,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 2075098107621203109}
   rigidbody: {fileID: 0}
-  _debug: 1
-  _meshRenderer: {fileID: 4289425569817373587}
-  _baseColor: {r: 1, g: 1, b: 1, a: 0}
-  _hitColor: {r: 1, g: 0, b: 0, a: 0}
-  _colorFadeStartDuration: 0.1
-  _colorFadeEndDuration: 0.5
+  debug: 0
+  meshRenderer: {fileID: 0}
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  hitColor: {r: 0, g: 0, b: 0, a: 0}
+  colorFadeStartDuration: 0.1
+  colorFadeEndDuration: 0.5
 --- !u!114 &2075098107621203109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,12 +1037,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 2656507849268937075}
   rigidbody: {fileID: 0}
-  _debug: 0
-  _meshRenderer: {fileID: 8496856056330259091}
-  _baseColor: {r: 1, g: 1, b: 1, a: 0}
-  _hitColor: {r: 1, g: 0, b: 0, a: 0}
-  _colorFadeStartDuration: 0.1
-  _colorFadeEndDuration: 0.5
+  debug: 0
+  meshRenderer: {fileID: 0}
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  hitColor: {r: 0, g: 0, b: 0, a: 0}
+  colorFadeStartDuration: 0.1
+  colorFadeEndDuration: 0.5
 --- !u!114 &2656507849268937075
 MonoBehaviour:
   m_ObjectHideFlags: 0

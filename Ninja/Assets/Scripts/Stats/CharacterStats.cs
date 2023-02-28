@@ -6,7 +6,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 {   
     [Header("Name")]
     [SerializeField] public string charName;
-
+    
     [Header("Faction")]
     [SerializeField] private Faction faction;
     public string Faction {get{return faction.FactionName;}}
@@ -14,6 +14,14 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [Header("Hurtboxes")]
     [SerializeField] private Hurtbox[] hurtboxes;
     
+    #region Exp Drop
+    
+    [Header("Exp Drop")]
+    [SerializeField] private int expDrop;
+    public int ExpDrop {get{return expDrop;}}
+
+    #endregion
+
     #region Level
 
     [Header("Level")]
@@ -205,8 +213,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             
             if (HealthUpdateEvent != null && oldValue != _health)
                 HealthUpdateEvent(_health / MaxHealth); 
-
-            if(_health <= 0)
+            
+            if(_health <= 0 && IsAlive)
                 Die();
         }
     }
@@ -692,6 +700,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             Debug.LogWarning("You are trying to add a negative amount of Health!");
             return;
         }
+
+        if(amount == 0)
+            return;
             
         Health += amount;
     }
@@ -703,7 +714,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             Debug.LogWarning("You are trying to subtract a negative amount of Health!");
             return;
         }
-            
+        
+        if(amount == 0)
+            return;
+        
         Health -= amount;
         _healthLastDeplete = Time.time;
     }
@@ -715,6 +729,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             Debug.LogWarning("You are trying to add a negative amount of potential Health!");
             return;
         }
+
+        if(amount == 0)
+            return;
             
         PotentialHealth += amount;
     }
@@ -726,7 +743,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             Debug.LogWarning("You are trying to subtract a negative amount of potential Health!");
             return;
         }
-            
+        
+        if(amount == 0)
+            return;
+        
         PotentialHealth -= amount;
         _potentialHealthLastDeplete = Time.time;
     }
@@ -767,7 +787,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             Debug.LogWarning("You are trying to add a negative amount of Stamina!");
             return;
         }
-            
+        
+        if(amount == 0)
+            return;
+        
         Stamina += amount;
     }
 
@@ -778,7 +801,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             Debug.LogWarning("You are trying to subtract a negative amount of Stamina!");
             return;
         }
-            
+        
+        if(amount == 0)
+            return;
+        
         Stamina -= amount;
         _staminaLastDeplete = Time.time;
     }
@@ -790,7 +816,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             Debug.LogWarning("You are trying to deplete a negative amount of Stamina!");
             return false;
         }
-
+        
         if(Stamina < amount)
         {
             if(greedy)
@@ -809,6 +835,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             Debug.LogWarning("You are trying to add a negative amount of potential Stamina!");
             return;
         }
+
+        if(amount == 0)
+            return;
             
         PotentialStamina += amount;
     }
@@ -820,7 +849,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             Debug.LogWarning("You are trying to subtract a negative amount of potential Stamina!");
             return;
         }
-            
+        
+        if(amount == 0)
+            return;
+        
         PotentialStamina -= amount;
         _potentialStaminaLastDeplete = Time.time;
     }
