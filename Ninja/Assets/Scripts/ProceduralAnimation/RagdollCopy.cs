@@ -13,7 +13,7 @@ public class RagdollCopy : MonoBehaviour
 
     private void CopyBone(Transform target, Transform reference)
     {
-        Debug.Log(target + " <= " + reference);
+        //Debug.Log(target + " <= " + reference);
         target.localPosition = reference.localPosition;
         target.localRotation = reference.localRotation;
 
