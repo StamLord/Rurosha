@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IKLeg : MonoBehaviour
@@ -7,6 +6,7 @@ public class IKLeg : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform target;
     [SerializeField] private float moveRadius = .5f;
+    [SerializeField] private IKLeg[] peers;
 
     [Header("Animation")]
     [SerializeField] private float animationDuration = .5f;
@@ -16,28 +16,53 @@ public class IKLeg : MonoBehaviour
     [SerializeField] private float raycastDistance = 1f;
     [SerializeField] private LayerMask groundMask;
 
-    private bool isMoving;
+    [Header("Default Position")]
+    [SerializeField] private Vector3 defaultOffset;
 
-    private void Start() 
-    {
-        transform.position = target.position;    
-    }
+    private bool isMoving;
+    public bool IsMoving {get{return isMoving;}}
+
+    private Vector3 groundedPosition;
+    private bool foundGround;
 
     private void Update() 
     {
         // Don't do anything while leg is moving
         if(isMoving) return;
 
-        // Move if too far
-        float distance = Vector3.Distance(transform.position, target.position);
-        if(distance > moveRadius)
-            Move();
+        // Get ground position underneath us
+        groundedPosition = GetGroundedPosition();
+
+        // If not grounded just update target
+        if(foundGround == false)
+        {
+            target.position = transform.position + defaultOffset;
+        }
+        else
+        {
+            // Move if too far
+            float distance = Vector3.Distance(groundedPosition, target.position);
+            if(distance > moveRadius)
+                Move();
+        }
+    }
+
+    private bool CanMove()
+    {
+        for (var i = 0; i < peers.Length; i++)
+        {
+            if(peers[i].IsMoving)
+                return false;
+        }
+
+        return true;
     }
 
     private void Move()
     {
-        Vector3 newPos = GetNewPosition();
-        StartCoroutine(AnimateMove(newPos));
+        if(CanMove() == false) return;
+            
+        StartCoroutine(AnimateMove(groundedPosition));
     }
 
     private IEnumerator AnimateMove(Vector3 newPosition)
@@ -68,16 +93,25 @@ public class IKLeg : MonoBehaviour
         isMoving = false;
     }
 
-    private Vector3 GetNewPosition()
+    private Vector3 GetGroundedPosition()
     {
         // Find grounded position
         RaycastHit hit;
+        
+        foundGround = Physics.Raycast(transform.position, Vector3.down, out hit, raycastDistance, groundMask);
 
-        if(Physics.Raycast(transform.position, Vector3.down, out hit, raycastDistance, groundMask))
+        if(foundGround)
             return hit.point;
 
         // Default to our position
-        return transform.position;
+        return transform.position + defaultOffset;
+    }
+
+    private void OnDrawGizmos() 
+    {
+        // Draw ground target positions
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(groundedPosition, .2f);
     }
 
 }
