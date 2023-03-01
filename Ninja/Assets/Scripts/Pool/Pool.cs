@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +7,15 @@ public class Pool
     private GameObject obj;
     private Vector3 pos = new Vector3(999,999,999);
     private List<GameObject> pool = new List<GameObject>();
+    private GameObject parent;
 
     public Pool(GameObject obj, int startAmount = 10)
     {
         this.startAmount = startAmount;
         this.obj = obj;
+
+        // Create parent object for the pool
+        parent = new GameObject(obj.name + "_Pool");
 
         // Create initial pool
         int diff = startAmount - pool.Count;
@@ -22,7 +25,7 @@ public class Pool
 
     public GameObject Create()
     {
-        GameObject o = GameObject.Instantiate(obj, pos, Quaternion.identity);
+        GameObject o = GameObject.Instantiate(obj, pos, Quaternion.identity, parent.transform);
         return o;
     }
 
@@ -43,5 +46,9 @@ public class Pool
     {
         gameObject.SetActive(false);
         pool.Add(gameObject);
+
+        // Return to pool parent if it's not already it
+        if(gameObject.transform.parent != parent.transform)
+            gameObject.transform.SetParent(parent.transform);
     }
 }
