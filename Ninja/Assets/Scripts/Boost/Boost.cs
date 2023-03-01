@@ -24,10 +24,16 @@ public class Boost : MonoBehaviour
     private float birthTime;
     private bool active = true;
     private bool startedCoroutine;
+    private Pool pool;
 
     private void Start() 
     {
         birthTime = Time.time;
+    }
+
+    public void SetPool(Pool pool)
+    {
+        this.pool = pool;
     }
 
     private void OnTriggerStay(Collider other) 
@@ -84,6 +90,10 @@ public class Boost : MonoBehaviour
             if(g)
                 g.SetActive(false);
         }
+        
+        // If we have a pool, we return to it after some delay
+        if(pool != null)
+            StartCoroutine("ReturnToPool");
     }
 
     private void Activate()
@@ -95,5 +105,16 @@ public class Boost : MonoBehaviour
         
         foreach(GameObject g in gameObjects)
             g.SetActive(true);
+    }
+
+    private IEnumerator ReturnToPool()
+    {
+        yield return new WaitForSeconds(2);
+        
+        // Return to default state with all object and particle systems active
+        Activate();
+        
+        // Return to pool
+        pool.Return(this.gameObject);
     }
 }

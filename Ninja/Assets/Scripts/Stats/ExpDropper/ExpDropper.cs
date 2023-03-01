@@ -32,14 +32,17 @@ public class ExpDropper : MonoBehaviour
 
         for (var i = 0; i < amount; i++)
         {
-            GameObject go = pool.Get();
+            GameObject drop = pool.Get();
 
             Vector3 random = Random.insideUnitSphere * spawnRadius;
             
-            go.transform.position = new Vector3(
+            drop.transform.position = new Vector3(
                 target.position.x + random.x, 
                 target.position.y + random.y + heightOffset, 
                 target.position.z + random.z);
+
+            Boost boost = drop.GetComponent<Boost>();
+            if(boost != null) boost.SetPool(pool);
         }
         
     }
