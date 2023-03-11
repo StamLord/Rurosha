@@ -93,8 +93,13 @@ public class AIInput : MonoBehaviour
 
     public void ClearPath()
     {
-        path.ClearCorners();
-        pathStarted = false;
+        if(useNavMeshAgentMovement)
+            navMeshAgent.SetDestination(transform.position);
+        else
+        {
+            path?.ClearCorners();
+            pathStarted = false;
+        }
     }
 
     public bool AdvancePathPosition()
