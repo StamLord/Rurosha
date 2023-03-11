@@ -563,6 +563,7 @@ MonoBehaviour:
   bigPiercePrefab: {fileID: 1681287656198363351, guid: 4700249964d415a47b12074815e5cd9f,
     type: 3}
   bigDamageThreshold: 5
+  vfxLifeTime: 0
 --- !u!1 &1794365645461784588
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,6 +1069,7 @@ MonoBehaviour:
   bigPiercePrefab: {fileID: 1681287656198363351, guid: 4700249964d415a47b12074815e5cd9f,
     type: 3}
   bigDamageThreshold: 5
+  vfxLifeTime: 0
 --- !u!1 &4469600994861103286
 GameObject:
   m_ObjectHideFlags: 0
@@ -2325,6 +2327,7 @@ MonoBehaviour:
   attackCombo: 1
   attackMaxCombo: 1
   attackInterval: 3
+  awarenessCheatRange: 3
   canAttack: 0
   canAdvance: 0
   defending: 0
