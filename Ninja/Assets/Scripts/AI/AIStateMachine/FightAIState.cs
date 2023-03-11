@@ -18,6 +18,9 @@ public class FightAIState : AIState
     [SerializeField] protected int attackMaxCombo = 3;
     [SerializeField] protected float attackInterval = 3f;
 
+    [Header("Awareness Cheat Range")]
+    [SerializeField] protected float awarenessCheatRange = 3f;
+
     protected StealthAgent enemy;
     protected Vector3 lastPathTarget;
     protected Coroutine attackCoroutine;

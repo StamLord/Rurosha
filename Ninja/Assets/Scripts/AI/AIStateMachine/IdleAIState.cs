@@ -133,7 +133,7 @@ public class IdleAIState : AIState
 
     private void HearSound(Vector3 origin)
     {
-        // Switch to InvestigateAIState
+        // TODO: Switch to InvestigateAIState
     }
 
     private void OnDrawGizmos() 

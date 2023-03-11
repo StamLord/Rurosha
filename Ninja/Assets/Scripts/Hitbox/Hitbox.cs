@@ -100,7 +100,7 @@ public class Hitbox : MonoBehaviour
             // If hitbox guarded by anything we inform responder and don't proceed
             if(perfectGuardColliders.Length > 0)
             {
-                _responder.PerfectGuardedBy(perfectGuardColliders[0], this);
+                _responder?.PerfectGuardedBy(perfectGuardColliders[0], this);
                 StopColliding();
                 collided.Clear();
                 return;
@@ -112,7 +112,7 @@ public class Hitbox : MonoBehaviour
             // If hitbox guarded by anything we inform responder and don't proceed
             if(guardColliders.Length > 0)
             {
-                _responder.GuardedBy(guardColliders[0], this);
+                _responder?.GuardedBy(guardColliders[0], this);
                 return;
             }
             
@@ -139,7 +139,7 @@ public class Hitbox : MonoBehaviour
                     }
 
                     // Perform collision
-                    _responder.CollisionWith(col, this);
+                    _responder?.CollisionWith(col, this);
                     collided.Add(col);
                 }
             }
