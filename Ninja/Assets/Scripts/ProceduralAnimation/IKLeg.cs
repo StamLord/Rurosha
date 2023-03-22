@@ -27,11 +27,11 @@ public class IKLeg : MonoBehaviour
 
     private void Update() 
     {
-        // Don't do anything while leg is moving
-        if(isMoving) return;
-
         // Get ground position underneath us
         groundedPosition = GetGroundedPosition();
+
+        // Don't do anything while leg is moving
+        if(isMoving) return;
 
         // If not grounded just update target
         if(foundGround == false)
@@ -62,10 +62,10 @@ public class IKLeg : MonoBehaviour
     {
         if(CanMove() == false) return;
             
-        StartCoroutine(AnimateMove(groundedPosition));
+        StartCoroutine(AnimateMove());
     }
 
-    private IEnumerator AnimateMove(Vector3 newPosition)
+    private IEnumerator AnimateMove()
     {
         isMoving = true;
 
@@ -77,7 +77,7 @@ public class IKLeg : MonoBehaviour
             float p = (Time.time - startTime) / animationDuration;
 
             // Move leg to target
-            Vector3 position = Vector3.Lerp(startPos, newPosition, p); 
+            Vector3 position = Vector3.Lerp(startPos, groundedPosition, p); 
 
             // Animate leg raise
             position.y = animationHeight.Evaluate(p);
@@ -88,7 +88,7 @@ public class IKLeg : MonoBehaviour
         }
 
         // Make sure we are at final position and update lastPosition
-        target.position = newPosition;
+        target.position = groundedPosition;
 
         isMoving = false;
     }
@@ -109,6 +109,10 @@ public class IKLeg : MonoBehaviour
 
     private void OnDrawGizmos() 
     {
+        // Draw current positions
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(target.position, .2f);
+
         // Draw ground target positions
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(groundedPosition, .2f);
