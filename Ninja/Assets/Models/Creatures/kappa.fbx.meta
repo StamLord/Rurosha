@@ -27,7 +27,12 @@ ModelImporter:
   - first:
       74: -2817600091395497832
     second: Armature|Melee Attack 1
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: kappa
+    second: {fileID: 2100000, guid: 3cf8d90d733ea18449796e7bcfdc0597, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
