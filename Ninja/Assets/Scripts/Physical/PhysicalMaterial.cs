@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PhysicalMaterial : MonoBehaviour
@@ -13,9 +12,32 @@ public class PhysicalMaterial : MonoBehaviour
     [SerializeField] private GameObject bigPiercePrefab;
 
     [SerializeField] private int bigDamageThreshold = 10;
+    [SerializeField] private float vfxLifeTime;
 
+    private static Dictionary<GameObject, Pool> pools = new Dictionary<GameObject, Pool>();
+    
     private Camera cam;
     
+    private void Start() 
+    {
+        // Create pools if none was created for these prefabs
+        CreatePool(bluntPrefab);
+        CreatePool(slashPrefab);
+        CreatePool(piercePrefab);
+
+        CreatePool(bigBluntPrefab);
+        CreatePool(bigSlashPrefab);
+        CreatePool(bigPiercePrefab);
+    }
+
+    private void CreatePool(GameObject prefab)
+    {
+        // Check if already exists
+        if(pools.ContainsKey(prefab)) return;
+
+        pools.Add(prefab, new Pool(prefab));
+    }
+
     public void CollideEffect(Vector3 position, int damage, Vector3 hitUp, DamageType damageType = DamageType.Blunt)
     {
         if(cam == null)
@@ -50,6 +72,13 @@ public class PhysicalMaterial : MonoBehaviour
 
     private void PlayVfx(GameObject vfx, Vector3 position, Quaternion rotation)
     {
-        Instantiate(vfx, position, rotation, transform); // Change to pool
+        //Instantiate(vfx, position, rotation, transform); // Change to pool
+        if(pools.ContainsKey(vfx))
+        {
+            GameObject go = pools[vfx].Get();
+            go.transform.position = position;
+            go.transform.rotation = rotation;
+            go.transform.parent = transform;
+        }
     }
 }
