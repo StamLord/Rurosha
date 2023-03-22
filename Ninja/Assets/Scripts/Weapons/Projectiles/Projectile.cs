@@ -229,7 +229,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
         if(hurtbox)
         {
             // Avoid triggering multiple hurtboxes with the same parent GameObject
-            if(objectsCollided.Contains(hurtbox.transform.parent.gameObject) == false)
+            if(objectsCollided.Contains(hurtbox.transform.root.gameObject) == false)
             {
                 hurtbox.Hit(stealthAgent, softDamage, hardDamage, Vector3.up, DamageType.Pierce);
                 objectsCollided.Add(hurtbox.transform.root.gameObject);
