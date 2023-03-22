@@ -173,10 +173,10 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             collider.enabled = true;
         
         // Activate objects
-        SetObjectsActiveDelay(objectsToActivate, true, activateDelay);
+        StartCoroutine(SetObjectsActiveDelay(objectsToActivate, true, activateDelay));
 
         // Deactivate objects
-        SetObjectsActiveDelay(objectsToDeactivate, false, deactivateDelay);
+        StartCoroutine(SetObjectsActiveDelay(objectsToDeactivate, false, deactivateDelay));
 
         // Notify listeners
         if(OnProjecitleStop != null)
