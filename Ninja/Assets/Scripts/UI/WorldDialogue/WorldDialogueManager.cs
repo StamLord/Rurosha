@@ -56,7 +56,13 @@ public class WorldDialogueManager : MonoBehaviour
     {
         Message m = new Message(message, duration, target);
         messages.Add(m);
-        messageObjects[m] = Instantiate(messagePrefab, transform);
+
+        GameObject go =  Instantiate(messagePrefab, transform);
+        messageObjects[m] = go;
+
+        WorldDialogue wd = go.GetComponent<WorldDialogue>();
+        if(wd)
+            wd.SetMessage(message);
     }
 
     private void UpdateMessages()

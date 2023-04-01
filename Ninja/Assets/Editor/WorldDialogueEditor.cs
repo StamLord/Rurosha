@@ -19,7 +19,7 @@ public class WorldDialogueEditor : Editor
         titleStyle.alignment = TextAnchor.MiddleCenter;
 
         // References
-        dialogue.text = (TextMeshProUGUI)EditorGUILayout.ObjectField("TextMesh", dialogue.text, typeof(Mesh), true);
+        dialogue.text = (TextMeshProUGUI)EditorGUILayout.ObjectField("TextMesh", dialogue.text, typeof(TextMeshProUGUI), true);
         dialogue.animator = (Animator)EditorGUILayout.ObjectField("Animator", dialogue.animator, typeof(Material), true);
 
         // Debug 

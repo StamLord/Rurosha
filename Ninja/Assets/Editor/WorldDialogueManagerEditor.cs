@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using TMPro;
 
 [CustomEditor(typeof(WorldDialogueManager))]
 public class WorldDialogueManagerEditor : Editor

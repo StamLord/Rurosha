@@ -7,6 +7,11 @@ public class WorldDialogue : MonoBehaviour
     public TextMeshProUGUI text;
     public Animator animator;
 
+    public void SetMessage(string message)
+    {
+        this.text.text = message;
+    }
+
     public void NewMessage(string message, float duration)
     {
         StartCoroutine(DisplayMessage(message, duration));
