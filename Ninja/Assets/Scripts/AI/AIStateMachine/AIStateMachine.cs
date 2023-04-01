@@ -8,6 +8,9 @@ public class AIStateMachine : StateMachine
     [SerializeField] private CharacterStats characterStats;
     public CharacterStats CharacterStats {get{return characterStats;}}
     
+    [SerializeField] private SquadAgent squadAgent;
+    public SquadAgent SquadAgent {get{return squadAgent;}}
+
     [SerializeField] private AwarenessAgent awarenessAgent;
     public AwarenessAgent AwarenessAgent {get{return awarenessAgent;}}
 

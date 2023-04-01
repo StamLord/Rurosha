@@ -12,6 +12,7 @@ public class AIState : State
 
     public CharacterStats Stats { get { return AIStateMachine.CharacterStats;}}
     public StealthAgent StealthAgent { get { return AIStateMachine.StealthAgent;}}
+    public SquadAgent SquadAgent { get { return AIStateMachine.SquadAgent;}}
 
     [SerializeField] protected float turnSpeed = 1f;
     [SerializeField] protected bool debug;

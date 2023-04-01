@@ -52,6 +52,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
     {
         enemy = (AIStateMachine.enemy)? AIStateMachine.enemy : null;
         AIStateMachine.AwarenessAgent.OnLoseAgent += LoseAgent;
+        SquadAgent.OnGetMessage += GetMessage;
 
         SwitchState(FightState.KEEP_DISTANCE);
     }
@@ -215,7 +216,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
     private IEnumerator CastingCoroutine()
     {
         isCasting = true;
-
+        SquadAgent.SendMessage("Started casting");
         // Stop moving
         MoveStop();
 
@@ -265,6 +266,11 @@ public class KappaFightState : FightAIState, IHitboxResponder
             hurtbox.Hit(AIStateMachine.StealthAgent, meleeSoftDamage, meleeHardDamage, Vector3.up, DamageType.Blunt, meleeStatuses);
     }
 
+    public void GetMessage(string message)
+    {
+        Debug.Log(gameObject.name + " Got message: " + message);
+    }
+
     public void GuardedBy(Collider collider, Hitbox hitbox)
     {
         return;
@@ -306,6 +312,8 @@ public class KappaFightState : FightAIState, IHitboxResponder
 
     protected override void OnExitState()
     {
+        SquadAgent.OnGetMessage -= GetMessage;
+
         // Cancel casting before switching states
         if(isCasting)
             CancelCasting();
