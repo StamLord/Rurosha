@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PhysicalMaterial : MonoBehaviour
@@ -79,6 +80,14 @@ public class PhysicalMaterial : MonoBehaviour
             go.transform.position = position;
             go.transform.rotation = rotation;
             go.transform.parent = transform;
+
+            StartCoroutine(ReturnVfx(go, pools[vfx], 10f));
         }
+    }
+
+    private IEnumerator ReturnVfx(GameObject vfx, Pool pool, float time)
+    {
+        yield return new WaitForSeconds(time);
+        pool.Return(vfx);
     }
 }

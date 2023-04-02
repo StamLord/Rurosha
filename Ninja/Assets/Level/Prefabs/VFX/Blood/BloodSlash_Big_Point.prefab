@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3176776961945035631}
   - component: {fileID: 2154845835232721228}
   - component: {fileID: 3176776961945035616}
-  - component: {fileID: 7576716643229253510}
   m_Layer: 0
   m_Name: BloodSlash_Big_Point
   m_TagString: Untagged
@@ -4836,7 +4835,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 3176776961945035631}
   splatterParticles: {fileID: 0}
-  decalPool: {fileID: 7576716643229253510}
 --- !u!199 &3176776961945035616
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4910,21 +4908,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &7576716643229253510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3176776961945035617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb78e45edaad3e640bd467513b5a8947, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDecals: 100
-  decal: {fileID: 4157574736529563003, guid: 476e1edde3874c1439880df0be5b4708, type: 3}
-  sizeMinMax: {x: 1, y: 2}
 --- !u!1 &7672048978791251293
 GameObject:
   m_ObjectHideFlags: 0

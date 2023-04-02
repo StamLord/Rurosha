@@ -6,7 +6,6 @@ public class ParticleLauncher : MonoBehaviour
 {
     [SerializeField] private new ParticleSystem particleSystem;
     [SerializeField] private ParticleSystem splatterParticles;
-    [SerializeField] private ParticleDecalPool decalPool;
 
     List<ParticleCollisionEvent> particleCollisionEvents = new List<ParticleCollisionEvent>();
 
@@ -16,8 +15,8 @@ public class ParticleLauncher : MonoBehaviour
 
         for (int i = 0; i < particleCollisionEvents.Count; i++)
         {
-            if(decalPool)
-                decalPool.ParticleHit(particleCollisionEvents[i]);
+            if(ParticleDecalPool.instance)
+                ParticleDecalPool.instance.ParticleHit(particleCollisionEvents[i]);
             if(splatterParticles)
                 EmitAtLocation(particleCollisionEvents[i]);
             yield return null;
