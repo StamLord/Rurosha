@@ -511,36 +511,40 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
                     switch(parameters[0])
                     {
-                    case "hp":
-                        Health = Int32.Parse(parameters[1]);
-                        success = true;
-                        break;
-                    case "php":
-                        PotentialHealth = Int32.Parse(parameters[1]);
-                        success = true;
-                        break;
-                    case "st":
-                        Stamina = Int32.Parse(parameters[1]);
-                        success = true;
-                        break;
-                    case "pst":
-                        PotentialStamina = Int32.Parse(parameters[1]);
-                        success = true;
-                        break;
-                    default:
-                        // Parse short attribute names
-                        if(parameters[0] == "str") success = SetAttributeLevel(AttributeType.STRENGTH, Int32.Parse(parameters[1]));
-                        else if(parameters[0] == "agi") success = SetAttributeLevel(AttributeType.AGILITY, Int32.Parse(parameters[1]));
-                        else if(parameters[0] == "dex") success = SetAttributeLevel(AttributeType.DEXTERITY, Int32.Parse(parameters[1]));
-                        else if(parameters[0] == "wis") success = SetAttributeLevel(AttributeType.WISDOM, Int32.Parse(parameters[1]));
-                        else
-                        {
-                            AttributeType attrType;
-                            if(Enum.TryParse(parameters[0], true, out attrType))
-                                success = SetAttributeLevel(attrType, Int32.Parse(parameters[1]));
+                        case "hp":
+                            Health = Int32.Parse(parameters[1]);
+                            success = true;
+                            break;
+                        case "php":
+                            PotentialHealth = Int32.Parse(parameters[1]);
+                            success = true;
+                            break;
+                        case "st":
+                            Stamina = Int32.Parse(parameters[1]);
+                            success = true;
+                            break;
+                        case "pst":
+                            PotentialStamina = Int32.Parse(parameters[1]);
+                            success = true;
+                            break;
+                        case "karma":
+                            Karma = Int32.Parse(parameters[1]);
+                            success = true;
+                            break;
+                        default:
+                            // Parse short attribute names
+                            if(parameters[0] == "str") success = SetAttributeLevel(AttributeType.STRENGTH, Int32.Parse(parameters[1]));
+                            else if(parameters[0] == "agi") success = SetAttributeLevel(AttributeType.AGILITY, Int32.Parse(parameters[1]));
+                            else if(parameters[0] == "dex") success = SetAttributeLevel(AttributeType.DEXTERITY, Int32.Parse(parameters[1]));
+                            else if(parameters[0] == "wis") success = SetAttributeLevel(AttributeType.WISDOM, Int32.Parse(parameters[1]));
+                            else
+                            {
+                                AttributeType attrType;
+                                if(Enum.TryParse(parameters[0], true, out attrType))
+                                    success = SetAttributeLevel(attrType, Int32.Parse(parameters[1]));
 
-                        }
-                        break;
+                            }
+                            break;
                     }
                     
                     if(success)
@@ -995,6 +999,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     public float GetChakraAmount(ChakraType type)
     {
+        if(chakraManager == null) 
+            return 0;
+        
         return chakraManager.GetChakraAmount(type);
     }
 
