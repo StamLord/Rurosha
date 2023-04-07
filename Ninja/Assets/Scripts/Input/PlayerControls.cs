@@ -217,6 +217,7 @@ public class PlayerControls : MonoBehaviour
 
     public void DisableMovement()
     {
+        inputState.ResetInput();
         movementDisabled = true;
     }
 

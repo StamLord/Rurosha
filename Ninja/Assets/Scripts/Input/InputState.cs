@@ -69,6 +69,36 @@ public class InputState : MonoBehaviour
         prevDoubleRight = DoubleRight;
     }
 
+    public void ResetInput()
+    {
+        AxisInput = Vector3.zero;
+
+        Jump.Set(VButtonState.UNPRESSED);
+        Run.Set(VButtonState.UNPRESSED);
+        Crouch.Set(VButtonState.UNPRESSED);
+        Use.Set(VButtonState.UNPRESSED);
+        Defend.Set(VButtonState.UNPRESSED);
+        Kick.Set(VButtonState.UNPRESSED);
+        Spell.Set(VButtonState.UNPRESSED);
+        Sit.Set(VButtonState.UNPRESSED);
+        Draw.Set(VButtonState.UNPRESSED);
+        Drop.Set(VButtonState.UNPRESSED);
+        
+        MouseButton1.Set(VButtonState.UNPRESSED);
+        MouseButton2.Set(VButtonState.UNPRESSED);
+
+        Num1.Set(VButtonState.UNPRESSED);
+        Num2.Set(VButtonState.UNPRESSED);
+        Num3.Set(VButtonState.UNPRESSED);
+        Num4.Set(VButtonState.UNPRESSED);
+        Num5.Set(VButtonState.UNPRESSED);
+        Num6.Set(VButtonState.UNPRESSED);
+        Num7.Set(VButtonState.UNPRESSED);
+        Num8.Set(VButtonState.UNPRESSED);
+        Num9.Set(VButtonState.UNPRESSED);
+        Num0.Set(VButtonState.UNPRESSED);
+    }
+
     private void OnDrawGizmos() 
     {
         if(!debug) return;
