@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34888de10901f9049b53cb9ee6108984, type: 3}
   m_Name: Smoke Bomb
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 21300000, guid: a445ee7869486f84cb35fe4721f32b1b, type: 3}
+  _shape:
+    _width: 1
+    _height: 1
+    _shape: 01
+  _canDrop: 1
+  _position: {x: 0, y: 0}
   model: {fileID: -231934308268961958, guid: 4fca8cb859966ca45a91f0f90a8819d4, type: 3}
   material: {fileID: 2100000, guid: 9862bd55dcd5fdd4d95ad5a922f48161, type: 2}
   itemName: Smoke Bomb

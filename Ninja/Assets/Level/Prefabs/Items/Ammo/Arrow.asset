@@ -12,9 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acd3cdc2e0e5b2e4aaaeaf4df2ad4e35, type: 3}
   m_Name: Arrow
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 0}
+  _shape:
+    _width: 1
+    _height: 1
+    _shape: 00
+  _canDrop: 1
+  _position: {x: 0, y: 0}
   model: {fileID: 0}
   material: {fileID: 0}
   itemName: Arrow
   stackable: 0
   _ammo: 1
   durability: 100
+  cost: 1
+  pickup: {fileID: 0}
+  projectile: {fileID: 0}

@@ -8,6 +8,17 @@ public class WeaponEditor : Editor
     GUIStyle dividerStyle = new GUIStyle();
     Editor gameObjectEditor;
 
+    private SerializedProperty sprite;
+    private SerializedProperty shape;
+    private SerializedProperty canDrop;
+
+    private void OnEnable() 
+    {
+        sprite = serializedObject.FindProperty("_sprite");
+        shape = serializedObject.FindProperty("_shape");
+        canDrop = serializedObject.FindProperty("_canDrop");
+    }
+
     public override void OnInspectorGUI()
     {
         //base.OnInspectorGUI();
@@ -15,6 +26,8 @@ public class WeaponEditor : Editor
         Weapon weapon = (Weapon)target;
         EditorUtility.SetDirty(weapon);
 
+        serializedObject.Update();
+        
         titleStyle.fontSize = 24;
         titleStyle.normal.textColor = Color.gray;
         titleStyle.alignment = TextAnchor.MiddleCenter;
@@ -37,6 +50,10 @@ public class WeaponEditor : Editor
         
         EditorGUILayout.Space(10);
 
+        EditorGUILayout.PropertyField(sprite);
+        EditorGUILayout.PropertyField(shape);
+        EditorGUILayout.PropertyField(canDrop);
+
         weapon.itemName = EditorGUILayout.DelayedTextField("Name", weapon.itemName);
 
         EditorGUILayout.Space(10);
@@ -57,6 +74,7 @@ public class WeaponEditor : Editor
 
         weapon.projectile = (GameObject)EditorGUILayout.ObjectField("Projectile", weapon.projectile, typeof(GameObject), true);
 
+        serializedObject.ApplyModifiedProperties();
     }
 
     public void WindowUpdate(int id)

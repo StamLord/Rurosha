@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c06a67b7c08df743ab815a1848c8e81, type: 3}
   m_Name: Tofu
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 21300000, guid: 0acae8d43a6a9c244bab95c1bab7f632, type: 3}
+  _shape:
+    _width: 1
+    _height: 1
+    _shape: 01
+  _canDrop: 1
+  _position: {x: 0, y: 0}
   model: {fileID: 8870465935319661989, guid: d193b75b9276a3045ba9dbebc06c7871, type: 3}
   material: {fileID: 2100000, guid: 9891b4c13795d1d4f90c05aed303e257, type: 2}
   itemName: Tofu
@@ -20,6 +27,7 @@ MonoBehaviour:
   durability: 100
   cost: 10
   pickup: {fileID: 999428405291157475, guid: c488f600552e17040b9ea7f04c77b799, type: 3}
+  projectile: {fileID: 0}
   healthRestore: 25
   potentialHealthRestore: 50
   staminaRestore: 0

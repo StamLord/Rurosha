@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Items/Item", order = 1)]
-public class Item : ScriptableObject
+public class Item : ItemDefinition
 {
     [Header("Visual")]
     public Mesh model;

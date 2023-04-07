@@ -240,7 +240,7 @@ public class GrapplingHook : WeaponObject
             yield return null;
         }
 
-        pickupGrappleTo.Use(manager);
+        //pickupGrappleTo.Use(manager);
         StopGrapple();
 
         if(rigidGrappleTo)

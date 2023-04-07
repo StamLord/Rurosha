@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Inventory
-{
-    public bool AddItem(Item item, Pickup pickup = null);
-}
-
 public class Interactor : MonoBehaviour
 {
     public enum CarryType {FIXED, PHYSICS, JOINT};
@@ -14,7 +9,7 @@ public class Interactor : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform _camera;
     [SerializeField] private Transform _carryPoint;
-    [SerializeField] private GameObject _weaponManager; private Inventory _inventory; // Workaround so we can have _weaponManager exposed in the inspector
+    [SerializeField] private Inventory _inventory;
     [SerializeField] private InputState _inputState;
     [SerializeField] private CharacterStats _characterStats;
 
@@ -74,8 +69,6 @@ public class Interactor : MonoBehaviour
     private void Start()
     {
         InitializeCarry();   
-        if(_weaponManager != null)
-            _inventory = _weaponManager.GetComponent<Inventory>();
     }
 
     private void InitializeCarry()
@@ -289,7 +282,7 @@ public class Interactor : MonoBehaviour
 
     public bool AddItem(Item item, Pickup pickup = null)
     {
-        return _inventory.AddItem(item, pickup);
+        return _inventory.TryAdd(item.CreateInstance());
     }
 
     public int GetMoney()

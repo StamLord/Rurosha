@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
-public class WeaponManager : MonoBehaviour, Inventory
+public class WeaponManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private CharacterStats _characterStats;
@@ -25,7 +23,7 @@ public class WeaponManager : MonoBehaviour, Inventory
     [SerializeField] private Transform dropOrigin;
     
     [Header("Items")]
-    [SerializeField] private Item[] items = new Item[10];
+    [SerializeField] private QuickSlots slots;
     [SerializeField] private int selected = 0;
     int oldSelected;
 
@@ -73,6 +71,8 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     void Start()
     {
+        slots.OnItemsUpdated += UpdateSelection;
+
         // Prepare weapon objects
         if(_melee)_melee.GetComponent<WeaponObject>().SetWeaponManager(this);
         if(_knife)_knife.GetComponent<WeaponObject>().SetWeaponManager(this);
@@ -107,23 +107,23 @@ public class WeaponManager : MonoBehaviour, Inventory
             itemDatabase[i.itemName.ToLower()] = i;
         }
 
-        DebugCommandDatabase.AddCommand(new DebugCommand(
-            "addweapon",
-            "Adds a weapon to player",
-            "addweapon <weapon> <amount>", 
-            (string[] parameters) => {
-                if(itemDatabase.ContainsKey(parameters[0]) == false)
-                    return "Unknown weapon: " + parameters[0];
+        // DebugCommandDatabase.AddCommand(new DebugCommand(
+        //     "addweapon",
+        //     "Adds a weapon to player",
+        //     "addweapon <weapon> <amount>", 
+        //     (string[] parameters) => {
+        //         if(itemDatabase.ContainsKey(parameters[0]) == false)
+        //             return "Unknown weapon: " + parameters[0];
 
-                int num;
-                if(int.TryParse(parameters[1], out num) == false)
-                    return "Parameter is not a number:" + parameters[1];
+        //         int num;
+        //         if(int.TryParse(parameters[1], out num) == false)
+        //             return "Parameter is not a number:" + parameters[1];
                 
-                for (int i = 0; i < Int32.Parse(parameters[1]); i++)
-                    AddItem(itemDatabase[parameters[0].ToLower()]);
+        //         for (int i = 0; i < Int32.Parse(parameters[1]); i++)
+        //             AddItem(itemDatabase[parameters[0].ToLower()]);
                 
-                return "Added weapon: " + parameters[0] + " x" + parameters[1];
-        }));
+        //         return "Added weapon: " + parameters[0] + " x" + parameters[1];
+        // }));
     }
 
     private void Update()
@@ -134,18 +134,22 @@ public class WeaponManager : MonoBehaviour, Inventory
 
         if(_inputState.ScrollInput > 0f)
         {
-            if(selected >= items.Length -1 /*&& weapons[0]*/) 
+            if(selected >= slots.Length -1 /*&& weapons[0]*/) 
                 selected = 0;
             else /*if(weapons[selected + 1])*/
                 selected++;
+            
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
         }
 
         if(_inputState.ScrollInput < 0f)
         {
             if(selected <= 0 /*&& weapons[weapons.Length - 1]*/) 
-                selected = items.Length -1;
+                selected = slots.Length -1;
             else if(selected > 0 /*&& weapons[selected - 1]*/)
                 selected--;
+            
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
         }
 
         #endregion
@@ -153,25 +157,55 @@ public class WeaponManager : MonoBehaviour, Inventory
         #region Num Keys
         
         if(_inputState.Num1.State == VButtonState.PRESS_START)
+        {
             selected = 0;
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }
         if(_inputState.Num2.State == VButtonState.PRESS_START)
+        {
             selected = 1;
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }
         if(_inputState.Num3.State == VButtonState.PRESS_START)
+        {
             selected = 2;
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }
         if(_inputState.Num4.State == VButtonState.PRESS_START)
+        {
             selected = 3;
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }
         if(_inputState.Num5.State == VButtonState.PRESS_START)
+        {
             selected = 4;
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }
         if(_inputState.Num6.State == VButtonState.PRESS_START)
+        {
             selected = 5;
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }
         if(_inputState.Num7.State == VButtonState.PRESS_START)
+        {
             selected = 6;
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }
         if(_inputState.Num8.State == VButtonState.PRESS_START)
+        {
             selected = 7;
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }
         if(_inputState.Num9.State == VButtonState.PRESS_START)
+        {
             selected = 8;
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }
         if(_inputState.Num0.State == VButtonState.PRESS_START)
+        {
             selected = 9;
+            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+        }
         
         #endregion
 
@@ -185,8 +219,13 @@ public class WeaponManager : MonoBehaviour, Inventory
         if(selected != oldSelected)
         {
             SelectItem();
-            if(ChangeSelectionEvent != null) ChangeSelectionEvent(selected);
+            
         }   
+    }
+
+    private void UpdateSelection()
+    {
+        SelectItem();
     }
 
     // Perform the selection, disable/enable appropriate objects
@@ -195,13 +234,14 @@ public class WeaponManager : MonoBehaviour, Inventory
         if(_lastActive)
             _lastActive.SetActive(false);
         
-        if(items[selected] == null)
-            items[selected] = Instantiate(defaultWeapon);
-        
+        if (slots[selected] == null)
+        {
+            ActivateObject(_melee);
+        }
         // Weapon
-        if(items[selected] is Weapon)
+        else if(slots[selected] is Weapon)
         {   
-            Weapon w = (Weapon)items[selected];
+            Weapon w = (Weapon)slots[selected];
             switch(w.WeaponType)
             {   
                 case WeaponType.MELEE:
@@ -242,29 +282,32 @@ public class WeaponManager : MonoBehaviour, Inventory
                 ChangeWeaponEvent(w.WeaponType);
         }
         // Equipment
-        else if (items[selected] is Equipment)
+        else if (slots[selected] is Equipment)
         {
             ActivateObject(_equipment);
         }
         //Scroll
-        else if (items[selected] is Scroll)
+        else if (slots[selected] is Scroll)
         {
             ActivateObject(_scroll);
         }
-        else // Item
+        // Item
+        else if (slots[selected] is Item)
         {
-            if(items[selected].itemName == ("Rice") || items[selected].itemName == ("Ramen"))
+            Item item = (Item)slots[selected];
+
+            if(item.itemName == ("Rice") || item.itemName == ("Ramen"))
             {
                 ActivateObject(_itemBowl);
-                _itemBowl?.GetComponent<HeldItem>().SetItem(items[selected]);
+                _itemBowl?.GetComponent<HeldItem>().SetItem(item);
             }
             else
             {
                 ActivateObject(_item);
-                _item?.GetComponent<HeldItem>().SetItem(items[selected]);
+                _item?.GetComponent<HeldItem>().SetItem(item);
             }
-            
         }
+        
     }
 
     // Activate gameobject (a held weapon with his own script)
@@ -272,11 +315,11 @@ public class WeaponManager : MonoBehaviour, Inventory
     {
         gameObject?.SetActive(true);
         _lastActive = gameObject;
-        if(items[selected])
+        if(slots[selected] != null)
         {
             WeaponObject wo = gameObject.GetComponent<WeaponObject>();
             if(wo)
-                wo.SetItem(items[selected]); // Change all references to WeaponObject so we don't need to search for component
+                wo.SetItem((Item)slots[selected]); // Change all references to WeaponObject so we don't need to search for component
         }
     }
 
@@ -286,12 +329,12 @@ public class WeaponManager : MonoBehaviour, Inventory
         int damage = 0;
         int index = 0;
 
-        for (var i = 0; i < items.Length; i++)
+        for (var i = 0; i < slots.Length; i++)
         {
-            if(items[i] == null) continue;
-            if(items[i].GetType() == typeof(Weapon))
+            if(slots[i] == null) continue;
+            if(slots[i].GetType() == typeof(Weapon))
             {   
-                Weapon w = (Weapon)items[i];
+                Weapon w = (Weapon)slots[i];
                 if(w.damage > damage)
                 {
                     damage = w.damage;
@@ -327,7 +370,7 @@ public class WeaponManager : MonoBehaviour, Inventory
         ammo[name] -= amount;
         return true;
     }
-
+    /*
     public bool AddItem(Item item, Pickup pickup = null)
     {
         // Add and exit if it's ammo
@@ -377,7 +420,7 @@ public class WeaponManager : MonoBehaviour, Inventory
         
         return false;
     }
-
+    */
     private void PoolPickup(Item item, Pickup pickup)
     {
         // TODO: Pool the pickup so we can drop later
@@ -389,10 +432,10 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     public void AddItemAtSelection(Item item)
     {   
-        if(items[selected] != null)
+        if(slots[selected] != null)
             RemoveItem();
         
-        items[selected] = item;
+        slots.AddItem(selected, item);
         if(ChangeItemEvent != null) ChangeItemEvent(selected, item);
 
         SelectItem();
@@ -408,10 +451,8 @@ public class WeaponManager : MonoBehaviour, Inventory
         // TODO: Unreference pickup
         //pickups.Remove(items[index]);
         
-        items[index] = null;
+        slots.RemoveItem(index);
         if(ChangeItemEvent != null) ChangeItemEvent(index, null);
-
-        SelectItem();
     }
 
     public void DepleteItem()
@@ -421,7 +462,7 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     public void DepleteItem(int amount)
     {
-        Item item = items[selected];
+        Item item = (Item)slots[selected];
         item.ammo -= amount;
         item.durability = 100f;
 
@@ -438,6 +479,8 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     public void DropItem()
     {
+        Item item = (Item)slots[selected];
+        
         // TODO: Create pickup object
         // If cached we reactivate it
         // if(pickups.ContainsKey(items[selected]))
@@ -450,17 +493,17 @@ public class WeaponManager : MonoBehaviour, Inventory
         // // If not cached we instantiate from the item object reference and prepare it
         // else
         // {
-            GameObject go = Instantiate(items[selected].pickup);
+            GameObject go = Instantiate(item.pickup);
             go.transform.position = dropOrigin.position;
             go.transform.rotation = Quaternion.identity;
 
             // Set the unique values like random colors
             Pickup p = go.GetComponent<Pickup>();
-            (p)?.SetItem(items[selected]);
+            (p)?.SetItem(item);
         // }
 
         // Remove selected item
-        if(items[selected].stackable)
+        if(item.stackable)
             DepleteItem();
         else
             RemoveItem();
@@ -471,16 +514,18 @@ public class WeaponManager : MonoBehaviour, Inventory
     /// </summary>
     public void DropItemNPC()
     {
-        GameObject go = Instantiate(items[selected].pickup);
+        Item item = (Item)slots[selected];
+
+        GameObject go = Instantiate(item.pickup);
         go.transform.position = _lastActive.transform.position;
         go.transform.rotation = _lastActive.transform.rotation;
 
         // Set the unique values like random colors
         Pickup p = go.GetComponent<Pickup>();
-        (p)?.SetItem(items[selected]);
+        (p)?.SetItem(item);
 
         // Remove selected item
-        if(items[selected].stackable)
+        if(item.stackable)
             DepleteItem();
         else
             RemoveItem();
@@ -488,12 +533,12 @@ public class WeaponManager : MonoBehaviour, Inventory
 
     public int GetAmmo()
     {
-        return items[selected].ammo;
+        return ((Item)slots[selected]).ammo;
     }
 
     public Item GetSelectedItem()
     {
-        return items[selected];
+        return (Item)slots[selected];
     }
 
     public GameObject GetActiveGameObject()

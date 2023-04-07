@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -42,7 +41,7 @@ public class WeaponSlotUI : MonoBehaviour
 
     public void UpdateItem(Item item, int stack)
     {
-        _itemName.text = (item)? item.itemName : "";
+        _itemName.text = (item != null)? item.itemName : "";
         _stackNumber.text = (stack == 0)? "" : "X" + stack;
         if(isAnimatingStack == false) 
             StartCoroutine("StackAnimation");

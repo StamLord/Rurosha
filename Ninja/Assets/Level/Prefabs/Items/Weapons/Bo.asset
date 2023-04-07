@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34888de10901f9049b53cb9ee6108984, type: 3}
   m_Name: Bo
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 21300000, guid: f51d298f64a3fba4a8889c54e5ce9955, type: 3}
+  _shape:
+    _width: 1
+    _height: 8
+    _shape: 0101010101010101
+  _canDrop: 1
+  _position: {x: 0, y: 0}
   model: {fileID: -2432090755550338912, guid: 4bae07fb75b9914488aa7f448d3f90b9, type: 3}
   material: {fileID: 0}
   itemName: Bo

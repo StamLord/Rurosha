@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c06a67b7c08df743ab815a1848c8e81, type: 3}
   m_Name: Rice Bowl
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 21300000, guid: d34b9c1404789dd4c94100caf3a769a1, type: 3}
+  _shape:
+    _width: 2
+    _height: 2
+    _shape: 01010101
+  _canDrop: 1
+  _position: {x: 5, y: 6}
   model: {fileID: 7568307919506465898, guid: ad6fb43597c394640b300bf65d54ccfa, type: 3}
   material: {fileID: 2100000, guid: 2d80e6fbdb5b1f443976c283f14f0242, type: 2}
   itemName: Rice
@@ -20,6 +27,7 @@ MonoBehaviour:
   durability: 100
   cost: 10
   pickup: {fileID: 999428405291157475, guid: c488f600552e17040b9ea7f04c77b799, type: 3}
+  projectile: {fileID: 0}
   healthRestore: 0
   potentialHealthRestore: 50
   staminaRestore: 0

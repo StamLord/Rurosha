@@ -11,6 +11,9 @@ public class UIWindow : MonoBehaviour
     [SerializeField] private bool disableMouse;
     [SerializeField] private bool disableInteraction;
 
+    [Header("Sub Windows")]
+    [SerializeField] private UISubWindow[] subWindows;
+
     [Header("Associated Key")]
     [SerializeField] private bool openWithKey;
     [SerializeField] private KeyCode key;
@@ -24,6 +27,12 @@ public class UIWindow : MonoBehaviour
     public virtual void ProcessInput(Vector3 axis, bool select){}
     public virtual bool Select(int index){return false;}
     
+    public delegate void OpenDelegate();
+    public event OpenDelegate OnWindowOpen;
+
+    public delegate void CloseDelegate();
+    public event CloseDelegate OnWindowClose;
+
     private void Update() 
     {
         if(openWithKey && Input.GetKeyDown(key))
@@ -49,7 +58,13 @@ public class UIWindow : MonoBehaviour
         else if(container)
             container.SetActive(true);
         
+        foreach(UISubWindow sub in subWindows)
+            sub.Open();
+        
         UIManager.Instance.AddWindow(this, disableMovement, disableMouse, disableInteraction);
+
+        if(OnWindowOpen != null)
+            OnWindowOpen();
     }
 
     public virtual void Close()
@@ -60,6 +75,12 @@ public class UIWindow : MonoBehaviour
         else if(container)
             container.SetActive(false);
         
+        foreach(UISubWindow sub in subWindows)
+            sub.Close();
+        
         UIManager.Instance.RemoveWindow(this, disableMovement, disableMouse, disableInteraction);
+
+        if(OnWindowClose != null)
+            OnWindowClose();
     }
 }

@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c06a67b7c08df743ab815a1848c8e81, type: 3}
   m_Name: Onigiri
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 21300000, guid: 8e926d9632175a84e81105b52e45a7ad, type: 3}
+  _shape:
+    _width: 1
+    _height: 1
+    _shape: 01
+  _canDrop: 1
+  _position: {x: 4, y: 9}
   model: {fileID: -5495902117074765545, guid: 55fb71665df85424bbe72c1881062170, type: 3}
   material: {fileID: 2100000, guid: f5871337ab0c5054a97e4ac0dfc9d805, type: 2}
   itemName: Onigiri
@@ -20,6 +27,7 @@ MonoBehaviour:
   durability: 100
   cost: 5
   pickup: {fileID: 191635950589325395, guid: f8e8abb0f75a74e4594c4436715a269b, type: 3}
+  projectile: {fileID: 0}
   healthRestore: 0
   potentialHealthRestore: 15
   staminaRestore: 0

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class Pickup : PhysicalObject
 {
@@ -118,7 +118,7 @@ public class Pickup : PhysicalObject
     public void Use(Inventory manager)
     {
         if(item)
-            if(manager.AddItem(item))
+            if(manager.TryAdd(item))
                 Destroy(transform.gameObject);
     }
 

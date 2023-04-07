@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34888de10901f9049b53cb9ee6108984, type: 3}
   m_Name: Katana
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 21300000, guid: f588cf2182dac3b48bfb8ff46f3c5303, type: 3}
+  _shape:
+    _width: 1
+    _height: 5
+    _shape: 0101010101
+  _canDrop: 1
+  _position: {x: 0, y: 0}
   model: {fileID: 3680027719181775668, guid: ed83b88ad46f39a42a9fb242038fe54d, type: 3}
   material: {fileID: 2100000, guid: ab66ea66405b0264aadc744112a0b4be, type: 2}
   itemName: Katana
@@ -20,5 +27,6 @@ MonoBehaviour:
   durability: 1
   cost: 300
   pickup: {fileID: 3576870040571072045, guid: bd74aac723952114c9f15fdb88e4aabb, type: 3}
+  projectile: {fileID: 0}
   WeaponType: 2
   damage: 40

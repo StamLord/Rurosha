@@ -1127,7 +1127,7 @@ MonoBehaviour:
   _stackNumber: {fileID: 1017823998434663437}
   _stackUpdateAnimationDuration: 0.5
   _stackUpdateAnimationSize: {x: 4, y: 4, z: 4}
-  _activeColor: {r: 0, g: 0, b: 0, a: 1}
+  _activeColor: {r: 0, g: 0, b: 0, a: 0.5882353}
   _activeOutlineColor: {r: 1, g: 1, b: 1, a: 1}
   _active: 0
 --- !u!1 &1017823998126177899
@@ -3617,6 +3617,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017823999358748261}
   - component: {fileID: 1017823999358748258}
+  - component: {fileID: 1746394562}
   m_Layer: 5
   m_Name: WeaponsParent
   m_TagString: Untagged
@@ -3657,6 +3658,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca8eb1e99f496548aeb49199f5b4c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  container: {fileID: 1017823998108233077}
   _slots:
   - {fileID: 1017823998126163849}
   - {fileID: 1017823998110981699}
@@ -3671,11 +3674,38 @@ MonoBehaviour:
   _wManager: {fileID: 0}
   activeAlpha: 0.8
   inactiveAlpha: 0.4
-  displayStartTime: 0
   displayTime: 2
-  dissapearSpeed: 1
-  dissappearPercentage: 0
+  dissapearTime: 1
   lastIndex: 0
+--- !u!114 &1746394562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017823999358748260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e0d96da6eb50c4ba5d20a875339ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  window: {fileID: 0}
+  onWindowOpen:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1017823999358748258}
+        m_TargetAssemblyTypeName: WeaponsUI, Scripts.UI.Weapons
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onWindowClose: []
 --- !u!1 &1017823999366880789
 GameObject:
   m_ObjectHideFlags: 0
