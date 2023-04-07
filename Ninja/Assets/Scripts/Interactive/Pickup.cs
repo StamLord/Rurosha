@@ -115,10 +115,10 @@ public class Pickup : PhysicalObject
     }
 
     // Used by Grappling Hook to pick up items
-    public void Use(Inventory manager)
+    public void Use(QuickSlots quickSlots)
     {
         if(item)
-            if(manager.TryAdd(item))
+            if(quickSlots.AddItemAtFirstEmpty(item))
                 Destroy(transform.gameObject);
     }
 

@@ -62,6 +62,26 @@ public class QuickSlots : MonoBehaviour
         return managers[index].TryRemove(managers[index].GetAtPoint(Vector2Int.zero));
     }
 
+    public bool AddItemAtFirstEmpty(IInventoryItem item)
+    {
+        for(int i = 0; i < Length; i++)
+        {
+            // 1 item per slot so if not full, it's empty
+            if(managers[i].isFull == false)
+            {
+                bool success = managers[i].TryAdd(item);
+                if(success)
+                {
+                    if(OnItemAdd != null) OnItemAdd(i);
+                    if(OnItemsUpdated != null) OnItemsUpdated();
+                    return true;
+                }
+            }
+        }
+        
+        return false;        
+    }
+
     public bool AddItem(int index, IInventoryItem item)
     {
         if(OnItemAdd != null) OnItemAdd(index);

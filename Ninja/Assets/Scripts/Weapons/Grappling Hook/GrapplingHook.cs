@@ -10,6 +10,7 @@ public class GrapplingHook : WeaponObject
     [SerializeField] private CharacterStateMachine characterStateMachine;
     [SerializeField] private GrappleState grappleState;
     [SerializeField] private GameObject projectile;
+    [SerializeField] private QuickSlots quickSlots;
 
     [Header("Spring Settings")]
     [SerializeField] private float springForce = 100;
@@ -240,7 +241,9 @@ public class GrapplingHook : WeaponObject
             yield return null;
         }
 
-        //pickupGrappleTo.Use(manager);
+        if(quickSlots)
+            pickupGrappleTo.Use(quickSlots);
+        
         StopGrapple();
 
         if(rigidGrappleTo)
