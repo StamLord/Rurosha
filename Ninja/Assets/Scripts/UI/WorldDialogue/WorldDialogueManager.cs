@@ -67,13 +67,18 @@ public class WorldDialogueManager : MonoBehaviour
 
     private void UpdateMessages()
     {
+        List<Message> toDelete = new List<Message>();
+
         foreach(Message m in messages)
         {
             if(Time.time - m.startTime > m.duration)
-                DeleteMessage(m);
+                toDelete.Add(m);
             else
                 UpdateMessagePosition(m);
         }
+
+        for (var i = 0; i < toDelete.Count; i++)
+            DeleteMessage(toDelete[i]);
     }
 
     private void DeleteMessage(Message message)
