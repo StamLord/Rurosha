@@ -66,15 +66,11 @@ public class EquipmentWindow : UIWindow
         if(old) 
         {
             // Try to add item and create drop if not able 
-            if(interactor.AddItem(old, old.pickup.GetComponent<Pickup>()) == false)
+            if(interactor.AddItem(old) == false)
             {
-                GameObject go = Instantiate(old.pickup);
+                GameObject go = PickupFactory.instance.GetPickup(old);
                 go.transform.position = dropOrigin.position;
                 go.transform.rotation = Quaternion.identity;
-
-                // Set the unique values like random colors
-                Pickup p = go.GetComponent<Pickup>();
-                (p)?.SetItem(old);
             }
         }
         

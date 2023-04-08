@@ -280,7 +280,7 @@ public class Interactor : MonoBehaviour
         _characterStats.ChargeChakra(type, amount);
     }
 
-    public bool AddItem(Item item, Pickup pickup = null)
+    public bool AddItem(Item item)
     {
         return _inventory.TryAdd(item.CreateInstance());
     }

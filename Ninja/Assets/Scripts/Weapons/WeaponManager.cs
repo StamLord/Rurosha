@@ -66,10 +66,7 @@ public class WeaponManager : MonoBehaviour
 
     public static Dictionary<string, Item> itemDatabase = new Dictionary<string, Item>();
 
-    //[Header("Pickup Pools")]
-    //Dictionary<Item, Pickup> pickups = new Dictionary<Item, Pickup>();
-
-    void Start()
+    private void Start()
     {
         slots.OnItemsUpdated += UpdateSelection;
 
@@ -370,65 +367,6 @@ public class WeaponManager : MonoBehaviour
         ammo[name] -= amount;
         return true;
     }
-    /*
-    public bool AddItem(Item item, Pickup pickup = null)
-    {
-        // Add and exit if it's ammo
-        if(item is Ammo)
-        {
-            AddAmmo((Ammo)item);
-            return true;
-        }
-
-        int firstEmpty = -1;
-
-        // Same Loop is used to check for stackable 
-        // items and the first empty slot
-        for(int i = 0; i < items.Length; i++)
-        {
-            if(items[i] == null && i != 0 || items[i].itemName == defaultWeapon.itemName && i != 0)
-            {
-                if(firstEmpty == -1)
-                    firstEmpty = i; // We keep record of the first empty slot so we don't loop again later
-            }
-            // If not empty, check if same and stackable
-            else if(item.itemName == items[i].itemName &&  
-                item.stackable && 
-                items[i].stackable)
-            {
-                items[i].ammo += item.ammo;
-                if(ChangeItemEvent != null) ChangeItemEvent(i, item, items[i].ammo);
-                SelectItem();
-                if(pickup)
-                    PoolPickup(item, pickup);
-                return true;
-            }
-        }
-        
-        if(firstEmpty != -1)
-        {
-            items[firstEmpty] = Instantiate(item);
-
-            if(ChangeItemEvent != null) ChangeItemEvent(firstEmpty, item);
-
-            SelectItem();
-            if(pickup)
-                PoolPickup(item, pickup);
-
-            return true;
-        }
-        
-        return false;
-    }
-    */
-    private void PoolPickup(Item item, Pickup pickup)
-    {
-        // TODO: Pool the pickup so we can drop later
-        //pickups[item] = pickup;
-        //pickup.gameObject.SetActive(false);
-
-        Destroy(pickup.gameObject);
-    }
 
     public void AddItemAtSelection(Item item)
     {   
@@ -448,9 +386,6 @@ public class WeaponManager : MonoBehaviour
 
     public void RemoveItem(int index)
     {
-        // TODO: Unreference pickup
-        //pickups.Remove(items[index]);
-        
         slots.RemoveItem(index);
         if(ChangeItemEvent != null) ChangeItemEvent(index, null);
     }
@@ -471,36 +406,18 @@ public class WeaponManager : MonoBehaviour
         else
         {
             if(ChangeItemEvent != null) ChangeItemEvent(selected, item, item.ammo);
-            
-            // Unreference pickup
-            //pickups.Remove(item);
         }
     }
 
     public void DropItem()
     {
+        if(slots[selected] == null) return;
+
         Item item = (Item)slots[selected];
         
-        // TODO: Create pickup object
-        // If cached we reactivate it
-        // if(pickups.ContainsKey(items[selected]))
-        // {
-        //     Pickup p = pickups[items[selected]];
-        //     p.gameObject.SetActive(true);
-        //     p.gameObject.transform.position = dropOrigin.position;
-        //     p.gameObject.transform.rotation = Quaternion.identity;
-        // }
-        // // If not cached we instantiate from the item object reference and prepare it
-        // else
-        // {
-            GameObject go = Instantiate(item.pickup);
-            go.transform.position = dropOrigin.position;
-            go.transform.rotation = Quaternion.identity;
-
-            // Set the unique values like random colors
-            Pickup p = go.GetComponent<Pickup>();
-            (p)?.SetItem(item);
-        // }
+        GameObject go = PickupFactory.instance.GetPickup(item);
+        go.transform.position = dropOrigin.position;
+        go.transform.rotation = Quaternion.identity;
 
         // Remove selected item
         if(item.stackable)
@@ -514,15 +431,13 @@ public class WeaponManager : MonoBehaviour
     /// </summary>
     public void DropItemNPC()
     {
+        if(slots[selected] == null) return;
+
         Item item = (Item)slots[selected];
 
-        GameObject go = Instantiate(item.pickup);
+        GameObject go = PickupFactory.instance.GetPickup(item);
         go.transform.position = _lastActive.transform.position;
         go.transform.rotation = _lastActive.transform.rotation;
-
-        // Set the unique values like random colors
-        Pickup p = go.GetComponent<Pickup>();
-        (p)?.SetItem(item);
 
         // Remove selected item
         if(item.stackable)

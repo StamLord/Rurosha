@@ -11,6 +11,8 @@ public class Pickup : PhysicalObject
     [SerializeField] private bool randomize;
     [SerializeField] private UIItemPrice costObject;
 
+    public Item Item => item;
+
     [Header ("Money")]
     [SerializeField] private bool money;
     [SerializeField] private int moneyAmount;
@@ -84,7 +86,7 @@ public class Pickup : PhysicalObject
                 if(success == false) return;
             }
 
-            if(interactor.AddItem(item, this))
+            if(interactor.AddItem(item))
             {
                 if(OnPickup != null)
                     OnPickup(item, interactor);
@@ -111,7 +113,10 @@ public class Pickup : PhysicalObject
             p.SetRigidActive(true);
         }
 
-        Destroy(transform.gameObject);
+        if(PickupFactory.instance != null)
+            PickupFactory.instance.DestroyPickup(this);
+        else
+            Destroy(transform.gameObject);
     }
 
     // Used by Grappling Hook to pick up items
