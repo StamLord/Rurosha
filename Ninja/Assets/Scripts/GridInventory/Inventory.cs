@@ -18,6 +18,9 @@ public class Inventory : MonoBehaviour
 
     private InventoryManager manager;
     
+    public delegate void itemDropdelegate(IInventoryItem item);
+    public event itemDropdelegate OnItemDropped;
+
     private void Start()
     {
         // Open inventory window
@@ -27,6 +30,8 @@ public class Inventory : MonoBehaviour
         var provider = new GridInventoryProvider(renderMode);
         manager = new InventoryManager(provider, inventoryWidth, inventoryHeight);
         inventoryRenderer?.SetInventory(manager, InventoryRenderMode.Grid);
+
+        manager.onItemDropped += HandleItemDrop;
 
         // Close inventory window
         inventoryWindow.Close();
@@ -43,5 +48,10 @@ public class Inventory : MonoBehaviour
     public bool TryAdd(IInventoryItem item)
     {
         return manager.TryAdd(item);
+    }
+
+    private void HandleItemDrop(IInventoryItem item)
+    {
+        if(OnItemDropped != null) OnItemDropped(item); 
     }
 }

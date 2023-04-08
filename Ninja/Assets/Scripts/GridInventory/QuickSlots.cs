@@ -1,6 +1,5 @@
 using UnityEngine;
 using FarrokhGames.Inventory;
-using System;
 
 public class QuickSlots : MonoBehaviour
 {
@@ -24,6 +23,9 @@ public class QuickSlots : MonoBehaviour
     public delegate void itemRemoveDelegate(int index);
     public event itemRemoveDelegate OnItemRemove;
 
+    public delegate void itemDropdelegate(IInventoryItem item);
+    public event itemDropdelegate OnItemDropped;
+
     private void Start() 
     {
         window.Open();
@@ -37,6 +39,7 @@ public class QuickSlots : MonoBehaviour
             managers[i] = new InventoryManager(provider, 1, 1);
             managers[i].onItemAdded += HandleItemsUpdate;
             managers[i].onItemRemoved += HandleItemsUpdate;
+            managers[i].onItemDropped += HandleItemDrop;
 
             // Set renderer
             renderers[i].SetInventory(managers[i], renderMode);
@@ -93,5 +96,10 @@ public class QuickSlots : MonoBehaviour
     private void HandleItemsUpdate(IInventoryItem item)
     {
         if(OnItemsUpdated != null) OnItemsUpdated();
+    }
+
+    private void HandleItemDrop(IInventoryItem item)
+    {
+        if(OnItemDropped != null) OnItemDropped(item); 
     }
 }
