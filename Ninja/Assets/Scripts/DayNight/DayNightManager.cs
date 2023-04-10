@@ -34,9 +34,9 @@ public class DayNightManager : MonoBehaviour
     [System.Serializable]
     public struct DayTime
     {
-        [ReadOnly] public int hours;
-        [ReadOnly] public int minutes;
-        [ReadOnly] public int seconds;
+        public int hours;
+        public int minutes;
+        public int seconds;
 
         public DayTime(int hours, int minutes, int seconds)
         {
@@ -44,11 +44,79 @@ public class DayNightManager : MonoBehaviour
             this.minutes = minutes;
             this.seconds = seconds;
         }
+
+        public static bool operator==(DayTime a, DayTime b)
+        {
+            return a.hours == b.hours && a.minutes == b.minutes && a.seconds == b.seconds;
+        }
+
+        public static bool operator!=(DayTime a, DayTime b)
+        {
+            return a.hours != b.hours || a.minutes != b.minutes || a.seconds != b.seconds;
+        }
+
+        public static bool operator>(DayTime a, DayTime b)
+        {
+            // Compare hours first
+            if(a.hours > b.hours)
+                return true;
+            else if (a.hours < b.hours)
+                return false;
+
+            // If hours equal, compare minutes
+            if(a.minutes > b.minutes)
+                return true;
+            else if (a.minutes < b.minutes)
+                return false;
+            
+            // Both hours and minutes are equal, compare seconds
+            if(a.seconds > b.seconds)
+                return true;
+            else if (a.seconds < b.seconds)
+                return false;
+
+            return false;
+        }
+
+        public static bool operator<(DayTime a, DayTime b)
+        {
+            // Compare hours first
+            if(a.hours < b.hours)
+                return true;
+            else if (a.hours > b.hours)
+                return false;
+
+            // If hours equal, compare minutes
+            if(a.minutes < b.minutes)
+                return true;
+            else if (a.minutes > b.minutes)
+                return false;
+            
+            // Both hours and minutes are equal, compare seconds
+            if(a.seconds < b.seconds)
+                return true;
+            else if (a.seconds > b.seconds)
+                return false;
+
+            return false;
+        }
+
+        public static bool operator<=(DayTime a, DayTime b)
+        {
+            return a < b || a == b;
+        }
+
+        public static bool operator>=(DayTime a, DayTime b)
+        {
+            return a > b || a == b;
+        }
     }
 
+    public delegate void dayPassedDelegate();
     public delegate void hourPassedDelegate(DayTime time);
     public delegate void minutePassedDelegate(DayTime time);
 
+    public event dayPassedDelegate OnDayPassed;
     public event hourPassedDelegate OnHourPassed;
     public event minutePassedDelegate OnMinutePassed;
 
@@ -149,7 +217,7 @@ public class DayNightManager : MonoBehaviour
 
     private void Update()
     {
-        ProgressTime();
+        ProgressTime(Time.deltaTime * timeMultiplier);
         UpdateSun();
         UpdateAmbient();
         UpdateFog();
@@ -161,15 +229,21 @@ public class DayNightManager : MonoBehaviour
         }
     }
 
-    private void ProgressTime()
+    private void ProgressTime(float delta)
     {
         // Advance time
-        time += Time.deltaTime * timeMultiplier;
+        time += delta;
 
         // New day
         if(time >= dayInRealSeconds)
+        {
             time -= dayInRealSeconds;
-
+            
+            // Call day event
+            if(OnDayPassed != null)
+                OnDayPassed();
+        }
+        
         int mm = dayTime.minutes;
         int hh = dayTime.hours;
         dayTime = GetDayTime();
@@ -183,6 +257,15 @@ public class DayNightManager : MonoBehaviour
         if(dayTime.hours != hh)
             if(OnHourPassed != null)
                 OnHourPassed(dayTime);
+    }
+
+    public void ProgressTime(int hours, int minutes, int seconds)
+    {
+        float delta = hours * 60 * 60;
+        delta += minutes * 60 ;
+        delta += seconds;
+
+        ProgressTime(delta);
     }
 
     private void UpdateSun()

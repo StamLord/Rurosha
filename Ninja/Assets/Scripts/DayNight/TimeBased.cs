@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TimeBased : MonoBehaviour
@@ -8,50 +6,71 @@ public class TimeBased : MonoBehaviour
     [SerializeField] private DayNightManager.DayTime endTime;
     [SerializeField] private bool state;
 
-    void Start()
+    private void Start()
     {
-        if(startTime.minutes == 0)
-            DayNightManager.instance.OnHourPassed += StartEvent;
+        // No reason to subscribe to both minute and hour events.
+        // We subscribe to the more frequent of the two if needed.
+        if(startTime.minutes == 0 && endTime.minutes == 0)
+            DayNightManager.instance.OnHourPassed += TimeEvent;
         else
-            DayNightManager.instance.OnMinutePassed += StartEvent;
+            DayNightManager.instance.OnMinutePassed += TimeEvent;
 
-        if(endTime.minutes == 0)
-            DayNightManager.instance.OnHourPassed += EndEvent;
+        // Initial update to make sure we match state value
+        if(state)
+            StartEvent();
         else
-            DayNightManager.instance.OnMinutePassed += EndEvent;
-
-        StartEvent(DayNightManager.instance.GetDayTime());
-        EndEvent(DayNightManager.instance.GetDayTime());
+            EndEvent();
     }
 
-    private void StartEvent(DayNightManager.DayTime time)
+    private void TimeEvent(DayNightManager.DayTime time)
     {
-        // If already on, do nothing
-        if(state) return;
+        bool startPassed = time >= startTime;
+        bool endPassed = time >= endTime;
 
-        if(TimePassed(time, startTime))
+        // Example: 
+        // Start: 01:00 End 03:00
+        if(startTime < endTime)
         {
-            if(TimePassed(time, endTime) == false)
+            if(startPassed)
             {
-                state = true;
-                StartAction();
+                if(endPassed)
+                    EndEvent();
+                else
+                    StartEvent();
             }
+            else
+                EndEvent();
         }
-    }
-
-    private void EndEvent(DayNightManager.DayTime time)
-    {
-        // If already off, do nothing
-        if(state == false) return;
-
-        if(TimePassed(time, endTime))
+        // Example:
+        // Start: 17:00 End: 07:00
+        else if (startTime > endTime)
         {
-            state = false;
-            EndAction();
+            if(endPassed)
+            {
+                if(startPassed)
+                    StartEvent();
+                else
+                    EndEvent();
+            }
+            else
+                StartEvent();
         }
     }
 
-     private bool TimePassed(DayNightManager.DayTime current, DayNightManager.DayTime target)
+    private void StartEvent()
+    {
+        state = true;
+        StartAction();
+    }
+
+    private void EndEvent()
+    {
+        state = false;
+        EndAction();
+    }
+
+    [System.Obsolete("Use comparison operators on DayTime structs. Example: a > b, a <= b, etc.")]
+    private bool TimePassed(DayNightManager.DayTime current, DayNightManager.DayTime target)
     {
         // If same hour and same minutes or bigger, perform action
         if(current.hours == target.hours && current.minutes >= target.minutes)
@@ -69,11 +88,11 @@ public class TimeBased : MonoBehaviour
     
     protected virtual void StartAction()
     {
-        Debug.Log("Started");
+        
     }
 
     protected virtual void EndAction()
     {
-        Debug.Log("Ended");
+        
     }
 }
