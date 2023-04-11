@@ -58,7 +58,9 @@ namespace UnityChan
 		private void OnValidate() 
 		{
 			if(useFirstChild == false) return;
-			child = transform.GetChild(0);
+			
+			if(transform.childCount > 0)
+				child = transform.GetChild(0);
 		}
 
 		private SpringManager GetParentSpringManager (Transform t)
