@@ -53,9 +53,11 @@ MonoBehaviour:
   interactionText: Pick Up
   weightClass: 0
   rigidbody: {fileID: 3616934152057708559}
+  owner: {fileID: 0}
   item: {fileID: 0}
   randomize: 0
-  money: 1
+  costObject: {fileID: 0}
+  isMoney: 1
   moneyAmount: 1
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}

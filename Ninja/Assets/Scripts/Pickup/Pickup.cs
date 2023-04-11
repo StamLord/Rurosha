@@ -14,8 +14,11 @@ public class Pickup : PhysicalObject
     public Item Item => item;
 
     [Header ("Money")]
-    [SerializeField] private bool money;
+    [SerializeField] private bool isMoney;
     [SerializeField] private int moneyAmount;
+
+    public bool IsMoney => isMoney;
+    public int Money => moneyAmount;
 
     [Header ("Visual")]
     [SerializeField] private MeshFilter meshFilter;
@@ -45,6 +48,12 @@ public class Pickup : PhysicalObject
         UpdateVisual();
     }
 
+    public void SetMoney(int amount)
+    {
+        isMoney = true;
+        moneyAmount = amount;
+    }
+
     private void UpdateVisual()
     {
         if(item is Equipment)
@@ -66,7 +75,7 @@ public class Pickup : PhysicalObject
         
         bool isSteal = IsStealing(interactor);
 
-        if(money)
+        if(isMoney)
         {
             interactor.AddMoney(moneyAmount);
             if(OnPickup != null)
