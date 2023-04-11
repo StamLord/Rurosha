@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -76,8 +73,6 @@ public class PlayerControls : MonoBehaviour
         {
             // Use
             UpdateVirtualButton("Use", inputState.Use);
-        
-            
 
             // Alpha numerics
             UpdateVirtualButton("Alpha1", inputState.Num1);
@@ -247,4 +242,3 @@ public class PlayerControls : MonoBehaviour
         mouseDisabled = true;
     }
 }
-
