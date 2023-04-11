@@ -106,7 +106,7 @@ public class Interactor : MonoBehaviour
         CheckObject();
 
         float carryTimer = Time.time - _startPressTime;
-
+        
         if(UpdateCarryTimerEvent != null)
             UpdateCarryTimerEvent((attemptingCarry)? carryTimer / _minTimeToCarry : 0f);
 
@@ -115,7 +115,7 @@ public class Interactor : MonoBehaviour
             _startPressTime = Time.time;
             attemptingCarry = true;
         }
-        else if(_inputState.Use.State == VButtonState.PRESS_END)
+        else if(_inputState.Use.State == VButtonState.PRESS_END || attemptingCarry && _inputState.Use.State == VButtonState.UNPRESSED)
         {
             attemptingCarry = false;
             if(UpdateCarryTimerEvent != null)
