@@ -22,13 +22,13 @@ public class PhysicalMaterial : MonoBehaviour
     private void Start() 
     {
         // Create pools if none was created for these prefabs
-        CreatePool(bluntPrefab);
-        CreatePool(slashPrefab);
-        CreatePool(piercePrefab);
-
-        CreatePool(bigBluntPrefab);
-        CreatePool(bigSlashPrefab);
-        CreatePool(bigPiercePrefab);
+        if(bluntPrefab) CreatePool(bluntPrefab);
+        if(slashPrefab) CreatePool(slashPrefab);
+        if(piercePrefab) CreatePool(piercePrefab);
+        
+        if(bigBluntPrefab) CreatePool(bigBluntPrefab);
+        if(bigSlashPrefab) CreatePool(bigSlashPrefab);
+        if(bigPiercePrefab) CreatePool(bigPiercePrefab);
     }
 
     private void CreatePool(GameObject prefab)
