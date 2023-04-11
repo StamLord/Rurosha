@@ -21,7 +21,7 @@ public class Hurtbox : MonoBehaviour
     
     public void Start()
     {
-        material = meshRenderer?.material;
+        if(meshRenderer) material = meshRenderer.material;
         if(material) baseColor = material.color;
     }
 
