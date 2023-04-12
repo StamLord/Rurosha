@@ -12,8 +12,8 @@ public class Item : ItemDefinition
     [Header("Data")]
     public string itemName;
     public bool stackable;
-    [SerializeField] private int _ammo = 1;
-    public int ammo { get { return _ammo; } set { _ammo = Mathf.Max(0, value); } }
+    [SerializeField] private int _amount = 1;
+    public int amount { get { return _amount; } set { _amount = Mathf.Max(0, value); } }
     public float durability = 1;
     public int cost = 1;
 

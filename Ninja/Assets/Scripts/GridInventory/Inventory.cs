@@ -18,8 +18,11 @@ public class Inventory : MonoBehaviour
 
     private InventoryManager manager;
     
-    public delegate void itemDropdelegate(IInventoryItem item);
-    public event itemDropdelegate OnItemDropped;
+    public delegate void itemDropDelegate(IInventoryItem item);
+    public event itemDropDelegate OnItemDropped;
+
+    public delegate void inventoryUpdateDelegate();
+    public event inventoryUpdateDelegate OnInventoryUpdate;
 
     private void Start()
     {
@@ -32,6 +35,8 @@ public class Inventory : MonoBehaviour
         inventoryRenderer?.SetInventory(manager, InventoryRenderMode.Grid);
 
         manager.onItemDropped += HandleItemDrop;
+        manager.onItemAdded += HandleItemAdded;
+        manager.onItemRemoved += HandleItemRemoved;
 
         // Close inventory window
         inventoryWindow.Close();
@@ -50,8 +55,25 @@ public class Inventory : MonoBehaviour
         return manager.TryAdd(item);
     }
 
+    public bool TryRemove(IInventoryItem item)
+    {
+        return manager.TryRemove(item);
+    }
+
     private void HandleItemDrop(IInventoryItem item)
     {
         if(OnItemDropped != null) OnItemDropped(item); 
     }
+
+    private void HandleItemAdded(IInventoryItem item)
+    {
+        if(OnInventoryUpdate != null) OnInventoryUpdate(); 
+    }
+
+    private void HandleItemRemoved(IInventoryItem item)
+    {
+        if(OnInventoryUpdate != null) OnInventoryUpdate(); 
+    }
+
+    public IInventoryItem[] AllItems => manager.allItems;
 }

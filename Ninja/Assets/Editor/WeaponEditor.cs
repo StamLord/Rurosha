@@ -60,7 +60,7 @@ public class WeaponEditor : Editor
 
         weapon.cost = EditorGUILayout.IntField("Cost", weapon.cost);
         weapon.damage = EditorGUILayout.IntField("Damage", weapon.damage);
-        weapon.ammo = EditorGUILayout.IntSlider("Ammo", weapon.ammo, 1, 99);
+        weapon.amount = EditorGUILayout.IntSlider("Ammo", weapon.amount, 1, 99);
         weapon.durability = EditorGUILayout.Slider("Durability", weapon.durability, 0, 1);
         weapon.stackable = EditorGUILayout.Toggle("Stackable", weapon.stackable);
         weapon.WeaponType = (WeaponType)EditorGUILayout.EnumPopup("Weapon Type", weapon.WeaponType);

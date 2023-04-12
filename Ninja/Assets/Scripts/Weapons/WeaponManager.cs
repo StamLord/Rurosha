@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using FarrokhGames.Inventory;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -23,12 +24,13 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private Transform dropOrigin;
     
     [Header("Items")]
+    [SerializeField] private Inventory inventory;
     [SerializeField] private QuickSlots slots;
     [SerializeField] private int selected = 0;
     int oldSelected;
 
     [Header("Ammo")]
-    [SerializeField] Dictionary<string, int> ammo = new Dictionary<string, int>();
+    [SerializeField] List<Ammo> ammo = new List<Ammo>();
     
     [Header("Default Weapon")]
     [SerializeField] private Weapon defaultWeapon;
@@ -68,7 +70,8 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-        slots.OnItemsUpdated += UpdateSelection;
+        if(inventory) inventory.OnInventoryUpdate += InventoryUpdate;
+        if(slots) slots.OnItemsUpdated += UpdateSelection;
 
         // Prepare weapon objects
         if(_melee)_melee.GetComponent<WeaponObject>().SetWeaponManager(this);
@@ -350,22 +353,44 @@ public class WeaponManager : MonoBehaviour
 
     public void AddAmmo(Ammo item)
     {
-        if(ammo.ContainsKey(item.itemName))
-            ammo[item.itemName] += item.ammo;
-        else
-            ammo[item.itemName] = item.ammo;
+        // Try to stack ammo
+        foreach(Ammo a in ammo)
+        {
+            if(a.itemName == item.itemName)
+            {
+                a.amount += item.amount;
+                return;
+            }
+        }
+
+        // Otherwise, add normally
+        inventory.TryAdd(item);
     }
 
     public bool RemoveAmmo(string name, int amount = 1)
     {
-        if(ammo.ContainsKey(name) == false)
-            return false;
+        // Try to find ammo
+        foreach(Ammo a in ammo)
+        {
+            if(a.itemName == name)
+            {
+                // Not enough
+                if(a.amount < amount)
+                    return false;
+                
+                // Deplete
+                a.amount -= amount;
 
-        if(ammo[name] < amount)
-            return false;
-            
-        ammo[name] -= amount;
-        return true;
+                // Remove item if amount reaches 0
+                if(a.amount < 1)
+                    inventory.TryRemove(a);
+                
+                return true;
+            }
+        }
+
+        // No ammo found
+        return false;
     }
 
     public void AddItemAtSelection(Item item)
@@ -398,14 +423,14 @@ public class WeaponManager : MonoBehaviour
     public void DepleteItem(int amount)
     {
         Item item = (Item)slots[selected];
-        item.ammo -= amount;
+        item.amount -= amount;
         item.durability = 100f;
 
-        if(item.ammo < 1)
+        if(item.amount < 1)
             RemoveItem(selected);
         else
         {
-            if(ChangeItemEvent != null) ChangeItemEvent(selected, item, item.ammo);
+            if(ChangeItemEvent != null) ChangeItemEvent(selected, item, item.amount);
         }
     }
 
@@ -446,9 +471,29 @@ public class WeaponManager : MonoBehaviour
             RemoveItem();
     }
 
-    public int GetAmmo()
+    public int GetAmount()
     {
-        return ((Item)slots[selected]).ammo;
+        return ((Item)slots[selected]).amount;
+    }
+
+    public List<Ammo> GetAmmoInInventory()
+    {
+        IInventoryItem[] items = inventory.AllItems;
+        List<Ammo> ammo = new List<Ammo>();
+        
+        // Find items with type of ammo
+        for (var i = 0; i < items.Length; i++)
+        {
+            if(items[i] is Ammo)
+                ammo.Add((Ammo)items[i]);
+        }
+
+        return ammo;
+    }
+
+    private void InventoryUpdate()
+    {
+        ammo = GetAmmoInInventory();
     }
 
     public Item GetSelectedItem()

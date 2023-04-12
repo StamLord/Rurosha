@@ -55,7 +55,7 @@ public class Bomb : WeaponObject
             case VButtonState.PRESS_END:
                 if(isAimingMultiple)
                 {
-                    int ammo = weaponManager.GetAmmo();
+                    int ammo = weaponManager.GetAmount();
                     for (int i = 0; i < ammo && i < origins.Length; i++)
                         ThrowBomb(i);
                     
@@ -86,7 +86,7 @@ public class Bomb : WeaponObject
     private void StartAimMultiple()
     {
         isAimingMultiple = true;
-        int ammo = weaponManager.GetAmmo();
+        int ammo = weaponManager.GetAmount();
         for(int i = 0; i < ammo && i < lineRenderer.Length; i++)
             ShowTrajectory(i, true);
     }
@@ -101,7 +101,7 @@ public class Bomb : WeaponObject
     private void ThrowBomb(int index)
     {
         // Check ammo and deplete
-        if(weaponManager.GetAmmo() < 1) return;
+        if(weaponManager.GetAmount() < 1) return;
         weaponManager.DepleteItem(1);
         
         // Instantiate projectile

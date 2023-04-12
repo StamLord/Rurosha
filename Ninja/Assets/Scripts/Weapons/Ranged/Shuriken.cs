@@ -158,7 +158,7 @@ public class Shuriken : WeaponObject
         float angleStep = burstSpread / burstAmount;
         float firstAngleStep = 0 - angleStep * burstAmount / 2;
 
-        int availableAmmo = Mathf.Min(burstAmount, manager.GetAmmo());
+        int availableAmmo = Mathf.Min(burstAmount, manager.GetAmount());
 
         for(int i = 0; i < availableAmmo; i++)
         {
