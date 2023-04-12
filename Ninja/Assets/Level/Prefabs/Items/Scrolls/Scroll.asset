@@ -12,11 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f9ffe275b4c96c4f82f1eddb8247c1b, type: 3}
   m_Name: Scroll
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 21300000, guid: 7d1256377e5f2e94e967d7c7b10ad887, type: 3}
+  _shape:
+    _width: 1
+    _height: 2
+    _shape: 0101
+  _canDrop: 1
+  _stackable: 0
+  _amount: 1
+  _position: {x: 0, y: 0}
   model: {fileID: -1388485733357891733, guid: 95f30927432ef1f4a8ef51c28c7fc39e, type: 3}
   material: {fileID: 0}
   itemName: Scroll
-  stackable: 0
-  _ammo: 1
   durability: 1
   cost: 1
   pickup: {fileID: 1226933097590465777, guid: 9c26aca397ad9df428cf5d26a1368d48, type: 3}
