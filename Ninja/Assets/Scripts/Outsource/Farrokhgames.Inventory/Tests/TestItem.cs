@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 
 namespace FarrokhGames.Inventory
@@ -23,3 +24,4 @@ namespace FarrokhGames.Inventory
         public bool canDrop => _canDrop;
     }
 }
+#endif

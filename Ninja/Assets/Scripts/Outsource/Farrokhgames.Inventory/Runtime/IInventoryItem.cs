@@ -4,6 +4,8 @@ namespace FarrokhGames.Inventory
 {
     public interface IInventoryItem
     {
+        string name { get; }
+
         /// <summary>
         /// The sprite of this item
         /// </summary>
@@ -34,6 +36,16 @@ namespace FarrokhGames.Inventory
         /// Returns true if this item can be dropped on the ground
         /// </summary>
         bool canDrop { get; }
+
+        /// <summary>
+        /// Is this item stackable
+        /// </summary>
+        bool stackable { get; }
+
+        /// <summary>
+        /// The amount of items in the stack
+        /// </summary>
+        int amount  { get; set;}
     }
 
     internal static class InventoryItemExtensions

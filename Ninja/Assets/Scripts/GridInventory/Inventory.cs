@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
 
     public delegate void inventoryUpdateDelegate();
     public event inventoryUpdateDelegate OnInventoryUpdate;
-
+    
     private void Start()
     {
         // Open inventory window
@@ -52,6 +52,23 @@ public class Inventory : MonoBehaviour
 
     public bool TryAdd(IInventoryItem item)
     {
+        // If item is stackable, find an existing item in inventory and add to it's amount
+        if(item.stackable)
+        {
+            IInventoryItem[] items = manager.allItems;
+
+            for (var i = 0; i < items.Length; i++)
+            {   
+                if(items[i].name == item.name)
+                {
+                    items[i].amount += item.amount;
+                    
+                    if(OnInventoryUpdate != null) OnInventoryUpdate(); 
+                    return true;
+                }
+            }
+        }
+
         return manager.TryAdd(item);
     }
 

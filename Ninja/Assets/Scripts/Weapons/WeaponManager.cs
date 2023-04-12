@@ -353,17 +353,6 @@ public class WeaponManager : MonoBehaviour
 
     public void AddAmmo(Ammo item)
     {
-        // Try to stack ammo
-        foreach(Ammo a in ammo)
-        {
-            if(a.itemName == item.itemName)
-            {
-                a.amount += item.amount;
-                return;
-            }
-        }
-
-        // Otherwise, add normally
         inventory.TryAdd(item);
     }
 

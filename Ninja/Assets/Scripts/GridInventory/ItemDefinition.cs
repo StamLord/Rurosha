@@ -10,6 +10,10 @@ public class ItemDefinition : ScriptableObject, IInventoryItem
     [SerializeField] private Sprite _sprite = null;
     [SerializeField] private InventoryShape _shape = null;
     [SerializeField] private bool _canDrop = true;
+
+    [SerializeField] private bool _stackable = false;
+    [SerializeField] private int _amount = 1;
+
     [SerializeField, HideInInspector] private Vector2Int _position = Vector2Int.zero;
 
     /// <summary>
@@ -41,6 +45,16 @@ public class ItemDefinition : ScriptableObject, IInventoryItem
 
     /// <inheritdoc />
     public bool canDrop => _canDrop;
+
+    /// <inheritdoc />
+    public bool stackable => _stackable;
+    
+    /// <inheritdoc />
+    public int amount
+    {
+        get => _amount;
+        set => _amount = Mathf.Max(0, value);
+    }
 
     /// <summary>
     /// Creates a copy if this scriptable object

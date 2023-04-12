@@ -8,12 +8,18 @@ public class WeaponEditor : Editor
     GUIStyle dividerStyle = new GUIStyle();
     Editor gameObjectEditor;
 
+    private SerializedProperty stackable;
+    private SerializedProperty amount;
+
     private SerializedProperty sprite;
     private SerializedProperty shape;
     private SerializedProperty canDrop;
 
     private void OnEnable() 
     {
+        stackable = serializedObject.FindProperty("_stackable");
+        amount = serializedObject.FindProperty("_amount");
+
         sprite = serializedObject.FindProperty("_sprite");
         shape = serializedObject.FindProperty("_shape");
         canDrop = serializedObject.FindProperty("_canDrop");
@@ -53,6 +59,8 @@ public class WeaponEditor : Editor
         EditorGUILayout.PropertyField(sprite);
         EditorGUILayout.PropertyField(shape);
         EditorGUILayout.PropertyField(canDrop);
+        EditorGUILayout.PropertyField(stackable);
+        EditorGUILayout.PropertyField(amount);
 
         weapon.itemName = EditorGUILayout.DelayedTextField("Name", weapon.itemName);
 
@@ -62,7 +70,7 @@ public class WeaponEditor : Editor
         weapon.damage = EditorGUILayout.IntField("Damage", weapon.damage);
         weapon.amount = EditorGUILayout.IntSlider("Ammo", weapon.amount, 1, 99);
         weapon.durability = EditorGUILayout.Slider("Durability", weapon.durability, 0, 1);
-        weapon.stackable = EditorGUILayout.Toggle("Stackable", weapon.stackable);
+        
         weapon.WeaponType = (WeaponType)EditorGUILayout.EnumPopup("Weapon Type", weapon.WeaponType);
         //EditorGUI.HelpBox(new Rect(100,100, 50, 50), "Test", MessageType.None);
 
