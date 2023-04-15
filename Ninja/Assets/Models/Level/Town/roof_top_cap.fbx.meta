@@ -3,7 +3,12 @@ guid: 47021fccf724cb24e9f3dd2a1a07eab1
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: roof_pipes
+    second: {fileID: 2100000, guid: 1374388cf55bea648b917fe84417b5ce, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

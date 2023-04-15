@@ -1,32 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class SlidingDoor : Usable
 {
     [SerializeField] private bool open;
     [SerializeField] private float slideDuration = .5f;
-    [SerializeField] private float startSlide;
 
     [SerializeField] private Vector3 openPos;
     [SerializeField] private Vector3 closePos;
     
+    private bool isAnimating;
+    private Coroutine coroutine;
 
     public override void Use(Interactor interactor)
     {
-        startSlide = Time.time;
+        // Switch State
         open = !open;
+
+        // Animate thorough coroutine
+
+        if(isAnimating && coroutine != null)
+            StopCoroutine(coroutine);
+
+        if(open)
+            coroutine = StartCoroutine(Animate(closePos, openPos));
+        else
+            coroutine = StartCoroutine(Animate(openPos, closePos));
     }
 
-    void Update()
+    private IEnumerator Animate(Vector3 startPos, Vector3 endPos)
     {
-        float ratio = (Time.time - startSlide) / slideDuration;
-        if(ratio <= 1f)
+        isAnimating = true;
+        float start = Time.time;
+
+        while(Time.time - start <= slideDuration)
         {
-            if(open)
-                transform.localPosition = Vector3.Lerp(openPos, closePos, ratio);
-            else
-                transform.localPosition = Vector3.Lerp(closePos, openPos, ratio);
+            transform.localPosition = Vector3.Lerp(startPos, endPos, (Time.time - start) / slideDuration);
+            yield return null;
         }
+
+        // Make sure we at our goal
+        transform.localPosition = endPos;
+        isAnimating = false;
     }
 }
