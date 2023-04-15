@@ -5,7 +5,7 @@ using UnityEngine;
 public class GroundSensor : MonoBehaviour
 {
     public enum Direction {down, up}
-    public enum GroundDetectionType {SphereCast, FourRays}
+    public enum GroundDetectionType {SphereCast, FiveRays}
 
     [Header("Ground Info")]
     [SerializeField] private float groundSlope;
@@ -40,6 +40,7 @@ public class GroundSensor : MonoBehaviour
     private bool GroundCheck()
     {
         Vector3 dir = Vector3.down;
+        string debugString = transform.name + ": ";
 
         switch(direction)
         {
@@ -56,39 +57,68 @@ public class GroundSensor : MonoBehaviour
                 isGrounded = Physics.SphereCast(transform.position, groundSphereRadius, dir, out groundHit, groundDistance, groundMask);
                 groundSlope = Vector3.Angle(groundHit.normal, Vector3.up);
                 break;
-            case GroundDetectionType.FourRays:
+            case GroundDetectionType.FiveRays:
+
+                // Cast down 5 raycasts around transform position.
+                //
+                //  (-1, 1)  X . . . . . X  (1, 1)
+                //           . . . . . . .
+                //           . . . X . . .
+                //           . . . . . . .
+                // (-1, -1)  X . . . . . X  (1, -1)
+                //
+                // If atleast one of them hits, we are grounded.
+                // The ground's Normal is an average of all succesful collisions.
 
                 Vector3 averageNormal = Vector3.zero;
 
+                // Forward Left
                 bool ray1 = Physics.Raycast(transform.position + new Vector3(-1,0,1) * groundSphereRadius, dir, out groundHit, groundDistance, groundMask);
-                
                 if(ray1)
                 {
                     averageNormal += groundHit.normal;
+                    debugString += "\n ray 1: " + groundHit.collider.transform.name;
                 }
                 
+                // Forward Right
                 bool ray2 = Physics.Raycast(transform.position + new Vector3(1,0,1) * groundSphereRadius, dir, out groundHit, groundDistance, groundMask);
                 if(ray2)
                 {
                     averageNormal += groundHit.normal;
+                    debugString += "\n ray 2: " + groundHit.collider.transform.name;
                 }
 
+                // Back Left
                 bool ray3 = Physics.Raycast(transform.position + new Vector3(-1,0,-1) * groundSphereRadius, dir, out groundHit, groundDistance, groundMask);
                 if(ray3)
                 {
                     averageNormal += groundHit.normal;
+                    debugString += "\n ray 3: " + groundHit.collider.transform.name;
                 }
 
+                // Forward Left
                 bool ray4 = Physics.Raycast(transform.position + new Vector3(1,0,-1) * groundSphereRadius, dir, out groundHit, groundDistance, groundMask);
                 if(ray4)
                 {
                     averageNormal += groundHit.normal;
+                    debugString += "\n ray 4: " + groundHit.collider.transform.name;
                 }
+
+                // Center
+                bool ray5 = Physics.Raycast(transform.position, dir, out groundHit, groundDistance, groundMask);
+                if(ray5)
+                {
+                    averageNormal += groundHit.normal;
+                    debugString += "\n ray 5: " + groundHit.collider.transform.name;
+                }
+
+                if(debugView)
+                    Debug.Log(debugString);
 
                 averageNormal.Normalize();
                 groundNormal = averageNormal;
                 groundSlope = Vector3.Angle(averageNormal, Vector3.up);
-                isGrounded = ray1 || ray2 || ray3 || ray4;
+                isGrounded = ray1 || ray2 || ray3 || ray4 || ray5;
                 isGrounded = isGrounded && groundSlope < maxGroundedSlope;
                 break;
         }
@@ -116,11 +146,12 @@ public class GroundSensor : MonoBehaviour
             case GroundDetectionType.SphereCast:
                 Gizmos.DrawWireSphere(transform.position + dir * groundDistance, groundSphereRadius);
                 break;
-            case GroundDetectionType.FourRays:
+            case GroundDetectionType.FiveRays:
                 Gizmos.DrawRay(transform.position + new Vector3(-1,0,1) * groundSphereRadius, dir * groundDistance);
                 Gizmos.DrawRay(transform.position + new Vector3(1,0,1) * groundSphereRadius, dir * groundDistance);
                 Gizmos.DrawRay(transform.position + new Vector3(-1,0,-1) * groundSphereRadius, dir * groundDistance);
                 Gizmos.DrawRay(transform.position + new Vector3(1,0,-1) * groundSphereRadius, dir * groundDistance);
+                Gizmos.DrawRay(transform.position, dir * groundDistance);
                 break;
         }
     }
