@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: house_beam
+    second: {fileID: 2100000, guid: 68ee2e79b2bd1a64180af845e7e071b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: house_walll
-    second: {fileID: 2100000, guid: 03a2e150a748d5044b0d9ba3884e6c59, type: 2}
+    second: {fileID: 2100000, guid: 68ee2e79b2bd1a64180af845e7e071b2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
