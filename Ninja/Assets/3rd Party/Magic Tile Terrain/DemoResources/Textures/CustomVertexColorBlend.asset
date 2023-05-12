@@ -1,0 +1,200 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &-6934711181591989242
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Terrain_VertexColorTextureBlend
+  m_Shader: {fileID: -6465566751694194690, guid: 44d684940e7aa0147bc089d983c1ba98, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_07d3d48f666a4b919e06a28eb14f7fa2:
+        m_Texture: {fileID: 2800000, guid: 3f9d34beacf17834684908548ae9e3a4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_70369a61633a4e12a8a0436b17c398e7:
+        m_Texture: {fileID: 2800000, guid: d7a46ab17cc13634eb7109cdc078c78d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_aabf70c4a03a487d985b4c95c6349f8c:
+        m_Texture: {fileID: 2800000, guid: 29a75663846ecc347b86b69957ba9318, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_d7d6121aeae4428ba10aa21d42605295:
+        m_Texture: {fileID: 2800000, guid: 0ed29dccce619754da0f4805d947e459, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 3884958098928784723}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlphaClip: 0
+    - _Blend: 0
+    - _BumpScale: 1
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _DetailAlbedoMapScale: 1
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _EnvironmentReflections: 1
+    - _GlossMapScale: 0
+    - _Glossiness: 0
+    - _GlossyReflections: 0
+    - _Metallic: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.005
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _Smoothness: 0.5
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _WorkflowMode: 1
+    - _ZWrite: 1
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+  m_BuildTextureStacks: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1425f714aed6f2e4b842560913e5fe33, type: 3}
+  m_Name: CustomVertexColorBlend
+  m_EditorClassIdentifier: 
+  padding: 0
+  maxSize: 1024
+  filterMode: 0
+  material: {fileID: 2100000, guid: c4a6a3e94dd4d154fb4b2506aff73e0d, type: 2}
+  _textures:
+  - {fileID: 2800000, guid: 29a75663846ecc347b86b69957ba9318, type: 3}
+  _atlasRects:
+  - serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _textureAtlas: {fileID: 3884958098928784723}
+  _atlasMaterial: {fileID: -6934711181591989242}
+  atlasOutOfSync: 0
+--- !u!28 &3884958098928784723
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 2
+  m_Width: 64
+  m_Height: 64
+  m_CompleteImageSize: 2048
+  m_MipsStripped: 0
+  m_TextureFormat: 10
+  m_MipCount: 1
+  m_IsReadable: 1
+  m_IsPreProcessed: 0
+  m_IgnoreMasterTextureLimit: 0
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 0
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 1
+  m_PlatformBlob: 
+  image data: 2048
+  _typelessdata: d19c0973da020aa0b19c8862806008e0d0a4676202c3e07a2e94e559bcffd3924e9c4762af9e2a0a52adcc93050a0b2a32ad0d94e8e834e932ad6e9c1d2a2aeb73b5ea7202000a2732ad676268e0f8d0d1a485416aef735fed8be649ddfff1fd8c83685a2a0b21bb2e94065acae8e521ea6aa6398f2ba842ed932431ff6aaf37b09c0752088078578c8365411f75a5a7f0ac6449eaeb292ad1a46a839bfaebbc12ad0d94fda12ba532aded8b0d97080811adec93fab4f4aeb0a4a86a804882ca53ad8c832d39e2aa12adc649f0787c7cac8ba649f5e90181c96ac641a817ded2ac834762091f5ffe0d94e659ab3da1af2e9c65397afafcfecc8b453926deea83afa4c649b5bf2aa84e9cc96a9efea8a82d94c5519050408211ada86ab707062ef1a44e9c1b9b2e0232ad6f9c020a06ef11ad2e94be28708a12a5cc8ba73d2f3753ad6b833b8f4d6a6c7b2431f89298100e942852aa8e04faac8385419fbefa538a93e651ef3fdd254f94466aad2bbafb0d94e749d878587eed8b07528b0b8dad53b56a83f4b4a4eed0a46a83bcaaa2def1a4275ac068fae232ada5490b090d3853ad6e9ce0f2e25df1a40a6b8228b8df12ad2a7b020aaa578f9cc87298aaaea3909c075a82ec68f6cd8b44392ba72fbb4e9ce749c8ea5e6dea724531eaa39fdf8b8ba551cb18bafeed93275a3a6e26f6097b6539f89aefba0e94e7492da7b68f6e9c886a06e4cba9afa4e559fef8a72ff1a4065a272a202011ade97ad0e0a07a6e9c056af835bda24e94a86ad72b00082e94877aacf69cb88f9c877289098e8b6e9c0431acea6ef82e94e651e9cbcbfb8c8385397ac64fed48522529c54040824b7bc6492b090121ed8be96a2fa21883cc8bc6517e5698280e944762fe1fbab56f9ce972ed8af808b09c06520a6a6cc00d942431a040adb74e9c2431a2aa29d5d1a48a8bdb90acae6f9c6a83ef29a200d1a4e559aae87aeb6c7ba541ad957d194f94a5494bef00086b7b6539820aedeb8f9cc649f7cf0b714b7b65395bf6fe26cd8b485abf5e1bfded8b275a0edf97962e94a96288bd3e66ec93275ab7ff2a3b32ad6f9c9bf58fc2d1a4e972c0b0eef612ade6515ebca06acc932429d656a7d44e9c44390081b9226f9ca549005feaff4e9c0652f2ef77768c8304398aaa22700e94e6510f8da98eee8b65312afe52b8ac8345291fe5d5e7ed8b4531bf63495a2b734529be34e5d5ed8b8539ebebbfd3ed93653182bedf5f6b7b85391850febdb09c8a8300292faaf1a4c972aa8baa7ad19c2a7bafb3d7ef6f9c04295f52fae0cc8b45390fcd9fbe4e948862cd8802aa6f9c8862a5e7af684f9c275ae82dbf8b4e94c972a70b76bb6f9c886270e6f53fad83653136fe406fea6a2521585575fd895a4529ef552b2bea6a65315ddf66e20a6b4531c67eefe7a95a453135373a3053adec8baba298ab6e94886a68dd0e886f944a7bae7b90f2909c0973f86b73fe0e8ce649f747aa328ea4e649a98327bbafa44983aab0f01ad0a4097baeca8a854e9c44397ce85655ed8b453980b3adfd12ad65395bd372f2485245292dcfa4bcea6aa6392d2fda2a6c7bc7416b4e7a5c695a2521af8d8d8d6c7be741afaeaf2df1a4265a08a0a860d1a4e972fa26a9b9b09c2a7b1ac0f7af8f940a73ccfcc429f2a4c96abe8b0a68ed8b2529d6d7d4780d94065228862ee8ed8b886a86e9a39ead832752ddfa62ea4b7b074a927295fe4f942752afad1f7709736531dfd756f48c83074aab4acbfd6b7b4531785ebcbe4c73e55126ab29a2cd83275a7f5260eb8f9ca541c040e8002e94853909870636d0a40a7358aeeebab19c6b7b5dfaa47f6f9c06522a787bbf4e9ce4285efbfef00d942431baad250512adc96a52ffe9bbcd83485292a0d2b8ed8368527fcaa26b8c7bc641e736c7f32a7b0429fcf873ebea6ac741a2af39a3ac83a641beb33a14cd8b24311f1d06be0e8c07525c78c04832adac83ae0a292bd1a4065a6ae8a8008f9c06520802a3064f94c9728c228e9a6f940973adca289a0d8ca641be60eeabafa4e42027a7afaf4e94265a0b18f74e909c275a6efa360a4e94e649aeaef6f80e8ce649c1a3e08ccd83e6497b3cda7e6f942752edfdeb37ed8ba54961f96a084f946862afabea524b734439c0bbb78332adcc8b2d3eaebc12a50d8c2cc8f2f68fa403390e3e1ab0afa4876a72a802bf8f9c886a3a14be4ef1a4a86acb54f57f0a738539dcd62a020d948541b6b5e7ac8f9c886ae337d2a9909c265a0242e3862f94275a08a35b704f94e649ffd4f5cc0e8c07523495bbf00e8c074a288a37fa0e8c0652bc90f48a4f94074a4dfa357b32ad8449f0a08040f1a4c96aaa9ee2806f9c2431a8080125d1a4c8728bf4a802b0a42983de2ba0c86e9c8351aa807a0ed0a4065a6e5cbfe22d9485418f0a0924afa4a5498e2a2a1aaf9cc87aa22ca8a4f1acea727a9f97dc2e94c96a77e8fab0d1a4c96abab03a93d1a4a86277abeae32e8c8862ef7bad084f948539bc5afffe909c06526c7ef8b031b525318201a5b5ec930431b5b6a808d19ca872aa2ba925f2a42d94f6bf68cb8fa4876a2c279e1ad0a44762dae8923e2d9424393a079e3cb0a4065a9a7049e2b0a44a832a85f9ab909cc96adcbe5fd4909cc96ae78fadc1d1a4c96a6b5fa274909ca96a15fe8293d1a4a96aa26b68ea4f942852fdda3d0f6f946862fc927bdfac8b242985bfde9e0d94a549c6ae92e28ea4c559bbbf9fa232ad0d94aa22ed7fd1a4eb9bdc7c9cc3afa44983a64aef484e9c644160408880b0a46449a08b875e909c2a7b62f3ba22909c886224ffd6a0d19c6b838cb543c312ad4b7b82a9e2aff2a4a86aa40808a012a54b7bba229ff8b09cc96aee96aa90
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 

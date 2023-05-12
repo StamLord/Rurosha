@@ -1,0 +1,37 @@
+1.4.0
+    -New Vertex Paint feature
+    -Minor bugfixes
+    
+1.3.2
+    -Fixed a bug that caused errors when building your project.
+    -Fixed a bug in GPU Details that came up if you wanted to edit the terrain after a fresh Details Generation.
+
+1.3.1
+    -Bugfix for a brush related issue.
+    
+1.3.0
+    -New GPU instancing support for Details. Quickly cover your terrain with grass and other details without the overhead of GameObjects
+    -New Scene View lock on feature. Focus the Scene View Camera to look at what you are editing. Great for Laptop Touchpads.
+    
+1.2.0
+    -Added support for editing brushes. Height editing is no longer limited to one point.
+    -Increased Editing Performance on big terrains a lot.
+    -Fixed a bug where the edit mode handles were not displayed when the terrain was not located at World zero position.
+
+1.1.1
+    -Fixed a bug where the 'TileTerrainHeightTexturing' was not working on tiles at the 0 Y position.
+    -Fixed a bug in 'TileTerrainHeightTexturing' where the Detail texture was not rendered correctly resulting in an uncomplete texture and missing detail objects.
+    -Terrain now automaticly updates its textures if you make changes to the TextureSet.
+    -Package Import should now work without API update in 2021 and above.
+
+1.1.0
+    -Added smooth terrain shading. You can select if you want to use Flat or Smooth shading from the new dropdown menu in the TileTerrain inspector.
+    -Added a GUI on top of the Scene view to make terrain editing easier.
+    -New GUI icons.
+    -Increased performance in height edit mode when using big terrains.
+    -Improved the height editing experience by adding an option to only draw handles to a certain distance.
+    -Handle selection is fixed. The small blue cubes are now selected correctly based on the mouse position.
+    -Improved the Scene View toolbar.
+    
+1.0.0
+    -Initial Release
