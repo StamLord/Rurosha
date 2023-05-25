@@ -50,8 +50,8 @@ public class Slicer
         positiveObject.GetComponent<MeshFilter>().mesh = positiveSideMeshData;
         negativeObject.GetComponent<MeshFilter>().mesh = negativeSideMeshData;
 
-        SetupCollidersAndRigidBodys(ref positiveObject, positiveSideMeshData, sliceable.UseGravity);
-        SetupCollidersAndRigidBodys(ref negativeObject, negativeSideMeshData, sliceable.UseGravity);
+        SetupCollidersAndRigidBodys(ref positiveObject, positiveSideMeshData, sliceable, dimensions);
+        SetupCollidersAndRigidBodys(ref negativeObject, negativeSideMeshData, sliceable, dimensions);
 
         return new GameObject[] { positiveObject, negativeObject};
     }        
@@ -92,13 +92,30 @@ public class Slicer
     /// </summary>
     /// <param name="gameObject"></param>
     /// <param name="mesh"></param>
-    private static void SetupCollidersAndRigidBodys(ref GameObject gameObject, Mesh mesh, bool useGravity)
+    private static void SetupCollidersAndRigidBodys(ref GameObject gameObject, Mesh mesh, Sliceable sliceable, Vector3 originalDimesnions)
     {                     
         MeshCollider meshCollider = gameObject.AddComponent<MeshCollider>();
         meshCollider.sharedMesh = mesh;
         meshCollider.convex = true;
 
         var rb = gameObject.AddComponent<Rigidbody>();
-        rb.useGravity = useGravity;
+        rb.useGravity = sliceable.UseGravity;
+
+        if(sliceable.Rigidbody != null)
+        {
+            // Get dimensions of mesh
+            Vector3 dimensions = new Vector3(   mesh.bounds.size.x * gameObject.transform.localScale.x, 
+                                                mesh.bounds.size.y * gameObject.transform.localScale.y,
+                                                mesh.bounds.size.z * gameObject.transform.localScale.z);
+
+            // Percentage of whole volume 
+            float percentage = (dimensions.x * dimensions.y * dimensions.z) / (originalDimesnions.x * originalDimesnions.y * originalDimesnions.z);
+
+            // Mass of piece
+            rb.mass = sliceable.Rigidbody.mass * percentage;
+
+            rb.drag = sliceable.Rigidbody.drag;
+            rb.angularDrag = sliceable.Rigidbody.angularDrag;
+        }
     }
 }

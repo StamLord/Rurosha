@@ -5,30 +5,28 @@ using UnityEngine;
 
 public class Sliceable : MonoBehaviour
 {
-    [SerializeField]
-    private bool _isSolid = true;
+    [SerializeField] private bool _isSolid = true;
 
-    [SerializeField]
-    private Material _insideMaterial;
+    [SerializeField] private Material _insideMaterial;
 
-    [SerializeField]
-    private bool _reverseWindTriangles = false;
+    [SerializeField] private bool _reverseWindTriangles = false;
 
-    [SerializeField]
-    private bool _useGravity = false;
+    [SerializeField] private bool _useGravity = false;
 
-    [SerializeField]
-    private bool _shareVertices = false;
+    [SerializeField] private bool _shareVertices = false;
 
-    [SerializeField]
-    private bool _smoothVertices = false;
+    [SerializeField] private bool _smoothVertices = false;
 
-    public Vector3 minMeshDimensions = new Vector3(.1f, .1f, .1f);
-    public MeshFilter m;
+    private Vector3 minMeshDimensions = new Vector3(.1f, .1f, .1f);
+    private MeshFilter meshFilter;
+
+    private new Rigidbody rigidbody;
+    public Rigidbody Rigidbody { get {return rigidbody;}}
 
     void Start()
     {
-        m = GetComponent<MeshFilter>();
+        meshFilter = GetComponent<MeshFilter>();
+        rigidbody = GetComponent<Rigidbody>();
     }
     
     public bool IsSolid
@@ -94,11 +92,11 @@ public class Sliceable : MonoBehaviour
     void OnDrawGizmos()
     {
         return;
-        if(m)
-            Gizmos.DrawCube(m.mesh.bounds.center + transform.position, 
-            new Vector3(m.mesh.bounds.size.x * transform.localScale.x, 
-                        m.mesh.bounds.size.y * transform.localScale.y,
-                        m.mesh.bounds.size.z * transform.localScale.z));
+        if(meshFilter)
+            Gizmos.DrawCube(meshFilter.mesh.bounds.center + transform.position, 
+            new Vector3(meshFilter.mesh.bounds.size.x * transform.localScale.x, 
+                        meshFilter.mesh.bounds.size.y * transform.localScale.y,
+                        meshFilter.mesh.bounds.size.z * transform.localScale.z));
     }
 
 }
