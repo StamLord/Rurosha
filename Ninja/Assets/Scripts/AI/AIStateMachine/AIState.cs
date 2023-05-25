@@ -29,17 +29,17 @@ public class AIState : State
     /// <returns>Returns true if found path</returns>
     protected bool MoveTo(Vector3 target)
     {
-        return aiStateMachine.CalculatePath(target);
+        return AIStateMachine.CalculatePath(target);
     }
 
     protected void MoveStop()
     {
-        aiStateMachine.ClearPath();
+        AIStateMachine.ClearPath();
     }
 
     protected Vector3 GetLastPosition()
     {
-        return aiStateMachine.GetLastPosition();
+        return AIStateMachine.GetLastPosition();
     }
     // TODO: Move look rotation handling into AIInput.cs for consistency
     protected void LookTowards(Vector3 target, float speedMult = 1f)
