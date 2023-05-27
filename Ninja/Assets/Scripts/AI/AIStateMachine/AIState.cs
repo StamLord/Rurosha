@@ -10,9 +10,10 @@ public class AIState : State
             return (aiStateMachine == null)? aiStateMachine = (AIStateMachine)_stateMachine : aiStateMachine; 
             }}
 
-    public CharacterStats Stats { get { return AIStateMachine.CharacterStats;}}
-    public StealthAgent StealthAgent { get { return AIStateMachine.StealthAgent;}}
-    public SquadAgent SquadAgent { get { return AIStateMachine.SquadAgent;}}
+    public CharacterStats Stats { get {return AIStateMachine.CharacterStats;}}
+    public StealthAgent StealthAgent { get {return AIStateMachine.StealthAgent;}}
+    public SquadAgent SquadAgent { get {return AIStateMachine.SquadAgent;}}
+    public Animator Animator { get {return AIStateMachine.Animator;}}
 
     [SerializeField] protected float turnSpeed = 1f;
     [SerializeField] protected bool debug;

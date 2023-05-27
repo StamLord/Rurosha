@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class KomaFightState : FightAIState, IHitboxResponder
 {
-    [Header ("Animator")]
-    [SerializeField] private Animator animator;
-
     [Header ("Hitbox")]
     [SerializeField] private Hitbox[] hitbox;
 
@@ -18,7 +15,7 @@ public class KomaFightState : FightAIState, IHitboxResponder
 
     [Header ("Circle")]
     [SerializeField] private float circleDuration = 5;
-    [SerializeField] private new float circleRange = 5;
+    [SerializeField] private float circleRadius = 5;
     [SerializeField] private float circleSpeed = 5;
     [SerializeField] private float currentCircleAngle = 0;
 
@@ -126,7 +123,7 @@ public class KomaFightState : FightAIState, IHitboxResponder
         Vector3 dir = enemy.transform.position + Vector3.forward; // Vector to us from enemy
 
         currentCircleAngle += Time.deltaTime * circleSpeed; // Increment angle around enemy
-        target += Quaternion.Euler(0, currentCircleAngle, 0) * Vector3.forward * circleRange; // Target moves around the player on the y axis
+        target += Quaternion.Euler(0, currentCircleAngle, 0) * Vector3.forward * circleRadius; // Target moves around the player on the y axis
         Debug.DrawLine(enemy.transform.position, target, Color.red);
 
         // Move to target
@@ -145,8 +142,8 @@ public class KomaFightState : FightAIState, IHitboxResponder
     private void AttemptMeleeAttack()
     {
         if(CanAttack() == false) return;
-        Debug.Log("Attack");
-        animator.Play("claw_attack");
+        
+        Animator?.Play("claw_attack");
         StartCoroutine(Cooldown(clawAttackCooldown));
     }
 

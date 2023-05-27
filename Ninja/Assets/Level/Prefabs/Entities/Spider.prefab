@@ -3818,8 +3818,10 @@ MonoBehaviour:
   defaultState: {fileID: 0}
   debugLogs: 0
   characterStats: {fileID: 7493063730529350522}
+  squadAgent: {fileID: 0}
   awarenessAgent: {fileID: 7493063730819967128}
   stealthAgent: {fileID: 7493063730819967135}
+  animator: {fileID: 7493063730424860407}
   aiInput: {fileID: 7493063730819967133}
   enemy: {fileID: 0}
   enemyLastSeen: {x: 0, y: 0, z: 0}
@@ -3906,12 +3908,12 @@ MonoBehaviour:
   attackCombo: 0
   attackMaxCombo: 3
   attackInterval: 3
+  awarenessCheatRange: 3
   canAttack: 0
   canAdvance: 0
   defending: 0
   navMeshAgent: {fileID: 7493063730819967129}
   rigidbody: {fileID: 7493063730819967127}
-  animator: {fileID: 7493063730424860407}
   waitChance: 20
   waitChanceAfterMovingFor: 2
   waitTime: 2

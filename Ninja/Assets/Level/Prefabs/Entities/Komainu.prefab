@@ -593,6 +593,7 @@ MonoBehaviour:
   squadAgent: {fileID: 0}
   awarenessAgent: {fileID: 8936521114964756207}
   stealthAgent: {fileID: 0}
+  animator: {fileID: 4405401759283838842}
   aiInput: {fileID: 4405401759834013710}
   enemy: {fileID: 0}
   enemyLastSeen: {x: 0, y: 0, z: 0}
@@ -618,7 +619,6 @@ MonoBehaviour:
   aiStateMachine: {fileID: 0}
   turnSpeed: 1
   debug: 0
-  animator: {fileID: 4405401759283838842}
   statuePoint: {fileID: 4405401760316160331}
   meshGlow: {fileID: 2050360040}
   karmaDetectRadius: 10
@@ -662,7 +662,6 @@ MonoBehaviour:
   canAttack: 0
   canAdvance: 0
   defending: 0
-  animator: {fileID: 4405401759283838842}
   hitbox:
   - {fileID: 1896690791}
   meleeDuration: 10
@@ -671,7 +670,7 @@ MonoBehaviour:
   minimumTimeInClawAttack: 3
   circleDuration: 10
   circleRange: 5
-  circleSpeed: 20
+  circleSpeed: 30
   currentCircleAngle: 0
   subState: 0
   subStateTime: 0

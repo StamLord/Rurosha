@@ -16,6 +16,9 @@ public class AIStateMachine : StateMachine
 
     [SerializeField] private StealthAgent stealthAgent;
     public StealthAgent StealthAgent {get{return stealthAgent;}}
+
+    [SerializeField] private Animator animator;
+    public Animator Animator {get{return animator;}}
     
     [SerializeField] private AIInput aiInput;
     

@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class KappaFightState : FightAIState, IHitboxResponder
 {
-    [Header ("Animator")]
-    [SerializeField] private Animator animator;
-
     [Header ("Hitbox")]
     [SerializeField] private Hitbox[] hitbox;
 
@@ -179,7 +176,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
 
     private void MeleeAttack()
     {
-        animator.Play("attack");
+        Animator?.Play("attack");
         StartCoroutine(Cooldown(meleeAttackCooldown));
     }
 
@@ -224,7 +221,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
         // Stop moving
         MoveStop();
 
-        animator?.Play("cast_start");
+        Animator?.Play("cast_start");
         visualCastObject?.SetActive(true);
 
         // Casting time
@@ -235,7 +232,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
             yield return null;
         }
 
-        animator?.Play("cast_end");
+        Animator?.Play("cast_end");
         visualCastObject?.SetActive(false);
 
         NewMessage("Take that!", 2f);
@@ -261,7 +258,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
         visualCastObject?.SetActive(false);
         
         // Cancel animation
-        animator?.Play("grounded");
+        Animator?.Play("grounded");
     }
 
     public void CollisionWith(Collider collider, Hitbox hitbox)

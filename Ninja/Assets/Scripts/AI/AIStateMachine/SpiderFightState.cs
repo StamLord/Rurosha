@@ -11,9 +11,6 @@ public class SpiderFightState : FightAIState, IHitboxResponder
     [Header ("Rigidbody")]
     [SerializeField] private Rigidbody rigidbody;
 
-    [Header ("Animator")]
-    [SerializeField] private Animator animator;
-
     [Header ("Wait Chance")]
     [SerializeField] private float waitChance = .2f;
     [SerializeField] private float waitChanceAfterMovingFor = 2f;
@@ -201,7 +198,7 @@ public class SpiderFightState : FightAIState, IHitboxResponder
 
     private void BiteAttack()
     {
-        animator.Play("bite_attack");
+        Animator?.Play("bite_attack");
         StartCoroutine(Cooldown(biteAttackCooldown));
     }
 

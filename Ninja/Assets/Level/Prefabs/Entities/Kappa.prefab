@@ -5460,6 +5460,7 @@ MonoBehaviour:
   squadAgent: {fileID: 287860554}
   awarenessAgent: {fileID: 8303137070419199188}
   stealthAgent: {fileID: 8474309387266052089}
+  animator: {fileID: 270369484}
   aiInput: {fileID: 2576022866849256162}
   enemy: {fileID: 0}
   enemyLastSeen: {x: 0, y: 0, z: 0}
@@ -5529,7 +5530,6 @@ MonoBehaviour:
   canAttack: 0
   canAdvance: 0
   defending: 0
-  animator: {fileID: 270369484}
   hitbox:
   - {fileID: 793627349}
   meleeSoftDamage: 7

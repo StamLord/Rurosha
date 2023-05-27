@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class KomaIdleAIState : AIState
 {
-    [SerializeField] private Animator animator;
     [SerializeField] private Transform statuePoint;
     [SerializeField] private MeshGlow meshGlow;
 
@@ -30,7 +29,7 @@ public class KomaIdleAIState : AIState
 
         if(subState == KomaState.ASLEEP)
         {
-            animator.Play("idle_asleep");
+            Animator?.Play("idle_asleep");
             SetActiveObjects(false);
         }
     }
@@ -101,7 +100,7 @@ public class KomaIdleAIState : AIState
         MoveTo(transform.position + transform.forward * 2f);
         SwitchKomaState(KomaState.AWAKE);
 
-        animator.CrossFade("idle_awake", .5f);
+        Animator?.CrossFade("idle_awake", .5f);
     }
 
     private void SwitchKomaState(KomaState state)
@@ -130,7 +129,7 @@ public class KomaIdleAIState : AIState
         SetActiveObjects(false);
 
         SwitchKomaState(KomaState.ASLEEP);
-        animator.CrossFade("idle_asleep", .5f);
+        Animator?.CrossFade("idle_asleep", .5f);
     }
 
     private void SetActiveObjects(bool state)
