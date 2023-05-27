@@ -25,6 +25,9 @@ public class KomaIdleAIState : AIState
     
     protected override void OnEnterState()
     {
+        AIStateMachine.CharacterStats.OnHitBy += Hit;
+        AIStateMachine.AwarenessAgent.OnSeeAgent += SeeTarget;
+
         if(subState == KomaState.ASLEEP)
         {
             animator.Play("idle_asleep");
@@ -57,7 +60,8 @@ public class KomaIdleAIState : AIState
 
     protected override void OnExitState()
     {
-        
+        AIStateMachine.CharacterStats.OnHitBy -= Hit;
+        AIStateMachine.AwarenessAgent.OnSeeAgent -= SeeTarget;
     }
 
     private bool IsBadKarmaInRange(float radius)
@@ -133,6 +137,50 @@ public class KomaIdleAIState : AIState
     {
         foreach(GameObject comp in disabledGameObjects)
             comp.SetActive(state);
+    }
+
+    private void Hit(StealthAgent agent)
+    {
+        // Only care if we are awake
+        if(subState != KomaState.AWAKE) return;
+
+        // If an ally we don't care
+        if(IsAlly(agent))
+            return;
+        
+        AIStateMachine.enemy = agent;
+
+        // If enemy is visible we switch to Fight
+        foreach(StealthAgent a in AIStateMachine.AwarenessAgent.VisibleAgents)
+        {
+            if(agent == a)
+            {
+                SwitchState(AIStateMachine.StateName.FIGHT);
+                return;
+            }
+        }
+
+        // Otherwise, switch to SearchAIState
+        SwitchState(AIStateMachine.StateName.SEARCH);
+    }
+
+    private void SeeTarget(StealthAgent agent)
+    {
+        // Only care if we are awake
+        if(subState != KomaState.AWAKE) return;
+
+        // If not an enemy, do nothing
+        if(IsEnemy(agent) == false)
+            return;
+
+        AIStateMachine.enemy = agent;
+        SwitchState(AIStateMachine.StateName.FIGHT);
+    }
+
+    public new bool IsEnemy(StealthAgent agent)
+    {
+        // Check Karama
+        return true;
     }
 
     private void OnDrawGizmos() 
