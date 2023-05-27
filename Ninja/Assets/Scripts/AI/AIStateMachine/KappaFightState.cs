@@ -51,6 +51,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
     protected override void OnEnterState()
     {
         enemy = (AIStateMachine.enemy)? AIStateMachine.enemy : null;
+        
         AIStateMachine.AwarenessAgent.OnLoseAgent += LoseAgent;
         SquadAgent.OnGetMessage += GetMessage;
 
@@ -319,6 +320,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
 
     protected override void OnExitState()
     {
+        AIStateMachine.AwarenessAgent.OnLoseAgent -= LoseAgent;
         SquadAgent.OnGetMessage -= GetMessage;
 
         // Cancel casting before switching states

@@ -48,6 +48,7 @@ public class FleeAIState : AIState
     {
         AIStateMachine.StopHoldButton("run");
         AIStateMachine.AwarenessAgent.OnLoseAgent -= LoseAgent;
+        AIStateMachine.AwarenessAgent.OnSeeAgent -= SeeAgent;
     }
 
     protected virtual void LoseAgent(StealthAgent agent)
