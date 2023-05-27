@@ -3919,10 +3919,12 @@ MonoBehaviour:
   waitTime: 2
   biteAttackCooldown: 3
   biteAttackRange: 3
-  biteSoftDamage: 20
-  biteHardDamage: 5
-  biteStatuses:
-  - {fileID: 11400000, guid: af21573141d85db4d8ccfc57eb7815c4, type: 2}
+  biteAttack:
+    softDamage: 20
+    hardDamage: 5
+    statuses:
+    - {fileID: 11400000, guid: af21573141d85db4d8ccfc57eb7815c4, type: 2}
+    damageType: 2
   jumpMinDistance: 4
   jumpMaxDistance: 12
   jumpHeight: 2

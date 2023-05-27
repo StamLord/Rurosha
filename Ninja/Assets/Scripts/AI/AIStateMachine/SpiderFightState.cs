@@ -19,13 +19,7 @@ public class SpiderFightState : FightAIState, IHitboxResponder
     [Header ("Bite Attack")]
     [SerializeField] private float biteAttackCooldown = 2f;
     [SerializeField] private float biteAttackRange = 3f;
-
-    [Header ("Bite Damage")]
-    [SerializeField] private int biteSoftDamage = 20;
-    [SerializeField] private int biteHardDamage = 5;
-
-    [Header ("Bite Status Afflictions")]
-    [SerializeField] private Status[] biteStatuses;
+    [SerializeField] private AttackInfo biteAttack = new AttackInfo(20, 5);
 
     [Header ("Jump")]
     [SerializeField] private float jumpMinDistance = 4f;
@@ -67,7 +61,7 @@ public class SpiderFightState : FightAIState, IHitboxResponder
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
 
         if(hurtbox)
-            hurtbox.Hit(AIStateMachine.StealthAgent, biteSoftDamage, biteHardDamage, Vector3.up, DamageType.Blunt, biteStatuses);
+            hurtbox.Hit(AIStateMachine.StealthAgent, biteAttack.softDamage, biteAttack.hardDamage, Vector3.up, DamageType.Blunt, biteAttack.statuses);
     }
 
     public void GuardedBy(Collider collider, Hitbox hitbox)

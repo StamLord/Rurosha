@@ -1,3 +1,4 @@
+[System.Serializable]
 public struct AttackInfo
 {
     public int softDamage;

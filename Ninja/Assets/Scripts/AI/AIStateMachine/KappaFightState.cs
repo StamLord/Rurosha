@@ -7,9 +7,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
     [SerializeField] private Hitbox[] hitbox;
 
     [Header ("Melee")]
-    [SerializeField] private int meleeSoftDamage = 7;
-    [SerializeField] private int meleeHardDamage = 5;
-    [SerializeField] private Status[] meleeStatuses;
+    [SerializeField] private AttackInfo meleeAttack = new AttackInfo(7, 5);
     [SerializeField] private float meleeAttackRange = 2;
     [SerializeField] private float meleeAttackCooldown = 1;
     [SerializeField] private float minimumTimeInMelee = 3;
@@ -266,7 +264,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
 
         if(hurtbox)
-            hurtbox.Hit(AIStateMachine.StealthAgent, meleeSoftDamage, meleeHardDamage, Vector3.up, DamageType.Blunt, meleeStatuses);
+            hurtbox.Hit(AIStateMachine.StealthAgent, meleeAttack.softDamage, meleeAttack.hardDamage, Vector3.up, DamageType.Blunt, meleeAttack.statuses);
     }
 
     public void GetMessage(string message)
