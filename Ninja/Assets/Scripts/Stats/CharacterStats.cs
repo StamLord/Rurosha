@@ -124,6 +124,11 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         Karma += stealKarma;
     }
 
+    public void AddKarma(int karma)
+    {
+        Karma += karma;
+    }
+
     public delegate void OnKarmaUpdateDelegate(int amount);
     public event OnKarmaUpdateDelegate OnKarmaUpdate;
 

@@ -295,6 +295,12 @@ public class Interactor : MonoBehaviour
         _characterStats.AddMoney(amount);
     }
 
+    /// <summary>
+    /// Checks if there is enough money and if so, depletes it. If greedy passed as true, will deplete the exiting money even if it's less than the amount.
+    /// </summary>
+    /// <param name="amount">The amount of money to deplete.</param>
+    /// <param name="greedy">If set to true, depletes the most amount of money even if it's not enough.</param>
+    /// <returns>True if there is enough money.</returns>
     public bool DepleteMoney(int amount, bool greedy = false)
     {
         return _characterStats.DepleteMoney(amount, greedy);
@@ -303,6 +309,11 @@ public class Interactor : MonoBehaviour
     public void CommitSteal()
     {
         _characterStats.CommitSteal();
+    }
+
+    public void AddKarma(int karma)
+    {
+        _characterStats.AddKarma(karma);
     }
 
     private void OnDrawGizmos()
