@@ -97,8 +97,8 @@ public class AIState : State
     {
         if(agent == null) return 0;
         
-        string targetFaction = agent.transform.root.GetComponent<CharacterStats>().Faction;
-        return AIStateMachine.CharacterStats.GetRelationship(targetFaction);
+        string targetFaction = Stats.Faction;
+        return Stats.GetRelationship(targetFaction);
     }
 
     protected bool IsEnemy(StealthAgent agent)
