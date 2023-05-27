@@ -110,4 +110,9 @@ public class AIState : State
     {
         return GetRelationship(agent) >= .5f; // 50% and up is an ally
     }
+
+    protected void NewMessage(string message, float duration = 2f)
+    {
+        WorldDialogueManager.instance.NewMessage(message, duration, transform);
+    }
 }

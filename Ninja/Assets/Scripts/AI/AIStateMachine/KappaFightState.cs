@@ -51,13 +51,13 @@ public class KappaFightState : FightAIState, IHitboxResponder
     protected override void OnEnterState()
     {
         enemy = (AIStateMachine.enemy)? AIStateMachine.enemy : null;
-        
+
         AIStateMachine.AwarenessAgent.OnLoseAgent += LoseAgent;
         SquadAgent.OnGetMessage += GetMessage;
 
         SwitchState(FightState.KEEP_DISTANCE);
 
-        WorldDialogueManager.instance.NewMessage("Enemy!! Waah~", 2f, transform);
+        NewMessage("Enemy!! Waah~", 2f);
     }
 
     public override void OnStateUpdate()
@@ -238,7 +238,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
         animator?.Play("cast_end");
         visualCastObject?.SetActive(false);
 
-        WorldDialogueManager.instance.NewMessage("Take that!", 2f, transform);
+        NewMessage("Take that!", 2f);
 
         // Creates projectile
         CastProjectile();
@@ -306,7 +306,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
         if(currentState == FightState.KEEP_DISTANCE)
             return;
 
-        WorldDialogueManager.instance.NewMessage("Where did he go?!", 2f, transform);
+        NewMessage("Where did he go?!", 2f);
 
         // Start searching
         AIStateMachine.enemyLastSeen = agent.transform.position; // Last position
