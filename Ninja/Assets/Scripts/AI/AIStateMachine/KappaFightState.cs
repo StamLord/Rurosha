@@ -267,7 +267,7 @@ public class KappaFightState : FightAIState, IHitboxResponder
             hurtbox.Hit(AIStateMachine.StealthAgent, meleeAttack.softDamage, meleeAttack.hardDamage, Vector3.up, DamageType.Blunt, meleeAttack.statuses);
     }
 
-    public void GetMessage(string message)
+    public void GetMessage(string message, SquadAgent sender)
     {
         Debug.Log(gameObject.name + " Got message: " + message);
     }
