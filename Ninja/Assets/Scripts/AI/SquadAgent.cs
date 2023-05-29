@@ -18,6 +18,21 @@ public class Squad
         this.id = id;
     }
 
+    public int Count { get {return squadMembers.Count;}}
+
+    public Vector3[] GetPositions()
+    {
+        Vector3[] positions = new Vector3[Count];
+
+        for (var i = 0; i < Count; i++)
+        {
+            Transform t = squadMembers[i].GetTransform();
+            positions[i] = (t != null) ? t.position : new Vector3(-9999, -9999, -9999);
+        }
+
+        return positions;
+    }
+    
     public void AddMember(SquadAgent member)
     {
         if(squadMembers.Contains(member)) return;
@@ -29,12 +44,12 @@ public class Squad
         squadMembers.Remove(member);
     }
 
-    public void SendMessage(string message, SquadAgent sender = null)
+    public void SendMessage(string message, SquadAgent sender)
     {
         foreach(SquadAgent agent in squadMembers)
         {
             if(sender == agent) continue;
-            agent.GetMessage(message);
+            agent.GetMessage(message, sender);
         }
     }
 }
@@ -52,7 +67,7 @@ public class SquadAgent : MonoBehaviour
     public int ID { get { return id; }}
     public Squad Squad { get { return squad; }}
     
-    public delegate void GetMessageDelegate(string message);
+    public delegate void GetMessageDelegate(string message, SquadAgent sender);
     public event GetMessageDelegate OnGetMessage;
 
     private void Start()
@@ -156,10 +171,28 @@ public class SquadAgent : MonoBehaviour
     /// This method is called by the Squad object on all it's members when a message is sent to the squad.
     /// </summary>
     /// <param name="message"></param>
-    public void GetMessage(string message)
+    public void GetMessage(string message, SquadAgent sender)
     {
         if(OnGetMessage != null)
-            OnGetMessage(message);
+            OnGetMessage(message, sender);
+    }
+
+    /// <summary>
+    /// Returns the "Alive" Transform that moves in world space
+    /// </summary>
+    public Transform GetTransform()
+    {
+        // Expected hierarchy is:
+        // - Parent: SquadAgent
+        // - |__ Alive: Rigidbody, AI scripts.. <-- The object we want to aim at
+        // - |__ Dead: Ragdoll
+
+        return transform.GetChild(0);
+    }
+
+    public Vector3[] GetPositions()
+    {
+        return squad.GetPositions();
     }
 
     private void OnDrawGizmos() 
