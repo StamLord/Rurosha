@@ -42,7 +42,6 @@ public class Squad
 public class SquadAgent : MonoBehaviour
 {
     [Min(0)][SerializeField] private int id;
-    [SerializeField] private CharacterStats self;
 
     [SerializeField] private bool autoJoinSquad;
     [SerializeField] private float squadJoinRange = 10;
