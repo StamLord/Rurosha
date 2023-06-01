@@ -26,6 +26,7 @@ public class KomaIdleAIState : AIState
     {
         AIStateMachine.CharacterStats.OnHitBy += Hit;
         AIStateMachine.AwarenessAgent.OnSeeAgent += SeeTarget;
+        AIStateMachine.SquadAgent.OnGetMessage += GetMessage;
 
         if(subState == KomaState.ASLEEP)
         {
@@ -63,6 +64,16 @@ public class KomaIdleAIState : AIState
         AIStateMachine.AwarenessAgent.OnSeeAgent -= SeeTarget;
     }
 
+    private void GetMessage(string message, SquadAgent sender)
+    {
+        switch(message)
+        {
+            case "Awaken": // This message is sent by squad memeber that also awakens
+                Awaken();
+                break;
+        }
+    }
+
     private bool IsBadKarmaInRange(float radius)
     {
         Collider[] cols = Physics.OverlapSphere(transform.position, radius);
@@ -79,7 +90,10 @@ public class KomaIdleAIState : AIState
 
     private void Awaken()
     {
+        if(subState == KomaState.AWAKE || subState == KomaState.AWAKENING) return;
+        
         StartCoroutine("Awakening");
+        SquadAgent.SendMessage("Awaken");
     }
 
     private IEnumerator Awakening()
