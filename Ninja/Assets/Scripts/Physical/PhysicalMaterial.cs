@@ -13,7 +13,7 @@ public class PhysicalMaterial : MonoBehaviour
     [SerializeField] private GameObject bigPiercePrefab;
 
     [SerializeField] private int bigDamageThreshold = 10;
-    [SerializeField] private float vfxLifeTime;
+    [SerializeField] private float vfxLifeTime = 10;
 
     private static Dictionary<GameObject, Pool> pools = new Dictionary<GameObject, Pool>();
     
@@ -81,7 +81,7 @@ public class PhysicalMaterial : MonoBehaviour
             go.transform.rotation = rotation;
             go.transform.parent = transform;
 
-            StartCoroutine(ReturnVfx(go, pools[vfx], 10f));
+            StartCoroutine(ReturnVfx(go, pools[vfx], vfxLifeTime));
         }
     }
 
