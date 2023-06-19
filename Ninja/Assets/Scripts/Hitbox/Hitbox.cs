@@ -70,9 +70,12 @@ public class Hitbox : MonoBehaviour
         return isActive;
     }
 
-    public void SetResponder(IHitboxResponder responder)
+    public void SetResponder(IHitboxResponder responder, Transform ignoreTransform = null)
     {
         _responder = responder;
+        
+        if(ignoreTransform != null)
+            SetIgnoreTransform(ignoreTransform);
     }
 
     public void SetIgnoreTransform(Transform transform)
