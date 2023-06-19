@@ -27,7 +27,7 @@ public class LinkedTransform : MonoBehaviour
 
         Vector3 targetPosition = parent.position - (parent.rotation * offset);
         Debug.DrawLine(parent.position, targetPosition);
-        transform.position = Vector3.Lerp(transform.position, targetPosition, newSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, posSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Slerp(transform.rotation, parent.rotation, rotSpeed * Time.deltaTime); 
     }
 }
