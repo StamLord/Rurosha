@@ -84,11 +84,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
 
     private void Start()
     {
-        startTime = Time.time;
-        startPos = transform.position;
-        startSpeed = transform.forward * speed;
-
-        lastPosition = transform.position;
+        Restart();
 
         for(int i=0; i < hitbox.Length; i++)
         {
@@ -96,6 +92,14 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             hitbox[i].StartColliding();
         }
 
+    }
+
+    public void Restart()
+    {
+        startTime = Time.time;
+        startPos = transform.position;
+        startSpeed = transform.forward * speed;
+        lastPosition = transform.position;
     }
 
     public void SetIgnoreTransform(Transform transform)
