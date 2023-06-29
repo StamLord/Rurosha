@@ -28,6 +28,19 @@ public class AIInput : MonoBehaviour
     private bool isOverrideMovement;
     private Vector3 overrideVector;
 
+    public bool SamplePosition(Vector3 position, out Vector3 sampledPosition)
+    {
+        NavMeshHit hit;
+        bool onNavMesh = NavMesh.SamplePosition(position, out hit, 2f, 1);
+
+        if(onNavMesh)
+            sampledPosition = hit.position;
+        else
+            sampledPosition = position;
+
+        return onNavMesh;
+    }
+    
     public Vector3 GetLastPosition()
     {
         if(path == null || path.corners.Length == 0)
@@ -118,7 +131,10 @@ public class AIInput : MonoBehaviour
         if(isOverrideMovement)
         {
             if(useNavMeshAgentMovement) 
+            {
                 navMeshAgent.velocity = overrideVector;
+                Debug.Log("NavMesh Velocity: " + navMeshAgent.velocity);
+            }
             
             inputState.AxisInput = overrideVector;
             return;

@@ -23,6 +23,11 @@ public class AIState : State
         AIStateMachine.SwitchState(state);
     }
 
+    protected bool SamplePosition(Vector3 position, out Vector3 sampledPosition)
+    {
+        return AIStateMachine.SamplePosition(position, out sampledPosition);
+    }
+
     /// <summary>
     /// Finds a path on NavMesh to target
     /// </summary>

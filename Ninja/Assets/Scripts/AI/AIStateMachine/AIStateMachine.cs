@@ -85,6 +85,11 @@ public class AIStateMachine : StateMachine
         }
     }
 
+    public bool SamplePosition(Vector3 position, out Vector3 sampledPosition)
+    {
+        return aiInput.SamplePosition(position, out sampledPosition);
+    }
+
     public bool CalculatePath(Vector3 target)
     {
         return aiInput.CalculatePath(target);
