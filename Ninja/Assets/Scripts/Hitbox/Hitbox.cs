@@ -86,7 +86,7 @@ public class Hitbox : MonoBehaviour
     private void Update()
     {
         if(lastActiveState != isActive)
-        {    
+        {
             if(_responder != null) _responder.UpdateColliderState(isActive);
             if(isActive == false)
                 collided.Clear();
@@ -94,9 +94,6 @@ public class Hitbox : MonoBehaviour
 
         if(isActive)
         {
-            Vector3 centerOffset = transform.position + transform.TransformVector(offset);
-            Vector3 sizeScaled = new Vector3(transform.lossyScale.x * size.x, transform.lossyScale.y * size.y, transform.lossyScale.z * size.z);
-
             // Check if hitbox hits a perfect guard collider
             Collider[] perfectGuardColliders = GetColliders(perfectGuardMask);
 
@@ -106,6 +103,7 @@ public class Hitbox : MonoBehaviour
                 _responder?.PerfectGuardedBy(perfectGuardColliders[0], this);
                 StopColliding();
                 collided.Clear();
+                lastActiveState = isActive;
                 return;
             }
 
@@ -116,6 +114,7 @@ public class Hitbox : MonoBehaviour
             if(guardColliders.Length > 0)
             {
                 _responder?.GuardedBy(guardColliders[0], this);
+                lastActiveState = isActive;
                 return;
             }
             
@@ -129,19 +128,27 @@ public class Hitbox : MonoBehaviour
                     continue;
                 
                 // Check if we didn't already collide with it to avoid multiple detections
-                if(collided.Contains(col) == false)
+                if(collided.Contains(col))
+                    continue;
+
+                // If we should not hit more than one hurtbox per target, check all collided so far
+                bool alreadyHit = false;
+
+                if(hitMultipleHurtbox == false)
                 {
-                    // If we should not hit more than one hurtbox per target, check all collided so far
-                    if(hitMultipleHurtbox == false)
+                    foreach(Collider c in collided)
                     {
-                        foreach(Collider c in collided)
+                        if(c.transform.root == col.transform.root )
                         {
-                            if(c.transform.root == col.transform.root )
-                                return;
+                            alreadyHit = true;
+                            break;
                         }
                     }
+                }
 
-                    // Perform collision
+                // Perform collision
+                if(alreadyHit == false)
+                {
                     _responder?.CollisionWith(col, this);
                     collided.Add(col);
                 }
@@ -158,6 +165,7 @@ public class Hitbox : MonoBehaviour
         
         // Calculate Velocity
         velocity = transform.position + offset - lastPosition;
+
         // Track position for next frame velocity calculations
         lastPosition = transform.position + offset;
     }
