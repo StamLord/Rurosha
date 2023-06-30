@@ -46,6 +46,12 @@ public class Hurtbox : MonoBehaviour
         return hit;
     }
 
+
+    public bool Hit(StealthAgent agent, AttackInfo attackInfo, Vector3 hitUp)
+    {
+        return Hit(agent, attackInfo.softDamage, attackInfo.hardDamage, hitUp, attackInfo.damageType, attackInfo.statuses);
+    }
+
     public void AddResponder(IHurtboxResponder responder)
     {
         if(responders.Contains(responder) == false)
