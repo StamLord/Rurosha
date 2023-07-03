@@ -41,7 +41,7 @@ public class DamagePopupManager : MonoBehaviour
 
         popup.gameObject.SetActive(true);
         popup.transform.position = position;
-        popup.Display(softDamage);
+        popup.Display(-softDamage);
 
         StartCoroutine(AnimatePopup(popup));
     }
