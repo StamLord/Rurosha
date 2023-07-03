@@ -906,6 +906,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             OnHit(softDamage, hardDamage);
         
         Debug.Log(gameObject.name + " was hit for " + softDamage + " / " + hardDamage + " " + damageType + " damage");
+
+        if(aliveVisual)
+            DamagePopupManager.instance.Damage(softDamage, hardDamage, aliveVisual.transform.position + Vector3.up);
+        
         SubHealth(softDamage);
         SubPotentialHealth(hardDamage);
 

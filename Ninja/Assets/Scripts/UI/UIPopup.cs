@@ -23,7 +23,7 @@ public class UIPopup : MonoBehaviour
     }
 
     /// <summary>
-    /// Override to subscribe Popup(int amount) to different events
+    /// Override to subscribe StartPopup(int amount) to different events
     /// </summary>
     protected virtual void Initialize()
     {
