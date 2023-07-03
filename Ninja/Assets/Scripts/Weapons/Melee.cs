@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +6,15 @@ public class Melee : WeaponObject, IHitboxResponder
     [Header("Hitboxes")]
     [SerializeField] private Hitbox[] hitboxes;
 
-    [Header("Attack Settings")]
-    [SerializeField] private int softDamage;
-    [SerializeField] private int hardDamage;
+    [Header("Damage Settings")]
+    [SerializeField] AttributeDependant<int> softDamage = new AttributeDependant<int>(
+        AttributeType.STRENGTH, 
+        new int[] {8, 10, 12, 14, 18, 22, 26, 32, 38, 44});
+
+    [SerializeField] AttributeDependant<int> hardDamage = new AttributeDependant<int>(
+        AttributeType.STRENGTH, 
+        new int[] {4, 5, 6, 7, 9, 11, 13, 16, 19, 22});
+
 
     [SerializeField] private float leftAttackStaminaCost;
     [SerializeField] private float rightAttackStaminaCost;
@@ -169,7 +174,7 @@ public class Melee : WeaponObject, IHitboxResponder
         
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
-        if(hurtbox) hurtbox.Hit(agent, softDamage, hardDamage, Vector3.up, DamageType.Blunt);
+        if(hurtbox) hurtbox.Hit(agent, softDamage.GetValue(charStats), hardDamage.GetValue(charStats), Vector3.up, DamageType.Blunt);
 
         //Physics
         Rigidbody rb = collider.GetComponent<Rigidbody>();
