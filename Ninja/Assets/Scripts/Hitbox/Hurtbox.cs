@@ -24,20 +24,22 @@ public class Hurtbox : MonoBehaviour
     }
 
     // Called by weapon scripts after
-    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, DamageType damageType = DamageType.Blunt, Status[] statuses = null)
+    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, Vector3 force, DamageType damageType = DamageType.Blunt, Status[] statuses = null)
     {
+        bool hit = false;
+        
         // Send hit data to all responders and see if atleast 1 returns true
-        bool hit = (responders.Count > 0)? false : true;
         foreach(IHurtboxResponder r in responders)
-            if(r.GetHit(agent, softDamage, hardDamage, hitUp, damageType, statuses))
+            if(r.GetHit(agent, softDamage, hardDamage, hitUp, force, damageType, statuses))
                 hit = true;
+        
 
-        if(hit)
+        if(hit || responders.Count == 0) // Either a succesfull hit on one of the responders or if we have no responders (so no one can guard)
         {
             // Hit Effects
             if(physicalMaterial)
                 physicalMaterial.CollideEffect(transform.position, hardDamage, hitUp, damageType);
-        
+
             // Change hurtbox's material color if hit for testing
             if(debug && material)
                 StartCoroutine(ColorChange(colorFadeStartDuration, colorFadeEndDuration));
@@ -47,9 +49,9 @@ public class Hurtbox : MonoBehaviour
     }
 
 
-    public bool Hit(StealthAgent agent, AttackInfo attackInfo, Vector3 hitUp)
+    public bool Hit(StealthAgent agent, AttackInfo attackInfo, Vector3 hitUp, Vector3 force)
     {
-        return Hit(agent, attackInfo.softDamage, attackInfo.hardDamage, hitUp, attackInfo.damageType, attackInfo.statuses);
+        return Hit(agent, attackInfo.softDamage, attackInfo.hardDamage, hitUp, force, attackInfo.damageType, attackInfo.statuses);
     }
 
     public void AddResponder(IHurtboxResponder responder)

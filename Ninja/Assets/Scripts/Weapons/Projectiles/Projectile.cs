@@ -235,7 +235,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             // Avoid triggering multiple hurtboxes with the same parent GameObject
             if(objectsCollided.Contains(hurtbox.transform.root.gameObject) == false)
             {
-                hurtbox.Hit(stealthAgent, softDamage, hardDamage, Vector3.up, DamageType.Pierce);
+                hurtbox.Hit(stealthAgent, softDamage, hardDamage, Vector3.up, transform.forward * pushForce, DamageType.Pierce);
                 objectsCollided.Add(hurtbox.transform.root.gameObject);
             }        
         }

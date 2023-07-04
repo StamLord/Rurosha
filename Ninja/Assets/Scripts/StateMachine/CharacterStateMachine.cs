@@ -26,6 +26,7 @@ public class CharacterStateMachine : StateMachine
     [SerializeField] private State sit;
     [SerializeField] private State grapple;
     [SerializeField] private State slide;
+    [SerializeField] private State thrown;
 
     [Space(20f)]
 
@@ -47,7 +48,8 @@ public class CharacterStateMachine : StateMachine
         ROLL,
         SIT,
         GRAPPLE,
-        SLIDE
+        SLIDE,
+        THROWN
     };
 
     public void SwitchState(StateName state)
@@ -90,6 +92,9 @@ public class CharacterStateMachine : StateMachine
             case StateName.SLIDE:
                 SwitchState(slide);
                 break;
+            case StateName.THROWN:
+                SwitchState(thrown);
+                break;
         }
     }
     
@@ -112,7 +117,22 @@ public class CharacterStateMachine : StateMachine
                     return "Parameter should be 1 or 0";
                 }));
         
+        // Register to throw events. Originates in GetHit(..., Force, ...)
+        characterStats.OnForce += ThrownState;
+
         SwitchState(defaultState);
+    }
+
+    [Header("Throw Force")]
+    [SerializeField] private Vector3 throwForce;
+
+    public Vector3 ThrowForce { get {return throwForce;}}
+    private void ThrownState(Vector3 force)
+    {
+        if(force.magnitude == 0) return;
+        
+        throwForce = force;
+        SwitchState(StateName.THROWN);
     }
 
     public void SetStepSoundAgent(bool active)
@@ -175,4 +195,6 @@ public class CharacterStateMachine : StateMachine
         Vector3 screenPos = cam.WorldToScreenPoint(transform.position);
         GUI.Box(new Rect(screenPos.x, screenPos.y, 100, 50), CurrentState);
     }
+
+    
 }

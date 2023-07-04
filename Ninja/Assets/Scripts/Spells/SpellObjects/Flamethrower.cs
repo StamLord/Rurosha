@@ -48,7 +48,7 @@ public class Flamethrower : SpellObject, IHitboxResponder
         
         Hurtbox hurt = collider.GetComponent<Hurtbox>();
         if(hurt)
-            hurt.Hit(manager.Agent, Mathf.CeilToInt(softDPS * Time.deltaTime), Mathf.CeilToInt(hardDPS * Time.deltaTime), Vector3.up, DamageType.Blunt);
+            hurt.Hit(manager.Agent, Mathf.CeilToInt(softDPS * Time.deltaTime), Mathf.CeilToInt(hardDPS * Time.deltaTime), Vector3.up, Vector3.zero, DamageType.Blunt);
     }
 
     public override void Stop()

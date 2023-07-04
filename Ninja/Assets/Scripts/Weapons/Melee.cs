@@ -174,7 +174,7 @@ public class Melee : WeaponObject, IHitboxResponder
         
         //Hurtbox
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
-        if(hurtbox) hurtbox.Hit(agent, softDamage.GetValue(charStats), hardDamage.GetValue(charStats), Vector3.up, DamageType.Blunt);
+        if(hurtbox) hurtbox.Hit(agent, softDamage.GetValue(charStats), hardDamage.GetValue(charStats), Vector3.up, hitbox.Velocity, DamageType.Blunt);
 
         //Physics
         Rigidbody rb = collider.GetComponent<Rigidbody>();

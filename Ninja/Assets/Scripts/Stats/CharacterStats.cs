@@ -466,6 +466,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     public delegate void HitDelegate(int softDamage, int hardDamage);
     public event HitDelegate OnHit;
 
+    public delegate void ForceDelegate(Vector3 force);
+    public event ForceDelegate OnForce;
+
     [SerializeField] private ChakraManager chakraManager;
 
     private void Awake() 
@@ -896,7 +899,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
-    public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, DamageType damageType, Status[] statuses)
+    public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, Vector3 force, DamageType damageType, Status[] statuses)
     {
         // Send hit events - Can be listened to by AI, AnimationManager, etc.
         if(OnHitBy != null)
@@ -904,6 +907,9 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         
         if(OnHit != null)
             OnHit(softDamage, hardDamage);
+        
+        if(OnForce != null)
+            OnForce(force);
         
         Debug.Log(gameObject.name + " was hit for " + softDamage + " / " + hardDamage + " " + damageType + " damage");
 

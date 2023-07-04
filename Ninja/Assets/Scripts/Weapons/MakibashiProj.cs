@@ -43,11 +43,11 @@ public class MakibashiProj : MonoBehaviour, IHitboxResponder
             {
                 // Register hit if rigidbody moves fast enough
                 if(rb.velocity.magnitude > minVelocityHurt)
-                    hurtbox.Hit(null, softDamage, hardDamage, Vector3.up, damageType);
+                    hurtbox.Hit(null, softDamage, hardDamage, Vector3.up, Vector3.zero, damageType);
             }
             // Fallback if no rigidbody found
             else
-                hurtbox.Hit(null, softDamage, hardDamage, Vector3.up, damageType);
+                hurtbox.Hit(null, softDamage, hardDamage, Vector3.up, Vector3.zero, damageType);
         }
     }
 
