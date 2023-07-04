@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 589420141}
   - component: {fileID: 589420142}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: Legs (Stand)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5761,7 +5761,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1412914319}
   - component: {fileID: 1412914320}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: Legs (Crouch)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16415,6 +16415,7 @@ GameObject:
   - component: {fileID: 2279680380539516123}
   - component: {fileID: 59200972}
   - component: {fileID: 59200985}
+  - component: {fileID: 4911225446326415933}
   m_Layer: 9
   m_Name: Alive
   m_TagString: Untagged
@@ -16822,7 +16823,9 @@ MonoBehaviour:
   sit: {fileID: 59200975}
   grapple: {fileID: 59200970}
   slide: {fileID: 2279680380539516123}
+  thrown: {fileID: 4911225446326415933}
   stepSoundAgent: {fileID: 59200967}
+  throwForce: {x: 0, y: 0, z: 0}
   stealthAgent: {fileID: 59200987}
   groundSensor: {fileID: 1031901065}
   ceilSensor: {fileID: 478293799}
@@ -17325,6 +17328,29 @@ MonoBehaviour:
   softDamage: 5
   hardDamage: 10
   damageType: 0
+--- !u!114 &4911225446326415933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966905278435006557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 352241d89177b544ba9fb76ce10e8ccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  isActive: 0
+  characterStateMachine: {fileID: 0}
+  gravityOn: 1
+  gravity: 20
+  stateDuration: 0.5
+  inputVector: {x: 0, y: 0, z: 0}
+  targetDirection: {x: 0, y: 0, z: 0}
+  targetVelocity: {x: 0, y: 0, z: 0}
+  debugView: 0
+  rigidbody: {fileID: 0}
 --- !u!1 &3984914144120669231
 GameObject:
   m_ObjectHideFlags: 0
@@ -18227,7 +18253,7 @@ MonoBehaviour:
     _modified: 0
     _modifiedDirty: 0
   statusManager: {fileID: 8338262042225387583}
-  karma: 0
+  karma: -45
   stealKarma: -5
   skillTreeManager: {fileID: 0}
   skillPointsPerLevel: 1
@@ -24937,39 +24963,39 @@ PrefabInstance:
       objectReference: {fileID: 1323493131}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].x
-      value: 25.800001
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].y
-      value: 2.9
+      value: 2.65
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: 0.99999875
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 25.800001
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 1.65
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: 0.99999875
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].x
-      value: 25.800001
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].y
-      value: 0.39999998
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 799175301, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: m_Positions.Array.data[2].z
-      value: 0.99999875
+      value: 45.8
       objectReference: {fileID: 0}
     - target: {fileID: 1490965675, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: camera
@@ -25023,6 +25049,11 @@ PrefabInstance:
       propertyPath: _scroll
       value: 
       objectReference: {fileID: 923035630}
+    - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 2138504024}
     - target: {fileID: 1278044654527455676, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: _rigidbody
@@ -25846,6 +25877,16 @@ PrefabInstance:
       propertyPath: equipmentManager
       value: 
       objectReference: {fileID: 2529752701175077094}
+    - target: {fileID: 8206658475404135320, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: hitMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8206658475404135320, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: hitMultipleHurtbox
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8206658475898245645, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: camera
@@ -25884,7 +25925,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3156
+      value: 3225
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -25894,7 +25935,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3177
+      value: 3243
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -25910,6 +25951,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8206658476890964085, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: hitMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8206658476890964085, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
+      propertyPath: hitMultipleHurtbox
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8434980863541445958, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
