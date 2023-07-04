@@ -4556,8 +4556,12 @@ MonoBehaviour:
   hitboxes:
   - {fileID: 8206658476890964085}
   - {fileID: 8206658475404135320}
-  softDamage: 10
-  hardDamage: 0
+  softDamage:
+    attributeType: 0
+    values: 080000000a0000000c0000000e00000012000000160000001a00000020000000260000002c000000
+  hardDamage:
+    attributeType: 0
+    values: 04000000050000000600000007000000090000000b0000000d000000100000001300000016000000
   leftAttackStaminaCost: 0
   rightAttackStaminaCost: 0
   strengthExpGain: 0.02
