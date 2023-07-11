@@ -71,6 +71,9 @@ public class KomaIdleAIState : AIState
             case "Awaken": // This message is sent by squad memeber that also awakens
                 Awaken();
                 break;
+            case "Fight": // This message is sent by squad memeber that enters fight state
+                SwitchState(AIStateMachine.StateName.FIGHT);
+                break;
         }
     }
 
@@ -188,6 +191,7 @@ public class KomaIdleAIState : AIState
 
         AIStateMachine.enemy = agent;
         SwitchState(AIStateMachine.StateName.FIGHT);
+        SquadAgent.SendMessage("Fight");
     }
 
     public new bool IsEnemy(StealthAgent agent)
