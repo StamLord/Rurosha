@@ -34,11 +34,8 @@ public class Kick : MonoBehaviour, IHitboxResponder
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
         if(hurtbox)
         {
-            hurtbox.Hit(agent, softDamage, hardDamage, Vector3.up, damageType);
-
-            // Push enemies
-            if(hurtbox.Rigidbody)
-                hurtbox.Rigidbody.AddForce(transform.forward * enemyKickForce + Vector3.up * kickUpwardsModifier, ForceMode.Impulse);
+            Vector3 force = transform.forward * kickForce + Vector3.up * kickUpwardsModifier;
+            hurtbox.Hit(agent, softDamage, hardDamage, Vector3.up, force, damageType);
         }
 
         // Rigidbody
