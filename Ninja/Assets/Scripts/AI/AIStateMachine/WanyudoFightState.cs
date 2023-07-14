@@ -293,7 +293,7 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         AIStateMachine.enemyLastDir.y = 0; // Flatten direction to discard jumping / falling vectors
 
         // Switch to SearchAIState
-        AIStateMachine.SwitchState(2);
+        AIStateMachine.SwitchState(AIStateMachine.StateName.SEARCH);
     }
 
     public void CollisionWith(Collider collider, Hitbox hitbox)
