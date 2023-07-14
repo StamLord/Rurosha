@@ -8,7 +8,7 @@ public class SpiderFightState : FightAIState, IHitboxResponder
     [SerializeField] private NavMeshAgent navMeshAgent;
 
     [Header ("Rigidbody")]
-    [SerializeField] private Rigidbody rigidbody;
+    [SerializeField] private new Rigidbody rigidbody;
 
     [Header ("Wait Chance")]
     [SerializeField] private float waitChance = .2f;

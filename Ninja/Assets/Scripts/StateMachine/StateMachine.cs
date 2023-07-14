@@ -57,7 +57,7 @@ public class StateMachine : MonoBehaviour
 
     }
 
-    [System.Obsolete]
+    [System.Obsolete("Use SwitchState(State state) instead!")]
     public void SwitchState(int stateIndex)
     {
         if(stateIndex >= states.Length)
