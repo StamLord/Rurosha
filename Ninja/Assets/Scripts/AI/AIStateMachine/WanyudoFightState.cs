@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class WanyudoFightState : FightAIState, IHitboxResponder
 {
-    [SerializeField] private Animator animator;
-    
     [SerializeField] private float attackCooldown = 2f;
+    [SerializeField] protected float faceEnemyDistance = 5f;
 
     [Header ("Spin attack")]
     [SerializeField] private float spinRange = 2f;
@@ -44,6 +43,7 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
     private float lastAttack;
     private bool delayedLoseAgent;
     private int dashCounter;
+    private Vector3 lastPathTarget;
     
     private Dictionary<Hurtbox, int> hitsRegistered = new Dictionary<Hurtbox, int>();
 
@@ -54,11 +54,6 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
             h.SetResponder(this);
             h.SetIgnoreTransform(transform.root);
         }
-    }
-
-    protected override void DrawWeapon()
-    {
-        // No weapons
     }
 
     public override void OnStateUpdate()
@@ -90,8 +85,8 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
             
             if(distance < 2f)
                 target = enemy.transform.position + dir * 2f;
-            else if(distance > attackRange)
-                target = enemy.transform.position + dir * attackRange;
+            else if(distance > spinRange)
+                target = enemy.transform.position + dir * spinRange;
             
 
             // Recalculate if target position changed enough
@@ -112,7 +107,7 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
             guardVfx.Stop();
     }
 
-    protected override void Attack()
+    protected void Attack()
     {
         // Spin if in close range with enemy
         float distance = Vector3.Distance(transform.position, enemy.transform.position);
@@ -146,16 +141,16 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         float rand = Random.Range(0f, 1f);
         
         if(rand <= .5f)
-            animator.Play("spin");
+            Animator?.Play("spin");
         else
-            animator.Play("spin_2");
+            Animator?.Play("spin_2");
 
         // Wait for duration of spin
         float startTime = Time.time;
         while( Time.time - startTime < spinDuration)
             yield return null;
 
-        animator.CrossFade("idle", .1f);
+        Animator?.CrossFade("idle", .1f);
         
         midAttack = false;
         canMove = true;
@@ -173,9 +168,9 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         // Start dash prepare
         float startTime = Time.time;
         if(dash2)
-            animator.Play("pre_dash_2");
+            Animator?.Play("pre_dash_2");
         else
-            animator.Play("pre_dash");
+            Animator?.Play("pre_dash");
 
         // Sound
         if(audioSource)
@@ -196,9 +191,9 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
 
         // Perform dash
         if(dash2)
-            animator.Play("dash_2");
+            Animator?.Play("dash_2");
         else
-            animator.Play("dash");
+            Animator?.Play("dash");
 
         // Start fire trail vfx
         fireTrail?.Play();
@@ -233,9 +228,9 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         StopHoldButton("run");
 
         if(dash2)
-            animator.Play("end_dash_2");
+            Animator?.Play("end_dash_2");
         else
-            animator.Play("end_dash");
+            Animator?.Play("end_dash");
 
         StopOverrideMovement();
 
@@ -261,13 +256,13 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         float timeStarted = Time.time;
 
         // Start flamethrower
-        animator.Play("pre_flamethrower");
+        Animator?.Play("pre_flamethrower");
 
         while (Time.time - timeStarted < flamethrowerDuration)
             yield return null;
 
         // Stop flamethrower
-        animator.Play("end_flamethrower");
+        Animator?.Play("end_flamethrower");
 
         midAttack = false;
         midFlamethrower = false;

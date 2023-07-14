@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -119,8 +118,8 @@ public class SpiderFightState : FightAIState, IHitboxResponder
 
         if(enemyDistance < 2f)
             target += dir * 2f;
-        else if(enemyDistance > attackRange)
-            target += dir * attackRange;
+        else if(enemyDistance > biteAttackRange)
+            target += dir * biteAttackRange;
         
         MoveTo(target);
 

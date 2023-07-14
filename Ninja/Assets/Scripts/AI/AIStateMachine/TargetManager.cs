@@ -1,19 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetManager : MonoBehaviour
 {
-    [SerializeField] private List<FightAIState> activeFighters = new List<FightAIState>();
-    [SerializeField] private List<FightAIState> pendingFighters = new List<FightAIState>();
+    [SerializeField] private List<ITargetAttaker> activeFighters = new List<ITargetAttaker>();
+    [SerializeField] private List<ITargetAttaker> pendingFighters = new List<ITargetAttaker>();
 
     [SerializeField] private int maxActive;
     [SerializeField] private float timeBeforeNextAttacker = 2f;
     private float lastAttackTime;
 
-    [SerializeField] private FightAIState lastAttacker;
+    [SerializeField] private ITargetAttaker lastAttacker;
 
-    public void AddFighter(FightAIState fighter)
+    public void AddFighter(ITargetAttaker fighter)
     {
         // Don't add twice
         if(pendingFighters.Contains(fighter) || activeFighters.Contains(fighter)) return;
@@ -26,7 +25,7 @@ public class TargetManager : MonoBehaviour
             NextActive();
     }
 
-    public void RemoveFighter(FightAIState fighter)
+    public void RemoveFighter(ITargetAttaker fighter)
     {
         if(pendingFighters.Contains(fighter))
             RemovePending(fighter);
@@ -35,7 +34,7 @@ public class TargetManager : MonoBehaviour
             RemoveActive(fighter);
     }
 
-    public bool ActiveToPending(FightAIState fighter)
+    public bool ActiveToPending(ITargetAttaker fighter)
     {
         if(activeFighters.Contains(fighter) == false)
             return false;
@@ -53,12 +52,12 @@ public class TargetManager : MonoBehaviour
         return true;
     }
 
-    private void RemovePending(FightAIState fighter)
+    private void RemovePending(ITargetAttaker fighter)
     {
         pendingFighters.Remove(fighter);
     }
 
-    private void RemoveActive(FightAIState fighter)
+    private void RemoveActive(ITargetAttaker fighter)
     {
         activeFighters.Remove(fighter);
         fighter.AllowAdvance(false);
@@ -82,7 +81,7 @@ public class TargetManager : MonoBehaviour
         if(pendingFighters.Count < 1) return;
 
         // Get first in pending line and make active
-        FightAIState f = pendingFighters[0];
+        ITargetAttaker f = pendingFighters[0];
         pendingFighters.RemoveAt(0);
         activeFighters.Add(f);
         f.AllowAdvance(true);
@@ -100,13 +99,13 @@ public class TargetManager : MonoBehaviour
         if(activeFighters.Count == 0)
             return;
         
-        FightAIState f = activeFighters[0];
-        if(lastAttacker) lastAttacker.AllowAttack(false);
+        ITargetAttaker f = activeFighters[0];
+        if(lastAttacker != null) lastAttacker.AllowAttack(false);
         f.AllowAttack(true);
         lastAttacker = f;
     }
 
-    public void FinishedAttack(FightAIState fighter)
+    public void FinishedAttack(ITargetAttaker fighter)
     {
         lastAttackTime = Time.time;
 
