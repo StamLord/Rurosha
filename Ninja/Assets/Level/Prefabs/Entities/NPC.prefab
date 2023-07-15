@@ -531,7 +531,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 2075098107621203109}
-  rigidbody: {fileID: 0}
   debug: 0
   meshRenderer: {fileID: 0}
   baseColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1037,7 +1036,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 2656507849268937075}
-  rigidbody: {fileID: 0}
   debug: 0
   meshRenderer: {fileID: 0}
   baseColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1365,8 +1363,6 @@ MonoBehaviour:
   _useGravity: 1
   _shareVertices: 0
   _smoothVertices: 0
-  minMeshDimensions: {x: 0.1, y: 0.1, z: 0.1}
-  m: {fileID: 0}
 --- !u!1 &5549394084717969818
 GameObject:
   m_ObjectHideFlags: 0
@@ -2075,7 +2071,7 @@ GameObject:
   - component: {fileID: 7715210714452133598}
   - component: {fileID: 3500558232261900858}
   - component: {fileID: 4108854064479762184}
-  - component: {fileID: 1180507626903282354}
+  - component: {fileID: 3423017637201124513}
   - component: {fileID: 652328847398222783}
   - component: {fileID: 1429114385148799954}
   - component: {fileID: 7566098629452177725}
@@ -2263,13 +2259,14 @@ MonoBehaviour:
   squadAgent: {fileID: 0}
   awarenessAgent: {fileID: 4293227107428241640}
   stealthAgent: {fileID: 4410426048301243333}
+  animator: {fileID: 0}
   aiInput: {fileID: 7715210714452133598}
   enemy: {fileID: 0}
   enemyLastSeen: {x: 0, y: 0, z: 0}
   enemyLastDir: {x: 0, y: 0, z: 0}
   idle: {fileID: 4108854064479762184}
   search: {fileID: 652328847398222783}
-  fight: {fileID: 1180507626903282354}
+  fight: {fileID: 3423017637201124513}
   flee: {fileID: 1429114385148799954}
 --- !u!114 &4108854064479762184
 MonoBehaviour:
@@ -2300,7 +2297,7 @@ MonoBehaviour:
   waitStart: 0
   waiting: 0
   target: {x: 0, y: 0, z: 0}
---- !u!114 &1180507626903282354
+--- !u!114 &3423017637201124513
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2309,27 +2306,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 8997393895949410982}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 346ed9120f299114fb13c7e00a0deb43, type: 3}
+  m_Script: {fileID: 11500000, guid: 69d97dbc1cabbb14fbddf1d37549342f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 0}
   isActive: 0
   aiStateMachine: {fileID: 0}
-  turnSpeed: 10
-  debug: 1
+  turnSpeed: 1
+  debug: 0
+  pathRecalculateDistance: 3
+  awarenessCheatRange: 3
+  canAttack: 0
   circleRange: 5
   attackRange: 2
-  pathRecalculateDistance: 0.5
   faceEnemyDistance: 5
   defensive: 0
   defenseRange: 5
   aggressive: 5
   dontAttackInterval: 2
   attackCombo: 1
-  attackMaxCombo: 1
+  attackMaxCombo: 3
   attackInterval: 3
-  awarenessCheatRange: 3
-  canAttack: 0
   canAdvance: 0
   defending: 0
 --- !u!114 &652328847398222783
@@ -2586,8 +2583,6 @@ MonoBehaviour:
   _useGravity: 1
   _shareVertices: 0
   _smoothVertices: 0
-  minMeshDimensions: {x: 0.1, y: 0.1, z: 0.1}
-  m: {fileID: 0}
 --- !u!1 &9157097314121358015
 GameObject:
   m_ObjectHideFlags: 0
