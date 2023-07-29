@@ -1,7 +1,7 @@
 using UnityEngine;
 using FarrokhGames.Inventory;
 
-public class QuickSlots : MonoBehaviour
+public class QuickSlots : QuickSlotsBase
 {
     [Header("Inventory Renderers")]
     [SerializeField] private InventoryRenderer[] renderers;
@@ -9,22 +9,22 @@ public class QuickSlots : MonoBehaviour
 
     private InventoryManager[] managers;
 
-    public int Length => renderers.Length;
+    #region Events
+
+    public override event itemsUpdated OnItemsUpdated;
+    public override event itemAddDelegate OnItemAdd;
+    public override event itemRemoveDelegate OnItemRemove;
+    public override event itemDropdelegate OnItemDropped;
+
+    #endregion
     
     // Each slot is a signle item
     private InventoryRenderMode renderMode = InventoryRenderMode.Single;
 
-    public delegate void itemsUpdated();
-    public event itemsUpdated OnItemsUpdated;
-
-    public delegate void itemAddDelegate(int index);
-    public event itemAddDelegate OnItemAdd;
-
-    public delegate void itemRemoveDelegate(int index);
-    public event itemRemoveDelegate OnItemRemove;
-
-    public delegate void itemDropdelegate(IInventoryItem item);
-    public event itemDropdelegate OnItemDropped;
+    public override int Length()
+    {
+        return renderers.Length;
+    }
 
     private void Start() 
     {
@@ -49,15 +49,18 @@ public class QuickSlots : MonoBehaviour
     }
     
     // Index getter
-    public IInventoryItem this[int index]
+
+    public override IInventoryItem GetItem(int index)
     {
-        get 
-        {
-            return managers[index].GetAtPoint(Vector2Int.zero);
-        }
+        return managers[index].GetAtPoint(Vector2Int.zero);
     }
 
-    public bool RemoveItem(int index)
+    public override IInventoryItem this[int index]
+    { 
+        get { return managers[index].GetAtPoint(Vector2Int.zero); } 
+    }
+
+    public override bool RemoveItem(int index)
     {
         if(OnItemRemove != null) OnItemRemove(index);
         if(OnItemsUpdated != null) OnItemsUpdated();
@@ -65,9 +68,9 @@ public class QuickSlots : MonoBehaviour
         return managers[index].TryRemove(managers[index].GetAtPoint(Vector2Int.zero));
     }
 
-    public bool AddItemAtFirstEmpty(IInventoryItem item)
+    public override bool AddItemAtFirstEmpty(IInventoryItem item)
     {
-        for(int i = 0; i < Length; i++)
+        for(int i = 0; i < Length(); i++)
         {
             // 1 item per slot so if not full, it's empty
             if(managers[i].isFull == false)
@@ -85,7 +88,7 @@ public class QuickSlots : MonoBehaviour
         return false;        
     }
 
-    public bool AddItem(int index, IInventoryItem item)
+    public override bool AddItem(int index, IInventoryItem item)
     {
         if(OnItemAdd != null) OnItemAdd(index);
         if(OnItemsUpdated != null) OnItemsUpdated();

@@ -25,7 +25,7 @@ public class WeaponManager : MonoBehaviour
     
     [Header("Items")]
     [SerializeField] private Inventory inventory;
-    [SerializeField] private QuickSlots slots;
+    [SerializeField] private QuickSlotsBase slots;
     [SerializeField] private int selected = 0;
     int oldSelected;
 
@@ -134,7 +134,7 @@ public class WeaponManager : MonoBehaviour
 
         if(_inputState.ScrollInput > 0f)
         {
-            if(selected >= slots.Length -1 /*&& weapons[0]*/) 
+            if(selected >= slots.Length() -1 /*&& weapons[0]*/) 
                 selected = 0;
             else /*if(weapons[selected + 1])*/
                 selected++;
@@ -145,7 +145,7 @@ public class WeaponManager : MonoBehaviour
         if(_inputState.ScrollInput < 0f)
         {
             if(selected <= 0 /*&& weapons[weapons.Length - 1]*/) 
-                selected = slots.Length -1;
+                selected = slots.Length() -1;
             else if(selected > 0 /*&& weapons[selected - 1]*/)
                 selected--;
             
@@ -329,7 +329,7 @@ public class WeaponManager : MonoBehaviour
         int damage = 0;
         int index = 0;
 
-        for (var i = 0; i < slots.Length; i++)
+        for (var i = 0; i < slots.Length(); i++)
         {
             if(slots[i] == null) continue;
             if(slots[i].GetType() == typeof(Weapon))
