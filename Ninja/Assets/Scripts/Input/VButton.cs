@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum VButtonState{UNPRESSED, PRESS_START, PRESSED, PRESS_END};
 
+[System.Serializable]
 public class VButton
 {
-    private VButtonState _state;
+    [SerializeField] private VButtonState _state;
     public VButtonState State {get {return _state;}}
 
     private float firstPress;
