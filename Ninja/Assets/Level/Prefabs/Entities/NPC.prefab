@@ -2158,6 +2158,50 @@ MonoBehaviour:
   DoubleLeft: 0
   DoubleRight: 0
   Rotation: 0
+  Jump:
+    _state: 0
+  Run:
+    _state: 0
+  Crouch:
+    _state: 0
+  Use:
+    _state: 0
+  Defend:
+    _state: 0
+  Kick:
+    _state: 0
+  Spell:
+    _state: 0
+  Sit:
+    _state: 0
+  Draw:
+    _state: 0
+  Drop:
+    _state: 0
+  MouseButton1:
+    _state: 0
+  MouseButton2:
+    _state: 0
+  Num1:
+    _state: 0
+  Num2:
+    _state: 0
+  Num3:
+    _state: 0
+  Num4:
+    _state: 0
+  Num5:
+    _state: 0
+  Num6:
+    _state: 0
+  Num7:
+    _state: 0
+  Num8:
+    _state: 0
+  Num9:
+    _state: 0
+  Num0:
+    _state: 0
   debug: 1
 --- !u!114 &4293227107428241640
 MonoBehaviour:
@@ -2324,11 +2368,18 @@ MonoBehaviour:
   defenseRange: 5
   aggressive: 5
   dontAttackInterval: 2
+  attackInterval: 3
+  swordAttack:
+    softDamage: 0
+    hardDamage: 0
+    statuses: []
+    damageType: 0
+  swordHitbox: {fileID: 0}
   attackCombo: 1
   attackMaxCombo: 3
-  attackInterval: 3
   canAdvance: 0
   defending: 0
+  midAttack: 0
 --- !u!114 &652328847398222783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3490,6 +3541,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 4073823353165971574}
+  ignoreTransformNames: []
+  debug: 0
 --- !u!1 &8567930112403330769 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -868736044832920848, guid: 060984eabd53c0445a6056c83a7d0737,
@@ -5233,6 +5286,7 @@ MonoBehaviour:
   weaponManager: {fileID: 7377369967753941515}
   animator: {fileID: 794946873}
   inputState: {fileID: 7936478245080124284}
+  hitAnimations: 1
   useNavMeshAgent: 1
   navMeshAgent: {fileID: 6091492067934997479}
   rigidbody: {fileID: 6676553478032390319}

@@ -1,11 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RagdollCopy : MonoBehaviour
 {
     [SerializeField] private Transform reference;
-    
+    [SerializeField] private List<string> ignoreTransformNames = new List<string>();
+    [SerializeField] private bool debug;
+
     private void OnEnable() 
     {
         CopyBone(transform, reference);
@@ -13,7 +14,17 @@ public class RagdollCopy : MonoBehaviour
 
     private void CopyBone(Transform target, Transform reference)
     {
-        //Debug.Log(target + " <= " + reference);
+        if(ignoreTransformNames.Contains(reference.name) || ignoreTransformNames.Contains(target.name))
+        {
+            if(debug)
+                Debug.Log("Ignoring transforms: " + target + ", " + reference);
+            
+            return;
+        }
+        
+        if(debug)
+            Debug.Log(target + " <= " + reference);
+        
         target.localPosition = reference.localPosition;
         target.localRotation = reference.localRotation;
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HumanFightState : FightAIState, ITargetAttaker
+public class HumanFightState : FightAIState, ITargetAttaker, IHitboxResponder
 {
     [Header("Circle")]
     [SerializeField] protected float circleRange = 5f;
@@ -16,14 +16,25 @@ public class HumanFightState : FightAIState, ITargetAttaker
     [Header("Attack")]
     [Range(1,5)] [SerializeField] protected int aggressive;
     [SerializeField] protected float dontAttackInterval = 2f;
+    [SerializeField] protected float attackInterval = 3f;
+
+    [SerializeField] private AttackInfo swordAttack = new AttackInfo();
+    [SerializeField] private Hitbox swordHitbox;
+
+    [Header("Combo")]
     [SerializeField] protected bool attackCombo;
     [SerializeField] protected int attackMaxCombo = 3;
-    [SerializeField] protected float attackInterval = 3f;
 
     private TargetManager targetManager;
     protected Vector3 lastPathTarget;
     public bool canAdvance = false;
     public bool defending;
+    public bool midAttack;
+
+    private void Start()
+    {
+        swordHitbox?.SetResponder(this, transform.root);
+    }
 
     protected override void OnEnterState()
     {
@@ -73,10 +84,13 @@ public class HumanFightState : FightAIState, ITargetAttaker
         bool inRange = distaneFromTarget <= .3f; // We allow for .3f to be the threshold to account for inconsistency in moving
 
         // Recalculate if too far or target position changed enough
-        if(inRange == false || Vector3.Distance(target, lastPathTarget) > pathRecalculateDistance)
+        if(midAttack == false)
         {
-            lastPathTarget = target;
-            MoveTo(target);
+            if(inRange == false || Vector3.Distance(target, lastPathTarget) > pathRecalculateDistance)
+            {
+                lastPathTarget = target;
+                MoveTo(target);
+            }
         }
         
         if (canAdvance && inRange && canAttack) // Close enough to attack range and not already attacking
@@ -122,22 +136,31 @@ public class HumanFightState : FightAIState, ITargetAttaker
 
     private IEnumerator AttackCoroutine(float waitAfterAttack)
     {
+        MoveStop();
+
         canAttack = false;
+        midAttack = true;
         int attacks = (attackCombo)? attackMaxCombo : 1;
 
         for (var i = 0; i < attacks; i++)
         {
             PressButton("MB1");
+
+            if(Vector3.Distance(transform.position, enemy.transform.position) > attackRange + .3f)
+                break;
+            
             if(i < attacks - 1)
                 yield return new WaitForSeconds(.5f);
         }
-
+        
         yield return new WaitForSeconds(waitAfterAttack);
 
         if(targetManager)
             targetManager.FinishedAttack(this);
         else
             canAttack = true;
+
+        midAttack = false;
     }
 
     private IEnumerator DontAttack(float wait)
@@ -169,5 +192,34 @@ public class HumanFightState : FightAIState, ITargetAttaker
     private void OnDeath()
     {
         targetManager.RemoveFighter(this);
+    }
+
+    public void CollisionWith(Collider collider, Hitbox hitbox)
+    {
+        Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
+        
+        if(hurtbox)
+        {
+            if(hitbox == swordHitbox)
+            {
+                hurtbox.Hit(StealthAgent, swordAttack, swordHitbox.transform.up, Vector3.zero);
+            }
+        }
+        
+    }
+
+    public void PerfectGuardedBy(Collider collider, Hitbox hitbox)
+    {
+        
+    }
+
+    public void GuardedBy(Collider collider, Hitbox hitbox)
+    {
+        
+    }
+
+    public void UpdateColliderState(bool newState)
+    {
+        
     }
 }

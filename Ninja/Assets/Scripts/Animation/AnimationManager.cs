@@ -10,6 +10,9 @@ public class AnimationManager : MonoBehaviour
     [SerializeField] private WeaponManager weaponManager;
     [SerializeField] private Animator animator;
     [SerializeField] private InputState inputState;
+    
+    [Header("Hit Animations")]
+    [SerializeField] private int hitAnimations = 1;
 
     [Header("Multiple by speed of NavMeshAgent/Rigidbody")]
     [SerializeField] private bool useNavMeshAgent;
@@ -19,6 +22,7 @@ public class AnimationManager : MonoBehaviour
     [Header("Running Speed")]
     [SerializeField] private float runSpeed = 10;
 
+    [Header("IK")]
     [SerializeField] private Transform ikLookTarget;
     [SerializeField] private Transform ikLeftTarget;
     [SerializeField] private Transform ikRightTarget;
@@ -46,6 +50,12 @@ public class AnimationManager : MonoBehaviour
         animator.SetFloat("z", velocity.z / runSpeed);
         animator.SetFloat("y", rigidbody.velocity.y);
         animator.SetBool("crouch", inputState.Crouch.State == VButtonState.PRESSED);
+
+        if(inputState.MouseButton1.State == VButtonState.PRESS_START)
+            animator.SetTrigger("LMB");
+
+        if(inputState.MouseButton2.State == VButtonState.PRESS_START)
+            animator.SetTrigger("RMB");
     }
 
     private void StateUpdate(string stateName)
@@ -80,7 +90,10 @@ public class AnimationManager : MonoBehaviour
     {
         AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
         if(state.IsName("Idle") || state.IsName("Attack1"))
+        {
+            animator.SetInteger("Hit Index", Random.Range(0, hitAnimations));
             animator.SetTrigger("Hit");
+        }
     }
 
     private void OnAnimatorIK(int layerIndex) 

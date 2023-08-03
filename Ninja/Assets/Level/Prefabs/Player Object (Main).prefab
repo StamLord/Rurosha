@@ -6076,7 +6076,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1702522206}
   - component: {fileID: 1702522207}
-  - component: {fileID: 2000835280}
   m_Layer: 9
   m_Name: Stand Body
   m_TagString: Untagged
@@ -6113,19 +6112,6 @@ CapsuleCollider:
   m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &2000835280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1702522205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a228f187a386f4abfd3344f2e7e9dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hurtbox: {fileID: 4628237269551806553}
 --- !u!1 &1760545693
 GameObject:
   m_ObjectHideFlags: 0
@@ -16790,6 +16776,50 @@ MonoBehaviour:
   DoubleLeft: 0
   DoubleRight: 0
   Rotation: 0
+  Jump:
+    _state: 0
+  Run:
+    _state: 0
+  Crouch:
+    _state: 0
+  Use:
+    _state: 0
+  Defend:
+    _state: 0
+  Kick:
+    _state: 0
+  Spell:
+    _state: 0
+  Sit:
+    _state: 0
+  Draw:
+    _state: 0
+  Drop:
+    _state: 0
+  MouseButton1:
+    _state: 0
+  MouseButton2:
+    _state: 0
+  Num1:
+    _state: 0
+  Num2:
+    _state: 0
+  Num3:
+    _state: 0
+  Num4:
+    _state: 0
+  Num5:
+    _state: 0
+  Num6:
+    _state: 0
+  Num7:
+    _state: 0
+  Num8:
+    _state: 0
+  Num9:
+    _state: 0
+  Num0:
+    _state: 0
   debug: 0
 --- !u!114 &59200984
 MonoBehaviour:
@@ -17535,7 +17565,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 0}
-  rigidbody: {fileID: 0}
   debug: 0
   meshRenderer: {fileID: 0}
   baseColor: {r: 0, g: 0, b: 0, a: 0}
@@ -17658,7 +17687,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 0}
-  rigidbody: {fileID: 0}
   debug: 0
   meshRenderer: {fileID: 0}
   baseColor: {r: 0, g: 0, b: 0, a: 0}
@@ -17724,7 +17752,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicalMaterial: {fileID: 0}
-  rigidbody: {fileID: 0}
   debug: 0
   meshRenderer: {fileID: 0}
   baseColor: {r: 0, g: 0, b: 0, a: 0}
@@ -24614,6 +24641,7 @@ MonoBehaviour:
   weaponManager: {fileID: 0}
   animator: {fileID: 8542446599430791395}
   inputState: {fileID: 59200974}
+  hitAnimations: 1
   useNavMeshAgent: 0
   navMeshAgent: {fileID: 0}
   rigidbody: {fileID: 59200983}
@@ -24938,6 +24966,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 520614883, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
+      propertyPath: hitMultipleHurtbox
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 520614883, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: oVelocityReference
       value: 
       objectReference: {fileID: 1323493131}
@@ -24956,6 +24988,10 @@ PrefabInstance:
     - target: {fileID: 735657387, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: overrideVelocity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 735657387, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
+      propertyPath: hitMultipleHurtbox
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 735657387, guid: e0128e86a9a29e74b80317cb98468768, type: 3}
       propertyPath: oVelocityReference
@@ -25644,6 +25680,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5174405575449335521, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
+      propertyPath: hitMultipleHurtbox
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174405575449335521, guid: e0128e86a9a29e74b80317cb98468768,
+        type: 3}
       propertyPath: oVelocityReference
       value: 
       objectReference: {fileID: 1323493131}
@@ -25925,7 +25966,7 @@ PrefabInstance:
     - target: {fileID: 8206658476292956839, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3225
+      value: 3261
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
@@ -25935,7 +25976,7 @@ PrefabInstance:
     - target: {fileID: 8206658476547805987, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3243
+      value: 3270
       objectReference: {fileID: 0}
     - target: {fileID: 8206658476547805996, guid: e0128e86a9a29e74b80317cb98468768,
         type: 3}
