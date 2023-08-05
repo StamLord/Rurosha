@@ -26,6 +26,9 @@ public class Melee : WeaponObject, IHitboxResponder
     [Header("Physics Settings")]
     [SerializeField] private float fistForce;
 
+    [Header("Valid States for Input")]
+    [SerializeField] private string[] validInputStates = new string[0];
+    
     [Header("Combo")]
     [SerializeField] private List<string> currentCombo;
     [SerializeField] private float comboResetTime = 1f;
@@ -68,14 +71,15 @@ public class Melee : WeaponObject, IHitboxResponder
         }
 
         // Defend (LMB + RMB)
-        bool defend = (inputState.MouseButton1.State == VButtonState.PRESSED &&
-        inputState.MouseButton2.State == VButtonState.PRESSED);
-        animator.SetBool("defend", defend);
+        bool defend = inputState.MouseButton1.State == VButtonState.PRESSED &&
+        inputState.MouseButton2.State == VButtonState.PRESSED;
+
+        animator.SetBool("DEFEND", defend);
         if(defend)
             return;
         
-        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-        
+        bool isValidState = ValidateState(validInputStates);
+
         // Left Attack (LMB)
         if(inputState.MouseButton1.State == VButtonState.PRESS_END)
         {
@@ -83,7 +87,7 @@ public class Melee : WeaponObject, IHitboxResponder
             {
                 DrawWeapon();
             }
-            else if(state.IsName("idle") || state.IsName("fist_left_chain") || state.IsName("fist_right_chain"))
+            else if(isValidState)
             {
                 if(charStats.DepleteStamina(leftAttackStaminaCost))
                 {
@@ -101,7 +105,7 @@ public class Melee : WeaponObject, IHitboxResponder
             {
                 DrawWeapon();
             }
-            else if(state.IsName("idle") || state.IsName("fist_left_chain") || state.IsName("fist_right_chain"))
+            else if(isValidState)
             {
                 if(charStats.DepleteStamina(rightAttackStaminaCost))
                 {
