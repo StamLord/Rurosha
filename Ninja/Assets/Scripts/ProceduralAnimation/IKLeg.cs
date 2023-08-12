@@ -110,7 +110,7 @@ public class IKLeg : MonoBehaviour
     private void OnDrawGizmos() 
     {
         // Draw current positions
-        Gizmos.color = Color.yellow;
+        Gizmos.color = (isMoving)? Color.green : Color.yellow;
         Gizmos.DrawSphere(target.position, .2f);
 
         // Draw ground target positions
