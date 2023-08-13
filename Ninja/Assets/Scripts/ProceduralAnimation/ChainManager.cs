@@ -5,6 +5,8 @@ public class ChainManager : MonoBehaviour
 {
     [SerializeField] private int segmentsPerUnit = 4;
     [SerializeField] private ChainLink linkPrefab;
+    [SerializeField] private bool drawLine;
+    [SerializeField] private LineRenderer lineRenderer;
 
     private ChainLink[] links;
 
@@ -34,4 +36,19 @@ public class ChainManager : MonoBehaviour
     }
 
     public int Count => links.Length;
+
+    private void Update()
+    {
+        UpdateLineRenderer();
+    }
+
+    private void UpdateLineRenderer()
+    {
+        if(drawLine == false || lineRenderer == null || links == null) return;
+
+        lineRenderer.positionCount = links.Length;
+
+        for (int i = 0; i < links.Length; i++)
+            lineRenderer.SetPosition(i, links[i].transform.position);
+    }
 }

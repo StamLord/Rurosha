@@ -118,7 +118,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   springJoint: {fileID: 6176157515943634928}
+  drawLine: 0
   lineRenderer: {fileID: 3162432570838806979}
+  dynamicWidth: 0
+  defaultWidth: 0.1
   lineWidthMinMax: {x: 0.01, y: 0.1}
   maxStretchForce: 1000
   enableCollisions: 1
@@ -137,7 +140,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2801411359291305221}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
