@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hurtbox : MonoBehaviour
+public class Hurtbox : MonoBehaviour, IHeatConductor
 {
     [Header("References")]
     [SerializeField] private List<IHurtboxResponder> responders = new List<IHurtboxResponder>();
@@ -15,12 +15,18 @@ public class Hurtbox : MonoBehaviour
     [SerializeField] private Color hitColor;
     [SerializeField] private float colorFadeStartDuration = .1f;
     [SerializeField] private float colorFadeEndDuration = .5f;
+    
     private Material material;
     
     public void Start()
     {
         if(meshRenderer) material = meshRenderer.material;
         if(material) baseColor = material.color;
+    }
+
+    public bool Hit(AttackInfo attackInfo)
+    {
+        return Hit(null, attackInfo, Vector3.up, Vector3.zero);
     }
 
     // Called by weapon scripts after
@@ -77,5 +83,23 @@ public class Hurtbox : MonoBehaviour
         }
 
         material.color = baseColor;
+    }
+
+    public void Conduct(float temperature)
+    {
+        HeatDamage(temperature);
+    }
+
+    public bool HeatDamage(float temperature)
+    {
+        bool hit = false;
+
+        foreach(IHurtboxResponder r in responders)
+        {
+            if(r.GetHeatDamage(temperature))
+                hit = true;
+        }
+
+        return hit;
     }
 }

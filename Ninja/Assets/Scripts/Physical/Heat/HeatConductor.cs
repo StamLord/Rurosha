@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class HeatConductor : MonoBehaviour
+public class HeatConductor : MonoBehaviour, IHeatConductor
 {
     [SerializeField] private float temperature;
     [SerializeField] private float conductivity;
@@ -18,10 +18,11 @@ public class HeatConductor : MonoBehaviour
     [SerializeField] private List<HeatEvent> events = new List<HeatEvent>();
 
     [System.Serializable]
-    public struct HeatEvent
+    public class HeatEvent
     {
         public float temperature;
         public UnityEvent action;
+        public bool played;
     }
 
     public void Conduct(float sourceTemperature)
@@ -32,13 +33,19 @@ public class HeatConductor : MonoBehaviour
             Temperature += conductivity * Mathf.Max(0, sourceTemperature - temperature) * Time.deltaTime;
     }
 
-    void Update()
+    private void Update()
     {
         Diffuse();
-        foreach(HeatEvent e in events)
+        for(int i = 0; i < events.Count; i++)
         {
-            if(e.temperature >= Temperature)
-                if(e.action != null) e.action.Invoke();
+            if(Temperature >= events[i].temperature && events[i].played == false)
+            {    
+                if(events[i].action != null) 
+                {
+                    events[i].action.Invoke();
+                    events[i].played = true;
+                }
+            }
         }
     }
 

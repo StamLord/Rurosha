@@ -460,6 +460,17 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    #region Heat Damage
+    
+    [SerializeField] private float minHeatDamageTemperature = 40;
+    [SerializeField] private float HeatDamageCooldown = 1f;
+    [SerializeField] private float heatSoftDamage = 10;
+    [SerializeField] private float heatHardDamage = 0;
+
+    private float lastHeatDamage;
+
+    #endregion
+
     public delegate void HitByDelegate(StealthAgent agent);
     public event HitByDelegate OnHitBy;
 
@@ -925,6 +936,21 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             foreach(Status s in statuses)
                 statusManager.AddStatus(s);
         }
+
+        return true;
+    }
+
+    public bool GetHeatDamage(float temperature)
+    {
+        if( temperature < minHeatDamageTemperature || 
+            Time.time - lastHeatDamage < HeatDamageCooldown) 
+            return false;
+
+        Debug.Log(String.Format("HeatDamage from temp: {0}", temperature));
+
+        SubHealth(heatSoftDamage);
+        SubPotentialHealth(heatHardDamage);
+        lastHeatDamage = Time.time;
 
         return true;
     }
