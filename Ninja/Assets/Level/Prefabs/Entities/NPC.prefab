@@ -469,6 +469,10 @@ MonoBehaviour:
   flaws: []
   sitHealthRecoveryMult: 2
   sitStaminaRecoveryMult: 2
+  minHeatDamageTemperature: 40
+  HeatDamageCooldown: 1
+  heatSoftDamage: 10
+  heatHardDamage: 0
   chakraManager: {fileID: 0}
 --- !u!1 &890345442238787815
 GameObject:
