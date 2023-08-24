@@ -133,10 +133,10 @@ public class AIInput : MonoBehaviour
             if(useNavMeshAgentMovement) 
             {
                 navMeshAgent.velocity = overrideVector;
-                Debug.Log("NavMesh Velocity: " + navMeshAgent.velocity);
+                Debug.Log("Override: " + overrideVector + "NavMesh Velocity: " + navMeshAgent.velocity);
             }
             
-            inputState.AxisInput = overrideVector;
+            inputState.AxisInput = transform.InverseTransformDirection(overrideVector);
             return;
         }
 
@@ -316,6 +316,9 @@ public class AIInput : MonoBehaviour
     {
         isOverrideMovement = true;
         overrideVector = input;
+
+        if(useNavMeshAgentMovement)
+            navMeshAgent.ResetPath();
     }
 
     public void StopOverrideMovement()
