@@ -18362,6 +18362,10 @@ MonoBehaviour:
   flaws: []
   sitHealthRecoveryMult: 1.5
   sitStaminaRecoveryMult: 2
+  minHeatDamageTemperature: 40
+  HeatDamageCooldown: 1
+  heatSoftDamage: 10
+  heatHardDamage: 0
   chakraManager: {fileID: 59200968}
 --- !u!114 &8338262042225387583
 MonoBehaviour:
