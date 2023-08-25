@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class HeatSource : MonoBehaviour
 {
-    [SerializeField] private float _temperature;
-    [SerializeField] private float _radius;
-    [SerializeField] private AnimationCurve _falloff;
+    [SerializeField] protected float _temperature;
 
     [SerializeField] public static bool debug;
-    
+
     private void Start()
     {
         DebugCommandDatabase.AddCommand(new DebugCommand(
@@ -28,34 +26,6 @@ public class HeatSource : MonoBehaviour
                     }
                     return "Parameter should be 1 or 0";
                 }));
-    }
-
-    private void Update()
-    {
-        HeatDiffuse();
-    }
-
-    private void HeatDiffuse()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
-        
-        foreach(Collider col in colliders)
-        {
-            IHeatConductor hc = col.GetComponent<IHeatConductor>();
-            if(hc == null) continue;
-
-            Transform colTransform = ((Component)hc).transform;
-            float falloffSample = _falloff.Evaluate(Vector3.Distance(transform.position, colTransform.position) / _radius);
-            hc.Conduct(_temperature * falloffSample);
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if(debug == false) return;
-        
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _radius);
     }
 
     private void OnGUI() 
