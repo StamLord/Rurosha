@@ -9702,6 +9702,7 @@ GameObject:
   - component: {fileID: 1339542601}
   - component: {fileID: 1339542603}
   - component: {fileID: 1339542602}
+  - component: {fileID: 1836718557}
   m_Layer: 0
   m_Name: ParticleSystem_Fire_RateOverTime_Torch
   m_TagString: Untagged
@@ -13368,9 +13369,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -13439,7 +13440,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -13547,11 +13548,11 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 64
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -14580,6 +14581,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1836718557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339542600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64d3d93626bfe346a6e27014fc9164e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _temperature: 200
 --- !u!1 &1434716973
 GameObject:
   m_ObjectHideFlags: 0
@@ -19404,6 +19418,7 @@ GameObject:
   - component: {fileID: 1559516659}
   - component: {fileID: 1559516661}
   - component: {fileID: 1559516660}
+  - component: {fileID: 1286635783}
   m_Layer: 0
   m_Name: ParticleSystem_Fire_RateOverTime_Torch
   m_TagString: Untagged
@@ -23070,9 +23085,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -23141,7 +23156,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -23249,11 +23264,11 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 64
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -24282,6 +24297,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1286635783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559516658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64d3d93626bfe346a6e27014fc9164e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _temperature: 200
 --- !u!1 &1647477080
 GameObject:
   m_ObjectHideFlags: 0
@@ -24293,6 +24321,7 @@ GameObject:
   - component: {fileID: 1647477081}
   - component: {fileID: 1647477083}
   - component: {fileID: 1647477082}
+  - component: {fileID: 1855882851}
   m_Layer: 0
   m_Name: ParticleSystem_Fire_RateOverTime_Torch
   m_TagString: Untagged
@@ -27959,9 +27988,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -28138,11 +28167,11 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 64
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -29171,6 +29200,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1855882851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647477080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64d3d93626bfe346a6e27014fc9164e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _temperature: 200
 --- !u!1 &2064709460
 GameObject:
   m_ObjectHideFlags: 0
@@ -29280,6 +29322,7 @@ GameObject:
   - component: {fileID: 9036410814908344069}
   - component: {fileID: 3922672222296495810}
   - component: {fileID: 328498117766575691}
+  - component: {fileID: 440710435}
   m_Layer: 0
   m_Name: ParticleSystem_Fire_RateOverTime_Torch
   m_TagString: Untagged
@@ -32946,9 +32989,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -33017,7 +33060,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -33125,11 +33168,11 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 64
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -34158,6 +34201,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &440710435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274333612230090292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64d3d93626bfe346a6e27014fc9164e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _temperature: 200
 --- !u!1 &291587896100673412
 GameObject:
   m_ObjectHideFlags: 0
@@ -86683,6 +86739,11 @@ MonoBehaviour:
   spinRange: 2
   spinDuration: 2
   spinCooldown: 1
+  spinAttack:
+    softDamage: 10
+    hardDamage: 5
+    statuses: []
+    damageType: 0
   preChargeTime: 1
   chargeDistance: 16
   maxChargeTime: 2
@@ -86691,11 +86752,18 @@ MonoBehaviour:
   fireTrailLeft: {fileID: 1434716976}
   fireTrailRight: {fileID: 1278655404}
   guardVfx: {fileID: 7484902818772356691}
-  chargeSoftDamage: 10
-  chargeHardDamage: 5
+  chargeAttack:
+    softDamage: 10
+    hardDamage: 5
+    statuses: []
+    damageType: 0
+  chargeForce: 20
   flamethrowerDuration: 5
-  flameSoftDamage: 5
-  flameHardDamage: 3
+  flamethrowerAttack:
+    softDamage: 5
+    hardDamage: 3
+    statuses: []
+    damageType: 0
   hitbox:
   - {fileID: 662863567}
   - {fileID: 3843246853426313061}
