@@ -11,21 +11,23 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
     [SerializeField] private float spinRange = 2f;
     [SerializeField] private float spinDuration = 2f;
     [SerializeField] private float spinCooldown = 1f;
+    [SerializeField] private AttackInfo spinAttack = new AttackInfo(10, 5, DamageType.Blunt);
 
     [Header ("Charge attack")]
     [SerializeField] private float preChargeTime = 1f;
     [SerializeField] private float chargeDistance = 3f;
     [SerializeField] private float maxChargeTime = 2f;
     [SerializeField] private float chargeCooldown = 1f;
-    [SerializeField] private ParticleSystem fireTrail;
+    [SerializeField] private ParticleSystem fireTrailMid;
+    [SerializeField] private ParticleSystem fireTrailLeft;
+    [SerializeField] private ParticleSystem fireTrailRight;
     [SerializeField] private ParticleSystem guardVfx;
-    [SerializeField] private int chargeSoftDamage;
-    [SerializeField] private int chargeHardDamage;
+    [SerializeField] private AttackInfo chargeAttack = new AttackInfo(10, 5, DamageType.Blunt);
+    [SerializeField] private float chargeForce = 20f;
 
     [Header ("Flamethrower attack")]
     [SerializeField] private float flamethrowerDuration = 3f;
-    [SerializeField] private int flameSoftDamage;
-    [SerializeField] private int flameHardDamage;
+    [SerializeField] private AttackInfo flamethrowerAttack = new AttackInfo(5, 3, DamageType.Blunt);
 
     [Header ("Hitbox")]
     [SerializeField] private Hitbox[] hitbox;
@@ -196,7 +198,13 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
             Animator?.Play("dash");
 
         // Start fire trail vfx
-        fireTrail?.Play();
+        if(dash2)
+        {
+            if(fireTrailLeft) fireTrailLeft.Play();
+            if(fireTrailRight) fireTrailRight.Play();    
+        }
+
+        if(fireTrailMid) fireTrailMid.Play();
         
         // Lock rotation so we dash in straight line
         canRotate = false;
@@ -206,11 +214,10 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
 
         // Get direction to enemy and set it in inputState
         Vector3 direction = enemy.transform.position - transform.position;
-        direction = transform.InverseTransformDirection(direction);
         StartOverrideMovement(direction);
 
         // We simulate run button to move faster
-        HoldButton("run");
+        //HoldButton("run");
     
         float distanceTraveled = 0;
         float dashStartTime = Time.time;
@@ -225,7 +232,7 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         }
 
         // Stop dash
-        StopHoldButton("run");
+        //StopHoldButton("run");
 
         if(dash2)
             Animator?.Play("end_dash_2");
@@ -235,7 +242,9 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         StopOverrideMovement();
 
         // Stop fire trail vfx
-        fireTrail?.Stop();
+        if(fireTrailMid) fireTrailMid.Stop();
+        if(fireTrailLeft) fireTrailLeft.Stop();
+        if(fireTrailRight) fireTrailRight.Stop();
 
         midAttack = false;
         canMove = canRotate = canLoseEnemy = true;
@@ -303,9 +312,9 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         if(hurtbox)
         {   
             if(midFlamethrower)
-                hurtbox.Hit(AIStateMachine.StealthAgent, flameSoftDamage, flameHardDamage, Vector3.up, Vector3.zero, DamageType.Blunt);
+                hurtbox.Hit(StealthAgent, flamethrowerAttack, Vector3.up, Vector3.zero);
             else
-                hurtbox.Hit(AIStateMachine.StealthAgent, chargeSoftDamage, chargeHardDamage, Vector3.up, Vector3.zero, DamageType.Blunt);
+                hurtbox.Hit(StealthAgent, chargeAttack, Vector3.up, transform.forward * chargeForce);
             
             if(hitsRegistered.ContainsKey(hurtbox))
             {
