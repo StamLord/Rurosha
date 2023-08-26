@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e3e1ccef25bc7d4c95e9923e20182ca, type: 3}
-  m_Name: Poison
+  m_Name: Burn
   m_EditorClassIdentifier: 
-  statusName: Poison
-  icon: {fileID: 21300000, guid: daea24afc4b2a3b40869edd4319abe23, type: 3}
+  statusName: Burn
+  icon: {fileID: 21300000, guid: b4ce42129bd37fb44a0738951bdf6e17, type: 3}
   description: 
-  cycles: 5
+  cycles: 3
   updateRate: 2
-  hpChange: -5
+  hpChange: -10
   stChange: 0

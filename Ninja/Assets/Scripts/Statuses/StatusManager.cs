@@ -6,6 +6,9 @@ public class StatusManager : MonoBehaviour
     private Dictionary<string, StatusComponent> statusComponents = new Dictionary<string, StatusComponent>();
 
     // Events
+    public delegate void StatusStartDelegate(string statusName);
+    public event StatusStartDelegate OnStatusStart;
+
     public delegate void StatusUpdateDelegate(int softHp, int hardHp, int softSt, int hardSt);
     public event StatusUpdateDelegate OnStatusUpdate;
 
@@ -23,10 +26,13 @@ public class StatusManager : MonoBehaviour
         // Add status component to our gameObject. 
         // The component is responsible for updating us and destorying itself when time is over
         StatusComponent comp = gameObject.AddComponent<StatusComponent>();
-        comp.Setup(this, status.Name, status.Description, status.Cycles, status.UpdateRate, status.HpChange, status.StChange);
+        comp.Setup(this, status);
 
         // We track the components in a dictionary
         statusComponents.Add(status.name, comp);
+
+        if(OnStatusStart != null)
+            OnStatusStart(status.Name);
     }
 
     public void StatusUpdate(int softHp, int hardHp, int softSt, int hardSt)
@@ -41,5 +47,10 @@ public class StatusManager : MonoBehaviour
 
         if(OnStatusEnd != null)
             OnStatusEnd(statusName);
+    }
+
+    public List<StatusComponent> GetStatusComponents()
+    {
+        return new List<StatusComponent>(statusComponents.Values);
     }
 }

@@ -2,30 +2,17 @@ using UnityEngine;
 
 public class StatusComponent : MonoBehaviour
 {   
+    public Status status;
     [SerializeField] private StatusManager manager;
-    [SerializeField] private string statusName;
-    [SerializeField] private string description;
-    [SerializeField] private int cycles;
-    [SerializeField] private float updateRate;
-    
-    [SerializeField] private int softHpChange;
-    [SerializeField] private int hardHpChange;
-
-    [SerializeField] private int softStChange;
-    [SerializeField] private int hardStChange;
-
     [SerializeField] private float lastUpdate;
     [SerializeField] private int currentCycle = 0;
 
-    public void Setup (StatusManager manager, string statusName, string description, int cycles, float updateRate, int hpChange, int stChange)
+    public float GetTimeLeft() => status.UpdateRate * status.Cycles - (status.UpdateRate * currentCycle + Time.time - lastUpdate);
+
+    public void Setup (StatusManager manager, Status status)
     {
         this.manager = manager;
-        this.statusName = statusName;
-        this.description = description;
-        this.cycles = cycles;
-        this.updateRate = updateRate;
-        this.softHpChange = hpChange;
-        this.softStChange = stChange;
+        this.status = status;
 
         lastUpdate = Time.time;
     }
@@ -33,18 +20,18 @@ public class StatusComponent : MonoBehaviour
     private void Update()
     {
         // Update cycle
-        if(Time.time - lastUpdate >= updateRate)
+        if(Time.time - lastUpdate >= status.UpdateRate)
         {
-            manager.StatusUpdate(softHpChange, hardHpChange, softStChange, hardStChange);
+            manager.StatusUpdate(status.HpChange, 0, status.StChange, 0);
 
             lastUpdate = Time.time;
             currentCycle++;
         }
 
         // Destroy status after final cycle
-        if(currentCycle >= cycles)
+        if(currentCycle >= status.Cycles)
         {
-            manager.RemoveStatus(statusName);
+            manager.RemoveStatus(status.Name);
             
             // TODO: Pool object
             Destroy(this);

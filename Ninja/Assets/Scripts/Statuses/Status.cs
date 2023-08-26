@@ -4,6 +4,7 @@ using UnityEngine;
 public class Status : ScriptableObject
 {
     [SerializeField] private string statusName;
+    [SerializeField] private Sprite icon;
     [SerializeField] private string description;
     [SerializeField] private int cycles;
     [SerializeField] private float updateRate;
@@ -11,6 +12,7 @@ public class Status : ScriptableObject
     [SerializeField] private int stChange;
 
     public string Name {get{return statusName;}}
+    public Sprite Icon {get{return icon;}}
     public string Description {get{return description;}}
     public int Cycles {get{return cycles;}}
     public float UpdateRate {get{return updateRate;}}
