@@ -6,6 +6,11 @@ public class StatusManager : MonoBehaviour
 {
     private Dictionary<string, StatusComponent> statusComponents = new Dictionary<string, StatusComponent>();
 
+    private Dictionary<string, ParticleSystem> statusParticleDict = new Dictionary<string, ParticleSystem>();
+
+    [SerializeField] private string[] statusParticleKeys;
+    [SerializeField] private ParticleSystem[] statusParticleValues;
+
     // Events
     public delegate void StatusStartDelegate(string statusName);
     public event StatusStartDelegate OnStatusStart;
@@ -15,6 +20,21 @@ public class StatusManager : MonoBehaviour
 
     public delegate void StatusEndDelegate(string statusName);
     public event StatusEndDelegate OnStatusEnd;
+
+    private void Awake()
+    {
+        if(statusParticleKeys == null || statusParticleValues == null) return;
+        
+        int min = statusParticleKeys.Length;
+        if(statusParticleKeys.Length != statusParticleValues.Length)
+        {
+            Debug.LogWarning("statusParticleKeys and statusParticleValues are not the same size! Keys: " + statusParticleKeys.Length + " Values: " + statusParticleValues.Length);
+            min = Mathf.Min(statusParticleKeys.Length, statusParticleValues.Length);
+        }
+
+        for (int i = 0; i < min; i++)
+            statusParticleDict.Add(statusParticleKeys[i], statusParticleValues[i]);
+    }
 
     public void AddStatus(Status status)
     {
@@ -47,6 +67,10 @@ public class StatusManager : MonoBehaviour
         // We track the components in a dictionary
         statusComponents.Add(status.name, comp);
 
+        // Activate vfx
+        if(statusParticleDict.ContainsKey(status.Name))
+            statusParticleDict[status.Name].Play();
+
         if(OnStatusStart != null)
             OnStatusStart(status.Name);
     }
@@ -60,9 +84,15 @@ public class StatusManager : MonoBehaviour
     public void RemoveStatus(string statusName)
     {
         bool found = statusComponents.Remove(statusName);
+        
+        if(found == false) return;
 
-        if(found && OnStatusEnd != null)
+        if(OnStatusEnd != null)
             OnStatusEnd(statusName);
+            
+        // Activate vfx
+        if(statusParticleDict.ContainsKey(statusName))
+            statusParticleDict[statusName].Stop();
     }
 
     public List<StatusComponent> GetStatusComponents()
