@@ -4927,6 +4927,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   softDamage: 10
   hardDamage: 0
+  attackInfo:
+    softDamage: 10
+    hardDamage: 0
+    statuses:
+    - {fileID: 11400000, guid: 24c63d2202f3b334eb2a8baa5bbb255c, type: 2}
+    damageType: 0
   pushForce: 5
   gravity: 0
   useGlobalGravity: 0

@@ -730,8 +730,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de228584dad30f459624439cc059add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  softDamage: 25
-  hardDamage: 20
+  attackInfo:
+    softDamage: 25
+    hardDamage: 20
+    statuses: []
+    damageType: 2
   pushForce: 5
   gravity: 1
   useGlobalGravity: 0
@@ -756,6 +759,7 @@ MonoBehaviour:
   objectsToActivate: []
   deactivateDelay: 0.5
   objectsToDeactivate: []
+  pickup: {fileID: 0}
   objectsCollided: []
   ignoreTransform: {fileID: 0}
 --- !u!114 &5248171932173236030
@@ -773,14 +777,24 @@ MonoBehaviour:
   shape: 0
   size: {x: 0.1, y: 0.1, z: 0.25}
   offset: {x: 0, y: 0, z: -0.1}
+  hitMultipleHurtbox: 1
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
+  guardMask:
+    serializedVersion: 2
+    m_Bits: 0
   isActive: 0
-  lastActiveState: 0
-  collided: []
   lastPosition: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  overrideVelocity: 0
+  oVelocityReference: {fileID: 0}
+  oVelocity: {x: 0, y: 0, z: 0}
+  lastActiveState: 0
+  collided: []
 --- !u!114 &6058809591785331382
 MonoBehaviour:
   m_ObjectHideFlags: 0

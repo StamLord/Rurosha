@@ -920,8 +920,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de228584dad30f459624439cc059add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  softDamage: 25
-  hardDamage: 20
+  attackInfo:
+    softDamage: 25
+    hardDamage: 20
+    statuses: []
+    damageType: 2
   pushForce: 5
   gravity: 1
   useGlobalGravity: 0
@@ -965,17 +968,24 @@ MonoBehaviour:
   shape: 0
   size: {x: 0.1, y: 0.1, z: 0.1}
   offset: {x: 0, y: 0, z: 1}
+  hitMultipleHurtbox: 1
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  perfectGuardMask:
+    serializedVersion: 2
+    m_Bits: 0
   guardMask:
     serializedVersion: 2
     m_Bits: 0
   isActive: 0
-  lastActiveState: 0
-  collided: []
   lastPosition: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  overrideVelocity: 0
+  oVelocityReference: {fileID: 0}
+  oVelocity: {x: 0, y: 0, z: 0}
+  lastActiveState: 0
+  collided: []
 --- !u!136 &8726597129875349312
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1024,4 +1034,11 @@ MonoBehaviour:
   interactionText: Pick Up
   weightClass: 0
   rigidbody: {fileID: 0}
+  owner: {fileID: 0}
   item: {fileID: 11400000, guid: 73eb56d4e8d00e347b35e62672ab15aa, type: 2}
+  randomize: 0
+  costObject: {fileID: 0}
+  isMoney: 0
+  moneyAmount: 0
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}

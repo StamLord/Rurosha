@@ -82,6 +82,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   softDamage: 10
   hardDamage: 0
+  attackInfo:
+    softDamage: 10
+    hardDamage: 0
+    statuses: []
+    damageType: 0
   pushForce: 0
   gravity: 1
   useGlobalGravity: 0
