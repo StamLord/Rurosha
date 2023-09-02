@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,17 @@ public class StatusManager : MonoBehaviour
         // Don't add the same status twice
         if(statusComponents.ContainsKey(status.Name))
             return;
+
+        // Make sure we don't have a status preventing the new status
+        foreach (String statusName in statusComponents.Keys)
+        {
+            Status iterating = statusComponents[statusName].status;
+            foreach (Status prevent in iterating.Prevents)
+            {
+                if(prevent.Name == status.Name)
+                    return;
+            }
+        }
         
         Debug.Log(gameObject.name + " got afflicted with status: " + status.Name);
 
@@ -27,6 +39,10 @@ public class StatusManager : MonoBehaviour
         // The component is responsible for updating us and destorying itself when time is over
         StatusComponent comp = gameObject.AddComponent<StatusComponent>();
         comp.Setup(this, status);
+
+        // Cure statuses
+        foreach (Status cure in status.Cures)
+            RemoveStatus(cure.Name);
 
         // We track the components in a dictionary
         statusComponents.Add(status.name, comp);
@@ -43,9 +59,9 @@ public class StatusManager : MonoBehaviour
 
     public void RemoveStatus(string statusName)
     {
-        statusComponents.Remove(statusName);
+        bool found = statusComponents.Remove(statusName);
 
-        if(OnStatusEnd != null)
+        if(found && OnStatusEnd != null)
             OnStatusEnd(statusName);
     }
 
