@@ -5,8 +5,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour, IHitboxResponder
 {   
     [Header("Damage")]
-    [SerializeField] private int softDamage = 5;
-    [SerializeField] private int hardDamage = 5;
+    [SerializeField] private AttackInfo attackInfo;
+    
 
     [Space (10)]
 
@@ -235,7 +235,7 @@ public class Projectile : MonoBehaviour, IHitboxResponder
             // Avoid triggering multiple hurtboxes with the same parent GameObject
             if(objectsCollided.Contains(hurtbox.transform.root.gameObject) == false)
             {
-                hurtbox.Hit(stealthAgent, softDamage, hardDamage, Vector3.up, transform.forward * pushForce, DamageType.Pierce);
+                hurtbox.Hit(stealthAgent, attackInfo, Vector3.up, transform.forward * pushForce);
                 objectsCollided.Add(hurtbox.transform.root.gameObject);
             }        
         }
