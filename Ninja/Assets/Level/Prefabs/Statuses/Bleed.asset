@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3e1ccef25bc7d4c95e9923e20182ca, type: 3}
+  m_Name: Bleed
+  m_EditorClassIdentifier: 
+  statusName: Bleed
+  icon: {fileID: 21300000, guid: d7ed0e227963a9e4ba953655a51873cd, type: 3}
+  description: 
+  cycles: 10
+  updateRate: 1
+  hpChange: -1
+  stChange: 0
