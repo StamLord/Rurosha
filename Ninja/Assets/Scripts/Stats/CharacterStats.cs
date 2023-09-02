@@ -466,6 +466,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     [SerializeField] private float HeatDamageCooldown = 1f;
     [SerializeField] private float heatSoftDamage = 10;
     [SerializeField] private float heatHardDamage = 0;
+    [SerializeField] private Status heatStatus;
 
     private float lastHeatDamage;
 
@@ -950,6 +951,10 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
         SubHealth(heatSoftDamage);
         SubPotentialHealth(heatHardDamage);
+        
+        if(heatStatus != null)
+            statusManager.AddStatus(heatStatus);
+
         lastHeatDamage = Time.time;
 
         return true;
