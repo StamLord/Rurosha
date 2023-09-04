@@ -6103,7 +6103,11 @@ MonoBehaviour:
   heatSoftDamage: 10
   heatHardDamage: 0
   heatStatus: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
-  resistanceMatrix:
+  damageResistanceMatrix:
+    blunt: 2
+    slash: 2
+    pierce: 2
+  elementalResistanceMatrix:
     earth: 2
     water: 2
     fire: 1

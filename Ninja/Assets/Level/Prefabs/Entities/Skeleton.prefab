@@ -11360,10 +11360,14 @@ MonoBehaviour:
   heatSoftDamage: 10
   heatHardDamage: 0
   heatStatus: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
-  resistanceMatrix:
-    earth: 2
+  damageResistanceMatrix:
+    blunt: 2
+    slash: 1
+    pierce: 1
+  elementalResistanceMatrix:
+    earth: 1
     water: 2
-    fire: 1
+    fire: 3
     wind: 2
     wood: 2
     thunder: 2

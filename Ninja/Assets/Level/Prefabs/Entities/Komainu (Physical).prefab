@@ -6049,6 +6049,7 @@ MonoBehaviour:
     hardDamage: 4
     statuses: []
     damageType: 1
+    element: 4
   clawAttackRange: 2
   clawAttackCooldown: 1
   clawHitbox: {fileID: 1896690791}
@@ -6057,6 +6058,7 @@ MonoBehaviour:
     hardDamage: 4
     statuses: []
     damageType: 0
+    element: 4
   tailAttackRange: 2
   tailAttackCooldown: 1
   tailHitbox: {fileID: 919427824}
@@ -6066,6 +6068,7 @@ MonoBehaviour:
     hardDamage: 4
     statuses: []
     damageType: 0
+    element: 4
   smashAttackRange: 3
   smashAttackCooldown: 1
   smashHitbox: {fileID: 8963491799294545087}
@@ -6945,7 +6948,11 @@ MonoBehaviour:
   heatSoftDamage: 10
   heatHardDamage: 0
   heatStatus: {fileID: 0}
-  resistanceMatrix:
+  damageResistanceMatrix:
+    blunt: 2
+    slash: 1
+    pierce: 1
+  elementalResistanceMatrix:
     earth: 3
     water: 2
     fire: 1
@@ -6953,7 +6960,7 @@ MonoBehaviour:
     wood: 1
     thunder: 1
     metal: 1
-    ice: 2
+    ice: 3
   chakraManager: {fileID: 0}
 --- !u!114 &1521944776613528877
 MonoBehaviour:

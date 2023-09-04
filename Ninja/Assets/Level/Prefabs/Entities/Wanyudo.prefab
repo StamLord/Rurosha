@@ -35013,7 +35013,11 @@ MonoBehaviour:
   heatSoftDamage: 10
   heatHardDamage: 0
   heatStatus: {fileID: 0}
-  resistanceMatrix:
+  damageResistanceMatrix:
+    blunt: 2
+    slash: 2
+    pierce: 1
+  elementalResistanceMatrix:
     earth: 2
     water: 4
     fire: 0

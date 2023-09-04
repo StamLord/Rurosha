@@ -44266,6 +44266,7 @@ MonoBehaviour:
     hardDamage: 15
     statuses: []
     damageType: 0
+    element: 4
   ballHitbox: {fileID: 6759680895113601559}
   ballRigidForce: 100
   ballBurstVFX: {fileID: 7630034041401698035}
@@ -44280,6 +44281,7 @@ MonoBehaviour:
     hardDamage: 2
     statuses: []
     damageType: 0
+    element: 4
   beamHitbox: {fileID: 1260758018}
   beamRigidForce: 50
   castBeamDuration: 6
@@ -44297,6 +44299,7 @@ MonoBehaviour:
     hardDamage: 50
     statuses: []
     damageType: 0
+    element: 4
   castHealDuration: 3
   castHealVfx: {fileID: 9023619648596336179}
   targetHealVfx: {fileID: 3576766767529532233}
@@ -44305,6 +44308,7 @@ MonoBehaviour:
     hardDamage: 15
     statuses: []
     damageType: 0
+    element: 4
   burstHitbox: {fileID: 6043185740221937189}
   burstRigidForce: 36
   burstVFX: {fileID: 9023619648210067934}
@@ -44553,7 +44557,11 @@ MonoBehaviour:
   heatSoftDamage: 10
   heatHardDamage: 0
   heatStatus: {fileID: 0}
-  resistanceMatrix:
+  damageResistanceMatrix:
+    blunt: 2
+    slash: 1
+    pierce: 1
+  elementalResistanceMatrix:
     earth: 3
     water: 2
     fire: 1
@@ -44561,7 +44569,7 @@ MonoBehaviour:
     wood: 1
     thunder: 1
     metal: 1
-    ice: 2
+    ice: 3
   chakraManager: {fileID: 0}
 --- !u!114 &3792356527066609826
 MonoBehaviour:

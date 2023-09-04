@@ -1,17 +1,16 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ElementalResistanceMatrix
+public class ElementalResistanceMatrix : ResistanceMatrix
 {
-    [SerializeField] private ElementalResistance earth;
-    [SerializeField] private ElementalResistance water;
-    [SerializeField] private ElementalResistance fire;
-    [SerializeField] private ElementalResistance wind;
-    [SerializeField] private ElementalResistance wood;
-    [SerializeField] private ElementalResistance thunder;
-    [SerializeField] private ElementalResistance metal;
-    [SerializeField] private ElementalResistance ice;
+    [SerializeField] private ElementalResistance earth = ElementalResistance.C;
+    [SerializeField] private ElementalResistance water = ElementalResistance.C;
+    [SerializeField] private ElementalResistance fire = ElementalResistance.C;
+    [SerializeField] private ElementalResistance wind = ElementalResistance.C;
+    [SerializeField] private ElementalResistance wood = ElementalResistance.C;
+    [SerializeField] private ElementalResistance thunder = ElementalResistance.C;
+    [SerializeField] private ElementalResistance metal = ElementalResistance.C;
+    [SerializeField] private ElementalResistance ice = ElementalResistance.C;
 
     public ElementalResistance GetResistance(ChakraType element)
     {
@@ -42,24 +41,5 @@ public class ElementalResistanceMatrix
     public float GetResistanceMult(ChakraType element)
     {
         return GetResistanceMult(GetResistance(element));
-    }
-
-    public float GetResistanceMult(ElementalResistance resistance)
-    {
-        switch(resistance)
-        {
-            case ElementalResistance.A:
-                return 0;
-            case ElementalResistance.B:
-                return .5f;
-            case ElementalResistance.C:
-                return 1f;
-            case ElementalResistance.D:
-                return 1.5f;
-            case ElementalResistance.E:
-                return 2f;
-        }
-
-        return 1f;
     }
 }

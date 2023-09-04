@@ -472,9 +472,15 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    #region Damage Resistance
+    
+    [SerializeField] private DamageResistanceMatrix damageResistanceMatrix;
+
+    #endregion
+
     #region Elemental Resistance
     
-    [SerializeField] private ElementalResistanceMatrix resistanceMatrix;
+    [SerializeField] private ElementalResistanceMatrix elementalResistanceMatrix;
 
     #endregion
 
@@ -929,12 +935,12 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         if(OnForce != null)
             OnForce(force);
         
-        // Calculate damage with resistance
-        float resistanceMult = resistanceMatrix.GetResistanceMult(element);
-        softDamage = Mathf.FloorToInt((float)softDamage * resistanceMult);
-        hardDamage = Mathf.FloorToInt((float)hardDamage * resistanceMult);
+        // Calculate damage with resistances
+        float damageMult = damageResistanceMatrix.GetResistanceMult(damageType);
+        float elementMult = elementalResistanceMatrix.GetResistanceMult(element);
 
-        Debug.Log("element: " + element + "resistance: " + resistanceMult);
+        softDamage = Mathf.FloorToInt(softDamage * damageMult * elementMult);
+        hardDamage = Mathf.FloorToInt(hardDamage * damageMult * elementMult);
 
         Debug.Log(gameObject.name + " was hit for " + softDamage + " / " + hardDamage + " " + damageType + " damage");
 
