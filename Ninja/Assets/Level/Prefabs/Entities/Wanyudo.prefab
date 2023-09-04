@@ -35012,6 +35012,16 @@ MonoBehaviour:
   HeatDamageCooldown: 1
   heatSoftDamage: 10
   heatHardDamage: 0
+  heatStatus: {fileID: 0}
+  resistanceMatrix:
+    earth: 2
+    water: 4
+    fire: 1
+    wind: 2
+    wood: 2
+    thunder: 2
+    metal: 2
+    ice: 2
   chakraManager: {fileID: 0}
 --- !u!1 &4436492932333908490
 GameObject:

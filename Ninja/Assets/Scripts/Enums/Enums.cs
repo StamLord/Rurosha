@@ -18,6 +18,8 @@ public enum WeightClass {LIGHT, MEDIUM, HEAVY}
 
 public enum ChakraType {EARTH, WATER, FIRE, WIND, VOID, WOOD, THUNDER, METAL, ICE}
 
+public enum ElementalResistance {A, B, C, D, E} // 100, 50, 0, -50, -100
+
 public enum Zodiac {RAT, OX, TIGER, RABBIT, DRAGON, SNAKE, HORSE, GOAT, MONKEY, ROOSTER, DOG, BOAR}
 
 public enum CursorType {SINGLE, HORIZONTAL, VERTICAL, DIAGONAL_CROSS}

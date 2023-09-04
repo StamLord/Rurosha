@@ -97,7 +97,7 @@ public class SpiderFightState : FightAIState, IHitboxResponder
         Hurtbox hurtbox = collider.GetComponent<Hurtbox>();
 
         if(hurtbox)
-            hurtbox.Hit(AIStateMachine.StealthAgent, biteAttack.softDamage, biteAttack.hardDamage, Vector3.up, Vector3.zero, DamageType.Blunt, biteAttack.statuses);
+            hurtbox.Hit(AIStateMachine.StealthAgent, biteAttack, Vector3.up, Vector3.zero);
     }
 
     public void GuardedBy(Collider collider, Hitbox hitbox)

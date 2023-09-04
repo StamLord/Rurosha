@@ -5,28 +5,14 @@ public struct AttackInfo
     public int hardDamage;
     public Status[] statuses;
     public DamageType damageType;
+    public ChakraType element;
 
-    public AttackInfo(int softDamage, int hardDamage, DamageType damageType = DamageType.Blunt)
+    public AttackInfo(int softDamage, int hardDamage, DamageType damageType = DamageType.Blunt, ChakraType element = ChakraType.VOID)
     {
         this.softDamage = softDamage;
         this.hardDamage = hardDamage;
         this.damageType = damageType;
+        this.element = element;
         statuses = new Status[0];
-    }
-    
-    public AttackInfo(int softDamage, int hardDamage, Status[] statuses, DamageType damageType = DamageType.Blunt)
-    {
-        this.softDamage = softDamage;
-        this.hardDamage = hardDamage;
-        this.statuses = statuses;
-        this.damageType = damageType;
-    }
-
-    public AttackInfo(int softDamage, int hardDamage, DamageType damageType, Status[] statuses)
-    {
-        this.softDamage = softDamage;
-        this.hardDamage = hardDamage;
-        this.damageType = damageType;
-        this.statuses = statuses;
     }
 }

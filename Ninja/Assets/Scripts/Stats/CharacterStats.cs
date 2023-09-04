@@ -472,6 +472,12 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
+    #region Elemental Resistance
+    
+    [SerializeField] private ElementalResistanceMatrix resistanceMatrix;
+
+    #endregion
+
     public delegate void HitByDelegate(StealthAgent agent);
     public event HitByDelegate OnHitBy;
 
@@ -911,7 +917,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
-    public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, Vector3 force, DamageType damageType, Status[] statuses)
+    public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, Vector3 force, DamageType damageType, ChakraType element, Status[] statuses)
     {
         // Send hit events - Can be listened to by AI, AnimationManager, etc.
         if(OnHitBy != null)
@@ -923,6 +929,13 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         if(OnForce != null)
             OnForce(force);
         
+        // Calculate damage with resistance
+        float resistanceMult = resistanceMatrix.GetResistanceMult(element);
+        softDamage = Mathf.FloorToInt((float)softDamage * resistanceMult);
+        hardDamage = Mathf.FloorToInt((float)hardDamage * resistanceMult);
+
+        Debug.Log("element: " + element + "resistance: " + resistanceMult);
+
         Debug.Log(gameObject.name + " was hit for " + softDamage + " / " + hardDamage + " " + damageType + " damage");
 
         if(aliveVisual)

@@ -44252,22 +44252,9 @@ MonoBehaviour:
   aiStateMachine: {fileID: 0}
   turnSpeed: 1
   debug: 0
-  circleRange: 5
-  attackRange: 2
   pathRecalculateDistance: 3
-  faceEnemyDistance: 5
-  defensive: 0
-  defenseRange: 5
-  aggressive: 0
-  dontAttackInterval: 2
-  attackCombo: 0
-  attackMaxCombo: 3
-  attackInterval: 3
   awarenessCheatRange: 3
-  enemy: {fileID: 0}
   canAttack: 0
-  canAdvance: 0
-  defending: 0
   ally: {fileID: 0}
   allyStats: {fileID: 0}
   circleDuration: 5
@@ -44375,6 +44362,50 @@ MonoBehaviour:
   DoubleLeft: 0
   DoubleRight: 0
   Rotation: 0
+  Jump:
+    _state: 0
+  Run:
+    _state: 0
+  Crouch:
+    _state: 0
+  Use:
+    _state: 0
+  Defend:
+    _state: 0
+  Kick:
+    _state: 0
+  Spell:
+    _state: 0
+  Sit:
+    _state: 0
+  Draw:
+    _state: 0
+  Drop:
+    _state: 0
+  MouseButton1:
+    _state: 0
+  MouseButton2:
+    _state: 0
+  Num1:
+    _state: 0
+  Num2:
+    _state: 0
+  Num3:
+    _state: 0
+  Num4:
+    _state: 0
+  Num5:
+    _state: 0
+  Num6:
+    _state: 0
+  Num7:
+    _state: 0
+  Num8:
+    _state: 0
+  Num9:
+    _state: 0
+  Num0:
+    _state: 0
   debug: 0
 --- !u!1 &2061805379858009188
 GameObject:
@@ -44517,6 +44548,20 @@ MonoBehaviour:
   flaws: []
   sitHealthRecoveryMult: 1.5
   sitStaminaRecoveryMult: 2
+  minHeatDamageTemperature: 40
+  HeatDamageCooldown: 1
+  heatSoftDamage: 10
+  heatHardDamage: 0
+  heatStatus: {fileID: 0}
+  resistanceMatrix:
+    earth: 3
+    water: 2
+    fire: 1
+    wind: 1
+    wood: 1
+    thunder: 1
+    metal: 1
+    ice: 2
   chakraManager: {fileID: 0}
 --- !u!114 &3792356527066609826
 MonoBehaviour:

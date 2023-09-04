@@ -30,13 +30,13 @@ public class Hurtbox : MonoBehaviour, IHeatConductor
     }
 
     // Called by weapon scripts after
-    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, Vector3 force, DamageType damageType = DamageType.Blunt, Status[] statuses = null)
+    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, Vector3 force, DamageType damageType = DamageType.Blunt, ChakraType element = ChakraType.VOID, Status[] statuses = null)
     {
         bool hit = false;
         
         // Send hit data to all responders and see if atleast 1 returns true
         foreach(IHurtboxResponder r in responders)
-            if(r.GetHit(agent, softDamage, hardDamage, hitUp, force, damageType, statuses))
+            if(r.GetHit(agent, softDamage, hardDamage, hitUp, force, damageType, element, statuses))
                 hit = true;
         
 
@@ -57,7 +57,7 @@ public class Hurtbox : MonoBehaviour, IHeatConductor
 
     public bool Hit(StealthAgent agent, AttackInfo attackInfo, Vector3 hitUp, Vector3 force)
     {
-        return Hit(agent, attackInfo.softDamage, attackInfo.hardDamage, hitUp, force, attackInfo.damageType, attackInfo.statuses);
+        return Hit(agent, attackInfo.softDamage, attackInfo.hardDamage, hitUp, force, attackInfo.damageType, attackInfo.element, attackInfo.statuses);
     }
 
     public void AddResponder(IHurtboxResponder responder)

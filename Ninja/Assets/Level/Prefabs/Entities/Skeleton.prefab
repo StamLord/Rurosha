@@ -11359,7 +11359,16 @@ MonoBehaviour:
   HeatDamageCooldown: 1
   heatSoftDamage: 10
   heatHardDamage: 0
-  heatStatus: {fileID: 0}
+  heatStatus: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
+  resistanceMatrix:
+    earth: 2
+    water: 2
+    fire: 1
+    wind: 2
+    wood: 2
+    thunder: 2
+    metal: 2
+    ice: 2
   chakraManager: {fileID: 0}
 --- !u!114 &6196713410799265085
 MonoBehaviour:
@@ -23124,6 +23133,7 @@ MonoBehaviour:
     hardDamage: 7
     statuses: []
     damageType: 0
+    element: 0
   swordHitbox: {fileID: 5536889512211530382}
   attackCombo: 1
   attackMaxCombo: 2

@@ -3486,7 +3486,16 @@ MonoBehaviour:
   HeatDamageCooldown: 1
   heatSoftDamage: 10
   heatHardDamage: 0
-  heatStatus: {fileID: 0}
+  heatStatus: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
+  resistanceMatrix:
+    earth: 2
+    water: 2
+    fire: 1
+    wind: 2
+    wood: 1
+    thunder: 2
+    metal: 2
+    ice: 2
   chakraManager: {fileID: 0}
 --- !u!114 &7493063730529350468
 MonoBehaviour:
@@ -4360,6 +4369,7 @@ MonoBehaviour:
     statuses:
     - {fileID: 11400000, guid: af21573141d85db4d8ccfc57eb7815c4, type: 2}
     damageType: 2
+    element: 4
   jumpMinDistance: 4
   jumpMaxDistance: 12
   jumpHeight: 2

@@ -5568,6 +5568,7 @@ MonoBehaviour:
     hardDamage: 5
     statuses: []
     damageType: 0
+    element: 4
   meleeAttackRange: 1
   meleeAttackCooldown: 1
   minimumTimeInMelee: 10
@@ -6101,7 +6102,16 @@ MonoBehaviour:
   HeatDamageCooldown: 1
   heatSoftDamage: 10
   heatHardDamage: 0
-  heatStatus: {fileID: 0}
+  heatStatus: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
+  resistanceMatrix:
+    earth: 2
+    water: 2
+    fire: 1
+    wind: 2
+    wood: 2
+    thunder: 4
+    metal: 2
+    ice: 3
   chakraManager: {fileID: 5648980171498927961}
 --- !u!114 &5648980171498927961
 MonoBehaviour:
