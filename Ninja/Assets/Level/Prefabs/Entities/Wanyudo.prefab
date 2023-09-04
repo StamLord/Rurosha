@@ -35016,7 +35016,7 @@ MonoBehaviour:
   resistanceMatrix:
     earth: 2
     water: 4
-    fire: 1
+    fire: 0
     wind: 2
     wood: 2
     thunder: 2
@@ -86754,6 +86754,7 @@ MonoBehaviour:
     hardDamage: 5
     statuses: []
     damageType: 0
+    element: 4
   preChargeTime: 1
   chargeDistance: 16
   maxChargeTime: 2
@@ -86767,6 +86768,7 @@ MonoBehaviour:
     hardDamage: 5
     statuses: []
     damageType: 0
+    element: 4
   chargeForce: 20
   flamethrowerDuration: 5
   flamethrowerAttack:
@@ -86774,6 +86776,7 @@ MonoBehaviour:
     hardDamage: 3
     statuses: []
     damageType: 0
+    element: 4
   hitbox:
   - {fileID: 662863567}
   - {fileID: 3843246853426313061}
