@@ -21,23 +21,30 @@ public struct Modifier
     public int StartHour { get {return startHour; }}
     public int EndHour { get {return endHour; }}
 
-    public float Process(float initial, DayNightManager.DayTime dayTime)
+    private bool IsActiveTime(DayNightManager.DayTime dayTime)
     {
-        // Time check
         if(isTimeSensitive)
         {
             bool active = false;
 
             // For example: Between 06:00 to 18:00 
             if(startHour < endHour)
-                active = dayTime.hours >= StartHour && dayTime.hours < EndHour;
+                active = dayTime.hours >= startHour && dayTime.hours < endHour;
             // For example: Between 23:00 to 1:00 
             else if (endHour < startHour) 
                 active = (dayTime.hours >= startHour || dayTime.hours < endHour);
             
-            if(active == false)
-                return initial;
+            return active;
         }
+
+        // If not time sensitive, modifier is always active
+        return true;
+    }
+
+    public float Process(float initial, DayNightManager.DayTime dayTime)
+    {
+        // Not within active time
+        if(IsActiveTime(dayTime) == false) return initial;
 
         float newValue = initial;
 
