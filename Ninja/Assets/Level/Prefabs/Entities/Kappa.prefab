@@ -5566,8 +5566,10 @@ MonoBehaviour:
   meleeAttack:
     softDamage: 7
     hardDamage: 5
-    statuses: []
-    damageType: 0
+    statuses:
+    - status: {fileID: 11400000, guid: 588cee77b1c4dee4c990c85ef2e07c1b, type: 2}
+      chance: 0.25
+    damageType: 1
     element: 4
   meleeAttackRange: 1
   meleeAttackCooldown: 1

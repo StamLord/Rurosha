@@ -923,7 +923,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #endregion
 
-    public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, Vector3 force, DamageType damageType, ChakraType element, Status[] statuses)
+    public bool GetHit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, Vector3 force, DamageType damageType, ChakraType element, StatusChance[] statuses)
     {
         // Send hit events - Can be listened to by AI, AnimationManager, etc.
         if(OnHitBy != null)
@@ -953,8 +953,11 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         // Apply statuses
         if(statuses != null && statuses.Length > 0)
         {
-            foreach(Status s in statuses)
-                statusManager.AddStatus(s);
+            foreach(StatusChance s in statuses)
+            {
+                if(s.Success())
+                    statusManager.AddStatus(s.status);
+            }
         }
 
         return true;

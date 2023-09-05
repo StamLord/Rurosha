@@ -3,7 +3,7 @@ public struct AttackInfo
 {
     public int softDamage;
     public int hardDamage;
-    public Status[] statuses;
+    public StatusChance[] statuses;
     public DamageType damageType;
     public ChakraType element;
 
@@ -13,6 +13,6 @@ public struct AttackInfo
         this.hardDamage = hardDamage;
         this.damageType = damageType;
         this.element = element;
-        statuses = new Status[0];
+        statuses = new StatusChance[0];
     }
 }

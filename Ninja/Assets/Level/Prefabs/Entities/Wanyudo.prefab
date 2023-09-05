@@ -86756,7 +86756,9 @@ MonoBehaviour:
   spinAttack:
     softDamage: 10
     hardDamage: 5
-    statuses: []
+    statuses:
+    - status: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
+      chance: 0.1
     damageType: 0
     element: 4
   preChargeTime: 1
@@ -86770,7 +86772,9 @@ MonoBehaviour:
   chargeAttack:
     softDamage: 10
     hardDamage: 5
-    statuses: []
+    statuses:
+    - status: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
+      chance: 0.1
     damageType: 0
     element: 4
   chargeForce: 20
@@ -86778,7 +86782,9 @@ MonoBehaviour:
   flamethrowerAttack:
     softDamage: 5
     hardDamage: 3
-    statuses: []
+    statuses:
+    - status: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
+      chance: 0.2
     damageType: 0
     element: 4
   hitbox:

@@ -4925,14 +4925,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de228584dad30f459624439cc059add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  softDamage: 10
-  hardDamage: 0
   attackInfo:
     softDamage: 10
     hardDamage: 0
     statuses:
-    - {fileID: 11400000, guid: 24c63d2202f3b334eb2a8baa5bbb255c, type: 2}
+    - status: {fileID: 11400000, guid: 24c63d2202f3b334eb2a8baa5bbb255c, type: 2}
+      chance: 1
     damageType: 0
+    element: 0
   pushForce: 5
   gravity: 0
   useGlobalGravity: 0

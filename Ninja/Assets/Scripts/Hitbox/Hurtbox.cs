@@ -30,7 +30,7 @@ public class Hurtbox : MonoBehaviour, IHeatConductor
     }
 
     // Called by weapon scripts after
-    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, Vector3 force, DamageType damageType = DamageType.Blunt, ChakraType element = ChakraType.VOID, Status[] statuses = null)
+    public bool Hit(StealthAgent agent, int softDamage, int hardDamage, Vector3 hitUp, Vector3 force, DamageType damageType = DamageType.Blunt, ChakraType element = ChakraType.VOID, StatusChance[] statuses = null)
     {
         bool hit = false;
         

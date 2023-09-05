@@ -4371,7 +4371,8 @@ MonoBehaviour:
     softDamage: 20
     hardDamage: 5
     statuses:
-    - {fileID: 11400000, guid: af21573141d85db4d8ccfc57eb7815c4, type: 2}
+    - status: {fileID: 11400000, guid: af21573141d85db4d8ccfc57eb7815c4, type: 2}
+      chance: 1
     damageType: 2
     element: 4
   jumpMinDistance: 4
