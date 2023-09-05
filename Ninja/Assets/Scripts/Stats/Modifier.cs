@@ -3,10 +3,10 @@ using UnityEngine;
 [System.Serializable]
 public struct Modifier
 {
-    public enum ModfierType {FLAT, PERCENTAGE}
+    public enum ModifierType {FLAT, PERCENTAGE}
 
     [SerializeField] private AttributeType attribute;
-    [SerializeField] private ModfierType modfierType;
+    [SerializeField] private ModifierType modfierType;
     [SerializeField] private float value;
     [SerializeField] private bool isTemporary;
     [SerializeField] private float duration;
@@ -44,10 +44,10 @@ public struct Modifier
         // Modification
         switch(modfierType)
         {
-            case ModfierType.FLAT:
+            case ModifierType.FLAT:
                 newValue = initial + value;
                 break;
-            case ModfierType.PERCENTAGE:
+            case ModifierType.PERCENTAGE:
                 newValue = initial * value;
                 break;
         }
