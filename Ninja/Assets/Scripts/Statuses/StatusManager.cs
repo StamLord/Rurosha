@@ -12,13 +12,13 @@ public class StatusManager : MonoBehaviour
     [SerializeField] private ParticleSystem[] statusParticleValues;
 
     // Events
-    public delegate void StatusStartDelegate(string statusName);
+    public delegate void StatusStartDelegate(Status status);
     public event StatusStartDelegate OnStatusStart;
 
     public delegate void StatusUpdateDelegate(int softHp, int hardHp, int softSt, int hardSt);
     public event StatusUpdateDelegate OnStatusUpdate;
 
-    public delegate void StatusEndDelegate(string statusName);
+    public delegate void StatusEndDelegate(Status status);
     public event StatusEndDelegate OnStatusEnd;
 
     private void Awake()
@@ -72,7 +72,7 @@ public class StatusManager : MonoBehaviour
             statusParticleDict[status.Name].Play();
 
         if(OnStatusStart != null)
-            OnStatusStart(status.Name);
+            OnStatusStart(status);
     }
 
     public void StatusUpdate(int softHp, int hardHp, int softSt, int hardSt)
@@ -83,13 +83,15 @@ public class StatusManager : MonoBehaviour
 
     public void RemoveStatus(string statusName)
     {
-        bool found = statusComponents.Remove(statusName);
+        bool found = statusComponents.ContainsKey(statusName);
         
         if(found == false) return;
 
         if(OnStatusEnd != null)
-            OnStatusEnd(statusName);
-            
+            OnStatusEnd(statusComponents[statusName].status);
+        
+        statusComponents.Remove(statusName);
+
         // Activate vfx
         if(statusParticleDict.ContainsKey(statusName))
             statusParticleDict[statusName].Stop();

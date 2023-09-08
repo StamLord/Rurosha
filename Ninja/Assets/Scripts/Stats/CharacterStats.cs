@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -429,7 +430,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         // Add modifiers
         Trait t = TraitManager.instance.GetBoon(boonName);
         AddModifiers(t.attributeModifiers);
-        //TODO: AddModifiers(t.elementalResistanceModifiers);
+        AddModifiers(t.elementalResistanceModifiers);
     }
 
     public void RemoveBoon(string boonName)
@@ -517,7 +518,11 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
     {
         // Subscribe to status manager updates
         if(statusManager) 
+        {
             statusManager.OnStatusUpdate += StatusUpdate;
+            statusManager.OnStatusStart += StatusStart;
+            statusManager.OnStatusEnd += StatusEnd;
+        }
 
         // Setup hurtboxes
         foreach(Hurtbox h in hurtboxes)
@@ -1018,6 +1023,18 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             DepletePotentailStamina(hardSt * -1);
         else if (hardSt > 0)
             RestoreStamina(0, hardHp);
+    }
+
+    public void StatusStart(Status status)
+    {
+        AddModifiers(status.AttributeModifiers.ToList());
+        AddModifiers(status.ElementResistanceModifiers.ToList());
+        //AddModifiers(status.DamageTypeResistanceModifiers.ToList());
+    }
+
+    public void StatusEnd(Status status)
+    {
+        RemoveModifiers(status.AllModifiers);
     }
 
     public void Die()

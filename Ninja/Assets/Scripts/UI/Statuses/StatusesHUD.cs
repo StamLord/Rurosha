@@ -19,7 +19,7 @@ public class StatusesHUD : MonoBehaviour
         statusManager.OnStatusEnd += OnStatusUpdate;
     }
 
-    private void OnStatusUpdate(string statusName)
+    private void OnStatusUpdate(Status status)
     {
         statuses = statusManager.GetStatusComponents();
 
