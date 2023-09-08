@@ -42,6 +42,13 @@ public class UIWindow : MonoBehaviour
             else
                 Open();
         }
+
+        RefreshWindow();
+    }
+
+    public virtual void RefreshWindow()
+    {
+
     }
 
     public virtual void Back() 
