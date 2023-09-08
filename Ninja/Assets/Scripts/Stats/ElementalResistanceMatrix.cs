@@ -1,18 +1,41 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class ElementalResistanceMatrix : ResistanceMatrix
 {
-    [SerializeField] private ElementalResistance earth = ElementalResistance.C;
-    [SerializeField] private ElementalResistance water = ElementalResistance.C;
-    [SerializeField] private ElementalResistance fire = ElementalResistance.C;
-    [SerializeField] private ElementalResistance wind = ElementalResistance.C;
-    [SerializeField] private ElementalResistance wood = ElementalResistance.C;
-    [SerializeField] private ElementalResistance thunder = ElementalResistance.C;
-    [SerializeField] private ElementalResistance metal = ElementalResistance.C;
-    [SerializeField] private ElementalResistance ice = ElementalResistance.C;
+    [SerializeField] private ElementalResistance earth = new ElementalResistance();
+    [SerializeField] private ElementalResistance water = new ElementalResistance();
+    [SerializeField] private ElementalResistance fire = new ElementalResistance();
+    [SerializeField] private ElementalResistance wind = new ElementalResistance();
+    [SerializeField] private ElementalResistance wood = new ElementalResistance();
+    [SerializeField] private ElementalResistance thunder = new ElementalResistance();
+    [SerializeField] private ElementalResistance metal = new ElementalResistance();
+    [SerializeField] private ElementalResistance ice = new ElementalResistance();
 
-    public ElementalResistance GetResistance(ChakraType element)
+    private Dictionary<Modifier, ElementalResistance> modifiers = new Dictionary<Modifier, ElementalResistance>();
+    
+    public Resistance GetResistance(ChakraType element)
+    {
+        ElementalResistance elementalResistance = FindElementalResistance(element);
+
+        // Default is 0%
+        if(elementalResistance == null) return Resistance.C; 
+        
+        return elementalResistance.Resistance;
+    }
+
+    public Resistance GetUnmodifiedResistance(ChakraType element)
+    {
+        ElementalResistance elementalResistance = FindElementalResistance(element);
+
+        // Default is 0%
+        if(elementalResistance == null) return Resistance.C; 
+        
+        return elementalResistance.Unmodified;
+    }
+
+    private ElementalResistance FindElementalResistance(ChakraType element)
     {
         switch(element)
         {
@@ -33,13 +56,45 @@ public class ElementalResistanceMatrix : ResistanceMatrix
             case ChakraType.ICE:
                 return ice;
         }
-        
-        // Default is 0%
-        return ElementalResistance.C;
+
+        return null;
     }
 
     public float GetResistanceMult(ChakraType element)
     {
         return GetResistanceMult(GetResistance(element));
     }
+
+    #region Modifiers
+
+    public void AddModifier(ElementResistanceModifier elementModifier)
+    {
+        ElementalResistance elementalResistance = FindElementalResistance(elementModifier.element);
+        if(elementalResistance == null) return;
+        
+        elementalResistance.AddModifier(elementModifier.modifier);
+        modifiers.Add(elementModifier.modifier, elementalResistance);
+    }
+
+    public void AddModifiers(List<ElementResistanceModifier> elementModifiers)
+    {
+        foreach (var mod in elementModifiers)
+            AddModifier(mod);
+    }
+
+    public void RemoveModifier(Modifier modifier)
+    {
+        if(modifiers.ContainsKey(modifier) == false) return;
+
+        modifiers[modifier].RemoveModifier(modifier);
+        modifiers.Remove(modifier);
+    }
+
+    public void RemoveModifiers(List<Modifier> modifiers)
+    {
+        foreach (var mod in modifiers)
+            RemoveModifier(mod);
+    }
+
+    #endregion
 }

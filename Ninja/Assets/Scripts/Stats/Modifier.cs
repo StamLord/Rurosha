@@ -3,9 +3,8 @@ using UnityEngine;
 [System.Serializable]
 public struct Modifier
 {
-    public enum ModifierType {FLAT, PERCENTAGE}
+    public enum ModifierType {FLAT, PERCENTAGE, SET}
 
-    [SerializeField] private AttributeType attribute;
     [SerializeField] private ModifierType modfierType;
     [SerializeField] private float value;
     [SerializeField] private bool isTemporary;
@@ -14,7 +13,6 @@ public struct Modifier
     [SerializeField] private int startHour;
     [SerializeField] private int endHour;
 
-    public AttributeType Attribute { get {return attribute; }}
     public bool IsTemporary { get {return isTemporary; }}
     public float Duration { get {return duration; }}
     public bool IsTimeSensitive { get {return isTimeSensitive; }}
@@ -56,6 +54,9 @@ public struct Modifier
                 break;
             case ModifierType.PERCENTAGE:
                 newValue = initial * value;
+                break;
+            case ModifierType.SET:
+                newValue = value;
                 break;
         }
 

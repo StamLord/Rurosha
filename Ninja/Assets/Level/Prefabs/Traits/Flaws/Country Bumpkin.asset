@@ -14,10 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traitName: Country Bumpkin
   description: -1 Wisdom.
-  modifiers:
+  attributeModifiers:
   - attribute: 3
-    modfierType: 0
-    value: -1
-    isTimeSensitive: 0
-    startHour: 18
-    endHour: 8
+    modifier:
+      modfierType: 0
+      value: -1
+      isTemporary: 0
+      duration: 0
+      isTimeSensitive: 0
+      startHour: 0
+      endHour: 0
+  elementalResistanceModifiers: []
+  damageTypeResistanceModifiers: []

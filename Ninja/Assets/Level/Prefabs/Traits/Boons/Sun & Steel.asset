@@ -15,10 +15,15 @@ MonoBehaviour:
   traitName: Sun & Steel
   description: You are no stranger to exerting yourself out in the sun. You have
     +2 Strength during daytime.
-  modifiers:
-  - attribute: strength
-    modfierType: 0
-    value: 2
-    isTimeSensitive: 1
-    startHour: 6
-    endHour: 18
+  attributeModifiers:
+  - attribute: 0
+    modifier:
+      modfierType: 0
+      value: 2
+      isTemporary: 0
+      duration: 0
+      isTimeSensitive: 1
+      startHour: 6
+      endHour: 18
+  elementalResistanceModifiers: []
+  damageTypeResistanceModifiers: []

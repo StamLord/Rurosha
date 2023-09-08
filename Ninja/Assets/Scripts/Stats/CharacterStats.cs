@@ -329,13 +329,15 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
     #region Modifiers
 
-    private Dictionary<Modifier, Attribute> modifiers = new Dictionary<Modifier, Attribute>();
+    private Dictionary<Modifier, Modifieable> modifiers = new Dictionary<Modifier, Modifieable>();
 
     // Modifier : Timestamp pairs
     private Dictionary<Modifier, float> tempModifiers = new Dictionary<Modifier, float>();
 
-    public void AddModifier(Modifier modifier)
+    public void AddModifier(AttributeModifier attrModifier)
     {
+        Modifier modifier = attrModifier.modifier;
+
         if(modifiers.ContainsKey(modifier))
         {
             // Reset timestamp
@@ -345,7 +347,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         }
 
         // Get attribute
-        Attribute attr = FindAttribute(modifier.Attribute);
+        Attribute attr = FindAttribute(attrModifier.attribute);
         if(attr == null) return;
 
         // Add modifier to attribute
@@ -357,6 +359,11 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         // Add to temporary dictionary with timestamp
         if(modifier.IsTemporary)
             tempModifiers[modifier] = Time.time;
+    }
+
+    public void AddModifier(ElementResistanceModifier elementResistanceModifier)
+    {
+        elementalResistanceMatrix.AddModifier(elementResistanceModifier);
     }
 
     public void RemoveModifier(Modifier modifier)
@@ -374,10 +381,15 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
             tempModifiers.Remove(modifier);
     }
 
-    public void AddModifiers(List<Modifier> modifiers)
+    public void AddModifiers(List<AttributeModifier> attrModifiers)
     {
-        for (int i = 0; i < modifiers.Count; i++)
-            AddModifier(modifiers[i]);
+        for (int i = 0; i < attrModifiers.Count; i++)
+            AddModifier(attrModifiers[i]);
+    }
+
+    public void AddModifiers(List<ElementResistanceModifier> elementResistanceModifier)
+    {
+        elementalResistanceMatrix.AddModifiers(elementResistanceModifier);
     }
 
     public void RemoveModifiers(List<Modifier> modifiers)
@@ -416,7 +428,8 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
         // Add modifiers
         Trait t = TraitManager.instance.GetBoon(boonName);
-        AddModifiers(t.modifiers);
+        AddModifiers(t.attributeModifiers);
+        //TODO: AddModifiers(t.elementalResistanceModifiers);
     }
 
     public void RemoveBoon(string boonName)
@@ -426,7 +439,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
         // Remove modifiers
         Trait t = TraitManager.instance.GetBoon(boonName);
-        RemoveModifiers(t.modifiers);
+        RemoveModifiers(t.AllModifiers);
     }
 
     public void AddFlaw(string flawName)
@@ -436,7 +449,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
         
         // Add modifiers
         Trait t = TraitManager.instance.GetFlaw(flawName);
-        AddModifiers(t.modifiers);
+        AddModifiers(t.attributeModifiers);
     }
 
     public void RemoveFlaw(string flawName)
@@ -446,7 +459,7 @@ public class CharacterStats : MonoBehaviour, IHurtboxResponder
 
         // Add modifiers
         Trait t = TraitManager.instance.GetFlaw(flawName);
-        RemoveModifiers(t.modifiers);
+        RemoveModifiers(t.AllModifiers);
     }
 
     

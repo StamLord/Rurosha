@@ -15,10 +15,15 @@ MonoBehaviour:
   traitName: Nimble
   description: 'You are swift on your feet and can easily move your body around.
     You have +1 AGI. '
-  modifiers:
+  attributeModifiers:
   - attribute: 1
-    modfierType: 0
-    value: 1
-    isTimeSensitive: 0
-    startHour: 0
-    endHour: 0
+    modifier:
+      modfierType: 0
+      value: 1
+      isTemporary: 0
+      duration: 0
+      isTimeSensitive: 0
+      startHour: 0
+      endHour: 0
+  elementalResistanceModifiers: []
+  damageTypeResistanceModifiers: []

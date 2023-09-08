@@ -18408,41 +18408,45 @@ MonoBehaviour:
   experience: 0
   expNeeded: 64000000c8000000900100002003000040060000800c00000019000000320000
   strength:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   agility:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   dexterity:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   wisdom:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   statusManager: {fileID: 8338262042225387583}
   karma: -45
   stealKarma: -5
@@ -18532,18 +18536,84 @@ MonoBehaviour:
   heatHardDamage: 0
   heatStatus: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
   damageResistanceMatrix:
-    blunt: 2
-    slash: 2
-    pierce: 2
+    blunt:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    slash:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    pierce:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
   elementalResistanceMatrix:
-    earth: 2
-    water: 2
-    fire: 2
-    wind: 2
-    wood: 2
-    thunder: 2
-    metal: 2
-    ice: 2
+    earth:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    water:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    fire:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    wind:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    wood:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    thunder:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    metal:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    ice:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
   chakraManager: {fileID: 59200968}
 --- !u!114 &8338262042225387583
 MonoBehaviour:

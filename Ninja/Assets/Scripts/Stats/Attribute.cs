@@ -9,27 +9,12 @@ public class Attribute : Modifieable
     [SerializeField] private int _minLevel;
     [SerializeField] private int _maxLevel;
     [SerializeField] private float _experience;
-    [SerializeField] private int _modified;
-    [SerializeField] private bool _modifiedDirty = true;
-
+    
     public int Level {get {return _level;}}
     public int MinLevel {get {return _minLevel;}}
     public int MaxLevel {get {return _maxLevel;}}
     public float Experience {get {return _experience;}}
-    public int Modified {
-        get 
-        {
-            if(_modifiedDirty)
-            {
-                _modified = CalculateModified();
-                _modifiedDirty = false;
-            }
-            
-            return _modified;
-        }}
-
-    private int _timeSensitiveModifiers = 0;
-
+   
     public Attribute(int minLevel = 1, int maxLevel = 10)
     {
         _minLevel = minLevel;
@@ -131,11 +116,5 @@ public class Attribute : Modifieable
             _timeSensitiveModifiers--;
         
         return true;
-    }
-
-    public void TimeBasedCalculateModified(DayNightManager.DayTime time)
-    {
-        if(_timeSensitiveModifiers > 0)
-            _modifiedDirty = true;
     }
 }

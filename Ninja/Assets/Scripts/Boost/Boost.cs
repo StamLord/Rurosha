@@ -9,7 +9,7 @@ public class Boost : MonoBehaviour
     [SerializeField] private float maxAbsorbTime = 1f;
     [SerializeField] private float immediateAbsorbRadius = .5f;
 
-    [SerializeField] private List<Modifier> modifiers;
+    [SerializeField] private List<AttributeModifier> attributeModifiers;
 
     [SerializeField] private int expGain = 10;
 
@@ -69,7 +69,7 @@ public class Boost : MonoBehaviour
 
         stats.RestoreHealth(healthGain, pHealthGain);
         stats.RestoreStamina(staminaGain, pStaminaGain);
-        stats.AddModifiers(modifiers);
+        stats.AddModifiers(attributeModifiers);
 
         Deactivate();
         startedCoroutine = false;

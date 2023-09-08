@@ -15,10 +15,15 @@ MonoBehaviour:
   traitName: Poet's Night
   description: The night is your domain and the moonlight nourishes your soul. You
     have +2 WIS during nighttime.
-  modifiers:
+  attributeModifiers:
   - attribute: 3
-    modfierType: 0
-    value: 2
-    isTimeSensitive: 1
-    startHour: 6
-    endHour: 18
+    modifier:
+      modfierType: 0
+      value: 2
+      isTemporary: 0
+      duration: 0
+      isTimeSensitive: 1
+      startHour: 18
+      endHour: 6
+  elementalResistanceModifiers: []
+  damageTypeResistanceModifiers: []

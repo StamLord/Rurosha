@@ -1,18 +1,18 @@
 public class ResistanceMatrix
 {
-    public static float GetResistanceMult(ElementalResistance resistance)
+    public static float GetResistanceMult(Resistance resistance)
     {
         switch(resistance)
         {
-            case ElementalResistance.A:
+            case Resistance.A:
                 return 0;
-            case ElementalResistance.B:
+            case Resistance.B:
                 return .5f;
-            case ElementalResistance.C:
+            case Resistance.C:
                 return 1f;
-            case ElementalResistance.D:
+            case Resistance.D:
                 return 1.5f;
-            case ElementalResistance.E:
+            case Resistance.E:
                 return 2f;
         }
 
