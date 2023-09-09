@@ -99,6 +99,104 @@ MonoBehaviour:
   oVelocity: {x: 0, y: 0, z: 0}
   lastActiveState: 0
   collided: []
+--- !u!1 &1067365454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1067365455}
+  - component: {fileID: 1067365458}
+  - component: {fileID: 1067365457}
+  - component: {fileID: 1067365456}
+  m_Layer: 0
+  m_Name: Water Bowl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1067365455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067365454}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.25, z: -0.052}
+  m_LocalScale: {x: 0.15, y: 0.02, z: 0.15}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 621494275361266826}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1067365458
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067365454}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1067365457
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067365454}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 735bad602b27efc4b9f3b3e9537fba46, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &1067365456
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067365454}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &1413114619
 GameObject:
   m_ObjectHideFlags: 0
@@ -5769,9 +5867,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 5648980171498927961}
   chakra: 1
-  target: {fileID: 1200286492232982838}
-  emptyHeight: -0.971
-  fullHeight: -0.9408779
+  target: {fileID: 1067365455}
+  emptyHeight: 0.2
+  fullHeight: 0.25
 --- !u!1 &4725670720363890921
 GameObject:
   m_ObjectHideFlags: 0
@@ -5936,6 +6034,7 @@ GameObject:
   - component: {fileID: 5648980171498927960}
   - component: {fileID: 287860554}
   - component: {fileID: 7105159582753627295}
+  - component: {fileID: 1121767755}
   m_Layer: 11
   m_Name: Kappa
   m_TagString: Untagged
@@ -5982,41 +6081,45 @@ MonoBehaviour:
   experience: 0
   expNeeded: 
   strength:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 1
+    _timeSensitiveModifiers: 0
     _level: 4
     _minLevel: 1
     _maxLevel: 10
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 1
   agility:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   dexterity:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   wisdom:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   statusManager: {fileID: 7105159582753627295}
   karma: 0
   stealKarma: -5
@@ -6106,18 +6209,84 @@ MonoBehaviour:
   heatHardDamage: 0
   heatStatus: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
   damageResistanceMatrix:
-    blunt: 2
-    slash: 2
-    pierce: 2
+    blunt:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    slash:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    pierce:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
   elementalResistanceMatrix:
-    earth: 2
-    water: 2
-    fire: 1
-    wind: 2
-    wood: 2
-    thunder: 4
-    metal: 2
-    ice: 3
+    earth:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    water:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    fire:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    wind:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    wood:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    thunder:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    metal:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    ice:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
   chakraManager: {fileID: 5648980171498927961}
 --- !u!114 &5648980171498927961
 MonoBehaviour:
@@ -6195,6 +6364,25 @@ MonoBehaviour:
   statusParticleValues:
   - {fileID: 3665566932344224450}
   - {fileID: 1741548313948923965}
+--- !u!114 &1121767755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5648980171498927963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 478ec79075e086246a71e1c88706132a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  autoJoinSquad: 1
+  squadJoinRange: 10
+  visualizeJoinRange: 1
+  squad:
+    id: -1
+    squadMembers: []
 --- !u!1 &7667109454329813962
 GameObject:
   m_ObjectHideFlags: 0
@@ -12873,20 +13061,19 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: cc99a0286fbfd6b41b9d1146892019f5, type: 2}
+      objectReference: {fileID: 2100000, guid: 735bad602b27efc4b9f3b3e9537fba46, type: 2}
     - target: {fileID: 919132149155446097, guid: 24cc47cb31bc74a4b817b6f847c121be,
         type: 3}
       propertyPath: m_Name
       value: kappa_head_water
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 24cc47cb31bc74a4b817b6f847c121be,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24cc47cb31bc74a4b817b6f847c121be, type: 3}
---- !u!4 &1200286492232982838 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 24cc47cb31bc74a4b817b6f847c121be,
-    type: 3}
-  m_PrefabInstance: {fileID: 1667175505113269981}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2523251293333289218
 PrefabInstance:
   m_ObjectHideFlags: 0
