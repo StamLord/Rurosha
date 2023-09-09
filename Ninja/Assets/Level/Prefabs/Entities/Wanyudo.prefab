@@ -34890,41 +34890,45 @@ MonoBehaviour:
   experience: 0
   expNeeded: 
   strength:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 1
+    _timeSensitiveModifiers: 0
     _level: 4
     _minLevel: 1
     _maxLevel: 10
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 1
   agility:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   dexterity:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   wisdom:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   statusManager: {fileID: 0}
   karma: 0
   stealKarma: -5
@@ -35014,18 +35018,84 @@ MonoBehaviour:
   heatHardDamage: 0
   heatStatus: {fileID: 0}
   damageResistanceMatrix:
-    blunt: 2
-    slash: 2
-    pierce: 1
+    blunt:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    slash:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    pierce:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
   elementalResistanceMatrix:
-    earth: 2
-    water: 4
-    fire: 0
-    wind: 2
-    wood: 2
-    thunder: 2
-    metal: 2
-    ice: 2
+    earth:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    water:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    fire:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    wind:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    wood:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    thunder:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    metal:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    ice:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
   chakraManager: {fileID: 0}
 --- !u!1 &4436492932333908490
 GameObject:
@@ -86760,7 +86830,7 @@ MonoBehaviour:
     - status: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
       chance: 0.1
     damageType: 0
-    element: 4
+    element: 2
   preChargeTime: 1
   chargeDistance: 16
   maxChargeTime: 2
@@ -86776,7 +86846,7 @@ MonoBehaviour:
     - status: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
       chance: 0.1
     damageType: 0
-    element: 4
+    element: 2
   chargeForce: 20
   flamethrowerDuration: 5
   flamethrowerAttack:
@@ -86786,7 +86856,7 @@ MonoBehaviour:
     - status: {fileID: 11400000, guid: 0cc89944aa0baef4bb79cf3854b39be4, type: 2}
       chance: 0.2
     damageType: 0
-    element: 4
+    element: 2
   hitbox:
   - {fileID: 662863567}
   - {fileID: 3843246853426313061}

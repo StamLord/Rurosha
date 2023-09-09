@@ -44266,7 +44266,7 @@ MonoBehaviour:
     hardDamage: 15
     statuses: []
     damageType: 0
-    element: 4
+    element: 6
   ballHitbox: {fileID: 6759680895113601559}
   ballRigidForce: 100
   ballBurstVFX: {fileID: 7630034041401698035}
@@ -44281,7 +44281,7 @@ MonoBehaviour:
     hardDamage: 2
     statuses: []
     damageType: 0
-    element: 4
+    element: 6
   beamHitbox: {fileID: 1260758018}
   beamRigidForce: 50
   castBeamDuration: 6
@@ -44308,7 +44308,7 @@ MonoBehaviour:
     hardDamage: 15
     statuses: []
     damageType: 0
-    element: 4
+    element: 6
   burstHitbox: {fileID: 6043185740221937189}
   burstRigidForce: 36
   burstVFX: {fileID: 9023619648210067934}
@@ -44470,41 +44470,45 @@ MonoBehaviour:
   experience: 0
   expNeeded: 
   strength:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   agility:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   dexterity:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   wisdom:
-    modifiers: []
     roundType: 0
+    modifiers: []
+    _modified: 0
+    _modifiedDirty: 0
+    _timeSensitiveModifiers: 0
     _level: 0
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
-    _modified: 0
-    _modifiedDirty: 0
   statusManager: {fileID: 0}
   karma: 0
   stealKarma: -5
@@ -44558,18 +44562,84 @@ MonoBehaviour:
   heatHardDamage: 0
   heatStatus: {fileID: 0}
   damageResistanceMatrix:
-    blunt: 2
-    slash: 1
-    pierce: 1
+    blunt:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    slash:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    pierce:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
   elementalResistanceMatrix:
-    earth: 3
-    water: 2
-    fire: 1
-    wind: 1
-    wood: 1
-    thunder: 1
-    metal: 1
-    ice: 3
+    earth:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    water:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    fire:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    wind:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    wood:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    thunder:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    metal:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
+    ice:
+      roundType: 0
+      modifiers: []
+      _modified: 0
+      _modifiedDirty: 1
+      _timeSensitiveModifiers: 0
+      resistance: 2
   chakraManager: {fileID: 0}
 --- !u!114 &3792356527066609826
 MonoBehaviour:
