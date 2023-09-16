@@ -1,0 +1,433 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9029373643071135924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9029373643071135925}
+  - component: {fileID: 9029373643071135926}
+  m_Layer: 0
+  m_Name: Skill Tree Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9029373643071135925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029373643071135924}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9029373643703572062}
+  - {fileID: 9029373643520904001}
+  - {fileID: 9029373643718384866}
+  - {fileID: 9029373644009479456}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9029373643071135926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029373643071135924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33dd35614108aa449afc8dd62cec9ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillPoints: 10
+  mobility: {fileID: 9029373643703572063}
+  stealth: {fileID: 9029373643520904000}
+  survival: {fileID: 9029373643718384867}
+  spirit: {fileID: 9029373644009479457}
+  unarmed: {fileID: 0}
+--- !u!1 &9029373643520904031
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9029373643520904001}
+  - component: {fileID: 9029373643520904000}
+  m_Layer: 0
+  m_Name: Stealth
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9029373643520904001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029373643520904031}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9029373643071135925}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9029373643520904000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029373643520904031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5702916693494884db16d292af0a068d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills:
+  - skillName: Light Feet
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Silent Feet
+    cost: 1
+    learned: 0
+    requirements:
+    - Light Feet
+  - skillName: Water Breath
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Silent Drop
+    cost: 1
+    learned: 0
+    requirements:
+    - Silent Feet
+  - skillName: Dissipate Aura
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Shadow Walk
+    cost: 1
+    learned: 0
+    requirements:
+    - Dissipate Aura
+  - skillName: Pickpocket
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Sense Money
+    cost: 1
+    learned: 0
+    requirements:
+    - Pickpocket
+  - skillName: Sense Loot
+    cost: 1
+    learned: 0
+    requirements:
+    - Sense Money
+  - skillName: Silent Takedown
+    cost: 1
+    learned: 0
+    requirements:
+    - Pickpocket
+  - skillName: Silent Disarm
+    cost: 1
+    learned: 0
+    requirements:
+    - Silent Takedown
+--- !u!1 &9029373643703572061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9029373643703572062}
+  - component: {fileID: 9029373643703572063}
+  m_Layer: 0
+  m_Name: Mobility
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9029373643703572062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029373643703572061}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9029373643071135925}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9029373643703572063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029373643703572061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5702916693494884db16d292af0a068d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills:
+  - skillName: Wall Jump
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Wall Run
+    cost: 2
+    learned: 0
+    requirements:
+    - Wall Jump
+  - skillName: Head Jump
+    cost: 2
+    learned: 0
+    requirements:
+    - Wall Jump
+  - skillName: Double Jump
+    cost: 3
+    learned: 0
+    requirements:
+    - Head Jump
+  - skillName: Slide
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Wall Slide
+    cost: 2
+    learned: 0
+    requirements:
+    - Slide
+  - skillName: Water Run
+    cost: 3
+    learned: 0
+    requirements: []
+  - skillName: Roll
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Dash
+    cost: 2
+    learned: 0
+    requirements: []
+  - skillName: Glide
+    cost: 2
+    learned: 0
+    requirements: []
+  - skillName: Ledge Climb
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Tree Climb
+    cost: 2
+    learned: 0
+    requirements:
+    - Ledge Climb
+  - skillName: Structure Climb
+    cost: 3
+    learned: 0
+    requirements:
+    - Tree Climb
+--- !u!1 &9029373643718384865
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9029373643718384866}
+  - component: {fileID: 9029373643718384867}
+  m_Layer: 0
+  m_Name: Survival
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9029373643718384866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029373643718384865}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9029373643071135925}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9029373643718384867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029373643718384865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5702916693494884db16d292af0a068d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills:
+  - skillName: Sense Herbs
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Potent Poison
+    cost: 1
+    learned: 0
+    requirements:
+    - Sense Herbs
+  - skillName: Potent Potion
+    cost: 1
+    learned: 0
+    requirements:
+    - Sense Herbs
+  - skillName: Poison Immunity
+    cost: 1
+    learned: 0
+    requirements:
+    - Potent Poison
+  - skillName: Sense Wild
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Animal Ally
+    cost: 1
+    learned: 0
+    requirements:
+    - Sense Wild
+  - skillName: Sense Human
+    cost: 1
+    learned: 0
+    requirements:
+    - Sense Wild
+  - skillName: Sense Hostile
+    cost: 1
+    learned: 0
+    requirements:
+    - Sense Human
+  - skillName: Sense Traps
+    cost: 1
+    learned: 0
+    requirements: []
+--- !u!1 &9029373644009479487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9029373644009479456}
+  - component: {fileID: 9029373644009479457}
+  m_Layer: 0
+  m_Name: Spirit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9029373644009479456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029373644009479487}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9029373643071135925}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9029373644009479457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029373644009479487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5702916693494884db16d292af0a068d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills:
+  - skillName: Banish Spirit
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Trap Spirit
+    cost: 1
+    learned: 0
+    requirements:
+    - Banish Spirit
+  - skillName: Summon Spirit
+    cost: 1
+    learned: 0
+    requirements:
+    - Trap Spirit
+  - skillName: Pacify
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Turn Ally
+    cost: 1
+    learned: 0
+    requirements:
+    - Pacify
+  - skillName: Elemental Resistance
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Elemental Affinity
+    cost: 1
+    learned: 0
+    requirements:
+    - Elemental Resistance
+  - skillName: Sense Spirit
+    cost: 1
+    learned: 0
+    requirements: []
+  - skillName: Break Illusion
+    cost: 1
+    learned: 0
+    requirements:
+    - Sense Spirit
+  - skillName: Spirit Ally
+    cost: 1
+    learned: 0
+    requirements:
+    - Sense Spirit
