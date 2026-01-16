@@ -7,6 +7,8 @@ public class QuickSlots : QuickSlotsBase
     [SerializeField] private InventoryRenderer[] renderers;
     [SerializeField] private UIWindow window;
 
+    [SerializeField] private ItemDefinition[] autoLoadItems;
+
     private InventoryManager[] managers;
 
     #region Events
@@ -43,6 +45,15 @@ public class QuickSlots : QuickSlotsBase
 
             // Set renderer
             renderers[i].SetInventory(managers[i], renderMode);
+        }
+
+         for (int i = 0; i < autoLoadItems.Length; i++)
+        {
+            if (i > managers.Length)
+                break;
+            Debug.Log("Adding " + autoLoadItems[i]);
+            bool success = managers[i].TryAddAt(autoLoadItems[i], Vector2Int.zero);
+            Debug.Log(success);
         }
 
         window.Close();

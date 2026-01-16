@@ -226,7 +226,7 @@ namespace FarrokhGames.Inventory
 
         /// <inheritdoc />
         public bool TryAddAt(IInventoryItem item, Vector2Int point)
-        {
+        {Debug.Log("TRY ADD AT" + point);
             if (!CanAddAt(item, point) || !_provider.AddInventoryItem(item)) 
 			{
 				onItemAddedFailed?.Invoke(item);

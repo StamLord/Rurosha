@@ -169,7 +169,7 @@ public class KomaMagicFightState : FightAIState, IHitboxResponder
             else
                 attackInfo = new AttackInfo();
             
-            hurtbox.Hit(AIStateMachine.StealthAgent, attackInfo, Vector3.zero, Vector3.up);
+            hurtbox.Hit(AIStateMachine.StealthAgent, attackInfo, Vector3.up, Vector3.zero);
         }
 
         Rigidbody rb = collider.transform.parent.GetComponent<Rigidbody>();

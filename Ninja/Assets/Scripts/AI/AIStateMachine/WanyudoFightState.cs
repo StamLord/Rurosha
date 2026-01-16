@@ -26,6 +26,7 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
     [SerializeField] private float chargeForce = 20f;
 
     [Header ("Flamethrower attack")]
+    [SerializeField] private float flamethrowerChance= 4f;
     [SerializeField] private float flamethrowerDuration = 3f;
     [SerializeField] private AttackInfo flamethrowerAttack = new AttackInfo(5, 3, DamageType.Blunt);
 
@@ -70,7 +71,7 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
         // If close enough, AI faces player
         if(canRotate)
         {
-            if(TooFar(enemy.transform.position, faceEnemyDistance))
+            if(TooFar(enemy.transform.position, faceEnemyDistance) && !midFlamethrower)
                 LookTowards(AIStateMachine.GetNextPosition());
             else
                 LookTowards(enemy.transform.position);
@@ -127,7 +128,7 @@ public class WanyudoFightState : FightAIState, IHitboxResponder
             // Roll random number to select attack
             float rand = Random.Range(0f,1f);
             
-            if(rand <= .8f && Time.time - lastAttack > chargeCooldown)
+            if(rand <= 1f - flamethrowerChance && Time.time - lastAttack > chargeCooldown)
                 StartCoroutine("Dash");
             else
                 StartCoroutine("Flamethrower");

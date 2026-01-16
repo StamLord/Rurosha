@@ -11242,7 +11242,7 @@ MonoBehaviour:
     _modified: 0
     _modifiedDirty: 1
     _timeSensitiveModifiers: 0
-    _level: 4
+    _level: 1
     _minLevel: 1
     _maxLevel: 10
     _experience: 0
@@ -11252,7 +11252,7 @@ MonoBehaviour:
     _modified: 0
     _modifiedDirty: 0
     _timeSensitiveModifiers: 0
-    _level: 0
+    _level: 1
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
@@ -11262,7 +11262,7 @@ MonoBehaviour:
     _modified: 0
     _modifiedDirty: 0
     _timeSensitiveModifiers: 0
-    _level: 0
+    _level: 1
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
@@ -11272,7 +11272,7 @@ MonoBehaviour:
     _modified: 0
     _modifiedDirty: 0
     _timeSensitiveModifiers: 0
-    _level: 0
+    _level: 1
     _minLevel: 0
     _maxLevel: 0
     _experience: 0
@@ -11287,9 +11287,9 @@ MonoBehaviour:
   deadVisual: {fileID: 2606492888976446636}
   _maxHealth:
     attributeType: 0
-    values: 46000000500000005a00000064000000730000008200000096000000aa000000c8000000e6000000
-  _health: 10
-  _potentialHealth: 100
+    values: bc020000500000005a00000064000000730000008200000096000000aa000000c8000000e6000000
+  _health: 700
+  _potentialHealth: 700
   HealthRecovery:
     attributeType: 0
     values:
@@ -11378,14 +11378,14 @@ MonoBehaviour:
       _modified: 0
       _modifiedDirty: 1
       _timeSensitiveModifiers: 0
-      resistance: 2
+      resistance: 1
     pierce:
       roundType: 0
       modifiers: []
       _modified: 0
       _modifiedDirty: 1
       _timeSensitiveModifiers: 0
-      resistance: 2
+      resistance: 0
   elementalResistanceMatrix:
     earth:
       roundType: 0

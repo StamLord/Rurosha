@@ -50,7 +50,6 @@ public class Hurtbox : MonoBehaviour, IHeatConductor
             if(debug && material)
                 StartCoroutine(ColorChange(colorFadeStartDuration, colorFadeEndDuration));
         }
-        
         return hit;
     }
 

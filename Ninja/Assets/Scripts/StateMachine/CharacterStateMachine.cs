@@ -119,7 +119,7 @@ public class CharacterStateMachine : StateMachine
         
         // Register to throw events. Originates in GetHit(..., Force, ...)
         characterStats.OnForce += ThrownState;
-
+Debug.Log(gameObject.name);
         SwitchState(defaultState);
     }
 
